@@ -1,0 +1,152 @@
+<div class="time-data-box">
+  <p class="title">{{ language.energyRealTimeData }}</p>
+  <div class="table-box">
+    <xc-table
+      #tableComponent
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </div>
+</div>
+
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span
+    class="status-text"
+    [ngStyle]="data.rowStyle"
+    title="{{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+  >
+    {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+  </span>
+</ng-template>
+
+<!-- 项目模板 -->
+<!-- <ng-template #projectFilterTemp let-data="data">
+  <span
+    class="status-text"
+    [ngStyle]="data.rowStyle"
+    title="{{ data.project | translate: projectTypeEnum:languageEnum.energy }}"
+  >
+    {{ data.project | translate: projectTypeEnum:languageEnum.energy }}
+  </span>
+</ng-template> -->
+<!-- 项目模板 -->
+<ng-template #projectFilterTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{language.picInfo.pleaseChoose}}" readonly
+           [ngModel]="filterValue.filterName || checkProject.projectName"
+           (click)="showProjectSelectorModal(filterValue)" >
+</ng-template>
+
+<app-select-project *ngIf="projectSelectVisible" [multiple]="true" [selectList]="selectProjectName"
+  [(isVisible)]="projectSelectVisible" (selectDataChange)="projectSelectChange($event)"></app-select-project>
+
+<!--  采集设施 的查看按钮 -->
+<ng-template #collentionDeviceRenderTemplate let-data="data">
+  <div
+    (click)="showCollectionModal(data, EnergyInsertCollectionType.device)"
+    class="hidden cursor-pointer ref-color"
+    [title]="language.checkout"
+    *ngIf="data.equipmentType === equipmentTypeEnum.centralController"
+  >
+    {{ language.checkout }}
+  </div>
+</ng-template>
+<!--  采集设备 的查看按钮  -->
+<ng-template #collentionEquipmentRenderTemplate let-data="data">
+  <div
+    (click)="showCollectionModal(data, EnergyInsertCollectionType.equipment)"
+    class="hidden cursor-pointer ref-color"
+    [title]="language.checkout"
+    *ngIf="data.equipmentType === equipmentTypeEnum.centralController"
+  >
+    {{ language.checkout }}
+  </div>
+</ng-template>
+<!--  采集回路 的查看按钮  -->
+<ng-template #collentionLoopRenderTemplate let-data="data">
+  <div
+    (click)="showCollectionModal(data, EnergyInsertCollectionType.loop)"
+    class="hidden cursor-pointer ref-color"
+    [title]="language.checkout"
+    *ngIf="data.equipmentType === equipmentTypeEnum.centralController"
+  >
+    {{ language.checkout }}
+  </div>
+</ng-template>
+<!-- 表格查看弹出框 -->
+<app-collection-tables
+  [tableType]="tableType"
+  *ngIf="visible"
+  [(visible)]="visible"
+  [switchPage]="switchPage.timeData"
+  [energyConsumptionNodeId]="energyConsumptionNodeId"
+></app-collection-tables>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input
+    nz-input
+    type="text"
+    [placeholder]="language.picInfo.pleaseChoose"
+    [(ngModel)]="filterDeviceName"
+    (click)="onShowFacility(filterValue, 1)"
+  />
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component
+  *ngIf="facilityVisible"
+  [(facilityVisible)]="facilityVisible"
+  [multiple]="true"
+  [selectFacilityIds]="selectFacility"
+  title="{{ language.collectDeviceId }}"
+  (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>
+
+<!-- 设备过滤输入框 -->
+<ng-template #equipmentTemplate let-filterValue="filterValue">
+  <input
+    nz-input
+    type="text"
+    [placeholder]="language.picInfo.pleaseChoose"
+    [(ngModel)]="filterEquipmentName"
+    (click)="onShowFacility(filterValue, 2)"
+  />
+</ng-template>
+<!-- 设备过滤选择器 -->
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [title]="language.collectEquipmentId"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)"
+>
+</equipment-list-selector-component>
+
+<!-- 回路过滤输入框 -->
+<ng-template #loopTemplate let-filterValue="filterValue">
+  <input
+    nz-input
+    type="text"
+    [placeholder]="language.picInfo.pleaseChoose"
+    [(ngModel)]="filterLoopName"
+    (click)="onShowFacility(filterValue, 3)"
+  />
+</ng-template>
+<!-- 回路过滤选择器 -->
+<app-collection-hl
+  *ngIf="loopVisible"
+  [(collectionHLVisible)]="loopVisible"
+  [title]="language.collectEquipmentId"
+  [selectEquipments]="selectLoops"
+  (selectDataChange)="onSelectLoop($event)"
+>
+</app-collection-hl>

@@ -1,0 +1,105 @@
+<div class="statistical-chart-wrap">
+  <!-- 查询部分 -->
+  <div class="statistical-search">
+    <xc-form [column]="formColumn" (formInstance)="getFormInitObject($event)">
+      <div class="search-btn">
+        <button nz-button nzType="primary" class="link-button submit-btn"
+                [disabled]="isDisabled"
+                (click)="handleSearch()">{{commonLanguage.okText}}</button>
+        <button nz-button class="link-button" (click)="handleReset()">{{commonLanguage.reset}}</button>
+      </div>
+    </xc-form>
+  </div>
+  <!-- 图表展示部分 -->
+  <div class="statistical-chart-content">
+    <!-- 库存总览统计图   -->
+    <div echarts  *ngIf="!isNeedTimeSelect && isShowChart" [options]="statisticalChartOptions"></div>
+    <!-- 入库出库统计图   -->
+    <nz-tabset *ngIf="isNeedTimeSelect && isShowChart"
+               [(nzSelectedIndex)]="selectedTabIndex">
+      <ng-container *ngFor="let material of tabsetDataSource">
+        <nz-tab [nzTitle]="material.label" (nzSelect)="handleTabSelect(material)">
+          <ng-template nz-tab>
+            <div *ngIf="isShowTabChart" echarts [options]="statisticalChartOptions"></div>
+            <div class="empty-container" *ngIf="!isShowTabChart">
+              <nz-empty></nz-empty>
+            </div>
+          </ng-template>
+        </nz-tab>
+      </ng-container>
+    </nz-tabset>
+    <!-- 无数据时的展示   -->
+    <div class="empty-container" *ngIf="!isShowChart">
+      <nz-empty></nz-empty>
+    </div>
+    <!-- 切换到列表按钮   -->
+    <i class="icon-l iconfont  icon-fiLink fiLink-flink_liebiao-icon" (click)="switchTable.emit()"></i>
+  </div>
+</div>
+
+<!--物料分类 多选-->
+<ng-template #materialCodeTpl let-formGroup="formGroup" >
+  <form [formGroup]="formGroup">
+    <nz-select formControlName="materialCode"
+               class="form-search"
+               [nzMode]="'multiple'"
+               [nzMaxTagCount]="0"
+               [nzMaxTagPlaceholder]="tagContent"
+               [nzPlaceHolder]= "storageLanguage.pleaseChoose"
+               [nzAllowClear]="true"
+               (ngModelChange)="handleMaterialCodeChange($event)">
+      <nz-option *ngFor="let select of materialClassifyDataSource"
+                  [nzLabel]="select.label"
+                  [nzValue]="select.code">
+      </nz-option>
+    </nz-select>
+    <ng-template #tagContent let-selectedList>
+        <span [title]="selectedList | selectValue : {selectInfo: materialClassifyDataSource, value: 'code'}">
+          {{selectedList | selectValue : {selectInfo: materialClassifyDataSource, value: 'code'} }}
+        </span>
+    </ng-template>
+  </form>
+</ng-template>
+
+<!-- 物料型号 -->
+<ng-template #materialModelTpl let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <input nz-input type="text" class="material-model" readonly formControlName="materialModel" [title]="formStatus.getData('materialModel') || ''">
+    <button type="button" class="open-button" [disabled]="formStatus.group.controls['materialModel'].disabled" (click)="showMaterialModelModal()">
+      <i class="icon-fiLink fiLink-search-index iconfont"></i>
+    </button>
+  </form>
+</ng-template>
+
+<!-- 时间维度 -->
+<ng-template #timeDimensionTpl let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <override-nz-select class="time-dropdown-select" formControlName="timeDimension">
+      <override-nz-option [nzLabel]="storageLanguage.year" [nzValue]="timeDimension.year"></override-nz-option>
+      <override-nz-option [nzLabel]="storageLanguage.month" [nzValue]="timeDimension.month"></override-nz-option>
+      <override-nz-option [nzLabel]="storageLanguage.date" [nzValue]="timeDimension.date"></override-nz-option>
+    </override-nz-select>
+    <nz-year-picker *ngIf="formStatus.getData('timeDimension') === timeDimension.year"
+                    [nzStyle]="{width: '210px'}"
+                    [nzAllowClear]="false"
+                    formControlName="warehousingDate"></nz-year-picker>
+    <nz-month-picker *ngIf="formStatus.getData('timeDimension') === timeDimension.month"
+                     [nzStyle]="{width: '210px'}"
+                     [nzAllowClear]="false"
+                     formControlName="warehousingDate"></nz-month-picker>
+    <nz-date-picker *ngIf="formStatus.getData('timeDimension') === timeDimension.date"
+                    [nzStyle]="{width: '210px'}"
+                    [nzAllowClear]="false"
+                    formControlName="warehousingDate"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!-- 物料型号弹窗 -->
+<app-material-model *ngIf="isShowMaterialModel"
+                    [(isVisible)]="isShowMaterialModel"
+                    [selectModelList]="selectModelList"
+                    [filterConditionSource]="materialFilterCondition"
+                    [productTypeDataSource]="productTypeDataSource"
+                    [isNeedLimitNum]="!isNeedTimeSelect"
+                    (handleOkEvent)="handleModelOk($event)">
+</app-material-model>

@@ -1,0 +1,70 @@
+<div class="facility-detail-panel-container">
+  <!--监控信息 有源锁 3-->
+  <div class="monitor-info bottom-distance">
+    <div class="monitor-info-title">
+      <div>{{indexLanguage.monitorInfo}}</div>
+      <div class="line">
+        <nz-select *ngIf="isShowSelect"
+                   class="nz-select-style"
+                   [(ngModel)]="selectedControlId"
+                   (ngModelChange)="changeControl()"
+                   nzSize="small"
+                   nzAllowClear="false"
+                   [nzPlaceHolder]="indexLanguage.pleaseSelect">
+          <nz-option *ngFor="let control of controlOption" [nzValue]="control.value" [nzLabel]="control.label"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div class="monitor-info-list">
+      <ng-container *ngFor="let item of monitorInfoList">
+        <div class="monitor-info-item">
+          <div class="monitor-info-title">{{item.text}}</div>
+          <div class="monitor-info-icon" [ngClass]="item.iconClass"></div>
+          <div class="monitor-info-text">{{item.value}}</div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!--门锁状态 有源锁 3-->
+  <div class="lock-status bottom-distance">
+    <div class="lock-status-title-name">
+      <div>{{indexLanguage.lockStatus}}</div>
+      <div class="line"></div>
+    </div>
+    <div class="lock-status-list" *ngIf="hostType !== hostTypeEnum.PassiveLock">
+      <ng-container *ngFor="let item of doorAndLockList">
+        <div class="lock-status-item">
+          <div class="lock-status-title hidden" title="{{item.doorName}}">{{item.doorName}}</div>
+          <div class="lock-status-icon"
+               [ngClass]="item.doorStatusClassName">
+          </div>
+          <div class="lock-status-icon"
+               [appAccessPermission]="'03-1-11'"
+               [ngClass]="item.lockStatusClassName"
+               (click)="clickLock(item)">
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!--门锁详情 无源锁 0  暂时注释-->
+  <div class="lock-info bottom-distance" *ngIf="hostType === hostTypeEnum.PassiveLock">
+    <div class="lock-info-title-name">
+      <div>{{indexLanguage.lockInfo}}</div>
+      <div class="line"></div>
+    </div>
+    <div class="facility-item" *ngFor="let item of doorAndLockList,let i=index">
+      <span class="label">{{language.door}}{{i+1}}:</span>
+      <span class="value hidden">{{item.doorName}}</span>
+    </div>
+    <div class="facility-item">
+      <span class="label">{{language.lockType}}：</span>
+      <span class="value hidden">{{language.config.PASSIVE_LOCK}}</span>
+    </div>
+  </div>
+  <!--心跳时间 有源锁 3-->
+  <div class="heartbeat-info bottom-distance">
+    <div class="heartbeat-info-icon"></div>
+    <div class="heartbeat-info-time">{{heartbeatTime}}</div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+@import "../../../../style-module/config";
+// 区域详情内容
+.area-detail-content {
+  padding: 10px;
+}
+.area-detail-title {
+  padding-left: 18px;
+  border-left: 2px solid $detail-title-color;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.open-button {
+  position: absolute;
+  top:3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $button-danger-color;
+}
+
+.unit-container {
+  width: 300px
+}

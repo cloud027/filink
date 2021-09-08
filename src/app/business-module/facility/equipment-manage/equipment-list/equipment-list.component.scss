@@ -1,0 +1,19 @@
+.box-warp {
+  padding: 10px;
+}
+// 表格容器宽度
+.table-container {
+  width: 100%;
+}
+
+// 状态文字样式
+.status-text {
+  margin-left: 6px;
+}
+// 列表设施名称样式（模版样式）
+.device-name{
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

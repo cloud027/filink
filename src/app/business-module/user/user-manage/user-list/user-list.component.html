@@ -1,0 +1,74 @@
+<div class="table-wrapper">
+    <xc-table [dataSet]="_dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+</div>
+
+
+<ng-template #departmentTemp let-data="data">
+  <span class="width-style" title="{{data.department?.deptName}}">{{data.department?.deptName}}</span>
+</ng-template>
+
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.role?.roleName}}">{{data.role?.roleName}}</span>
+</ng-template>
+
+<ng-template #loginTypeTemp let-data="data">
+  <span *ngIf="data.loginType === loginTypeEnum.singleUser">{{language.singleUser}}</span>
+  <span *ngIf="data.loginType === loginTypeEnum.multiUser">{{language.multiUser}}</span>
+</ng-template>
+<!--推送方式模板-->
+<ng-template #pushTypeTemp let-data="data">
+    <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.mail)" class="margin-right10">{{language.mail}}</span>
+    <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.note)" class="margin-right10">{{language.note}}</span>
+    <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.app)" class="margin-right10">app</span>
+    <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.web)">web</span>
+</ng-template>
+
+<ng-template #unitNameSearch let-filterValue="filterValue">
+  <span class="unit-name hidden" (click)="showModal(filterValue)" [class.placeholder]="!selectUnitName&&!filterValue.filterValue"
+        [title]="selectUnitName">{{ (selectUnitName || filterValue.filterValue) || commonLanguage.clickSelect}}</span>
+</ng-template>
+
+<ng-template #importTemp>
+  <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <button nz-button><i nz-icon type="upload"></i><span>{{language.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>
+
+<ng-template #selectLogTemp>
+  <nz-radio-group [(ngModel)]="radioValue" nzName="radiogroup">
+    <label nz-radio nzValue="operation" [nzDisabled]="operationDis">{{language.operationLog}}</label>
+    <label nz-radio nzValue="security" [nzDisabled]="securityDis">{{language.securityLog}}</label>
+  </nz-radio-group>
+</ng-template>
+
+<ng-template #userStatusTemp let-data="data">
+  <nz-switch [ngModel]="data.userStatus=== userStatusEnum.enable"
+             [nzLoading]="data.clicked"
+             [nzControl]="true"
+             [nzDisabled]="data.isDisabled"
+             [appAccessPermission]="'01-1-5'"
+             (click)="clickSwitch(data)">
+  </nz-switch>
+  <span *ngIf="data.userStatus === userStatusEnum.disable" class="mr-l-15">{{language.disable}}</span>
+  <span *ngIf="data.userStatus === userStatusEnum.enable" class="mr-l-15">{{language.enable}}</span>
+</ng-template>
+
+<!-- 区域选择器 -->
+<xc-tree-area-selector
+  [nodeDisabled]="true"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+  [isHiddenButton]="true">
+</xc-tree-area-selector>
+
+<!-- 单位选择器 -->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

@@ -1,0 +1,14 @@
+@import "../../../../style-module/config.scss";
+$left-panel-width: 410px;
+
+//我的关注列表
+.my-attention-list-panel {
+  width: $left-panel-width;
+  border-top: 1px solid $border-color;
+  background-color: white;
+
+  .my-attention-list {
+    min-width: 180px;
+    min-height: 20px;
+  }
+}

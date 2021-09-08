@@ -1,0 +1,121 @@
+@import "../../../../style-module/config";
+.trouble-list{
+  position: relative;
+
+  .box-icon {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+    align-self: center;
+  }
+
+  .box-warp-trouble {
+    .content-warp{
+      width: 100%;
+      position: relative;
+      .select-trouble {
+        position: absolute;
+        min-width: 226px;
+
+        .select-box {
+          margin-left: 10px;
+        }
+      }
+    }
+    .red-icon{
+      color: $handle-undone-color;
+    }
+
+    .area-name {
+      height: 22px;
+      line-height: 22px;
+      padding: 0 11px;
+      width: 100%;
+    }
+  }
+
+  .trouble-flex{
+    display: flex;
+
+    .trouble-level{
+      margin-left: 5px;
+    }
+  }
+  .uncommit-color {
+    color: $handle-uncommit-color;
+  }
+
+  .commit-color {
+    color: $handle-commit-color;
+  }
+
+  .processing-color {
+    color: $handle-processing-color;
+  }
+
+  .done-color {
+    color: $handle-done-color;
+  }
+
+  .undone-color {
+    color: $handle-undone-color;
+  }
+
+  .status-text{
+    margin-left: 5px;
+  }
+}
+
+.one-text {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: top;
+  text-overflow:ellipsis;
+}
+
+.equipmentName-box{
+  margin-right: 6px;
+}
+
+.equipmentName-box:not(:last-child) > .status-text:after {
+  content: ',';
+}
+
+.width-style {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid $cutting-line;
+  height: 22px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  outline: none;
+  cursor: default;
+  &:hover{
+    border-color: $color;
+  }
+
+  &:disabled{
+    cursor: no-drop;
+    background-color: $button-delete-disable-color;
+    color: rgba(0,0,0,0.25);
+  }
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alarm-model {
+  cursor: pointer;
+  color: $menu-hover-color;
+}

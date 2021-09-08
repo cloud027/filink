@@ -1,0 +1,86 @@
+<nz-modal
+  nzWidth="80%"
+  *ngIf="equipmentVisible"
+  [nzTitle]="tableTitle"
+  [(nzVisible)]="equipmentVisible"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="equipmentVisible = false"
+>
+  <ng-template #modalContent>
+    <xc-table
+      #tableComponent
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="Confirm()">
+      {{ language.okText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="equipmentVisible = false">
+      {{ language.cancelText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">
+      {{ commonLanguage.cleanUp }}
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectEquipmentId" (ngModelChange)="onEquipmentChange($event, data)">
+    <label nz-radio [nzValue]="data.equipmentId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont ' + data.statusIconClass + ' ' + data.statusColorClass"></i>
+    <span
+      class="status-text"
+      title="{{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}"
+      [ngStyle]="data.rowStyle"
+    >
+      {{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span
+    class="status-text"
+    [ngStyle]="data.rowStyle"
+    title="{{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+  >
+    {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+  </span>
+</ng-template>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input
+    nz-input
+    type="text"
+    [placeholder]="language.picInfo.pleaseChoose"
+    [(ngModel)]="filterValue.filterName || filterDeviceName"
+    (click)="onShowFacility(filterValue)"
+  />
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component
+  *ngIf="facilityVisible"
+  [(facilityVisible)]="facilityVisible"
+  [multiple]="true"
+  [selectFacilityIds]="selectFacility"
+  title="{{ language.facilityList }}"
+  (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>

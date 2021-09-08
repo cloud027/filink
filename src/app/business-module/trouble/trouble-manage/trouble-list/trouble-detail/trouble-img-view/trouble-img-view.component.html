@@ -1,0 +1,10 @@
+<nz-card nzTitle="{{language.troublePic}}" class="common-card">
+  <nz-tabset class="image-tab" *ngIf="isNotData" [nzSelectedIndex]="0">
+    <div *ngFor="let tab of imageTabs">
+      <nz-tab [nzTitle]="tab.label" *ngIf="tab.imageList.length > 0">
+        <app-detail-img-view [transmitData]="tab.imageList"></app-detail-img-view>
+      </nz-tab>
+    </div>
+  </nz-tabset>
+  <div *ngIf="!isNotData">{{language.noPicturesYet}}</div>
+</nz-card>

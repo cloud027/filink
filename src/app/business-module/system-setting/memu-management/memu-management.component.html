@@ -1,0 +1,19 @@
+<!--菜单管理-->
+<div class="menu-list table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<ng-template #templateStatus let-data="data">
+  <nz-switch [ngModel]="data.templateStatus === templateStatusEnum.enable"
+             [nzDisabled]="data.templateStatus === templateStatusEnum.enable"
+             [nzLoading]="data.clicked"
+             [nzControl]="true"
+             appAccessPermission="04-1-2"
+             (click)="useTemplate(data)"></nz-switch>
+  <span *ngIf="data.templateStatus ===  templateStatusEnum.enable" class="space">{{language.systemSetting.selectEnable}}</span>
+  <span *ngIf="data.templateStatus ===  templateStatusEnum.disable" class="space">{{language.systemSetting.prohibit}}</span>
+</ng-template>

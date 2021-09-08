@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'digifacewide';
+  src: url('./digifaw.ttf');
+}
+
+.screen-tree {
+  width: 100%;
+  height: 100%;
+
+  .screen-item {
+    width: 206px;
+    height: 206px;
+    margin: 10px;
+    box-shadow: 2px 2px 5px #949494;
+
+    .item-img {
+      width: 206px;
+      height: 170px;
+      background: #092f45;
+
+      img {
+        margin-top: 10px;
+        width: 100%;
+        height: 90%;
+      }
+    }
+
+    .item-name {
+      display: flex;
+      line-height: 25px;
+
+      .edit {
+        flex: 1;
+        padding-left: 10px;
+
+        i {
+          font-size: 5px;
+          color: #268CCD;
+        }
+      }
+
+      .name {
+        flex: 6;
+        padding-top: 5px;
+
+      }
+
+      .edit-name {
+        flex: 6;
+
+        input {
+          border: none;
+        }
+      }
+
+
+    }
+  }
+}

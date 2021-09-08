@@ -1,0 +1,12 @@
+.box-warp {
+  padding: 10px;
+
+  .equip-info-ref {
+    display: flex;
+    align-items: center;
+    // 状态文字样式
+    .status-text {
+      margin-left: 6px;
+    }
+  }
+}

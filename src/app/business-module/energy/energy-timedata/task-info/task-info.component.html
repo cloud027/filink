@@ -1,0 +1,178 @@
+<nz-spin class="nodes-details-box" [nzSpinning]="pageLoading">
+  <!-- 策略详情 -->
+  <p class="nodes-details-title">{{ language.dataAcquisitionTaskDetails }}</p>
+  <div nz-row nzGutter="10" class="card-box">
+    <div nz-col nzSpan="12">
+      <nz-card class="card-list" style="height: 200px">
+        <div class="details-info">
+          <span class="title">{{ energyTaskCollectionInfo.strategyName }}</span>
+          <!-- 启用 -->
+          <span
+            class="status"
+            [ngClass]="
+              energyTaskCollectionInfo.strategyStatus === collectionTaskOpenClose.Disable
+                ? 'disable-status'
+                : ''
+            "
+          >
+            <i
+              class="iconfont fiLink-enable status-icon"
+              *ngIf="energyTaskCollectionInfo.strategyStatus === collectionTaskOpenClose.Enable"
+            ></i>
+            <i
+              class="iconfont fiLink-disable-o status-icon"
+              *ngIf="energyTaskCollectionInfo.strategyStatus === collectionTaskOpenClose.Disable"
+            ></i>
+            <span class="status-text">{{
+              energyTaskCollectionInfo.strategyStatus | translate: collectionTaskOpenClose:"energy"
+            }}</span>
+          </span>
+          <!-- 执行状态 -->
+          <span class="status exec-status">
+            <span>{{
+              energyTaskCollectionInfo.collectStatus
+                | translate: dataCollectionTaskStatus:"energy.collectionTaskStatusType"
+            }}</span>
+          </span>
+        </div>
+        <div class="time-box">
+          <!-- 创建时间 -->
+          <div class="details-info time-item create">
+            <span class="create-time">{{ language.creationTime }}:</span>
+            <span>{{ energyTaskCollectionInfo.createTime | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+          </div>
+          <!-- 更新时间 -->
+          <div class="details-info time-item create">
+            <span class="update-time">{{ language.updateTime }}:</span>
+            <span>{{ energyTaskCollectionInfo.updateTime | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+          </div>
+        </div>
+        <!-- 创建人 -->
+        <div class="details-info createuser-item">
+          <i
+            nz-icon
+            nzType="user"
+            nzTheme="outline"
+            class="iconfont create-user"
+            [nz-tooltip]="language.founder"
+          ></i>
+          <span>{{ energyTaskCollectionInfo.createUser }}</span>
+        </div>
+        <!-- 任务的时间范围 -->
+        <div class="details-info">
+          <i
+            nz-icon
+            nzType="clock-circle"
+            nzTheme="outline"
+            class="iconfont clock-circle"
+            [nz-tooltip]="language.picInfo.pleaseChooseTimeStatis"
+          ></i>
+          <span>{{ energyTaskCollectionInfo.effectivePeriodStart | date: "yyyy-MM-dd" }}</span
+          >~
+          <span>{{ energyTaskCollectionInfo.effectivePeriodEnd | date: "yyyy-MM-dd" }}</span>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-card class="card-item card-list right-container" style="height: 200px">
+        <!-- 采集周期: -->
+        <div class="item">
+          <span class="span-title">{{ language.acquisitionCycle }}:</span>
+          <span>{{
+            energyTaskCollectionInfo.execType
+              | translate: collectionTaskCycleEnum:languageEnum.energy
+          }}</span>
+        </div>
+        <!-- 采集时间 -->
+        <div class="item">
+          <span class="span-title">{{ language.collectionTime }}:</span>
+          <span>{{ energyTaskCollectionInfo.execTime | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+        </div>
+        <div class="remarks-box">
+          <span class="span-title">{{ language.nodesDetails.remarks }}:</span>
+          <span>{{ energyTaskCollectionInfo.remark }}</span>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-row class="basic-operation-box">
+    <div nz-col nzSpan="24">
+      <p class="title">{{ language.taskOperation }}</p>
+      <div class="operation-icon">
+        <div
+          class="edit"
+          [hidden]="energyTaskCollectionInfo.collectStatus === dataCollectionTaskStatus.completed"
+          [appAccessPermission]="'26-3-3'"
+          (click)="handleEdit()"
+        >
+          <i class="icon-fiLink iconfont fiLink-edit-facility"></i>
+          <span>{{ language.updateHandle }}</span>
+        </div>
+        <div class="delete" (click)="handleDelete()" [appAccessPermission]="'26-3-5'">
+          <i class="icon-fiLink iconfont fiLink-delete"></i>
+          <span>{{ language.deleteHandle }}</span>
+        </div>
+        <div
+          class="delete"
+          [appAccessPermission]="'26-3-6'"
+          [hidden]="energyTaskCollectionInfo.collectStatus === dataCollectionTaskStatus.completed"
+          (click)="enableOrDisableStrategy(OperationButtonEnum.enable)"
+        >
+          <i class="icon-fiLink iconfont fiLink-enable"></i>
+          <span>{{ language.Enable }}</span>
+        </div>
+        <div
+          class="delete"
+          [appAccessPermission]="'26-3-7'"
+          [hidden]="energyTaskCollectionInfo.collectStatus === dataCollectionTaskStatus.completed"
+          (click)="enableOrDisableStrategy(OperationButtonEnum.disable)"
+        >
+          <i class="icon-fiLink iconfont fiLink-disable-o"></i>
+          <span>{{ language.Disable }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 应用范围 -->
+  <div class="node-con-box">
+    <nz-card nzTitle="{{ language.scopeOfApplication }}">
+      <div class="equipment-tabs">
+        <nz-tabset>
+          <!-- 区域 -->
+          <nz-tab
+            *ngIf="areaIds && areaIds.length"
+            nzTitle="{{ language.tabConfig.areaList }}"
+            (nzClick)="onClickTab(1)"
+          >
+            <app-tab-areaor
+              [switchPageToTable]="SwitchPageToTable.details"
+              [filterIds]="areaIds"
+            ></app-tab-areaor>
+          </nz-tab>
+          <!--分组-->
+          <nz-tab
+            *ngIf="groupIds && groupIds.length"
+            nzTitle="{{ language.tabConfig.groupList }}"
+            (nzClick)="onClickTab(2)"
+          >
+            <app-group
+              [switchPageToTable]="SwitchPageToTable.details"
+              [filterIds]="groupIds"
+            ></app-group>
+          </nz-tab>
+          <!-- 设备 -->
+          <nz-tab
+            *ngIf="equipmentIds && equipmentIds.length"
+            nzTitle="{{ language.tabConfig.equipmentList }}"
+            (nzClick)="onClickTab(3)"
+          >
+            <app-equipment
+              [switchPageToTable]="SwitchPageToTable.details"
+              [filterIds]="equipmentIds"
+            ></app-equipment>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-card>
+  </div>
+</nz-spin>

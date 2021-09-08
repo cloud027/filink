@@ -1,0 +1,10 @@
+@import "../../../../style-module/config";
+.unfinished-alarm-box{
+  .status-temp{
+    margin-right: 5px;
+  }
+  .ref-color{
+    cursor: pointer;
+    color: $color;
+  }
+}

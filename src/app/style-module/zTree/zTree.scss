@@ -1,0 +1,97 @@
+.ztree.link-tree {
+
+  li span.button {
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    width: 21px;
+    height: 21px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 0 none;
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-image: url("assets/img/common-icon/zTree_metro_fipole.png");
+  }
+
+  li span.button.chk.checkbox_true_full {
+    background-position: -25px -3px;
+  }
+
+  li span.button.chk.checkbox_true_full_focus {
+    background-position: -25px -3px;
+  }
+
+  li span.button.chk.checkbox_true_part {
+    background-position: -25px -25px;
+  }
+
+  li span.button.chk.checkbox_true_part_focus {
+    background-position: -25px -25px;
+  }
+  li span.button.chk.checkbox_true_disable {
+    background-position: -25px -86px;
+  }
+  li span.button.chk.checkbox_false_disable {
+    background-position: -2px -86px;
+  }
+  li span.button.chk {
+    width: 18px;
+    height: 18px;
+    margin: 0 2px;
+    cursor: auto;
+  }
+
+  li span.button.chk.checkbox_false_full {
+    background-position: -3px -1px;
+  }
+
+  li span.button.chk.checkbox_false_full_focus {
+    background-position: -3px -1px;
+
+  }
+
+  span.button.chk.checkbox_false_part {
+    background-position: -3px -1px;
+
+  }
+
+  span.button.chk.checkbox_false_part_focus {
+    background-position: -3px -1px;
+
+  }
+
+  span.button.chk.radio_false_full, span.button.chk.radio_false_full_focus, span.button.chk.radio_false_part_focus ,span.button.chk.radio_false_part {
+    background-position: -46px -3px;
+  }
+
+  span.button.chk.radio_true_full, span.button.chk.radio_true_full_focus {
+    background-position: -67px -3px;
+  }
+  span.button.chk.radio_false_disable {
+    background-position: -46px -87px;
+  }
+}
+
+// 单独处理 tree-selector 组件的样式
+.ztree.link-tree.selector-table-tree {
+  li span.button.chk.checkbox_true_part {
+    background-position: -25px -3px;
+  }
+
+  li span.button.chk.checkbox_true_part_focus {
+    background-position: -25px -3px;
+  }
+
+  li span.button.chk.checkbox_false_disable {
+    background-position: -3px -86px;
+  }
+}
+
+.ztree span {
+  white-space: pre;
+  word-break: keep-all;
+}

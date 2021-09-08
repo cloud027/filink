@@ -1,0 +1,58 @@
+<div class="allocation-warp">
+  <div class="allocation-title">{{language.redeployInfo}}</div>
+  <nz-tabset nzSize="large" class="no-checkbox-table" [nzSelectedIndex] = "selectIndex">
+    <nz-tab nzTitle="{{language.eliminateWork}}">
+      <xc-table [dataSet]="eliminateData"
+                [pageBean]="eliminatePageBean"
+                [tableConfig]="eliminateTableConfig"
+                (pageChange)="eliminatePageChange($event)">
+      </xc-table>
+    </nz-tab>
+    <nz-tab nzTitle="{{language.trouble}}" *ngIf="troubleTableShow">
+      <xc-table [dataSet]="troubleData"
+                [pageBean]="troublePageBean"
+                [tableConfig]="troubleTableConfig"
+                (pageChange)="troublePageChange($event)">
+      </xc-table>
+    </nz-tab>
+  </nz-tabset>
+  <!--工单状态-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}" [ngStyle]="data.rowStyle">
+    <span [ngClass]="data.statusClass" class="alarm-left"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--设施类型-->
+  <ng-template #deviceTypeTemp let-data="data">
+    <i [ngClass]="data.deviceClass"></i>
+    <span class="alarm-left" [title]="data.deviceType | translate : deviceTypeEnum">{{data.deviceType | translate : deviceTypeEnum}}</span>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipmentTypeTemp let-data="data">
+    <i [ngClass]="data.equipClass"></i>
+    <span class="alarm-left" [title]="data.equipmentType | translate : equipmentTypeEnum">{{data.equipmentType | translate : equipmentTypeEnum}}</span>
+  </ng-template>
+</div>
+<!--  故障级别 -->
+<ng-template #troubleLevelTemp let-data="data">
+  <div class="alarm-flex">
+    <div class="box-icon" [ngStyle]="data.style"></div>
+    <span class="alarm-left">{{ data.troubleLevel | translate : alarmLevelEnum : languageEnum.alarm}} </span>
+  </div>
+</ng-template>
+<!--  处理状态  -->
+<ng-template #handleStatusTemp let-data="data">
+  <i class="iconfont" [ngClass]="data.handleStatusClass"></i>
+  <div class = 'status-display'>{{ data.handleStatus | translate: handleStatusEnum }}</div>
+</ng-template>
+<!--  故障设备  -->
+<ng-template #troubleEquipment let-data="data" >
+  <div class="one-text" [title]="data.equipmentName">
+      <span *ngFor="let equipment of data.equipmentTypeArr" class="equipment-name-box">
+        <i class="icon-fiLink iconfont" [ngClass]="equipment.picture"></i>
+        <span class="status-text">{{equipment.name}}</span>
+      </span>
+  </div>
+</ng-template>
+

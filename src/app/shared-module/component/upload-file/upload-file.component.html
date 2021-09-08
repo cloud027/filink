@@ -1,0 +1,5 @@
+<nz-upload [(nzFileList)]="fileList"
+           [nzRemove]="removeUpload"
+           [nzBeforeUpload]="beforeUpload">
+  <button [disabled]="uploadBtnDisabled" nz-button><i nz-icon nzType="upload"></i><span>{{language.uploadFile}}</span></button>
+</nz-upload>

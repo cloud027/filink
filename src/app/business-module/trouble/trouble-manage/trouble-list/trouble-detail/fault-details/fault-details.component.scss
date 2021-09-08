@@ -1,0 +1,116 @@
+@import "../../../../../../style-module/config";
+
+.fault-details{
+  height: 250px;
+  .gutter-row{
+    height: 100%;
+
+    .icon-fiLink {
+      vertical-align: top;
+    }
+    .icon-right{
+      margin-right: 5px;
+    }
+    .gutter-box {
+      background: $bg-c-w;
+      padding: 28px 16px;
+      height: 100%;
+      position: relative;
+
+      .item-height {
+        height: 26px;
+        line-height: 26px;
+
+        &.item-top {
+          margin-top: 5px;
+        }
+
+        &.trouble-type {
+          margin-top: 15px;
+        }
+
+        .label-title{
+          display: inline-block;
+          width: 130px;
+          color: $switch-bg-color;
+          vertical-align: top;
+        }
+
+        .one-text{
+          display: inline-block;
+          white-space: nowrap;
+          width: calc(100% - 131px);
+          overflow: hidden;
+          text-overflow:ellipsis;
+        }
+      }
+      .title{
+        display: flex;
+        .trouble-title{
+          display: inline-block;
+          font-size: 16px;
+          font-weight: 600;
+          margin-right: 15px;
+        }
+
+        .trouble-status {
+          display: inline-block;
+          height: 22px;
+          line-height: 22px;
+          color: $button-danger-color;
+          padding: 0 5px;
+          margin: 2px 0 0 5px;
+          border-radius: 2px;
+          font-size: 12px;
+          .icon-fiLink{
+            margin-right: 0;
+            color: $button-danger-color;
+            font-size: 14px;
+          }
+        }
+      }
+
+      .happen-time {
+        color: $switch-bg-color;
+        margin-top: 5px;
+      }
+
+      .uint-box{
+        margin-top: 20px;
+      }
+
+      .equipment-warp {
+        margin-top: 10px;
+      }
+
+      .fiLink-user-menu{
+        color: $handle-processing-color;
+      }
+
+      .trouble-source {
+        background: $equipment-business-free-bg;
+      }
+      .one-text {
+        display: inline-block;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow:ellipsis;
+      }
+
+      .equipment-box{
+        margin-right: 6px;
+      }
+
+      .equipment-box:not(:last-child) > .status-text:after {
+        content: ',';
+      }
+      .uint-box> .one-text {
+        width: 100%;
+      }
+    }
+    .gutter-box.mapBox {
+      padding: 10px;
+    }
+  }
+}

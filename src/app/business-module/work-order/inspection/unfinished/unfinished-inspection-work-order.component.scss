@@ -1,0 +1,42 @@
+.order-box-warp{
+  .link-button-order{
+    margin-right: 10px
+  }
+  .ng-star-inserted ul.breadcrumbs {
+    display: flex;
+    list-style: none;
+    margin: 30px 30px 30px 30px;
+  }
+
+  .area-name {
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 11px;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: underline
+  }
+
+  a:hover {
+    text-decoration: none
+  }
+
+  .global-search-item-count {
+    position: absolute;
+    right: 16px;
+  }
+
+  .status-temp{
+    margin-right: 5px;
+  }
+
+  .number-inspect{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+

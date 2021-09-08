@@ -1,0 +1,15 @@
+<div class="alarm-correlation-warp">
+  <div class="table-common-title"><span>{{language.alarmCorrelationRules}}</span></div>
+  <div class="correlation-tabs">
+    <nz-tabset [nzSelectedIndex]="tabIndex">
+      <!--相关性告警规则-->
+      <nz-tab [nzTitle]="language.alarmCorrelationRule" *ngIf="isStaticRole">
+        <app-correlation-rule></app-correlation-rule>
+      </nz-tab>
+      <!--动态相关性告警规则-->
+      <nz-tab [nzTitle]="language.dynamicCorrelationRule" *ngIf="isDynamicRole">
+        <app-dynamic-correlation-rule></app-dynamic-correlation-rule>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<!-- 表格查看弹出框 -->
+<nz-modal
+  [nzWidth]="'70%'"
+  *ngIf="visible"
+  [(nzVisible)]="visible"
+  [nzTitle]="tableCheckModalTitle"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="visible = false"
+>
+  <ng-template #modalContent>
+    <xc-table
+      #tableComponent
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="visible = false">
+      {{ language.okText }}
+    </button>
+  </ng-template>
+</nz-modal>
+
+<xc-table
+  *ngIf="!visible"
+  #tableComponent
+  [dataSet]="dataSet"
+  [pageBean]="pageBean"
+  [tableConfig]="tableConfig"
+  (pageChange)="pageChange($event)"
+>
+</xc-table>
+
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i
+      [class]="
+        'icon-fiLink-l iconfont ' +
+        data['deviceStatusIconClass'] +
+        ' ' +
+        data['deviceStatusColorClass']
+      "
+    ></i>
+    <span
+      [ngStyle]="data.rowStyle"
+      class="status-text"
+      title="{{ data.deviceStatus | translate: deviceStatusEnum:'facility.config' }}"
+    >
+      {{ data.deviceStatus | translate: deviceStatusEnum:"facility.config" }}</span
+    >
+  </div>
+</ng-template>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text" [title]="data['deviceType']">{{
+      data["deviceType"] | translate: deviceTypeCode
+    }}</span>
+  </div>
+</ng-template>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont ' + data.statusIconClass + ' ' + data.statusColorClass"></i>
+    <span
+      class="status-text"
+      title="{{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}"
+      [ngStyle]="data.rowStyle"
+    >
+      {{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}
+    </span>
+  </div>
+</ng-template>
+
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span
+    class="status-text"
+    [ngStyle]="data.rowStyle"
+    title="{{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+  >
+    {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+  </span>
+</ng-template>
+
+<!--设备中的设施类型模板 -->
+<ng-template #equipmentDeviceTypeTemp let-data="data">
+  <i [ngClass]="data['deviceIconClass']"></i>
+  <span [ngStyle]="data.rowStyle" class="status-text" [title]="data['deviceType']">{{
+    data["deviceType"] | translate: deviceTypeEnum
+  }}</span>
+</ng-template>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input
+    nz-input
+    type="text"
+    [placeholder]="language.picInfo.pleaseChoose"
+    [(ngModel)]="filterDeviceName"
+    (click)="onShowFacility(filterValue)"
+  />
+</ng-template>
+<!--设施过滤选择器-->
+<facility-list-selector-component
+  *ngIf="facilityVisible"
+  [(facilityVisible)]="facilityVisible"
+  [multiple]="true"
+  [selectFacilityIds]="selectFacility"
+  title="{{ language.collectDeviceId }}"
+  (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>

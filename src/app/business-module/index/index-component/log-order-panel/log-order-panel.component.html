@@ -1,0 +1,40 @@
+<div class="log-order-panel-container">
+  <!--  设备日志  5-->
+  <div class="facility-log"  [appTenantPermission]="'1-2-3-1'">
+    <div class="facility-log-title">
+      <div class="facility-log-title-text">{{logTitleName}}</div>
+      <div class="facility-log-title-more" (click)="goToFacilityLogList()">{{commonLanguage.more}}>></div>
+    </div>
+    <div class="facility-log-table" *ngIf="facilityPowerCode.includes(powerCode.equipmentLog) && this.deviceLogRole">
+      <app-facility-log-table [facilityId]="facilityId"
+      ></app-facility-log-table>
+    </div>
+  </div>
+
+  <!--工单表格-->
+  <div class="facility-log" *ngIf="facilityPowerCode.includes(powerCode.workOrder) && this.workOrderRole">
+    <app-index-facility-order-list #facilityOrderList
+                                   [facilityId]="facilityId"
+                                   [facilityName]="facilityName"
+                                   [idData]="idData"
+                                   [isShowStatistics]="true"
+                                   [isShowMore]="false"
+                                   [isSelect]="true"
+                                   [isStyleSwitch]="true">
+    </app-index-facility-order-list>
+  </div>
+
+  <!--  操作记录 7-->
+  <div class="facility-log" *ngIf="facilityPowerCode.includes(powerCode.operationLog)&&this.operationLogRole" [appTenantPermission]="'1-2-3-4'">
+    <div class="facility-log-title">
+      <div class="facility-log-title-text">{{indexLanguage.operationRecordTitle}}</div>
+      <div class="facility-log-title-more" (click)="navigatorTo('business/system/log')">{{commonLanguage.more}}>></div>
+    </div>
+    <div class="facility-log-table">
+      <app-operation-record [facilityId]="facilityId"
+      ></app-operation-record>
+    </div>
+  </div>
+</div>
+
+

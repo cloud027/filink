@@ -1,0 +1,26 @@
+@import '../../../../style-module/config';
+.logBox {
+    padding: 10px;
+
+  .select-log{
+    width: 150px;
+  }
+  .input-log-top{
+    width: 120px;
+  }
+  .log-statistical-btn{
+    width:120px;
+  }
+
+  .chart-log-column{
+    flex: 1;
+    background-color: $eCharts-bg-color;
+    padding: 10px;
+  }
+    .barChart{
+      margin-top: 10px;
+      display: flex;
+    }
+    
+}
+  

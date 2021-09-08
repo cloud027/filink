@@ -1,0 +1,17 @@
+<!--步骤条-->
+<div class="steps-box">
+  <div class="steps-list"
+    *ngFor="let item of setData;let idx = index"
+    [ngClass]="item.activeClass">
+    <div
+      class="finish-style"
+      *ngIf="isActiveStepsCount > idx + 1" >
+      <i class="icon-fiLink fiLink-pass iconfont icon-img" (click)="handChangeSteps(item)"></i>
+    </div>
+    <div class="steps-number"
+         *ngIf="isActiveStepsCount <= idx + 1"
+         (click)="handChangeSteps(item)">{{item.number}}</div>
+    <div class="steps-title" (click)="handChangeSteps(item)">{{item.title}}</div>
+  </div>
+</div>
+

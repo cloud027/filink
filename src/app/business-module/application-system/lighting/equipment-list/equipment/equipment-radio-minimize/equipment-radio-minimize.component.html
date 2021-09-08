@@ -1,0 +1,12 @@
+<!-- 一键呼叫最小化 -->
+<div class="minimize" [ngClass]="{'packUp': shrinkage}" *ngIf="minimize">
+  <a class="shrinkage" (click)="shrinkage = !shrinkage">
+    <i nz-icon nzType="caret-left" nzTheme="outline" *ngIf="shrinkage;else packUp"></i>
+    <ng-template #packUp>
+      <i nz-icon nzType="caret-right" nzTheme="outline"></i>
+    </ng-template>
+  </a>
+  <div class="device-name">{{radioName}}</div>
+  <div style="height: 17px"></div>
+  <div class="stop-call" (click)="stop()">停止广播</div>
+</div>

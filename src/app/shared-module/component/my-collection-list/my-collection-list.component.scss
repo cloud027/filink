@@ -1,0 +1,86 @@
+@import "../../../style-module/config";
+//我的关注设施设备列表样式
+.facility-list-container {
+  background-color: white;
+  $text-margin: 0 5px;
+
+  .facility-table {
+    padding: 5px 10px 10px 10px;
+  }
+
+  .left-panel-tabs {
+    display: flex;
+    background-color: $bg-c-w;
+    margin-bottom: -5px;
+    padding: 5px 10px 0 0;
+    .click-area {
+      flex: 1;
+      display: flex;
+      .segmentation {
+        font-size: 12px;
+        margin: 4px 5px;
+        color: #cccccc;
+        display: inline-block;
+      }
+
+      .left-panel-border {
+        border-right: 1px solid $border-color;
+      }
+
+      .left-panel-tab {
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+
+        .icon-type {
+          width: 20px;
+          height: 20px;
+          float: left;
+          margin-left: 20px;
+          color: $index-card-title-color;
+        }
+
+        .text-content {
+          cursor: pointer;
+          float: left;
+          width: 70px;
+        }
+      }
+    }
+  }
+
+  .facility-list-title {
+    display: flex;
+    padding: 5px;
+    height: 30px;
+    align-items: center;
+
+    .text {
+      margin: $text-margin;
+      color: $index-card-title-color;
+      flex: 1;
+    }
+
+    .facility-list-title-more {
+      cursor: pointer;
+      color: $index-card-more;
+      margin: 0 5px;
+      font-size: 12px;
+    }
+
+    .batch-handle-button {
+      margin-left: 125px;
+      width: 80px;
+    }
+  }
+  .search-style {
+    margin-top: 5px;
+  }
+}
+
+//tab切换表样式
+.tab-selected {
+  color: $color;
+  font-weight: bold;
+}
+

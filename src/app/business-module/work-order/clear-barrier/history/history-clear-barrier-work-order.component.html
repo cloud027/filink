@@ -1,0 +1,64 @@
+<div class="order-box-warp bg-c-w">
+  <div class="order-warp" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <div class="statistics-item-title">{{workOrderLanguage.errorReason}}</div>
+        <div class="statistics-item-chart">
+          <div *ngIf="errorReasonStatisticsChartType === chartType.chart" echarts [options]="ringChartOption" class="pie-chart"></div>
+          <div *ngIf="errorReasonStatisticsChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <div class="statistics-item-title">{{workOrderLanguage.processingScheme}}</div>
+        <div class="statistics-item-chart">
+          <div *ngIf="processingSchemeStatisticsChartType === chartType.chart" echarts [options]="pieChartOption" class="pie-chart"></div>
+          <div *ngIf="processingSchemeStatisticsChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+    <!--第三列-->
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <div class="statistics-item-title">{{workOrderLanguage.facilityType}}</div>
+        <div class="statistics-item-chart">
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.chart" echarts [options]="barChartOption" class="demo-chart chart"></div>
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+    <!--第四列-->
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <div class="statistics-item-title">{{workOrderLanguage.status}}</div>
+        <div class="statistics-item-chart">
+          <div class="circle-container" *ngIf="statusStatisticsChartType === chartType.chart">
+            <div class="circle">
+              <canvas id="canvas_completed" width="{{canvasLength}}" height="{{canvasLength}}"></canvas>
+              <div class="text">
+                <div class="title">{{workOrderLanguage.completed}}</div>
+                <div class="number">{{completedPercent}}</div>
+              </div>
+            </div>
+            <div class="circle">
+              <canvas id="canvas_singleBack" width="{{canvasLength}}" height="{{canvasLength}}"></canvas>
+              <div class="text">
+                <div class="title">{{workOrderLanguage.singleBack}}</div>
+                <div class="number">{{singleBackPercent}}</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="statusStatisticsChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 表格部分 -->
+  <div class="table-container bg-c-w">
+    <app-history-clear-barrier-work-order-table></app-history-clear-barrier-work-order-table>
+  </div>
+</div>
+

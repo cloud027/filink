@@ -1,0 +1,40 @@
+<div class="team-management">
+  <div class="table-common-title">
+    <span>{{scheduleLanguage.teamManagement}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!--班组成员选择模板-->
+<ng-template #teamMemberTpl let-filterValue="filterValue">
+  <span class="dept-name-select hidden"
+        (click)="showTeamMemberModal(filterValue)"
+        [class.placeholder]="!filterValue.filterName"
+        [title]="filterValue.filterName || ''">{{(filterValue.filterName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--班组成员选择器-->
+<app-team-members *ngIf="isShowPersonModal"
+                  [(isVisible)]="isShowPersonModal"
+                  [selectMemberList]="selectMemberList"
+                  (handleOkEvent)="handlePersonOk($event)">
+</app-team-members>
+
+<!--单位模板-->
+<ng-template #unitNameSearch let-filterValue="filterValue">
+  <span class="dept-name-select hidden" (click)="showModal(filterValue, 'deptCode')" [class.placeholder]="!filterValue.filterName"
+        [title]="filterValue.filterName || ''">{{(filterValue.filterName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+
+<!--班组成员列表中责任单位选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event,true)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

@@ -1,0 +1,42 @@
+<!-- 新增销障工单 派单销障-->
+<nz-modal [(nzVisible)]="isShowModal"
+          [nzWidth]="540"
+          [nzMaskClosable]="false"
+          [nzTitle]="setModalTitle"
+          [nzContent]="setModalContent"
+          [nzFooter]="editModalFooter"
+          (nzOnCancel)="setHandleCancel()">
+  <ng-template #setModalTitle>
+    {{modalTitle}}
+  </ng-template>
+  <ng-template #setModalContent>
+    <xc-form class="alarm-work-order" [column]="tableColumnSet" (formInstance)="formInstanceSet($event)" class="form-column-width"></xc-form>
+  </ng-template>
+  <ng-template #editModalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="setHandle()" [nzLoading]="isLoading" [disabled]="!isOrderDis">{{language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="setHandleCancel()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+<!-- 责任单位 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div>
+    <span class="area-name" [title]="deptName">{{deptName}}</span>
+    <button type="button" class="open-button"
+            (click)="showUnitSelectorModal()"><i
+      class="icon-fiLink fiLink-search-index iconfont" ></i></button>
+  </div>
+</ng-template>
+<!--单位选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="unitSelectVisible"
+  [treeSelectorConfig]="unitSelectorConfig"
+  [canClear]="false"
+  (selectDataChange)="unitSelectChange($event)"
+>
+</xc-tree-area-selector>
+<!--期望完工时间-->
+<ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker [nzDisabledDate]="disabledEndDate"  nzShowTime formControlName="expectedCompletedTime"></nz-date-picker>
+  </form>
+</ng-template>

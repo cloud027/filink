@@ -1,0 +1,31 @@
+<div class="search">
+  <input type="text" nz-input="" [placeholder]="searchPlaceholder" [(ngModel)]="templateName">
+  <button type="button" class="open-button" (click)="search()">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i>
+  </button>
+</div>
+<div class="template-list">
+  <ul>
+    <li *ngFor="let item of templateList">
+      <div class="template-title"
+           [title]="item.name"
+           [ngClass]="{'tem-active': item.id === selectedTemplate.id}"
+           (click)="selectTemplate(item)">
+        {{item.name}}</div>
+      <div class="template-icon" [ngClass]="{'tem-active': item.id === selectedTemplate.id}">
+        <!--修改-->
+        <i class="icon-fiLink iconfont fiLink-edit"
+           (click)="templateModify(item)"
+           *ngIf="modifyShow"></i>
+        <!--删除-->
+        <i class="icon-fiLink iconfont fiLink-delete red-icon"
+           (click)="templateDelete(item)"
+           [ngClass]="{'icon-fiLink-active': !modifyShow}"></i>
+      </div>
+    </li>
+  </ul>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{language.TemplateDelete}}" (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()">
+  <p>{{language.DeleteTemplate}}</p>
+</nz-modal>

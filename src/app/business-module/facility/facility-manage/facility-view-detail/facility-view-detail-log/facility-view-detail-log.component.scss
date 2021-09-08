@@ -1,0 +1,35 @@
+@import 'src/app/style-module/config';
+.card {
+  position: relative;
+  width: 100%;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.card-right {
+  position: relative;
+  width: 100%;
+}
+
+.one-card {
+  position: relative;
+  width: 100%;
+}
+
+.more {
+  cursor: pointer;
+  color: $color;
+}
+
+.result-container {
+  display: flex;
+
+  i {
+    align-self: center
+  }
+
+  span {
+    margin-left: 10px;
+    line-height: 24px
+  }
+}

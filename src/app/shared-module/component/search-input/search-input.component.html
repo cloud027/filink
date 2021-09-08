@@ -1,0 +1,23 @@
+
+<div class="example-input">
+  <nz-input-group nzSearch  [nzSuffix]="suffixIcon">
+    <input
+      #searchInput
+      [placeholder]="language.inputPlaceholder"
+      nz-input
+      [(ngModel)]="searchValue"
+      [nzAutocomplete]="auto"
+      (keydown)="handleKeyDown($event)"
+      [ngStyle]="inputStyle"
+    />
+  </nz-input-group>
+  <ng-template #suffixIcon>
+      <i class="search-icon" nz-icon type="search" (click)="inputClick()"></i>
+  </ng-template>
+  <nz-autocomplete #auto>
+    <nz-auto-option [ngStyle]="itemStyle" (mousedown)="optionChange($event,option[selectInfo.value],option[selectInfo.label])" *ngFor="let option of selectInfo.data"
+                    [nzLabel]="option[selectInfo.label]" [nzValue]="option[selectInfo.value]">
+      {{ option[selectInfo.label]}}
+    </nz-auto-option>
+  </nz-autocomplete>
+</div>

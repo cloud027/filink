@@ -1,0 +1,116 @@
+<div class="batch-coding-container">
+  <div>
+    <span class="batch-coding-title">
+      {{language.batchCoding}}
+    </span>
+  </div>
+  <div class="batch-coding-content">
+    <!--步骤条组件-->
+    <div class="xc-steps">
+      <app-xc-steps
+              [isActiveStepsCount]="isActiveSteps"
+              [setData]="setData">
+      </app-xc-steps>
+    </div>
+    <div class="assembly">
+      <!--第一步-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+        <nz-tabset>
+          <!--循环获取设施类型tab页-->
+          <nz-tab  *ngFor="let tab of deviceOrEquipmentList;let index = index" nzTitle="{{tab.typeName}}" (nzClick)="changeTab(index)">
+            <div class="assetType-table">
+              <ng-template nz-tab>
+                <xc-table [tableConfig]="tableConfig"
+                          [dataSet]="dataSet"
+                          [selectedData]="selectData"
+                          [pageBean]="pageBean"
+                          (pageChange)="pageChange($event)">
+                </xc-table>
+              </ng-template>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+      <!-- 第二步-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+        <div class="facility-or-equipment-table">
+          <xc-table [tableConfig]="facilityOrEquipmentTableConfig"
+                    [dataSet]="facilityOrEquipmentDataSet"
+                    [pageBean]="facilityOrEquipmentPageBean"
+                    (pageChange)="secondPageChange($event)">
+          </xc-table>
+        </div>
+      </div>
+      <!--按钮-->
+      <div class="coding-btn">
+        <!--上一步-->
+        <button nz-button nzType="primary" class="link-button next-step"
+                (click)="handPrevSteps(isActiveSteps)"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+          {{commonLanguage.back}}
+        </button>
+        <!--下一步-->
+        <button nz-button nzType="primary" class="link-button next-step"
+                (click)="handNextSteps(isActiveSteps)"
+                [disabled]="nextButtonDisable"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+          {{commonLanguage.nextStep}}
+        </button>
+        <!--确定-->
+        <button nz-button nzType="primary" class="link-button ok-step"
+                [nzLoading]="isSaveLoading"
+                (click)="handStepsSubmit()"
+                [disabled]="!selectDeviceOrEquipmentInformation.length"
+                *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+          {{commonLanguage.okText}}
+        </button>
+        <!--取消-->
+        <button class="link-button cancel-step"
+                (click)="handCancelSteps()"
+                nz-button nzType="danger">
+          {{commonLanguage.cancel}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--启用状态模板-->
+<ng-template #enableStatus let-data="data">
+  <nz-switch [appAccessPermission] = "data.buttonDisabled ? '03-12-7' : '03-12-6'"
+          (click)="switchChange(data)"
+          [nzControl]="true"
+          [nzLoading]="data.switchLoading"
+          [ngModel]="data.buttonDisabled"></nz-switch>
+  {{data.buttonDisabled ? language.codingStandard.enable : language.codingStandard.disable}}
+</ng-template>
+
+<!--设施/设备类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level" *ngIf="pageType === '1'">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}">
+      {{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}
+    </span>
+  </div>
+  <div class="area-level" *ngIf="pageType === '2'">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.equipmentType | translate : equipmentTypeEnum: 'facility'}}">
+      {{data.equipmentType | translate : equipmentTypeEnum: 'facility'}}
+    </span>
+  </div>
+</ng-template>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}"
+          [ngStyle]="data.rowStyle">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>

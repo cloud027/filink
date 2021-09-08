@@ -1,0 +1,24 @@
+@import "../../../../style-module/config";
+
+.security-button {
+  display: flex;
+  justify-content: center;
+
+  .disabled-btn {
+    width: 90px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .icon-fiLink {
+    color: $button-danger-hover-color;
+  }
+
+  .menu-text {
+    color: $button-danger-hover-color;
+
+    .icon-fiLink {
+      margin-right: 5px;
+    }
+  }
+}

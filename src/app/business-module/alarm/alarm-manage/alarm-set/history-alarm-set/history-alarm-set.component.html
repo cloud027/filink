@@ -1,0 +1,14 @@
+<div class="alarm-detail">
+  <div>
+    <span class="page-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div>
+      <button class="link-button save-btn" nz-button nzType="primary" [nzLoading]="isLoading"
+              appAccessPermission="02-3-2" (click)="submit()" [disabled]="!isSubmit">{{language.save}}</button>
+    </div>
+  </div>
+</div>

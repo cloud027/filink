@@ -1,0 +1,186 @@
+@import "../config";
+// 表格删除确认框 (所有确认框通用)
+.ant-modal-confirm-btns {
+  button {
+    width: 90px;
+  }
+
+  button:nth-of-type(1) {
+    color: $bg-c-w;
+    background-color: $color;
+    border-color: $color;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
+    &:hover {
+      color: $bg-c-w;
+      background-color: $button-hover-color;
+      border-color: $button-hover-color;
+    }
+  }
+}
+
+// 自定义创建modal样式
+.custom-create-modal {
+  .ant-modal-footer {
+    button {
+      width: 90px;
+    }
+
+    button:nth-of-type(1) {
+      color: $bg-c-w;
+      background-color: $color;
+      border-color: $color;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
+      &:hover, &:focus {
+        color: $bg-c-w;
+        background-color: $button-hover-color;
+        border-color: $button-hover-color;
+      }
+    }
+
+    button[disabled] {
+      color: rgba(0, 0, 0, 0.25) !important;
+      background-color: #f5f5f5 !important;
+      border-color: #d9d9d9 !important;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.ant-modal-close:focus, .ant-modal-close:hover {
+  color: rgba(0, 0, 0, 0.75);
+  text-decoration: none;
+  outline: none;
+}
+
+// 地图选择器下面的
+.map-selector-position {
+  #cur_city_name {
+    width: 58px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+  }
+
+  .ui_city_change_top .ui_city_change_inner i, .ui_city_change_bottom .ui_city_change_inner i {
+    width: 8px;
+    height: 6px;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left: 5px;
+    -webkit-transition: all ease-in-out .15s;
+    transition: all ease-in-out .15s;
+  }
+}
+
+.alarm-work-order {
+  .ant-calendar-picker {
+    width: 300px !important;
+  }
+
+  .ant-calendar {
+    width: 300px;
+  }
+}
+
+.ant-modal-title {
+  font-size: 16px;
+  color: $title-color;
+  font-weight: bold;
+
+}
+
+.ant-modal-body {
+  padding: 20px 25px 40px;
+}
+
+.ant-modal-header {
+  padding: 9px 25px
+}
+
+.ant-modal-footer {
+  padding: 10px 20px 15px;
+}
+.ant-modal-close-x {
+  height: 40px;
+  line-height: 40px;
+}
+
+.ant-modal-close-icon {
+  color: $color;
+}
+
+.alarm-template-table {
+  .ant-modal-body {
+    padding: 0 5px;
+  }
+  .table-top-button {
+    padding: 8px 0 8px;
+  }
+}
+
+.force-change-password {
+  .ant-modal-body {
+    padding: 20px 25px;
+  }
+}
+
+.license-verification {
+  .ant-modal {
+    top: 203px;
+    left: 130px;
+    padding-bottom: 0;
+  }
+  .ant-modal-header {
+    border-bottom: 0;
+  }
+  .ant-modal-content {
+    width: 450px;
+  }
+  .ant-modal-footer {
+    border-top: 0;
+  }
+  .ant-modal-body {
+    padding: 10px 25px;
+    line-height: 1.5;
+  }
+  .ant-modal-title {
+    font-size: 14px;
+    color: #999;
+    font-weight: normal;
+  }
+}
+
+.ant-modal-confirm-body .ant-modal-confirm-title {
+  display: block;
+  overflow: hidden;
+  color: $title-color;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.ant-modal-equipment {
+  .ant-modal-body{
+    padding: 0;
+  }
+
+}
+
+.custom-duplicate-name-modal{
+.custom-create-modal{
+  border-bottom:none;
+}
+  .ant-modal-footer{
+  border-top: none;
+  }
+  .ant-modal-body{
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}

@@ -1,0 +1,88 @@
+<nz-modal *ngIf="isShowRefFault"
+          [(nzVisible)]="isShowRefFault"
+          [nzWidth]="1050"
+          [nzTitle]="workOrderLanguage.relevancyFault"
+          [nzContent]="alarmTemplate"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #alarmTemplate>
+    <div nz-row nzGutter="60" class="alarm-box">
+      <!--标题部分-->
+      <div nz-col class="alarm-box-item column-title" nzSpan="8">
+        <div class="fault-head">
+          <span class="title-tag fault-title" [title]="modalData.troubleCode">{{modalData.troubleCode}}</span>
+          <span class="title-tag fault-status" [ngClass]="modalData.handleStatus"><i class="iconfont icon-span" [ngClass]="modalData.handleStatusName"></i>{{inspectionLanguage[modalData.handleStatus]}}</span>
+          <span class="title-tag fault-level" [ngClass]="modalData.troubleLevelClass">{{modalData.troubleLevelName}}</span>
+        </div>
+        <div class="clear-fault"></div>
+        <!--发生时间-->
+        <div class="happen-time line-heights">
+          <span>{{workOrderLanguage.happenTime}}：</span><span>{{modalData.happenTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <!--处置时间-->
+        <div class="happen-time line-heights">
+          <span>{{workOrderLanguage.handlingTime}}：</span><span>{{modalData.handleTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <!--责任人-->
+        <div class="handel-unit speed line-heights">
+          <i nz-tooltip [nzTitle]="inspectionLanguage.responsible" class="iconfont icon-fiLink fiLink-user-menu"></i>{{modalData.assignUserName}}
+        </div>
+        <!--单位-->
+        <div class="handel-unit line-heights">
+          <i nz-tooltip [nzTitle]="inspectionLanguage.responsibleUnit" class="icon-fiLink iconfont fiLink-departments"></i>{{modalData.assignDeptName}}
+        </div>
+      </div>
+      <!--第二部分-->
+      <div nz-col class="alarm-box-item column-area" nzSpan="8">
+        <!--  设施  -->
+        <div class="cate-margin">
+          <span class="label-text obj-width">{{workOrderLanguage.faultDevice}}：</span>
+          <span class="value-text hidden" [title]="modalData.deviceName"><i class="iconfont icon-span" [ngClass]="modalData.deviceTypeClass"></i>{{modalData.deviceName}}</span>
+        </div>
+        <!--设备-->
+        <div class="cate-margin equip">
+          <span class="label-text obj-width">{{workOrderLanguage.faultEquipment}}：</span>
+          <span class="equip-type value-text hidden" [title]="modalData.equipmentTypeNames">
+            <span *ngFor="let equipment of modalData.equipment">
+              <i nz-tooltip class="iconfont icon-fiLink icon-span" [nzTitle]="equipment.equipmentName" [ngClass]="equipment.equipmentTypeClass"></i>{{equipment.equipmentName}}
+            </span>
+          </span>
+        </div>
+        <!--故障类型-->
+        <div class="cate-margin">
+          <span class="label-text obj-width">{{workOrderLanguage.faultType}}：</span><span class="value-text">{{modalData.troubleTypeName}}</span>
+        </div>
+        <!--故障来源-->
+        <div class="cate-margin">
+          <span class="label-text obj-width">{{workOrderLanguage.faultSource}}：</span><span class="value-text">{{modalData.troubleSource}}</span>
+        </div>
+        <!--填报人-->
+        <div class="cate-margin">
+          <span class="label-text obj-width">{{workOrderLanguage.informant}}：</span><span class="value-text">{{modalData.reportUserName}}</span>
+        </div>
+      </div>
+      <!--第三部分-->
+      <div nz-col class="alarm-box-item column-time" nzSpan="8">
+        <!--当前处置节点-->
+        <div class="fault-time alarm-left">
+          <span class="label-text">{{workOrderLanguage.handlingNode}}：</span>
+          <span class="value-text hidden" [title]="modalData.currentHandleProgress">{{modalData.currentHandleProgress}}</span>
+        </div>
+        <!--备注-->
+        <div class="fault-time alarm-left">
+          <span class="label-text">{{workOrderLanguage.remark}}：</span>
+          <span class="value-text hidden" [title]="modalData.troubleRemark">{{modalData.troubleRemark}}</span>
+        </div>
+        <!--故障描述-->
+        <div class="fault-time alarm-left">
+          <span class="label-text">{{workOrderLanguage.faultDesc}}：</span>
+          <span class="value-text hidden" [title]="modalData.troubleDescribe">{{modalData.troubleDescribe}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{inspectionLanguage.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

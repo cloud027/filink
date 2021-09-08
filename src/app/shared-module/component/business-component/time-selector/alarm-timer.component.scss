@@ -1,0 +1,9 @@
+.timer-selector {
+  span {
+    padding: 0 10px;
+    cursor: pointer!important;
+  }
+  .active {
+    color: #36cfc9;
+  }
+}

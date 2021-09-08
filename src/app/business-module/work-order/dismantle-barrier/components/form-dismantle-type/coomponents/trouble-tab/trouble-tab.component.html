@@ -1,0 +1,76 @@
+<xc-table
+  #table
+  [dataSet]="dataSet"
+  [pageBean]="pageBean"
+  [tableConfig]="tableConfig"
+  (pageChange)="pageChange($event)"
+>
+</xc-table>
+<!--单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group
+    [(ngModel)]="selectedTroubldId"
+    (ngModelChange)="selectedAlarmChange($event, data)"
+  >
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--  处理状态  -->
+<ng-template #handleStatusTemp let-data="data">
+  <i class="iconfont" [ngClass]="data.handleStatusClass"></i>
+  <span class="status-text">{{ data.handleStatusName }}</span>
+</ng-template>
+<!--  故障级别 -->
+<ng-template #troubleLevelTemp let-data="data">
+  <div class="trouble-flex">
+    <div class="box-icon" [ngStyle]="data.style"></div>
+    <span class="trouble-level">{{ data.troubleLevelName }} </span>
+  </div>
+</ng-template>
+<!--设施类型-->
+<ng-template #troubleDeviceType let-data="data">
+  <i [ngClass]="data.deviceTypeClass"></i>
+  <span class="status-text" [title]="data.deviceTypeName">{{ data.deviceTypeName }}</span>
+</ng-template>
+<!-- 故障设施 -->
+<ng-template #facilityTemp let-filterValue="filterValue">
+  <app-alarm-object
+    [alarmObjectConfig]="troubleFacilityConfig"
+    [filterValue]="filterValue"
+    [isRadio]="isRadio"
+    [isTrouble]="isTrouble"
+    [title]="language.troubleFacility"
+  ></app-alarm-object>
+</ng-template>
+<!-- 故障设备 -->
+<ng-template #equipmentTemp let-filterValue="filterValue">
+  <input
+    type="text"
+    nz-input
+    placeholder="{{ language.clickSelect }}"
+    readonly
+    (click)="openEquipmentSelector(filterValue)"
+    [(ngModel)]="checkTroubleObject.name"
+  />
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)"
+>
+</equipment-list-selector-component>
+
+<!--  故障设备展示  -->
+<ng-template #troubleEquipment let-data="data">
+  <div class="one-text" [title]="data.equipmentName">
+    <span *ngFor="let equipment of data.equipmentTypeArr" class="equipmentName-box">
+      <i class="icon-fiLink iconfont" [ngClass]="equipment.picture"></i>
+      <span class="status-text">{{ equipment.name }}</span>
+    </span>
+  </div>
+</ng-template>

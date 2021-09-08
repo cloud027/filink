@@ -1,0 +1,40 @@
+@import "../../../../style-module/config";
+// 整个详情的高度
+.detail-height {
+  overflow: hidden;
+  background: $bg-c;
+}
+.view-item {
+  margin-top: 10px;
+}
+.security-equipment{
+  background: #fff;
+  padding-bottom: 20px;
+}
+ // 整体详情的样式
+.device-detail-info {
+  display:block;
+  margin-left: 20px;
+  width:100%;
+  white-space:nowrap;
+  .device-ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .facility-item{
+    margin: 4px 5px;
+    width: 30%;
+    text-align: left;
+    .label {
+      width: 30%;
+      display: inline-block;
+      line-height: 34px
+    }
+    .value {
+      max-width: 68%;
+      line-height: 34px;
+
+    }
+  }
+}

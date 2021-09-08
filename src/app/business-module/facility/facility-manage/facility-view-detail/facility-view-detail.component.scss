@@ -1,0 +1,19 @@
+@import 'src/app/style-module/config';
+
+.facility-view-title {
+  font-size: $primary-title-size;
+  font-weight: 900;
+  color: $title-color;
+  padding-left: 12px;
+  padding-bottom: 20px;
+}
+
+.view-item {
+  margin-top: 10px;
+}
+
+.detail-height {
+  background: $bg-c;
+  overflow: hidden;
+  min-height: calc(100vh - 159px);
+}

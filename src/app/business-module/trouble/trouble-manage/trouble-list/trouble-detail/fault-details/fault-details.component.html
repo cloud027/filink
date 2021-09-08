@@ -1,0 +1,86 @@
+<div class="fault-details" nz-row nzGutter="10">
+  <!--第一列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box">
+      <div class="item-height title">
+        <span class="trouble-title hidden" [nz-tooltip]="troubleInfo.troubleCode">{{troubleInfo.troubleCode}}</span>
+        <span class="trouble-status" [ngClass]="troubleInfo.handleStatus">
+            <i class="icon-fiLink iconfont" [ngClass]="troubleInfo.handleStatusIcon"></i>
+          {{troubleInfo.handleStatusName}}
+          </span>
+        <span class="trouble-status" [ngStyle]="troubleInfo.troubleLevelClass">{{troubleInfo.troubleLevelName}}</span>
+        <span class="trouble-status trouble-source">{{troubleInfo.troubleSourceName}}</span>
+      </div>
+      <div class="item-height happen-time">
+        <label>{{language.happenTime}}：</label>
+        <span>{{troubleInfo.happenTime | dynamic: 'date' : null}}</span>
+      </div>
+      <div class="item-height happen-time">
+        <label>{{language.handleTime}}：</label>
+        <span>{{ troubleInfo.handleTime | dynamic: 'date' : null}}</span>
+      </div>
+      <div class="item-height uint-box">
+          <span class="one-text">
+            <i class="icon-fiLink iconfont fiLink-uint" [nz-tooltip]="language.currentProgress"></i>
+            <span>{{troubleInfo.currentHandleProgress}}</span>
+          </span>
+      </div>
+      <div class="item-height item-top">
+           <span>
+            <i class="icon-fiLink iconfont fiLink-user-menu icon-right" [nz-tooltip]="language.assignPerson"></i>
+             <span>{{troubleInfo.assignUserName}}</span>
+          </span>
+      </div>
+      <div class="item-height item-top">
+           <span>
+            <i class="icon-fiLink iconfont fiLink-departments icon-right" [nz-tooltip]="language.assignDepart"></i>{{troubleInfo.assignDeptName}}
+          </span>
+      </div>
+    </div>
+  </div>
+  <!--第二列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box">
+      <div class="item-height title">
+           <span class="trouble-title">
+            <i class="icon-fiLink iconfont" [ngClass]="troubleInfo.deviceTypeIcon" [nz-tooltip]="troubleInfo.deviceTypeName"></i>
+             {{troubleInfo.deviceName}}
+          </span>
+      </div>
+      <div class="item-height one-text equipment-warp">
+          <span *ngFor="let equipment of troubleInfo.equipmentTypeArr" class="equipment-box">
+            <i class="icon-fiLink iconfont" [ngClass]="equipment.picture" [nz-tooltip]="equipment.typeName"></i>
+            <span class="status-text">{{equipment.name}}</span>
+          </span>
+      </div>
+      <div class="item-height trouble-type" >
+        <label class="label-title">{{language.troubleType}}：</label>
+        <span>{{troubleInfo.troubleTypeName}}</span>
+      </div>
+      <div class="item-height item-top">
+        <label class="label-title">{{language.troubleDescribe}}：</label>
+        <span class="one-text" [title]="troubleInfo.troubleDescribe">{{troubleInfo.troubleDescribe}}</span>
+      </div>
+      <div class="item-height item-top">
+        <label class="label-title">{{language.reportUserName}}：</label>
+        <span class="one-text">{{troubleInfo.reportUserName}}</span>
+      </div>
+      <div class="item-height item-top">
+        <label class="label-title">{{language.troubleRemark}}：</label>
+        <span class="one-text" [title]="troubleInfo.troubleRemark">{{troubleInfo.troubleRemark}}</span>
+      </div>
+    </div>
+  </div>
+  <!--第三列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box mapBox">
+      <app-thumbnail
+        *ngIf="baseInfo?.positionBase"
+        [deviceId]="deviceId"
+        [equipmentId]="toIndexEquipmentId"
+        [baseInfo]="baseInfo"
+        [mapType]="mapType">
+      </app-thumbnail>
+    </div>
+  </div>
+</div>

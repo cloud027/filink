@@ -1,0 +1,122 @@
+@import "../../../../../style-module/config";
+// 整体详情的样式
+.product-info-container {
+  display: flex;
+  // 第一行卡片的的样式
+  .first-line-card {
+    margin-right: 10px;
+    height: 230px;
+  }
+
+  // 每一个卡片的样式
+  .info-card-item {
+    background-color: $bg-c-w;
+
+    .product-image {
+      padding: 10px;
+      height: auto;
+      width: auto;
+      max-width: 100%;
+      max-height: 100%;
+     // position: relative;
+     // top: 20%;
+    }
+
+    .import-info {
+      padding: 30px 0 20px 16px;
+    }
+
+    .product-base {
+      padding-bottom: 10px;
+      .wisdom-preview{
+        margin: 0 10px;
+        float: right;
+      }
+      .product-camera{
+        margin-left: 10px;
+        padding: 3px 5px;
+        color: $sp-icon-color-4;
+        background-color: $color;
+      }
+    }
+
+    .chart-container {
+      display: flex;
+      margin-top: 10px;
+      .product-creator {
+        width: 400px;
+      }
+      .break-chart {
+        padding-right: 16px;
+        width: 220px;
+        height: 146px;
+        float: right;
+      }
+    }
+
+    .detail-btn {
+      padding-top: 30px;
+      padding-left: 16px;
+      margin-bottom: 40px;
+    }
+  }
+
+  // 安装信息卡片样式
+  .install-info {
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 186px;
+
+    .form-first-item {
+      padding-top: 30px;
+    }
+  }
+
+  .picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 426px;
+  }
+
+  .form-last-item {
+    padding-bottom: 30px;
+  }
+
+  // 表单类型名称
+  .install-info-item {
+    display: flex;
+    padding: 0 0 18px 16px;
+    width: 100%;
+    vertical-align: middle;
+    .platform-info{
+      margin-right: 15px;
+      min-width: 40px;
+    }
+    .sp-icon {
+      margin-right: 6px;
+    }
+    .label-name {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: $sp-icon-color-7;
+    }
+    .description-label{
+      width: 40%;
+    }
+
+    // 表单类型字段值
+    .label-value {
+      display: block;
+      padding-right: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+.icon-item{
+  margin-right: 6px;
+}

@@ -1,0 +1,7 @@
+@import "../../style-module/config";
+.user {
+    background: $bg-c-w;
+    > div {
+      background: $bg-c-w;
+    }
+  }

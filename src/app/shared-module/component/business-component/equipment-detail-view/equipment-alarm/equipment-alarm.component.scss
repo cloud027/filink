@@ -1,0 +1,65 @@
+@import "../../../../../style-module/config";
+.box-container {
+  position: relative;
+  background: $bg-c-w;
+  // 告警
+  .alarm-container {
+    position: relative;
+    padding: 0 0 20px;
+  }
+  // 统计图区域样式
+  .chart-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    //  环形图样式
+    .ring {
+      width: 30%;
+    }
+    .chart {
+      width: 30%;
+    }
+    // 增量图样式
+    .columnar {
+      width: 40%;
+    }
+    // 统计图样式
+    .demo-chart {
+      max-height: 300px;
+    }
+  }
+}
+
+
+// 告警级别
+.alarm-level-icon {
+  display: inline-block;
+  margin-right: 5px;
+}
+// 告警等级模版容器
+.level-container {
+  display: flex;
+  // 等级模版
+  .box-icon {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    align-self: center;
+    border-radius: 50%;
+  }
+  // 级别名称
+  .level-name {
+    margin-left: 5px
+  }
+}
+.more {
+  margin-left: 20px;
+  cursor: pointer;
+  color: $color;
+}
+//  选择时间容器样式
+.timer-container{
+  display: flex;
+  margin-right: 10px;
+}
+

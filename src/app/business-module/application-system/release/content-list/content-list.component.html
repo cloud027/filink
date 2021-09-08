@@ -1,0 +1,59 @@
+<!--  内容列表-->
+<div class="box-title">
+  {{language.contentList.contentList}}
+</div>
+
+<!--列表-->
+<div class="table-wrapper">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!-- 责任人 -->
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+</ng-template>
+
+<!--节目文件-->
+<ng-template #programFiles let-data="data">
+  <div (click)="downloadFile(data)" [title]="data.programFileName" class="program-files">{{data.programFileName}}</div>
+</ng-template>
+
+<!--备注换行处理-->
+<ng-template #remarksTable let-data="data">
+  <div class="program-files"
+       [title]="data.remark">
+    {{data.remark}}
+  </div>
+</ng-template>
+
+<!--预览框-->
+<nz-modal *ngIf="isPreview" [(nzVisible)]="isPreview" [nzTitle]="language.contentList.preview"
+          (nzOnCancel)="onPreviewCancel()" (nzOnOk)="onPreviewOk()">
+  <nz-select *ngIf="!isVideo" class="choose-screen-select" nzPlaceHolder="{{language.contentList.chooseScreen}}"
+             [(ngModel)]="chooseScreen.equipmentModel"
+             (ngModelChange)="onChangeScreen($event)">
+    <nz-option *ngFor="let option of informationSelectList"
+               [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+  <div class="preview-container">
+    <xc-video [hidden]="!isVideo" [options]="{width: '475px', height: '300px'}" [sourceArray]="[filePath]"></xc-video>
+    <div class="img-box" [ngStyle] ="boxStyle">
+      <img [hidden]="isVideo" [src]="filePath" class="preview-img" alt="" [width]="chooseScreen.width"
+           [ngStyle] ="{'max-width': chooseScreen.width+'px'}"
+           [height]="chooseScreen.height">
+    </div>
+  </div>
+</nz-modal>
+<!--发起审核框-->
+<nz-modal *ngIf="isToExamine" [(nzVisible)]="isToExamine" [nzTitle]="language.contentList.initiateAudit"
+          (nzOnCancel)="onToExamineCancel()" (nzOnOk)="onToExamineOk()">
+  <span class="examine">{{language.contentList.checker}}:</span>
+  <nz-select [(ngModel)]="reviewedBy" class="select-user">
+    <nz-option *ngFor="let data of reviewedByArr" [nzValue]="data.id" [nzLabel]="data.userName"></nz-option>
+  </nz-select>
+</nz-modal>

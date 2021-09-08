@@ -1,0 +1,81 @@
+.done-box {
+    margin-left: 20px;
+    .basic-info {
+        >.title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #333;
+        }
+        .container-box {
+            border-top: 1px solid #ccc;
+            >.title {
+                font-size: 14px;
+                font-weight: 600;
+                margin: 15px 0;
+                color: #333;
+                border-left: 2px solid #7cb0dd;
+                padding-left: 16px;
+            }
+            .container-basic {
+                p {
+                    display: flex;
+                    margin: 15px 0;
+                }
+                .title {
+                    color: #A6A6A6;
+                    width: 200px;
+                }
+                .context {
+                    flex: 1;
+                }
+            }
+        }
+        .table-box {
+            >.title {
+                font-size: 14px;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+                border-left: 2px solid #7cb0dd;
+                padding-left: 16px;
+            }
+        }
+    }
+    .detail-box {
+        >.title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #333;
+        }
+        .fanwei {
+            border-top: 1px solid #ccc;
+        }
+        .electric-box {
+            >.title {
+                font-size: 14px;
+                font-weight: 600;
+                margin: 20px 0;
+                color: #333;
+                border-left: 2px solid #7cb0dd;
+                padding-left: 16px;
+            }
+            .container {
+                margin: 15px 0;
+                display: flex;
+                align-items: center;
+                .title {
+                    color: #A6A6A6;
+                    width: 200px;
+                }
+                .icon-line {
+                    margin: 0 15px;
+                }
+                span {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

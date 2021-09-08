@@ -1,0 +1,67 @@
+<!--用户登录-->
+<form class="user-login-form" nz-form [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixUser">
+        <input (blur)="initHint('userName')" [placeholder]="language.login.userNamePlaceholder" class="username"
+               formControlName="userName" nz-input>
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">
+        {{language.login.userNameHint}}</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixLock">
+        <input (blur)="initHint('password')" [placeholder]="language.login.passwordPlaceholder" class="password" formControlName="password"
+               nz-input type="password">
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">
+        {{language.login.passwordHint}}</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixCode">
+      <input (blur)="initHint('authCode')" [placeholder]="language.login.codePlaceholder" class="auth-code"
+             formControlName="authCode" nz-input>
+      <span class="timer"><img class="yz-code" [src]="base64" (click)="random()"/></span>
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('authCode').dirty && validateForm.get('authCode').errors">
+        {{language.login.codeHint}}</nz-form-explain>
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control class="remember-item">
+      <label nz-checkbox formControlName="remember" class="remember" style="width: 120px">{{language.login.remember}}</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <button class="login-button"
+              [disabled]="!validateForm.valid || loginLoading"
+              (click)="submit()"
+              nz-button
+              nzType="primary"
+              [nzLoading]="loginLoading">{{language.login.login}}</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+<ng-template #prefixUser>
+  <img src="../../../../assets/img/login/icon_user.png" alt="">
+</ng-template>
+<ng-template #prefixLock>
+  <img src="../../../../assets/img/login/icon_password.png" alt="">
+</ng-template>
+<ng-template #prefixCode>
+  <img src="../../../../assets/img/login/icon_yzm.png" alt="">
+</ng-template>
+
+<!--登录时license无效弹出license无效弹窗-->
+<app-license-verification [(isVisible)]="isVisible" ></app-license-verification>
+

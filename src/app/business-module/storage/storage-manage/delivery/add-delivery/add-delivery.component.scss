@@ -1,0 +1,32 @@
+@import "../../../../../style-module/config";
+
+.add-delivery {
+  .delivery-add-content {
+    padding: 20px 20px 20px 20px;
+    .secondary-title {
+      line-height: 30px;
+      font-size: 14px;
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .secondary-title::before {
+      content: '';
+      display: inline-block;
+      height: 30px;
+      width: 4px;
+      vertical-align: bottom;
+      margin-right: 10px;
+      background-color: $color;
+    }
+  }
+  .btn-all {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    .submit-btn {
+      margin-right: 20px
+    }
+  }
+}

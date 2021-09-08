@@ -1,0 +1,49 @@
+<div class="select-container">
+  <div class="map-select-container">
+    <div class="map-select">
+      <nz-dropdown>
+        <a nz-dropdown><span class="map-search-select" >{{searchTypeName}}</span><i nz-icon type="down" ></i> </a>
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item (click)="searchFacilityName()">
+            <a>{{indexLanguage.searchDeviceName}}</a>
+          </li>
+          <li nz-menu-item (click)="searchAddress()">
+            <a>{{indexLanguage.searchAddress}}</a>
+          </li>
+        </ul>
+      </nz-dropdown>
+    </div>
+  </div>
+  <div class="map-search">
+    <!--设施名称搜索-->
+    <div class="map-search-name" [ngStyle]="{'zIndex': IndexObj.facilityNameIndex}">
+      <input
+        placeholder="{{indexLanguage.enterFacilityName}}"
+        nz-input
+        [(ngModel)]="inputValue"
+        (input)="onInput($event.target?.value)"
+        [nzAutocomplete]="auto"
+        (keydown)="keyDownEvent($event)"/>
+      <nz-autocomplete nzBackfill #auto>
+        <nz-auto-option *ngFor="let option of options"
+                        (click)="optionChange($event,option)"
+                        [nzValue]="option.pointId"
+                        [nzLabel]="option.pointName">
+          {{ option.pointName }}
+        </nz-auto-option>
+      </nz-autocomplete>
+    </div>
+    <!--百度地图地址搜索-->
+    <div class="b-map-location-search" [ngStyle]="{'zIndex': IndexObj.bMapLocationSearch}">
+      <div id="r-result">
+        <input type="text" placeholder="{{indexLanguage.enterPlace}}" id="_suggestId" size="20" value=""/>
+      </div>
+      <div id="_searchResultPanel"></div>
+    </div>
+    <!--谷歌地图地址搜索-->
+    <div class="g-map-location-search" [ngStyle]="{'zIndex': IndexObj.gMapLocationSearch}">
+      <input #input [(ngModel)]="searchKey" placeholder="{{indexLanguage.enterPlace}}" (keyup.enter)="location()"/>
+      <div class="iconfont icon-fiLink fiLink-search location-icon" (click)="location()"></div>
+    </div>
+  </div>
+</div>

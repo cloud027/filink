@@ -1,0 +1,13 @@
+@import 'src/app/style-module/config';
+.router-box {
+  padding: 24px;
+  background: $bg-c-w;
+  height: 100%;
+}
+
+.schedule {
+  background: $bg-c-w;
+  > div {
+    background: $bg-c-w;
+  }
+}

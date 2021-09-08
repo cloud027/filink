@@ -1,0 +1,92 @@
+@import '../config';
+.statistical-chart-wrap {
+  // 重写表单样式
+  .form-row {
+    padding: 20px 20px 20px 16px;
+  }
+
+  .xc-label {
+    min-width: auto;
+  }
+
+  // 需给具体的宽度（给auto时，flex-basis属性不生效），使表单元素的排列自适应页面的变化
+  .ant-col-14 {
+    width: 416px;
+  }
+
+  .search-btn {
+    float: left;
+    margin-left: 8px;
+
+    .submit-btn {
+      margin-right: 10px;
+    }
+  }
+
+  // 重写多选输入框的样式
+  .form-search {
+    .ant-select-selection--multiple {
+      height: 32px;
+      width: 300px;
+
+      .ant-select-selection__rendered > ul > li {
+        border: none;
+        background-color: none;
+      }
+
+      .ant-select-search--inline {
+        display: none;
+      }
+    }
+  }
+}
+
+.modify-delivery, .add-warehousing-wrap, .submit-delivery,
+.add-delivery {
+  // 通用调整搜索按钮弹出选择器框样式
+  .open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $bg-c-w;
+  }
+
+  .custom-template {
+    display: flex;
+    align-items: center;
+
+    .input-name {
+      width: 300px;
+    }
+
+    .icon-template {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+  // 表单底部确认、取消按钮样式
+  .footer {
+    padding-left: 20px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+
+    .submit-btn {
+      margin-right: 20px
+    }
+  }
+}
+// 修改出库数量表单样式
+.edit-num-modal {
+  .ant-modal-body {
+    padding: 20px 20px 0 20px;
+  }
+}
+// 已入库、已出库图标样式
+.success-icon {
+  color: $color;
+}
+// 未入库、未出库图标样式
+.failure-icon {
+  color: $error-color !important;
+}

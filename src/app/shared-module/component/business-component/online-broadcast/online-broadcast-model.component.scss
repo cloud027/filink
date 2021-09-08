@@ -1,0 +1,29 @@
+@import "../../../../style-module/config";
+
+.instruct-list {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 10px;
+
+  .instruct-title {
+    display: flex;
+    margin-right: 68px;
+  }
+  .volume {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    width: 24px;
+    background-color: #B9ABF7;
+    margin-right: 10px;
+    color: $bg-c-w;
+  }
+
+  .instruct-volume {
+    width: 250px;
+    margin-right: 10px;
+  }
+}
+

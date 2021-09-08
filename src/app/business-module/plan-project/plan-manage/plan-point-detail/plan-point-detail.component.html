@@ -1,0 +1,192 @@
+<div class="create-wisdom-data-container">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <!-- 地图容器 -->
+  <div class="map-container">
+    <app-map-search [options]="searchOptions" (inputChange)="searchInputChange($event)" (selectMarker)="searchSelectPoint($event)"></app-map-search>
+    <!--  仅显示当前规划  -->
+    <div class="show-current-plan" (click)="toggleShowPlan($event)">
+      <label nz-radio [(ngModel)]="showCurrentPlan">{{language.showCurrentPlan}}</label>
+    </div>
+    <div id="createWisdomDataMap"></div>
+    <!-- 底部操作按钮 -->
+    <div class="edit-box">
+      <button  class="icon-fiLink iconfont icon-fiLink-1  fiLink-create-plan-point box-icon"
+           title="{{language.createPlan}}" (click)="showCreatePlanModal()">
+        <div class="add-box-title">{{language.createPlan}}</div>
+      </button>
+      <button [disabled]="!planPoint.length"  class="icon-fiLink iconfont icon-fiLink-1 fiLink-save box-icon" [hidden]="!isCreating"
+           title="{{commonLanguage.save}}" (click)="savePlanPoint()">
+        <div class="add-box-title">{{commonLanguage.save}}</div>
+      </button>
+      <button [disabled]="!planPoint.length" class="icon-fiLink iconfont icon-fiLink-1 fiLink-edit-item box-icon" [hidden]="!isCreating"
+           title="{{commonLanguage.edit}}" (click)="showModify()">
+        <div class="add-box-title">{{commonLanguage.edit}}</div>
+      </button>
+      <button class="icon-fiLink iconfont icon-fiLink-1 fiLink-return box-icon" [hidden]="!isCreating"
+           title="{{indexLanguage.revoke}}" (click)="revoke()">
+        <div class="add-box-title">{{indexLanguage.revoke}}</div>
+      </button>
+      <!--删除对已保存的点操作-->
+      <button class="icon-fiLink iconfont icon-fiLink-1 fiLink-delete red-icon box-icon" [hidden]="isCreating"
+           title="{{commonLanguage.deleteBtn}}" (click)="deletePlanPoint('delete')" appAccessPermission="18-2-2">
+        <div class="add-box-title">{{commonLanguage.deleteBtn}}</div>
+      </button>
+      <!--移除对创建未保存的点操作-->
+      <button class="icon-fiLink iconfont icon-fiLink-1 fiLink-delete red-icon box-icon" [hidden]="!isCreating"
+              title="{{language.remove}}" (click)="deletePlanPoint('remove')">
+        <div class="add-box-title">{{language.remove}}</div>
+      </button>
+      <button class="icon-fiLink iconfont icon-fiLink-1 fiLink-chargeback box-icon" [hidden]="isCreating"
+           title="{{commonLanguage.back}}" (click)="previousStepHandle()">
+        <div class="add-box-title">{{commonLanguage.back}}</div>
+      </button>
+      <button class="icon-fiLink iconfont icon-fiLink-1 fiLink-open box-icon"
+           title="{{indexLanguage.dropOut}}" (click)="dropOut()">
+        <div class="add-box-title">{{indexLanguage.dropOut}}</div>
+      </button>
+    </div>
+    <!--地图右上角操作按钮-->
+    <div class="map-button-box">
+      <ul>
+        <!-- 显示当前的点位列表-->
+        <li class="map-button" title="{{language.planPointList}}">
+          <div class="icon-fiLink iconfont fiLink-overview fz-19" [class.no-highlighting]="!currentPlanPointListShow"
+               (click)="currentPlanPointListShow = !currentPlanPointListShow; pointStatusPanelShow = false"></div>
+        </li>
+        <!-- 切换点位状态按钮-->
+        <li class="map-button" title="{{language.filterDeviceStatus}}">
+          <div class="icon-fiLink iconfont fiLink-point-status" [class.no-highlighting]="!pointStatusPanelShow"
+               (click)="pointStatusPanelShow = !pointStatusPanelShow; currentPlanPointListShow = false"></div>
+        </li>
+      </ul>
+    </div>
+    <!--  当前规划下的点位列表  -->
+    <div class="point-list" [hidden]="!currentPlanPointListShow">
+      <span class="point-list-title">{{language.planPointList}}</span>
+      <xc-table
+        [dataSet]="currentPlanPointPageList"
+        [tableConfig]="currentPlanPointListConfig"
+        [pageBean]="currentPlanPointListPageBean"
+        (pageChange)="currentPlanPointListPageChange($event)"
+      ></xc-table>
+    </div>
+    <!-- 切换点位状态-->
+    <div class="point-status" [hidden]="!pointStatusPanelShow">
+      <nz-checkbox-group [(ngModel)]="checkPointStatus"
+                         (ngModelChange)="checkPointStatusChange($event)"></nz-checkbox-group>
+    </div>
+    <!--提示框-->
+    <div *ngIf="isShowInfoWindow" class="info-window-container" [ngStyle]="{left: infoWindowLeft, top: infoWindowTop}">
+      <app-plan-panel *ngIf="infoData.type === 'a'" [infoData]="infoData" [viewIndex]="'planView'"></app-plan-panel>
+      <app-plan-point-panel *ngIf="infoData.type === 'p'" [infoData]="infoData" [viewIndex]="'projectView'"></app-plan-point-panel>
+    </div>
+
+  </div>
+
+
+  <!--创建规划弹框-->
+  <nz-modal
+    *ngIf="createPlanVisible"
+    [(nzVisible)]="createPlanVisible"
+    [nzTitle]="language.createPlanPoint"
+    [nzContent]="coordinatesContent"
+    [nzFooter]="coordinatesFooter"
+    [nzWidth]="800"
+    (nzOnCancel)="closeModal()">
+  </nz-modal>
+
+  <ng-template #coordinatesContent>
+    <!--弹框主体内容-->
+    <div class="plan-modal-step">
+      <!--步骤条-->
+      <div class="step-content">
+        <nz-steps class="step-container" [nzCurrent]="stepIndex" [nzStartIndex]="0" nzDirection="vertical">
+          <nz-step class="select-facility"
+                   nzTitle="{{indexLanguage.firstStep}}"></nz-step>
+          <nz-step nzTitle="{{indexLanguage.secondStep}}"></nz-step>
+        </nz-steps>
+      </div>
+      <!--第一步显示表格-->
+      <div class="first-step-form" [hidden]="stepIndex===stepNum.one">
+        <div class="facility-table-title">
+          <span>{{commonLanguage.firstStep}}</span>
+        </div>
+        <xc-form class="group-input" [column]="formColumnFirst"
+                 (formInstance)="formInstance($event,stepNum.one)"></xc-form>
+      </div>
+      <!--第二步操作内容-->
+      <div class="addGroup" [hidden]="stepIndex===stepNum.zero">
+        <div class="addGroup-title">
+          <span class="title-text">{{commonLanguage.secondStep}}</span>
+        </div>
+        <xc-form class="group-input" [column]="formColumnSecond"
+                 (formInstance)="formInstance($event,stepNum.two)"></xc-form>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #coordinatesFooter>
+    <!--上一步-->
+    <button nz-button nzType="primary" class="link-button" *ngIf="stepIndex===stepNum.one"
+            (click)="handleBack()">{{indexLanguage.lastStep}}</button>
+    <!--下一步-->
+    <button nz-button nzType="primary" class="link-button" *ngIf="stepIndex===stepNum.zero"
+            [disabled]="!isDisabledNext"
+            (click)="handleNext()">{{indexLanguage.nextStep}}</button>
+
+    <button nz-button nzType="primary" class="link-button" *ngIf="stepIndex===stepNum.one"
+            [disabled]="!isDisabledOk"
+            (click)="handleOk()" [nzLoading]="isLoading"
+    >{{indexLanguage.confirm}}</button>
+    <!--取消-->
+    <button nz-button nzType="default" class="link-button" (click)="closeModal()">{{indexLanguage.cancel}}</button>
+  </ng-template>
+  <!-- 区域选择模板-->
+  <ng-template #areaSelector let-formGroup="formGroup" let-col="col">
+    <div>
+      <input nz-input type="text" readonly  placeholder="{{commonLanguage.clickSelect}}" [(ngModel)]="selectAreaName">
+      <button type="button" class="open-button" (click)="openAreaTree()"><i
+        class="icon-l icon-search"></i></button>
+      <nz-spin [nzSpinning]="treeLoading&&treeVisible" [nzSize]="'small'">
+        <ul [hidden]="!treeVisible" id="planPointArea" class="ztree link-tree selector-table-tree"></ul>
+      </nz-spin>
+    </div>
+  </ng-template>
+  <!--删除确认模板-->
+  <ng-template #deleteConfirmation>
+    <xc-table
+      #deleteTable
+      [dataSet]="selectWisdomDataSet"
+      [tableConfig]="selectWisdomTableConfig"
+      [pageBean]="selectWisdomPageBean"
+      (pageChange)="pageChange($event)"
+    ></xc-table>
+  </ng-template>
+  <!--重命名确认模板-->
+  <ng-template #renameConfirmation>
+    <span class="rename-model">
+      <i nz-icon type="question-circle" class="rename-icon" theme="outline"></i>
+      <span class="text">{{language.renameText}}</span>
+    </span>
+    <xc-table
+      [dataSet]="renameWisdomDataSet"
+      [tableConfig]="renameWisdomTableConfig"
+      [pageBean]="renameWisdomPageBean"
+      (pageChange)="renamePageChange($event)"
+    ></xc-table>
+  </ng-template>
+</div>
+<!--智慧杆状态模板-->
+<ng-template #pointStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass "></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.pointStatus | translate : pointStatusEnum: languageEnum.planProject}}">
+      {{(data.pointStatus | translate : pointStatusEnum: languageEnum.planProject) || '--'}}
+    </span>
+  </div>
+</ng-template>

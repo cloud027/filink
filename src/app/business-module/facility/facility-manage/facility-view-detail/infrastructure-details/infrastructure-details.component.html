@@ -1,0 +1,228 @@
+<div class="detail-container-wrapper">
+  <div class="detail-container-one">
+    <nz-card class="base-card" [nzBordered]="false">
+      <div class="detail-container-item">
+        <div class="title-flex">
+          <!--基础设施名称-->
+          <div class="facility-title margin-right10" [nz-tooltip]="facilityInfo?.deviceName">
+            {{facilityInfo?.deviceName}}
+          </div>
+          <!--业务状态-->
+          <div class="margin-right10 business-status" *ngIf="facilityInfo.businessStatus">
+            <span>{{facilityInfo.businessStatus | translate: businessStatus: languageEnum.facility}}</span>
+          </div>
+          <!--设施状态-->
+          <div class="margin-right10 device-status {{facilityInfo.deviceStatusColorClass}}">
+            <i class="icon-fiLink-l iconfont {{facilityInfo.deviceStatusIconClass}}"></i>
+            {{facilityInfo.deviceStatus | translate: deviceStatusEnum: 'facility.config'}}
+          </div>
+        </div>
+        <!--更新时间-->
+        <div class="facility-item margin-top5 margin-bottom10">
+          <span class="facility-item-label">{{language.updateTime}}：</span>
+          <span class="facility-item-label hidden"
+                [nz-tooltip]="facilityInfo?.updateTime  | dynamic: 'date' : null">
+            {{facilityInfo?.updateTime  | dynamic: 'date' : null}}</span>
+        </div>
+        <!--设施类型-->
+        <div class="facility-item">
+          <span class="facility-item-label">{{language.deviceType}}：</span>
+          <span [appDeviceType]="deviceType"></span>
+          <span class="facility-item-value hidden"
+                nz-tooltip="{{facilityInfo.deviceType | translate : deviceTypeEnum: 'facility.config'}}">{{facilityInfo.deviceType | translate : deviceTypeEnum: 'facility.config'}}</span>
+        </div>
+        <!--型号-->
+        <div class="facility-item">
+          <span class="facility-item-label">{{language.deviceModel}}：</span>
+          <span class="facility-item-value hidden"
+                [nz-tooltip]="facilityInfo?.deviceModel">{{facilityInfo?.deviceModel}}</span>
+        </div>
+        <!--部署状态-->
+        <div class="facility-item" *ngIf="hiddenLoopGroupButton" >
+          <span class="facility-item-label">{{language.deployStatus}}：</span>
+          <span class="value">
+            {{facilityInfo?.deployStatusLabel}}
+          </span>
+          <i class="i-vertical" [ngClass]="facilityInfo?.deployStatusIconClass"></i>
+        </div>
+        <div class="code-bottom" nz-row>
+          <div nz-col nzSpan="24" class="code-bottom-item">
+            <!--资产编码-->
+            <div  class="code-width hidden">
+              <i class="icon-fiLink-7 iconfont fiLink-asset-number mg-right" [nz-tooltip]="language.deviceCode"></i>
+              {{facilityInfo?.deviceCode}}
+            </div>
+            <span class="item-separation">|</span>
+            <!--第三方编码-->
+            <div class="code-width hidden">
+              <i [nz-tooltip]="language.thirdPartyCode"
+                class="icon-fiLink-6 iconfont fiLink-tripartite-coding mg-right"></i>
+              {{facilityInfo?.otherSystemNumber}}
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="code-bottom-item">
+            <!--部门-->
+            <div class="code-width hidden">
+              <i class="icon-fiLink-6 iconfont fiLink-departments mg-right" [nz-tooltip]="language.departmentName"></i>
+              {{facilityInfo?.departmentName}}
+            </div>
+            <span class="item-separation">|</span>
+            <!--供应商-->
+            <div class="code-width hidden">
+              <i
+                class="icon-fiLink-9 iconfont fiLink-supplier mg-right"
+                [nz-tooltip]="language.supplierName"></i> {{facilityInfo?.supplier}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card [nzBordered]="false">
+      <div class="detail-container-item">
+        <!--详细地址-->
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.address}}：</span>
+          </div>
+          <div nz-col nzSpan="8">
+              <span class="facility-item-value hidden"
+                    [nz-tooltip]="facilityInfo?.address">{{facilityInfo?.address}}</span>
+          </div>
+        </div>
+        <!--权属公司-->
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.company}}：</span>
+          </div>
+          <div nz-col nzSpan="8">
+              <span class="facility-item-value hidden"
+                    [nz-tooltip]="facilityInfo?.company">{{facilityInfo?.company}}</span>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <div class="detail-container-two">
+    <nz-card class="base-card" [nzBordered]="false">
+      <div class="area-flex">
+        <!--区域-->
+        <div class="area-item"
+             [nz-tooltip]="facilityInfo?.areaInfo?.areaName">{{facilityInfo?.areaInfo?.areaName}}</div>
+        <!--设备数量-->
+        <div class="equipment-quantity-item">{{language.equipmentQuantity}}
+          : {{facilityInfo?.equipmentQuantity}}</div>
+      </div>
+      <!--查看分组和查看回路-->
+      <div class="group-and-loop"  *ngIf="!hiddenLoopGroupButton">
+        <button class="info-btn icon-fiLink-4" nz-button nzType="default" type="button"
+                (click)="showGroupInfo=true">
+          <i class="iconfont fiLink-query-group"></i>
+          {{language.queryGroupInfo}}
+        </button>
+        <button class="icon-fiLink-4 iconfont" nz-button nzType="default" type="button" (click)="showLoopInfoTable()">
+          <i class="iconfont fiLink-policy"></i>
+          {{language.queryLoopInfo}}
+        </button>
+      </div>
+      <!--所属项目-->
+      <div class="project-scrap-wrapper">
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.projectName}}：</span>
+          </div>
+          <div nz-col nzSpan="8">
+              <span class="facility-item-value hidden" [nz-tooltip]="facilityInfo?.projectName">
+                {{facilityInfo?.projectName}}
+              </span>
+          </div>
+        </div>
+        <!--报废年限-->
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.scrapTime}}：</span>
+          </div>
+          <div nz-col nzSpan="8">
+              <span class="facility-item-value hidden" [nz-tooltip]="facilityInfo?.scrapTime">
+                <i class="icon-fiLink-6 iconfont fiLink-filink-riqi-icon"></i>
+                {{facilityInfo?.scrapTime}}{{language.year}}
+              </span>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card [nzBordered]="false">
+      <div class="detail-container-item">
+        <!--安装日期-->
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.installationDate}}：</span>
+          </div>
+          <div nz-col nzSpan="8">
+            <span class="facility-item-value hidden"
+                  [nz-tooltip]="facilityInfo?.installationDate | dynamic: 'date' : 'yyyy-MM-dd'">
+              <i class="icon-fiLink-6 iconfont fiLink-time"></i>
+              {{facilityInfo?.installationDate | dynamic: 'date' : 'yyyy-MM-dd'}}
+            </span>
+          </div>
+        </div>
+        <!--备注-->
+        <div class="facility-item" nz-row>
+          <div nz-col nzSpan="6">
+            <span class="facility-item-label">{{language.remarks}}：</span>
+          </div>
+          <div nz-col class="facility-remarks">
+            <span class="facility-item-value facility-remarks hidden" [nz-tooltip]="facilityInfo.remarks">{{facilityInfo.remarks}}</span>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <div class="detail-container-three">
+    <nz-card class="thumbnail-picture">
+      <!--实景图-->
+      <img class="really-img" (click)="clickImage()" [src]="devicePicUrl" alt="">
+    </nz-card>
+    <!-- 缩略图-->
+    <nz-card class="thumbnail-img-card" [nzBordered]="false">
+      <div class="thumbnail-info">
+        <app-thumbnail
+          *ngIf="baseInfo?.positionBase"
+          [deviceId]="deviceId"
+          [baseInfo]="baseInfo"
+          [mapType]="mapType">
+        </app-thumbnail>
+      </div>
+    </nz-card>
+  </div>
+</div>
+
+<!--查看分组信息-->
+<group-info-list *ngIf="showGroupInfo"
+                 [(groupVisible)]="showGroupInfo"
+                 [deviceId]="deviceId">
+</group-info-list>
+
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzTitle]="language.loopInfo"
+          nzWidth="70%"
+          [nzContent]="loopInfoTable"
+          (nzOnCancel)="xcVisible = false"
+          [nzFooter]="footer">
+  <ng-template #loopInfoTable>
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  </ng-template>
+  <!-- 底部按钮-->
+  <ng-template #footer>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="handleOk()">{{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="xcVisible = false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+
+

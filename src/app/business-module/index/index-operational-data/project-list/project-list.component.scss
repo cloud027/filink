@@ -1,0 +1,50 @@
+@import '../../../../style-module/config';
+$left-panel-width: 410px;
+
+//设施设备模块样式
+.facility-list-panel{
+  width: $left-panel-width;
+  background-color: $bg-c-w;
+  border-top: 1px solid $border-color;
+
+  //区域选择器样式
+  .app-logic-area {
+    width:  $left-panel-width;
+    height: 240px;
+    border-bottom: 1px solid $border-color;
+    .logic-left{
+      width: 30%;
+      float: left;
+      height: 100%;
+      background-color: #f6fbfc;
+      box-shadow: 2px 0 0 0 #e8e8e8;
+    }
+    .logic-right{
+      width: 70%;
+      height: 100%;
+      float: left;
+      overflow-y: auto;
+    }
+    &::after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+  //设施设备类型选择器
+  .app-facility-type {
+    width:  $left-panel-width;
+    height: 95px;
+    border-bottom: 1px solid $border-color;
+  }
+  //分组和租赁方选择器
+  .app-facility-group {
+    width:  $left-panel-width;
+    border-bottom: 1px solid $border-color;
+  }
+  //设施设备列表
+  .app-facility-list {
+    width:  $left-panel-width;
+    min-height: 10px;
+  }
+}

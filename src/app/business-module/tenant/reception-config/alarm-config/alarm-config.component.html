@@ -1,0 +1,32 @@
+<!--告警元素-->
+<div class="alarm-box">
+  <div class="alarm-select-box" *ngFor="let item of alarmElementList">
+    <!--类型title-->
+    <div class="alarm-select-title">{{item.elementCode | tenantConfigTranslate}}</div>
+    <!--类型全选-->
+    <div class="alarm-select-all">
+      <label nz-checkbox nzValue="{{item.elementCode}}"
+             [ngModel]="item.isShow==='1'"
+             (click)="alarmSelectAll(item)">{{this.commonLanguage.selectAll}}</label>
+    </div>
+    <!--告警名称-->
+    <div class="alarm-select-type">
+      <nz-checkbox-wrapper class="alarm-select-check-box">
+        <div *ngFor="let _item of item.children">
+          <div class="alarm-select-check-label">
+            <label nz-checkbox nzValue="{{_item.elementCode}}"
+                   (ngModelChange)="log(_item,_item.isShow)"
+                   [ngModel]="_item.isShow==='1'">{{_item.elementCode | tenantConfigTranslate}}</label>
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </div>
+  </div>
+</div>
+
+<!--配置按钮-->
+<div class="button-group">
+  <button class="link-button  margin-right20" [nzLoading]="submitLoading"
+          nz-button nzType="primary" (click)="updateMenuTemplate()">{{this.language.config}}</button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+</div>

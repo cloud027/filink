@@ -1,0 +1,114 @@
+<!--选择为触发器的时候显示-->
+<div class="application">
+  <span class="application-title">{{language.strategyList.coincident}}</span>
+  <xc-nz-select class="trigger-type-select" [(ngModel)]="stepsFirstParams.linkageStrategyInfo.logic" (ngModelChange)="conditionChange($event)">
+    <!-- 事件类型枚举 -->
+    <xc-nz-option *ngFor="let item of conditionsMetOption" [nzValue]="item.code" [nzLabel]="item.label"></xc-nz-option>
+  </xc-nz-select>
+</div>
+<div class="trigger-add" (click)="openTrigger()">
+  <i class="icon-fiLink fiLink-pic-to-big iconfont"></i>
+  <span class="text">{{language.strategyList.addTrigger}}</span>
+</div>
+<!--添加触发条件-->
+<div class="trigger-condition" *ngIf="isShowTriggerCondition">
+  <div class="strategy-close">
+    <i nz-icon nzType="save" nzTheme="outline" (click)="handleSave()" class="button-save"></i>
+    <i nz-icon nzType="close" nzTheme="outline" (click)="handleClose()"></i>
+  </div>
+  <h4 class="strategy-condition">{{language.strategyList.term}}</h4>
+  <div class="condition-form-row">
+    <div class="label-left padding-left10 required-title">{{language.strategyList.triggerEquipment}}</div>
+    <div class="form-right">
+      <div class="trigger-facility">
+        <span class="area-name">{{currentTriggerSelected.equipmentName}}</span>
+        <button class="open-button" (click)="handleTriggerSelectOpen()"><i class="icon-l icon-search"></i></button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="triggerConditionRender.length">
+    <xc-form [column]="triggerConditionRender" (formInstance)="triggerFormInstanceHandle($event)"></xc-form>
+  </ng-container>
+</div>
+
+<!--触发条件已选择的回显-->
+<div class="trigger-selected">
+  <xc-table [dataSet]="triggerSelectedList"
+            [tableConfig]="tableConfigTrigger">
+  </xc-table>
+</div>
+<h3 class="perform-title">{{language.strategyList.performAction}}</h3>
+<!--添加执行动作-->
+<div class="action-add" (click)="openAction()">
+  <i class="icon-fiLink fiLink-pic-to-big iconfont"></i>
+  <span class="text">{{language.strategyList.addAction}}</span>
+</div>
+<div class="action-condition" *ngIf="isShowAction">
+  <div class="strategy-close">
+    <i nz-icon nzType="save" nzTheme="outline" (click)="handleActionSave()" class="button-save"></i>
+    <i nz-icon nzType="close" nzTheme="outline" (click)="handleActionClose()"></i>
+  </div>
+  <button nz-button nzType="primary" class="link-button add-button strategy-add"
+          (click)="handleAddEquipment()">
+    <i [class]="'iconfont fiLink-add-no-circle'"></i>
+    {{language.strategyList.add}}
+  </button>
+  <app-view-equipment [inputDataSet]="selectedData" [isShowDelete]="true"
+                      (deleteEquipment)="deleteEquipmentChange($event)"></app-view-equipment>
+  <app-select-equipment
+    #actionEquipmentTable
+    *ngIf="isAddEquipmentVisible"
+    [gatewayQueryMap]="gatewayQueryMap"
+    [selectEquipmentType]="'gateway'"
+    [(isVisible)]="isAddEquipmentVisible"
+    (selectChange)="handleEquipmentSelectOk($event)"
+    [selectedData]="selectedData">
+  </app-select-equipment>
+  <div class="screen" *ngIf="currentActionSelected.selectEquipmentType&&(currentActionSelected.selectEquipmentType.includes(targetTypeEnum.singleControl)
+  ||currentActionSelected.selectEquipmentType.includes(targetTypeEnum.multiControl))" >
+    <div class="information-screen lamp">{{language.strategyList.lamp}}</div>
+    <div class="instruct-list">
+      <div class="instruct-title">
+        <span class="icon-wrap open-wrap">
+          <i class="iconfont fiLink-open"></i>
+        </span>
+        <span>{{language.strategyList.switch}}</span>
+      </div>
+      <span class="instruct-volume">
+        <nz-switch
+          [ngModel]="currentActionSelected.switchLight === switchStatus.on"
+          [nzCheckedChildren]="language.equipmentTable.switch"
+          (ngModelChange)="switchLightChange($event)"
+          [nzUnCheckedChildren]="language.equipmentTable.shut">
+        </nz-switch>
+      </span>
+    </div>
+    <div class="instruct-list">
+      <div class="instruct-title">
+        <span class="icon-wrap light-wrap">
+          <i class="iconfont fiLink-light"></i>
+        </span>
+        <span>{{language.equipmentTable.light}}</span>
+      </div>
+      <div class="instruct-volume">
+        <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="currentActionSelected.light"></nz-slider>
+      </div>
+      <div>{{currentActionSelected.light}}</div>
+    </div>
+  </div>
+</div>
+<!--执行动作已选择的回显-->
+<div class="action-selected">
+  <xc-table [dataSet]="actionSelectedList"
+            [tableConfig]="tableConfigAction">
+  </xc-table>
+</div>
+
+<app-select-equipment
+  *ngIf="isShowTriggerSelect"
+  [selectType]="'radio'"
+  [selectEquipmentType]="'gateway'"
+  [(isVisible)]="isShowTriggerSelect"
+  [selectEquipment]="selectEquipment"
+  (selectChange)="handleTriggerSelectOk($event)">
+</app-select-equipment>

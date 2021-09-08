@@ -1,0 +1,88 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{ title }}
+    </span>
+  </div>
+  <div class="alarm-menu">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width alarm-filtration-form"></xc-form>
+    <div class="all-btn">
+      <button class="link-button ok-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isDisabled"
+              >{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+    <button class="alarm-filtration-rule" (click)="display.rulePopUp = true">{{ language.alarmFiltrationRule }}</button>
+  </div>
+</div>
+
+<!-- 告警过滤规则 -->
+<div class="user-detail" *ngIf="display.rulePopUp">
+  <app-alarm-filtration-rule (resultAndClose)="ruleTable($event)"></app-alarm-filtration-rule>
+</div>
+<!-- 告警名称 -->
+<ng-template #alarmName let-formGroup="formGroup" let-col="col">
+  <app-alarm-name [isFilter]="false" [alarmNameConfig]='alarmNameConfig'></app-alarm-name>
+</ng-template>
+
+<!-- 是否启用 -->
+<ng-template #isNoStartUsing let-data="data">
+  <nz-switch [ngModel]="isNoStartData"
+             [nzControl]="true"
+             (click)="isNoStartData = !isNoStartData">
+  </nz-switch>
+</ng-template>
+<!-- 基本信息 -->
+<ng-template #titleDataTemplate>
+  <p class="title-data">
+    <span class="label-style">{{ language.fundamental }}</span>
+  </p>
+</ng-template>
+
+<!-- 过滤条件信息 -->
+<ng-template #filtrationDataTemplate>
+  <p class="title-data">
+    <span class="label-style">{{ language.filtration }}</span>
+  </p>
+</ng-template>
+
+<!-- 告警对象 -->
+<ng-template #alarmEquipmentTemp let-data="data">
+  <div class="custom-template">
+    <label>
+      <input type="text" class="area-name" nz-input readonly
+       [(ngModel)]="checkAlarmEquipment.name" [title]="checkAlarmEquipment.name">
+    </label>
+    <button type="button"
+            class="open-button"
+            (click)="openEquipmentSelector()">
+      <i class="icon-fiLink fiLink-search-index iconfont">
+      </i>
+    </button>
+  </div>
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>
+
+<!--起始时间-->
+<ng-template #startTime let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime formControlName="beginTime"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!--结束时间-->
+<ng-template #endTime let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime formControlName="endTime"></nz-date-picker>
+  </form>
+</ng-template>

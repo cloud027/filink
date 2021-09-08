@@ -1,0 +1,64 @@
+<div class="jumper"  [appBarProgress]="ProgressShow">
+  <span class="select-device"
+        [title]="pageTypes === 'outer'?(deviceNameOne?deviceNameOne:statisticalLanguage.selectDeviceOne):(deviceNameOne?deviceNameOne:statisticalLanguage.selectDevice)"
+        [class.placeholder]="deviceNameOne?false:true"
+        (click)="showDeviceSelect()">{{pageTypes === 'outer' ? (deviceNameOne ? deviceNameOne : statisticalLanguage.selectDeviceOne) : (deviceNameOne ? deviceNameOne : statisticalLanguage.selectDevice)}}</span>
+  <span *ngIf="pageTypes === 'outer'" class="select-device"
+        [title]="deviceNameTwo?deviceNameTwo:statisticalLanguage.selectDeviceTwo"
+        [class.placeholder]="deviceNameTwo?false:true"
+        (click)="showDeviceTwoSelect()">{{deviceNameTwo ? deviceNameTwo : statisticalLanguage.selectDeviceTwo}}</span>
+  <button type="button"
+          class="link-button" nz-button
+          nzType="primary"
+          [disabled]="pageTypes === 'inner'?!deviceNameOne:!deviceNameOne||!deviceNameTwo"
+          (click)="statistical()">{{statisticalLanguage.statistical}}
+  </button>
+</div>
+<!--统计信息表-->
+<div *ngIf="hide" style="padding: 0 10px">
+  <xc-table
+    [dataSet]="_dataset"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+<div *ngIf="!hide&&!showLoading">
+  <nz-spin style="height: 300px"></nz-spin>
+</div>
+
+
+<!--设施选择器1-->
+<ng-template #deviceTemp>
+  <div>
+    <xc-table [dataSet]="deviceDataSet"
+              [pageBean]="devicePageBeanOne"
+              [tableConfig]="deviceTableConfig"
+              (pageChange)="devicePageChangeOne($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--单选按钮1-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedDeviceId" (ngModelChange)="selectedDeviceChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId" [nzDisabled]="data.disable"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设施选择器2-->
+<ng-template #deviceTwoTemp>
+  <div>
+    <xc-table [dataSet]="deviceTwoDataSet"
+              [pageBean]="deviceTwoPageBean"
+              [tableConfig]="deviceTwoTableConfig"
+              (pageChange)="deviceTwoPageChangeOne($event)">
+    </xc-table>
+  </div>
+</ng-template>
+<!--单选按钮2-->
+<ng-template #radioTwoTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedDeviceTwoId" (ngModelChange)="selectedDeviceTwoChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId" [nzDisabled]="data.disable"></label>
+  </nz-radio-group>
+</ng-template>

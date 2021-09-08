@@ -1,0 +1,82 @@
+.override-video.video-js {
+  .vjs-control-bar {
+    justify-content: center;
+    height: 36px;
+
+    .vjs-paused, .vjs-playing {
+      left: 40px;
+      outline: none;
+      &:hover, &:active {
+        .vjs-icon-placeholder:before {
+          background-color: #36cfc9;
+          color: #fff;
+        }
+      }
+    }
+
+    .register-btn {
+      font-size: 2em;
+      width: 40px;
+      cursor: pointer;
+      outline: none;
+    }
+    .fiLink-pic-right, .fiLink-pic-left {
+      &:hover::before, &:active::before {
+        background-color: #36cfc9;
+        color: #fff;
+      }
+    }
+
+    .fiLink-pic-right:before, .fiLink-pic-left:before {
+      position: absolute;
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      color: #36cfc9;
+      background-color: #fff;
+      transform: translate(-50%,-50%);
+      font-size: 16px;
+    }
+
+    .register-prev-btn {
+      position: relative;
+      left: -40px;
+    }
+
+    .register-btn-hidden {
+      visibility: hidden;
+    }
+  }
+
+  .vjs-big-play-button {
+    line-height: 2em;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    outline: none;
+  }
+
+  .vjs-control:focus:before, .video-js .vjs-control:hover:before, .video-js .vjs-control:focus {
+    text-shadow: none;
+  }
+
+  .vjs-play-control .vjs-icon-placeholder:before {
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    color: #36cfc9;
+    &:hover, &:active {
+      background-color: #36cfc9;
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.modal-step {
+  height: auto;
+  clear: both;
+  // 步骤条
+  .step-content {
+    display: inline-block;
+    float: left;
+    width: 166px;
+    height: 390px;
+    border-right: 1px solid #e0dfdf;
+
+    // 步骤条标题
+    .select-facility {
+      height: 150px;
+      margin-top: 50px;
+    }
+  }
+
+  //第一步智慧杆列表格
+  .facility-table {
+    display: inline-block;
+    float: left;
+    width: calc(100% - 185px);
+    margin-left: 15px;
+
+    .facility-table-title {
+      height: 25px;
+      margin: 10px 0 20px 0;
+      padding-left: 10px;
+      border-left: 2px solid #56a9f5;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  zoom: 1;
+}

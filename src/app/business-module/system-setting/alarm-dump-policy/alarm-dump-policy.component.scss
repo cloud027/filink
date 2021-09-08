@@ -1,0 +1,28 @@
+@import "../../../style-module/config";
+
+.dump-policy-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.dump-policy {
+  margin: 20px 16px;
+}
+
+.btn-implement {
+  margin-right: 10px;
+}
+
+.space-left {
+  padding-left: 20px
+}
+
+.space-right {
+  margin-right: 20px
+}
+.progress-width{
+  width: 98%
+}

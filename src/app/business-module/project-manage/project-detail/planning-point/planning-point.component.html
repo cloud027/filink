@@ -1,0 +1,158 @@
+<div class="planning-point-container">
+  <div class="project-detail">
+    <span class="page-title">
+      {{ pageTitle}}
+    </span>
+  </div>
+  <div class="mar-l16 button-box">
+    <!-- 添加规划按钮-->
+    <button class="link-button margin-right20" nz-button nzType="primary"
+            (click)="OpenPlanListWindow()">+{{language.addPlan}}
+    </button>
+  </div>
+
+  <div class="map-container">
+    <!-- 地图左上角搜索-->
+    <app-map-search #mapSearchComponent [options]="searchOptions" (inputChange)="searchInputChange($event)"
+                    (selectMarker)="searchSelectPoint($event)"></app-map-search>
+    <!-- 点位地图-->
+    <div id="planningPointMap"></div>
+
+
+    <!--地图右上角操作按钮-->
+    <div class="map-button-box">
+      <ul>
+        <!-- 显示隐藏已选规划和智慧杆列表按钮-->
+        <li class="map-button" title="{{language.projectDeviceList}}">
+          <div class="icon-fiLink iconfont fiLink-overview fz-19" [class.no-highlighting]="!isShowSelect"
+               (click)="isShowSelect = !isShowSelect; pointStatusPanelShow = false"></div>
+        </li>
+        <!-- 添加规划点位按钮-->
+        <li class="map-button" title="{{language.selectDevice}}"
+            (click)="openDrawUtil(selectPointTypeEnum.add)">
+          <div class="icon-fiLink iconfont fiLink-add-icon"
+               [class.no-highlighting]="!drawUtilOpen || selectPointType === selectPointTypeEnum.change">
+          </div>
+          <div class="add-point-tip" *ngIf="isShowAddPointTip">{{language.addPointTip}}</div>
+        </li>
+        <!-- 修改规划点位按钮-->
+        <li class="map-button" title="{{language.multipleEditModel}}"
+            (click)="openDrawUtil(selectPointTypeEnum.change)">
+          <div class="icon-fiLink iconfont fiLink-change-plan-icon"
+               [class.no-highlighting]="!drawUtilOpen || selectPointType === selectPointTypeEnum.add">
+          </div>
+        </li>
+
+        <!-- 切换点位状态按钮-->
+        <li class="map-button" title="{{language.filterDeviceStatus}}">
+          <div class="icon-fiLink iconfont fiLink-point-status" [class.no-highlighting]="!pointStatusPanelShow"
+               (click)="pointStatusPanelShow = !pointStatusPanelShow; isShowSelect = false"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!--地图上列表浮窗-->
+    <div class="right-suspension-box"
+         [hidden]="!isShowSelect">
+      <div class="table-box moder-preset-container">
+        <span class="table-title">{{language.modelPreset}}</span>
+        <!--型号预设置-->
+        <xc-table
+          [dataSet]="modelPresetDataSet"
+          [tableConfig]="modelPresetTableConfig"
+          [pageBean]="modelPresetPageBean"
+          (pageChange)="modelPresetPageChange($event)"
+        ></xc-table>
+        <div class="set-model-tip" *ngIf="isShowModelTip">{{language.modelTip}}
+        </div>
+      </div>
+
+      <!--已选智慧杆列表-->
+      <div class="table-box">
+        <span class="table-title">{{language.selectedWisdomList}}</span>
+        <xc-table
+          [dataSet]="selectWisdomDataSet"
+          [tableConfig]="selectWisdomTableConfig"
+          [pageBean]="selectWisdomPageBean"
+          (pageChange)="selectWisdomChange($event)"
+        ></xc-table>
+        <!--智慧杆状态模板-->
+        <ng-template #pointStatusTemp let-data="data">
+          <div class="area-level">
+            <i [class]="'iconfont '+data.statusIconClass "></i>
+            <span [ngStyle]="data.rowStyle" class="status-text"
+                  title="{{data.pointStatus | translate : pointStatusEnum: languageEnum.planProject}}">
+      {{data.pointStatus | translate : pointStatusEnum: languageEnum.planProject}}
+    </span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <!-- 切换点位状态-->
+    <div class="point-status" [hidden]="!pointStatusPanelShow">
+      <nz-checkbox-group [(ngModel)]="checkPointStatus"
+                         (ngModelChange)="checkPointStatusChange($event)"></nz-checkbox-group>
+    </div>
+
+    <!--提示框-->
+    <div *ngIf="isShowInfoWindow" class="info-window-container" [ngStyle]="{left: infoWindowLeft, top: infoWindowTop}">
+      <app-plan-point-panel *ngIf="infoData.type === 'p'" [infoData]="infoData"
+                            [viewIndex]="'projectView'"></app-plan-point-panel>
+    </div>
+  </div>
+  <div class="mar-l16 footer-button">
+    <button class="link-button margin-right20" nz-button nzType="primary"
+            (click)="onSavePointInfo()">
+      {{language.complete}}
+    </button>
+    <button class="link-button margin-right20" nz-button nzType="danger"
+            (click)="handleCancelPointInfo()">
+      {{commonLanguage.cancelText}}
+    </button>
+  </div>
+
+</div>
+
+<!--规划列表弹窗-->
+<nz-modal
+  *ngIf="isShowPlanList"
+  [(nzVisible)]="isShowPlanList"
+  [nzTitle]="language.addPlan"
+  (nzOnOk)="handlePlanOk()"
+  [nzFooter]="modalPlanFooter"
+  (nzOnCancel)="handlePlanCancel()"
+  nzWidth="70%">
+  <xc-table
+    #planListTable
+    [dataSet]="planListDataSet"
+    [pageBean]="planListPageBean"
+    (pageChange)="planListPageChange($event)"
+    [selectedData]="selectPlanList"
+    [tableConfig]="tablePlanListConfig"
+  ></xc-table>
+  <ng-template #modalPlanFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handlePlanOk()"
+            [disabled]="this.planConfirmDisabled">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+            (click)="handlePlanCancel()">{{commonLanguage.cancel}}</button>
+    <button nz-button nzType="danger" class="link-button"
+            (click)="handlePlanCleanUp()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--规格型号弹窗-->
+<app-project-product-list-selector
+  *ngIf="isShowProductList"
+  [(productListVisible)]="isShowProductList"
+  [selectedProductId]="this.currentPlanData.productId"
+  (selectDataChange)="selectProductChange($event)"
+></app-project-product-list-selector>
+
+
+<!--批量修改型号弹窗-->
+<app-change-point-model
+  *ngIf="editProductModelVisible"
+  [(isVisible)]="editProductModelVisible"
+  [facilityAllData]="selectedAllPoint"
+  (modelChange)="modelChange($event)">
+</app-change-point-model>

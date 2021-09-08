@@ -1,0 +1,600 @@
+@import "../config";
+
+// 状态图标
+$status-icon-width: 16px;
+
+// 配线架
+.icon-patchPanel {
+  background: url("assets/facility-icon/icon_patchPanel.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 光交箱
+.icon-opticalBox {
+  background: url("assets/facility-icon/icon_opticalBox.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 人井
+.icon-manWell {
+  background: url("assets/facility-icon/icon_manWell.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 接头盒
+.icon-jointClosure {
+  background: url("assets/facility-icon/icon_jointClosure.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+
+// 分纤箱
+.icon-fiberBox {
+  background: url("assets/facility-icon/icon_fiberBox.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 室外柜
+.icon-outDoorCabinet {
+  background: url("assets/facility-icon/icon-shiwaigui.png") no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 智慧杆
+.icon-wisdom {
+  background: url('~assets/facility-icon/icon_wisdom.png') no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 配电箱
+.icon-distributionPanel {
+  background: url('assets/facility-icon/icon_distributionPanel.png') no-repeat center;
+  height: 14px;
+  width: 14px;
+  background-size: 100% 100%;
+}
+
+// 布防
+.icon_deploy_arm {
+  background: url("assets/facility-icon/icon_deploy_arm.png") no-repeat center;
+  height: 16px;
+  width: 16px;
+  background-size: 100% 100%;
+}
+
+// 未布防
+.icon_deploy_unarm {
+  background: url("assets/facility-icon/icon_deploy_unarm.png") no-repeat center;
+  height: 16px;
+  width: 16px;
+  background-size: 100% 100%;
+}
+
+// 拆除
+.icon_deploy_remove {
+  background: url("assets/facility-icon/icon_deploy_remove.png") no-repeat center;
+  height: 16px;
+  width: 16px;
+  background-size: 100% 100%;
+}
+
+// 停用
+.icon_deploy_disable {
+  background: url("assets/facility-icon/icon_deploy_disable.png") no-repeat center;
+  height: 16px;
+  width: 16px;
+  background-size: 100% 100%;
+}
+
+// 维护
+.icon_deploy_maintain {
+  background: url("assets/facility-icon/icon_deploy_maintain.png") no-repeat center;
+  height: 16px;
+  width: 16px;
+  background-size: 100% 100%;
+}
+
+// 设施告警
+.icon_facility_alarm {
+  background: url("assets/img/facility/icon_facility_alarm.png") no-repeat center;
+}
+
+// 正常
+.icon_facility_normal {
+  background: url("assets/img/facility/icon_normal.png") no-repeat center;
+}
+
+// 离线
+.icon_facility_offline {
+  background: url("assets/img/facility/icon_offline.png") no-repeat center;
+}
+
+// 失联
+.icon_facility_out_of_contact {
+  background: url("assets/img/facility/icon_out_of_contact.png") no-repeat center;
+}
+
+// 其他
+.icon_facility_unknown {
+  background: url("assets/img/facility/icon_unknown.png") no-repeat center;
+}
+
+
+.facility-icon {
+  font-size: $status-icon-width;
+}
+
+.all-facility-icon {
+  font-size: $status-icon-width;
+  color: $statistics-facility-all;
+}
+
+.opticalBox-color {
+  color: $statistics-opticalBox;
+}
+
+.patchPanel-color {
+  color: $statistics-patchPanel;
+}
+
+.fiberBox-color {
+  color: $statistics-fiberBox;
+}
+
+.outDoorCabinet-color {
+  color: $statistics-fiberBox;
+}
+
+.manWell-color {
+  color: $statistics-manWell;
+}
+
+.jointClosure-color {
+  color: $statistics-jointClosure;
+}
+
+.wisdom-color {
+  color: $statistics-wisdom;
+}
+
+.distributionPanel-color {
+  color: $statistics-distributionPanel;
+}
+
+.all-facility-color {
+  color: $statistics-facility-all;
+}
+
+//解决bug413
+.ant-form-item-label label::after {
+  content: ' ' !important;
+  position: relative;
+  top: -0.5px;
+  margin: 0 8px 0 2px;
+}
+
+.facility-alarm-c {
+  color: $facility-status-alarm;
+}
+.facility-alarm-bg {
+  background-color: $facility-status-alarm;
+}
+
+.ant-card-head-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.facility-normal-c {
+  color: $color;
+}
+.facility-normal-bg {
+  background-color: $color;
+}
+
+.facility-break-c {
+  color: $facility-status-offline;
+}
+.facility-break-bg {
+  background-color: $facility-status-offline;
+}
+
+.facility-dismantled-c {
+  color: $facility-status-outOfContact;
+}
+.facility-lost-c{
+  color: $equipment-status-lost;
+}
+.facility-offline-c{
+  color: $equipment-status-offline;
+}
+.facility-dismantled-bg {
+  background-color: $facility-status-outOfContact;
+}
+.facility-unknown-c {
+  color: $facility-status-unKnow;
+}
+.facility-unknown-bg {
+  background-color: $facility-status-unKnow;
+}
+.facility-lost-bg {
+  background-color: $equipment-status-lost;
+}
+
+.equipment-dismantled-color{
+  color: $equipment-status-dismantled
+}
+.equipment-lost-color{
+  color: $equipment-status-lost;
+}
+.equipment-out-of-contact-color{
+  color: $equipment-status-lost;
+}
+.equipment-un-set-color{
+  color: $equipment-status-unset;
+}
+.equipment-offline-color{
+  color: $equipment-status-offline;
+}
+.equipment-normal-color{
+  color: $equipment-normal;
+}
+.equipment-break-color{
+  color: $equipment-status-break;
+}
+.equipment-alarm-status-color{
+  color: $equipment-status-alarm;
+}
+
+.equipment-dismantled-bg{
+  background-color: $equipment-status-dismantled
+}
+.equipment-lost-bg{
+  background-color: $equipment-status-lost;
+}
+.equipment-un-set-bg{
+  background-color: $equipment-status-unset;
+}
+.equipment-offline-bg{
+  background-color: $equipment-status-offline;
+}
+.equipment-normal-bg{
+  background-color: $equipment-normal;
+}
+.equipment-break-bg{
+  background-color: $equipment-status-break;
+}
+.equipment-alarm-status-bg{
+  background-color: $equipment-status-alarm;
+}
+.equipment-out-of-contact-bg{
+  background-color: $equipment-status-lost;
+}
+.eq-business-lock {
+  background-color: $equipment-business-lock-bg;
+}
+.eq-business-free{
+  background-color: $equipment-business-free-bg;
+}
+
+// 摄像头
+.camera-color {
+  color: $camera-color;
+}
+.accesslock-color{
+  color: $accesslock-color;
+}
+
+// 信息屏
+.informationboard-color {
+  color: $informationboard-color;
+}
+
+// 单灯控制器
+.singlelightcon-color {
+  color: $singlelightcon-color;
+}
+// 广播
+.broadcasts-color {
+  color: $broadcast-color;
+}
+// 一键告警器
+.alarm-fast-color {
+  color: $alarm-fast-color;
+}
+.filink-duijiangji-icon-color{
+  color: $alarm-fast-color;
+}
+// 无线ap
+.wireless-ap-color{
+  color: $wirelessAp-color;
+}
+// 微气象仪
+.weather-instrument-color{
+  color: $weatherInstrument-color;
+}
+.filink-guangbo-icon-color {
+   color: $statistics-broadcast;
+ } // 一键呼叫
+.alarm-urgency-color {
+  color: $statistics-calling;
+}
+.filink-dianbiao-icon-color {
+  color: $statistics-smartpower;
+}
+
+// 环境监测仪
+.filink-huanjingjiance-icon-color {
+  color: $statistics-environmentalMonitoring;
+}
+
+// 网关
+.gateway-color {
+  color: $gateway-color;
+}
+
+// 集中控制器
+.centralwlancon-color {
+  color: $centralwlancon-color;
+}
+
+// 安装时间选择宽度
+// 设备上传图片时距离上面的高度
+.equipment-detail {
+  .xc-item:last-child {
+    margin-top: 20px;
+  }
+  .installation-date {
+    .ant-calendar-picker-input {
+      width: 300px;
+    }
+  }
+}
+
+.button-container {
+  padding-bottom: 20px;
+  padding-left: 20px
+}
+
+// 设施
+.facility-detail {
+  .installation-date {
+    .ant-calendar-picker-input {
+      width: 300px;
+    }
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    &:hover {
+      border-color: $color
+    }
+  }
+  .xc-item:last-child {
+    margin-top: 20px;
+  }
+}
+// 去掉zorro卡片头下面的一条线
+.ant-card-head {
+  padding: 0 10px;
+  border: none;
+  .ant-card-head-title{
+    padding: 20px 10px 0 10px;
+  }
+}
+.ant-card-body {
+  padding: 10px;
+}
+.detail-container-two .base-card{
+  .ant-card-body {
+    padding: 16px;
+  }
+}
+.status-text{
+  margin-left: 6px;
+}
+.card-table-container{
+  padding-bottom: 20px;
+}
+.content-right{
+  .ant-slider-rail{
+    height: 2px;
+    color: #f2f2f2;
+  }
+  .ant-slider{
+    line-height: 24px;
+    margin: 6px 6px 6px;
+  }
+  .ant-slider-track{
+    height: 2px;
+  }
+  .ant-slider-handle {
+    position: absolute;
+    width: 6px;
+    height: 16px;
+    margin-top: -7px;
+    margin-left: -6px;
+    background-color: $bg-c;
+    border: solid 3px $color;
+    border-radius: 1px;
+    box-shadow: 0 2px 6px 0 rgba($color, 0.5);
+  }
+}
+.dept-name-select {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 2px 11px 0 11px;
+  width: 100%;
+  height: 22px;
+  border: 1px solid $button-disable-bg-color;
+  line-height: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+/*步骤弹窗列表*/
+.step-group-table{
+  .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body{
+    max-height: 253px !important;
+  }
+}
+.group-form{
+  .form-row .xc-item{
+    width: 100%;
+  }
+}
+.groupList {
+  .zoom-control {
+    right: 10px !important;
+  }
+}
+
+.cable-container {
+  .ant-select {
+    width: 140px;
+  }
+}
+/* 顶部通知卡片样式*/
+.notice-container .ant-card{
+  width: 250px;
+  box-sizing: border-box;
+  position: absolute;
+  left: -110px;
+  .ant-card-head{
+    border-bottom: 1px solid #e8e8e8;
+    min-height: 40px;
+    box-sizing: border-box;
+    .ant-card-head-title{
+      padding: 0 6px;
+      line-height: 40px;
+    }
+  }
+  .ant-card-body {
+    padding: 0;
+    max-height: 221px;
+    overflow-y: auto;
+    .card-item{
+      width: 100%;
+      padding: 0 16px;
+      height: 55px;
+      box-sizing: border-box;
+      border-left: none;
+      border-right: none;
+      cursor: pointer;
+      &.has-read{
+        opacity: 0.5;
+      }
+    }
+  }
+}
+/**
+报表分析 nz-tab标签样式重写
+ */
+.report-content .ant-tabs-bar {
+  margin-left: 16px;
+}
+
+.asset-analysis {
+  .xc-label {
+    min-width: 90px;
+    flex-basis: 0 !important;
+  }
+  .ant-input {
+    width: 90%;
+  }
+  .form-item-select {
+    width: 90% !important;
+  }
+
+  // 重写多选输入框的样式
+  .form-search {
+    width: 90%;
+    .ant-select-selection--multiple {
+      height: 32px;
+      width: 100%;
+      .ant-select-selection__rendered > ul > li {
+        border: none;
+        background-color: none;
+      }
+
+      .ant-select-search--inline {
+        display: none;
+      }
+    }
+  }
+
+  .asset-growth-rate-condition {
+    nz-month-picker {
+      width: 43.5%;
+      .ant-calendar-picker-input {
+        width: 100%;
+      }
+    }
+    nz-year-picker {
+      width: 43.5%;
+      .ant-calendar-picker-input {
+        width: 100%;
+      }
+    }
+    nz-select {
+      .ant-select-selection__rendered {
+        height: 30px;
+        overflow: hidden;
+        ul {
+          position: absolute;
+          display: flex;
+          width: 97%;
+        }
+      }
+    }
+  }
+
+  .asset-failure-distribution-condition {
+    nz-month-picker {
+      width: 43.5%;
+      .ant-calendar-picker-input {
+        width: 100%;
+      }
+    }
+    nz-year-picker {
+      width: 43.5%;
+      .ant-calendar-picker-input {
+        width: 100%;
+      }
+    }
+    nz-select {
+      .ant-select-selection__rendered {
+        height: 30px;
+        overflow: hidden;
+        ul {
+          position: absolute;
+          display: flex;
+          width: 97%;
+        }
+      }
+    }
+  }
+}
+
+.batch-coding-container {
+  .ant-tabs-bar {
+    margin-left: 40px;
+  }
+}

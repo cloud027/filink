@@ -1,0 +1,99 @@
+.application-content {
+  display: flex;
+
+  .content-left {
+    width: 50%;
+    background: #fff;
+    position: relative;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .content-right {
+    width: 50%;
+    background: #fff;
+
+    .screen {
+      width: 500px;
+      padding: 20px;
+      margin: 30px 20px;
+      border-radius: 3px;
+      border-top: none;
+
+      .information-screen {
+        position: absolute;
+        color: #35cfc9;
+        top: -12px;
+        left: 50px;
+      }
+
+      .program-select {
+        display: flex;
+        align-items: center;
+
+        .program-title {
+          width: 100px;
+        }
+
+        .area-name {
+          display: inline-block;
+          width: 300px;
+          border: 1px solid #ccc;
+          height: 32px;
+          padding: 4px 11px;
+          border-radius: 4px;
+          margin-right: 10px;
+          vertical-align: middle;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        .open-button {
+          border: none;
+          outline: none;
+          background: #fff;
+        }
+      }
+
+      .instruct-list {
+        display: flex;
+        align-items: center;
+
+        .light {
+          background: #f1c620;
+          border-radius: 100%;
+          width: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 5px;
+
+          .icon-fiLink {
+            color: #fff;
+          }
+        }
+
+        .volume {
+          background: #9186e0;
+        }
+
+        .instruct-title {
+          width: 80px;
+        }
+
+        .instruct-volume {
+          width: 60%;
+          margin: 20px 20px 20px 0;
+        }
+      }
+    }
+  }
+}
+
+.preview {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 300px;
+}

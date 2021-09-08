@@ -1,0 +1,510 @@
+@font-face {
+  font-family: 'digifacewide';
+  src: url('../digifaw.ttf');
+}
+
+.float-bg-screen {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  filter: alpha(opacity=60);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1100;
+  background: url("../../../../assets/img/screen/bj.png") no-repeat 100%;
+  .icon-cursor {
+    cursor: default;
+  }
+  .screen-head-title {
+    width: 100%;
+    height: 10%;
+    background: url("../../../../assets/img/screen/top.png") no-repeat;
+    background-size: 100%;
+    background-position-y: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .title {
+      margin-top: 2%;
+      color: #00fcf9;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .time {
+      position: absolute;
+      right: 3%;
+      bottom: 32%;
+
+      .iconTime {
+        span {
+          background: linear-gradient(to top, #00aceb, #00fcf9);
+          -webkit-background-clip: text;
+          color: transparent;
+        }
+      }
+    }
+
+  }
+
+  .screen-content {
+    width: 100%;
+    height: 90%;
+    display: flex;
+
+    .content-left {
+      flex: 3;
+
+      .screen-alarm {
+        margin-left: 10px;
+        width: 97%;
+        height: 31%;
+        background: url("../../../../assets/img/screen/alarm-bj.png") no-repeat;
+        background-size: 100% 100%;
+        margin-bottom: 10px;
+
+        .title {
+          width: 100%;
+          padding: 0 10px;
+
+          span {
+            float: left;
+            color: #00fcf9;
+            font-size: 16px;
+            padding-top: 5px;
+          }
+
+          i {
+            float: right;
+            padding-left: 3px;
+          }
+        }
+
+        .screen-charts-nowAlarm {
+          clear: both;
+          width: 100%;
+          height: 90%;
+
+          .nowAlarm {
+            width: 100%;
+            height: 90%;
+            padding-left: 28px;
+          }
+        }
+
+        .screen-charts-nAlarm {
+          clear: both;
+          width: 90%;
+          height: 95%;
+
+          .numAlarm {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+      }
+
+      .alarm-top {
+        margin-left: 10px;
+        width: 97%;
+        height: 63.5%;
+        background: url("../../../../assets/img/screen/alarmtopbg.png") no-repeat;
+        background-size: 100% 100%;
+        margin-bottom: 10px;
+        .title {
+          width: 100%;
+          padding: 0 10px;
+
+          span {
+            float: left;
+            color: #00fcf9;
+            font-size: 16px;
+            padding-top: 5px;
+          }
+
+          i {
+            float: right;
+            padding-left: 3px;
+          }
+        }
+        .select-date {
+          clear: both;
+          font-weight: bold;
+          color: #00fcf9;
+          .day {
+            padding-right: 10px;
+            display: inline-block;
+            cursor: pointer
+          }
+          .week {
+            padding-right: 10px;
+            display: inline-block;
+            cursor: pointer
+          }
+          .mouth {
+            padding-right: 10px;
+            display: inline-block;
+            cursor: pointer
+          }
+        }
+
+      }
+    }
+
+    .content-center {
+      flex: 4;
+
+      .screen-total {
+        width: 97%;
+        height: 8%;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        .total-facilities {
+          line-height: 100%;
+          color: #00fcf9;
+          margin-top: 20px;
+          flex: 1;
+
+          .facilities {
+            padding-left: 16px;
+            margin-top: 16px;
+            float: left;
+            font-size: 15px;
+            font-weight: bold;
+          }
+
+          .facilities-num-ta {
+            margin-top: 8px;
+          }
+
+        }
+
+        .total-alarm {
+          line-height: 100%;
+          color: #00fcf9;
+          margin-top: 20px;
+          display: flex;
+          justify-content: end;
+
+          .facilities {
+            padding-left: 16px;
+            margin-top: 16px;
+            float: left;
+            font-size: 15px;
+            font-weight: bold;
+          }
+
+          .facilities-num {
+            margin-top: 8px;
+            flex-wrap: nowrap;
+
+            .num {
+              float: left;
+
+              height: 40px;
+              background: url("../../../../assets/img/screen/number-bj.png") no-repeat;
+              background-size: 100% 100%;
+              line-height: 30px;
+              text-align: center;
+
+              i {
+                color: black;
+              }
+
+            }
+          }
+        }
+      }
+
+      .content-map {
+        clear: both;
+        width: 97%;
+        height: 52%;
+        background: url("../../../../assets/img/screen/map-bj.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        margin: 10px;
+
+        #map {
+          width: 97%;
+          height: 97%;
+          position: absolute;
+          top: 2%;
+          left: 2%;
+
+          .BMap_cpyCtrl {
+            display: none;
+          }
+        }
+      }
+
+      .alarm-increment {
+        width: 97%;
+        margin: 10px;
+        height: 32%;
+
+        .increment {
+          width: 100%;
+          height: 13%;
+
+          .increment-name {
+            color: #00fcf9;
+            float: left;
+            width: 155px;
+            height: 100%;
+            background: url("../../../../assets/img/screen/title-footer.png") no-repeat;
+            background-size: 100% 100%;
+            padding-left: 10px;
+            font-size: 16px;
+            display: flex;
+
+            span {
+              flex: 5;
+              margin-top: 3px;
+            }
+
+            i {
+              flex: 1;
+            }
+
+          }
+
+          .increment-date {
+            float: right;
+            width: 125px;
+            height: 100%;
+            color: #00fcf9;
+
+            .incre-comms {
+              padding-right: 10px;
+              display: inline-block;
+              width: 40px;
+              text-align: center;
+              cursor: pointer;
+              span:nth-of-type(2) {
+                position: relative;
+              }
+              span:nth-of-type(2)::before {
+                content: "";
+                border: 5px solid transparent;
+                border-bottom-color: #5f79a5;
+                position: absolute;
+                right: 2px;
+                top: 100%;
+              }
+            }
+          }
+        }
+
+        .increment-chart {
+          position: relative;
+          clear: both;
+          width: 100%;
+          margin-top: 6px;
+          height: 84%;
+          background: url("../../../../assets/img/screen/day-up-alarm-bj.png") no-repeat;
+          background-size: 100% 100%;
+
+          .incrementNum {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+      }
+
+    }
+
+    .content-right {
+      flex: 3;
+
+      .screen-alarm {
+        margin-right: 20px;
+        width: 97%;
+        height: 31%;
+        background: url("../../../../assets/img/screen/alarm-bj.png") no-repeat;
+        background-size: 100% 100%;
+        margin-bottom: 10px;
+
+        .title {
+          width: 100%;
+          padding: 0 10px;
+
+          span {
+            float: left;
+            color: #00fcf9;
+            font-size: 17px;
+            padding-top: 5px;
+          }
+
+          i {
+            float: right;
+            padding-left: 3px;
+            padding-top: 3px;
+          }
+        }
+
+        .screen-charts {
+          clear: both;
+          width: 100%;
+          height: 83%;
+          overflow: hidden;
+          ul {
+            width: 100%;
+            height: 100%;
+
+            li {
+              list-style-type: none;
+              color: #00fcf9;
+              width: 100%;
+              line-height: 25px;
+              word-break: break-all;
+              display: flex;
+
+              .name {
+                flex: 3;
+                padding-left: 10px;
+                padding-right: 5px;
+              }
+
+              .describe {
+                flex: 2;
+                text-align: center;
+                padding-right: 5px;
+              }
+
+              .time {
+                flex: 4;
+              }
+
+              .icon-alarm {
+                // flex: 1;
+                padding-left: 5px;
+
+                i {
+                  display: -webkit-box;
+                  display: -moz-box;
+                  color: red;
+                  transform-origin: 50% 50%;
+                  animation: moveImg .2s linear infinite 0s alternate;
+                }
+
+                @keyframes moveImg {
+                  0% {
+                    transform: rotate(-10deg);
+                  }
+                  100% {
+                    transform: rotate(10deg);
+                  }
+                }
+              }
+            }
+          }
+          .typeAlarm {
+            width: 95%;
+            height: 95%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.float-bg-screen::-webkit-scrollbar {
+  display: none
+}
+
+.l-height{
+  line-height: 17px;
+}
+.p-left{
+  padding-left: 10px;
+}
+.p-events{
+  pointer-events: none;
+}
+.urgent{
+  color: #ff0000;
+}
+.main{
+  color: #fe7d02;
+}
+.secondary{
+  color: #e6ce13;
+}
+.prompt{
+  color: #02a1e2;
+}
+:host ::ng-deep.digit {
+  color: black;
+  flex: 1;
+  font-size: 20px;
+  font-family: 'digifacewide', serif;
+  padding: 8px 3px;
+  text-align: center;
+  background: url("../../../../assets/img/screen/number-bj.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+:host ::ng-deep .ctnr {
+  display: flex;
+  padding-left: 1.2px;
+}
+
+.text-success {
+  color: #5f79a5;
+}
+
+.info-window-container {
+  position: absolute;
+  z-index: 100;
+  transform: translate(-50%, -100%);
+  // margin-top: -10px;
+  white-space: nowrap;
+  .info-box {
+    position: relative;
+    width: 242px;
+    height: 164px;
+    border-radius: 10px;
+    background-color: rgba(12, 20, 43, 0.5);
+    box-shadow: 0 0 5px #0644bb inset;
+    border: 1px solid #1243be;
+    padding-left: 20px;
+    padding-top: 5px;
+    top: 12px;
+    left: 4px;
+    p {
+      color: #ffffff;
+      margin-bottom: 22px;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 0;
+      height: 0;
+      // margin-left: -2px;
+      border-left: 6px solid transparent;
+      border-top: 15px solid #1243be;
+      border-right: 8px solid transparent;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 98%;
+      width: 0;
+      height: 0;
+      // margin-left: -2px;
+      border-left: 6px solid transparent;
+      border-top: 15px solid rgba(10, 27, 66, 0.8);
+      border-right: 8px solid transparent;
+    }
+  }
+}

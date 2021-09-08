@@ -1,0 +1,73 @@
+//实景图设备信息悬浮窗
+.float-window {
+  height: 100%;
+  width: 450px;
+
+  //画布
+  .canvas-container {
+    width: 100%;
+    position: relative;
+
+    //悬浮窗主体
+    .float-window-body {
+      height: 200px;
+      width: 200px;
+      background-color: #FFFFFF;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px #888888;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 999;
+
+      //悬浮窗字段
+      .font-type {
+        width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        margin: 12px 0 0 10px;
+
+        //悬浮窗字段内边距
+        .font-type-margin {
+          color: #808080;
+          margin-right: 15px;
+        }
+
+        .equipmentStatus {
+          height: 20px;
+          padding: 0 9px;
+          color: white;
+          border-radius: 2px;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .float-window-equipment {
+
+      .float-window-equipment-children {
+        padding-left: 10px;
+        line-height: 35px;
+        width: 140px;
+        height: 35px;
+      }
+
+      :hover {
+        background-color: rgba(0, 188, 253, 0.31);
+      }
+
+      z-index: 999;
+      width: 140px;
+      background-color: #FFFFFF;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px #888888;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+  }
+}

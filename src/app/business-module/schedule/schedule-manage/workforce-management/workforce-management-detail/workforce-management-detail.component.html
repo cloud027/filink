@@ -1,0 +1,168 @@
+<div class="workforce-detaile-wrap">
+  <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+  <div class="schedule-add person-add">
+    <!--步骤条组件-->
+    <div class="xc-steps">
+      <app-xc-steps
+        [isActiveStepsCount]="isActiveSteps"
+        [setData]="scheduleStepConfig">
+      </app-xc-steps>
+    </div>
+    <div class="form-wrap">
+      <!--第一步 基本信息-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST" class="basic-info-wrap">
+        <xc-form [column]="formColumn"
+                 (formInstance)="scheduleFormInstance($event)">
+        </xc-form>
+      </div>
+      <!--第二步 人员排班-->
+      <div *ngIf ="isActiveSteps === finalValueEnum.STEPS_SECOND">
+        <app-schedule-calendar #scheduleCalendar
+                               [isShowAutoScheduleBtn]="true"
+                               [dateRange]="[startDate, endDate]"
+                               [(scheduledDateList)]="scheduledDateList"
+                               [pageType]="pageType"
+                               [teamIdList]="formInstance.getData('teamIdList')"
+                               [isQueryAutoScheduling]="isQueryAutoScheduling"
+                               [querySchedulingParams]="queryParams"
+                               [(scheduleMemberDataListBackup)]="scheduleMemberDataListBackup"
+                               [(scheduleMemberDataList)]="scheduleMemberDataList"
+                               [(updateScheduleDataBackup)]="updateScheduleDataBackup"
+                                (nextValid)="nextValid($event)">
+        </app-schedule-calendar>
+      </div>
+      <!--第三步 完成-->
+      <div *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD">
+        <!-- 排班基本信息 -->
+        <div class="schedule-basic-info-wrap">
+          <div class="schedule-title">{{scheduleLanguage.scheduleBasicInfo}}</div>
+          <div class="schedule-basic-info-content">
+            <!--  开始日期&结束日期 -->
+            <div class="content-box">
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.startDate}}：</span>
+                <span class="item-content">
+                  <i class="clock-circle iconfont" nz-icon nzType="clock-circle"></i>
+                  <span class="">{{startDate}}</span>
+                </span>
+              </div>
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.endDate}}：</span>
+                <span class="item-content">
+                  <i class="clock-circle iconfont" nz-icon nzType="clock-circle"></i>
+                  <span class="item-content-text">{{endDate}}</span>
+                </span>
+              </div>
+            </div>
+            <!--  班组名称&班次名称 -->
+            <div class="content-box">
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.teamName}}：</span>
+                <span class="item-content" [title]="teamNames">{{teamNames}}</span>
+              </div>
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.workShiftName}}：</span>
+                <span class="item-content" [title]="queryParams.shiftName">{{queryParams.shiftName}}</span>
+              </div>
+            </div>
+            <!--  区域&备注 -->
+            <div class="content-box">
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.area}}：</span>
+                <span class="item-content" [title]="areaNames">{{areaNames}}</span>
+              </div>
+              <div class="item-container">
+                <span class="item-label">{{scheduleLanguage.remark}}：</span>
+                <span class="item-content" [title]="formInstance.getData('remark')">{{formInstance.getData('remark')}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 人员排班信息 -->
+        <div class="schedule-person-title">{{scheduleLanguage.personSchedule}}</div>
+        <app-schedule-calendar [(scheduleMemberDataList)]="scheduleMemberDataList"
+                               [dateRange]="[startDate, endDate]"
+        ></app-schedule-calendar>
+      </div>
+      <!--按钮-->
+      <div class="footer-btn">
+        <!--上一步-->
+        <button nz-button nzType="primary" class="link-button"
+                (click)="handPrevSteps(isActiveSteps)"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+          {{commonLanguage.back}}
+        </button>
+        <!--下一步-->
+        <button nz-button nzType="primary" class="link-button"
+                (click)="handNextSteps(isActiveSteps)"
+                [disabled]="isNextStepDisabled"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_THIRD">
+          {{commonLanguage.nextStep}}
+        </button>
+        <!--完成-->
+        <button nz-button nzType="primary" class="link-button"
+                [nzLoading]="isSaveLoading"
+                (click)="handStepsSubmit()"
+                *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD">
+          {{scheduleLanguage.finish}}
+        </button>
+        <!--取消-->
+        <button class="link-button"
+                (click)="handCancelSteps()"
+                nz-button nzType="danger">
+          {{commonLanguage.cancel}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--开始日期-->
+<ng-template #startDateTpl let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="startDate" class="entry-time"
+                    [nzDisabledDate]="startDateDisabled"
+                    (ngModelChange)="startDateChange($event)"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!--结束日期-->
+<ng-template #endDateTpl let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="endDate" class="entry-time"
+                    [nzDisabledDate]="endDateDisabled"
+                    (ngModelChange)="endDateChange($event)"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!-- 班组名称选择 -->
+<ng-template #teamNameSelectorTpl let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" class="input-selector text-wrap" readonly [(ngModel)]="teamNames" [title]="teamNames">
+    <button type="button" class="open-button" (click)="isShowTeamSelectorModal = true">
+      <i class="icon-l icon-search"></i>
+    </button>
+  </div>
+</ng-template>
+
+<!--班组名称选择器-->
+<app-team-name-selector *ngIf="isShowTeamSelectorModal"
+                        [(isVisible)]="isShowTeamSelectorModal"
+                        [selectTeamNameList]="selectTeamNameList"
+                        (handleOkEvent)="handleTeamNameOk($event)">
+</app-team-name-selector>
+
+<!-- 区域选择 -->
+<ng-template #areaSelectorTpl let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" class="input-selector text-wrap" readonly [(ngModel)]="areaNames" [title]="areaNames">
+    <button type="button" class="open-button" (click)="showAreaSelectorModal()">
+      <i class="icon-l icon-search"></i>
+    </button>
+  </div>
+</ng-template>
+<!--区域选择器-->
+<xc-tree-selector [(xcVisible)]="isShowAreaSelectorModal"
+                  [treeSelectorConfig]="areaSelectorConfig"
+                  (selectDataChange)="areaSelectChange($event)">
+</xc-tree-selector>

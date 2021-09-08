@@ -1,0 +1,26 @@
+<div class="workforce-wrap">
+  <div class="table-common-title">
+    <span>{{scheduleLanguage.workforceManagement}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!--班组名称选择模板-->
+<ng-template #teamSelectorTpl let-filterValue="filterValue">
+  <span class="dept-name-select hidden"
+        (click)="showTeamNameModal(filterValue)"
+        [class.placeholder]="!filterValue.filterName"
+        [title]="filterValue.filterName || ''">{{(filterValue.filterName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--班组名称选择器-->
+<app-team-name-selector *ngIf="isShowTeamSelectorModal"
+                  [(isVisible)]="isShowTeamSelectorModal"
+                  [selectTeamNameList]="selectTeamNameList"
+                  (handleOkEvent)="handleTeamNameOk($event)"></app-team-name-selector>

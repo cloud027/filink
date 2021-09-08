@@ -1,0 +1,117 @@
+<!--告警-->
+<nz-card nzTitle="{{language.alarm}}" [nzExtra]="extraTemplate">
+  <nz-card-tab>
+    <div class="box-container">
+      <nz-tabset [nzAnimated]="false">
+        <!--当前告警-->
+        <nz-tab *ngIf="checkHasRole('02-1')" nzTitle="{{language.currentAlarm}}"
+                (nzClick)="onChangeTab(alarmTypeEnum.current)">
+          <nz-spin class="facility-detail"
+                   [nzSpinning]="pageLoading">
+            <div class="chart-container">
+              <!--当前告警环形图-->
+              <div class="ring">
+                <div echarts [options]="ringOption" class="demo-chart"></div>
+              </div>
+              <!--当前告警饼图-->
+              <div class="chart">
+                <div echarts [options]="chartOption" class="demo-chart"></div>
+              </div>
+              <!--告警增量统计-->
+              <div class="columnar">
+                <div echarts [options]="columnarOption" class="demo-chart"></div>
+              </div>
+            </div>
+          </nz-spin>
+          <div class="alarm-container">
+            <div>
+              <xc-table [dataSet]="currentAlarmDataSet" [pageBean]="pageBean" [tableConfig]="tableConfig">
+              </xc-table>
+            </div>
+          </div>
+        </nz-tab>
+        <!--历史告警-->
+        <nz-tab *ngIf="checkHasRole('02-2')" nzTitle="{{language.historyAlarm}}"
+                (nzClick)="onChangeTab(alarmTypeEnum.history)">
+          <nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+            <div class="chart-container">
+              <!--历史告警环形图-->
+              <div echarts [options]="ringOptionHistory" class="demo-chart ring"></div>
+              <!--历史告警饼图-->
+              <div echarts [options]="chartOptionHistory" class="demo-chart chart"></div>
+              <!--告警增量统计-->
+              <div echarts [options]="columnarOption" class="demo-chart columnar"></div>
+            </div>
+          </nz-spin>
+          <div class="alarm-container">
+            <xc-table
+              [dataSet]="historyAlarmDataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="historyTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </nz-card-tab>
+</nz-card>
+<!--时间选择器模板-->
+<ng-template #extraTemplate>
+  <div class="timer-container">
+    <app-alarm-time-selector [timeList]="timeList"
+                             [dateType]="dateType"
+                             (changeFilter)="changeFilter($event)">
+    </app-alarm-time-selector>
+    <a (click)="onClickShowMore()" class="more"><span>更多 >></span></a>
+  </div>
+</ng-template>
+
+<!--告警等级模版 -->
+<ng-template #alarmFixedLevelTemp let-data="data">
+  <div class="level-container">
+    <div class="box-icon" [ngStyle]="data.style"></div>
+    <span class="level-name">{{ data.alarmLevelName }} </span>
+  </div>
+</ng-template>
+
+<!--清除状态模版-->
+<ng-template #isCleanTemp let-data="data">
+  <div>{{ data.alarmCleanStatusName }}</div>
+</ng-template>
+
+<!-- 修改备注弹框 -->
+<nz-modal
+  class="updateRemarkPopUp"
+  [(nzVisible)]="remarkFormModal"
+  [nzTitle]="language.updateRemark"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="remarkFormModal=false">
+  <ng-template>
+    {{language.updateRemark}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-form [column]="formColumnRemark" (formInstance)="formInstanceRemark($event)"></xc-form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button class="link-button"
+            nz-button nzType="primary"
+            [nzLoading]="remarkFormSaveLoading"
+            [disabled]="!saveButtonDisabled"
+            (click)="onClickUpdateRemark()">
+      {{language.okText}}
+    </button>
+    <button class="link-button" nz-button nzType="default"
+            (click)="remarkFormModal=false">
+      {{language.cancelText}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!-- 创建工单 -->
+<app-add-work-order *ngIf="creatWorkOrderShow"
+                    [alarmInfo]="createWorkOrderData"
+                    [isShowModal]="creatWorkOrderShow"
+                    [modalTitle]="equipmentLanguage.createOrder"
+                    (close)="creatWorkOrderShow=false">
+</app-add-work-order>

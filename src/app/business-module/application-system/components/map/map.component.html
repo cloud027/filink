@@ -1,0 +1,102 @@
+<div id="equipment-map-box" (drop)="dropHandle($event)" (dragover)="dragoverHandle($event)">
+  <!--地图 -->
+  <div id="equipment-map-content" [hidden]="!isShowMap" class="equipment-map-container">
+    <app-application-map #mainMap
+                         [mapConfig]="mapConfig"
+                         [viewIndex]="viewIndex"
+                         [data]="data"
+                         [iconSize]="iconSize"
+                         [centerPoint]="centerPoint"
+                         [areaData]="areaData"
+                         [deviceLocation]="null"
+                         [equipmentLocation]="null"
+                         [listType]="listType"
+                         [facilityInGroup]="facilityInGroup"
+                         [equipmentTypeArr]="equipmentTypeArr"
+                         (mapEvent)="mapEvent($event)"
+                         (showProgressBar)="showProgressBar()"
+                         (hideProgressBar)="hideProgressBar()">
+    </app-application-map>
+
+    <!--  我的关注-->
+    <div class="left-panel">
+      <div class="left-panel-tabs">
+        <!--我的关注列表页-->
+        <div class="myCollection-list left-panel-tab tab-selected"
+             (click)="onShowMyCollection(isShowMyCollection)">
+          <div class="icon-type"><i class="iconfont fiLink-facility-list"></i></div>
+          <div class="text-content hidden" title="{{indexLanguage.myCollection}}">{{indexLanguage.myCollection}}</div>
+        </div>
+      </div>
+      <!--    关注列表-->
+      <my-attention [facilityOrEquipment]="facilityOrEquipment"
+                    [equipmentTypeArr]="equipmentTypeArr"
+                    *ngIf="isShowMyCollection"
+      ></my-attention>
+    </div>
+
+    <div class="button-box">
+      <!-- 框选选择添加关注或分组变更-->
+      <div class="zoom-control-item iconfont icon-fiLink fiLink-map-selection" (click)="multipleSelect()"
+           title="{{indexLanguage.mapBoxToChoose}}">
+        <div class="map-right-button" *ngIf="isShowButton">
+          <ul class="button-ul">
+            <!--添加关注-->
+            <li class="button-li" (click)="handleAddAttention($event)">
+              <span class="button-icon-right"><i class="iconfont icon-fiLink fiLink-collected"></i></span>
+              <span>{{ language.equipmentMap.addAttention }}</span>
+            </li>
+            <!--分组变更-->
+            <li class="button-li" [appAccessPermission]="'03-10-7'" (click)="groupChange($event)" *ngIf="!isSecurity">
+              <span class="button-icon-right"><i class="iconfont icon-fiLink fiLink-group-change-icon"></i></span>
+              <span>{{ language.equipmentMap.changeGroup }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!--   未分组-->
+      <div class="zoom-control-item multiple-select iconfont icon-fiLink fiLink-query-group mar-t-6"
+           title="{{language.equipmentMap.notGroup}}"
+           *ngIf="!isSecurity"
+           (click)="noneGroupOperation()">
+      </div>
+    </div>
+  </div>
+  <!-- 地图大小变化的触发图标按钮-->
+  <!-- 拖拽触发处-->
+  <div *ngIf="isShowUpIcon" [draggable]="true" id="drag-start" (dragstart)="dragstartHandle($event)"></div>
+  <div class="map-icon-container">
+    <div *ngIf="isShowUpIcon">
+      <i nz-icon nzType="double-left" nzTheme="outline" class="up-icon" (click)="mapMinHeightChange()"></i>
+    </div>
+    <div *ngIf="isShowDownIcon">
+      <i nz-icon nzType="double-left" nzTheme="outline" class="down-icon" (click)="mapBigHeightChange()"></i>
+    </div>
+  </div>
+</div>
+
+<!--进度条-->
+<div class="progress-bar" *ngIf="isShowProgressBar">
+  <p>{{commonLanguage.loading}}...</p>
+  <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+</div>
+
+
+<!-- 分组变更-->
+<app-grouping-changes
+  *ngIf="isShowGroupChange"
+  [(xcVisible)]="isShowGroupChange"
+  [tableData]="groupChangeDataSet"
+  [groupFacilityType]="selectMapType"
+  (selectDataChange)=reloadGroup()>
+</app-grouping-changes>
+
+<!--批量添加关注-->
+<app-multiple-collect-equipment
+  *ngIf="isShowAddAttention"
+  [(xcVisible)]="isShowAddAttention"
+  [facilityOrEquipment]="facilityOrEquipment"
+  [tableData]="groupChangeDataSet"
+  (addAttentionChange)="onAddAttention($event)">
+</app-multiple-collect-equipment>

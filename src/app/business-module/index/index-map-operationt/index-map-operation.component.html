@@ -1,0 +1,19 @@
+<!--坐标调整-->
+<app-adjust-coordinates [viewIndex]="viewIndex"
+                        (addCoordinatesEventEmitter)="adjustCoordinatesChange()"></app-adjust-coordinates>
+
+<!--地图分层-->
+<app-facility-show *ngIf="viewIndex===this.maintenanceView" [viewIndex]="viewIndex"
+                   [indexType]="indexType"
+                   (isShowCardEventEmitter)="facilityLayeredChange()"></app-facility-show>
+
+<!--添加分组-->
+<app-select-grouping *ngIf="roleSelect && viewIndex===this.maintenanceView"
+                     [viewIndex]="viewIndex"
+                     [facilityType] = "indexType"
+                     (addGroupingEventEmitter)="selectGroupChange()"></app-select-grouping>
+
+<!--项目聚合-->
+<app-app-select-polymerization (isShowPolymerizationEmitter)="PolymerizationChange()"
+                               *ngIf="viewIndex===this.maintenanceView && indexType === mapTypeEnum.facility">
+</app-app-select-polymerization>

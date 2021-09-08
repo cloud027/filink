@@ -1,0 +1,59 @@
+<div class="project-wisdom-detail">
+    <span class="page-title">
+      {{ pageTitle }}
+    </span>
+</div>
+
+<!--项目智慧杆编辑表单-->
+<div class="basic-info-content">
+  <xc-form [column]="formColumn"
+           (formInstance)="formInstance($event)">
+  </xc-form>
+</div>
+
+<!--表单按钮-->
+<div class="button-container">
+  <button class="link-button margin-right20" nz-button nzType="primary"
+          [nzLoading]="isSaveLoading"
+          (click)="onSaveBasicInfo()">
+    {{commonLanguage.confirm}}
+  </button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{commonLanguage.cancel}}</button>
+</div>
+
+<!-- 智慧杆型号模板 -->
+<ng-template #wisdomModelTemp let-data="data">
+  <div class="wisdom-input">
+    <span class="area-name wisdom-input" [title]="selectProductName">{{selectProductName}}</span>
+    <button type="button" class="open-button" (click)="showProductList()">
+      <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+
+
+<!-- 所选区域模板 -->
+<ng-template #areaTemp let-data="data">
+  <div class="wisdom-input">
+    <span class="area-name wisdom-input" [title]="selectAreaName">{{selectAreaName}}</span>
+    <button type="button" class="open-button" (click)="showAreaSelector()">
+      <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+
+<!--产品列表弹窗-->
+<app-project-product-list-selector
+  *ngIf="isShowProductList"
+  [productListVisible]="isShowProductList"
+  [selectedProductId]="selectProductId"
+  (selectDataChange)="selectProductChange($event)"
+></app-project-product-list-selector>
+
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>

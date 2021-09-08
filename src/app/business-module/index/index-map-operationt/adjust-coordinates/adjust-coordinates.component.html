@@ -1,0 +1,157 @@
+<!--坐标调整-->
+<div class="select-coordinates">
+  <!--坐标调整图标-->
+  <div class="select-coordinates-show icon-fiLink iconfont fiLink-location select-coordinates-show-color"
+       [ngStyle]="{'bottom': viewIndex===this.maintenanceView ? '246px' : '124px'}"
+       *ngIf="coordinateAdjustment && isShowDevice"
+       title="{{indexLanguage.adjustmentCoordinate}}"
+       (click)="checkCoordinates()">
+  </div>
+  <!--坐标调整展开-->
+  <div class="expand" *ngIf="isExpand">
+    <div class="add-single-show"
+      [ngStyle]="{'bottom': viewIndex===this.maintenanceView ? '245px' : '124px'}"
+      (click)="selectType(adjustmentType.singleCoordinate)">
+      <div class="add-coordinates-icon iconfont icon-fiLink fiLink-coordinate-single-icon"></div>
+      <div class="add-coordinates-title">{{indexLanguage.singleCoordinateAdjustment}}</div>
+    </div>
+    <div class="add-batch-show"
+      [ngStyle]="{'bottom': viewIndex===this.maintenanceView ? '211px' : '90px'}"
+      (click)="selectType(adjustmentType.batchCoordinate)">
+      <div class="add-coordinates-icon iconfont icon-fiLink fiLink-location-adjust"></div>
+      <div class="add-coordinates-title">{{indexLanguage.batchCoordinateAdjustment}}</div>
+    </div>
+  </div>
+</div>
+<!--框选展开 -->
+<div class="edit-box" *ngIf="addCoordinates">
+  <div class="icon-fiLink iconfont icon-fiLink-1  fiLink-location-adjust box-icon"
+       title="{{indexLanguage.adjustmentCoordinate}}" (click)="showAdjust()" *ngIf="!singleCoordinate">
+    <div class="add-box-title">{{indexLanguage.adjustmentCoordinate}}</div>
+  </div>
+  <div class="icon-fiLink iconfont icon-fiLink-1 fiLink-coordinate-single-icon box-icon"
+       title="{{indexLanguage.singleAdjustment}}" (click)="showSingleAdjust()" *ngIf="singleCoordinate">
+    <div class="add-box-title">{{indexLanguage.singleAdjustment}}</div>
+  </div>
+  <div class="icon-fiLink iconfont icon-fiLink-1 fiLink-save box-icon"
+       title="{{indexLanguage.save}}" (click)="showSave()">
+    <div class="add-box-title">{{indexLanguage.save}}</div>
+  </div>
+  <div class="icon-fiLink iconfont icon-fiLink-1 fiLink-return box-icon"
+       title="{{indexLanguage.revoke}}" (click)="showRevoke()">
+    <div class="add-box-title">{{indexLanguage.revoke}}</div>
+  </div>
+  <div class="icon-fiLink iconfont icon-fiLink-1 fiLink-edit-item box-icon"
+       title="{{indexLanguage.modify}}" (click)="showModify()" *ngIf="!singleCoordinate">
+    <div class="add-box-title">{{indexLanguage.modify}}</div>
+  </div>
+  <div class="icon-fiLink iconfont icon-fiLink-1 fiLink-open box-icon"
+       title="{{indexLanguage.dropOut}}" (click)="showDropOut()">
+    <div class="add-box-title">{{indexLanguage.dropOut}}</div>
+  </div>
+</div>
+
+<!--坐标调整弹框-->
+<nz-modal
+  *ngIf="isCoordinates"
+  [(nzVisible)]="isCoordinates"
+  [nzTitle]="coordinatesTitle"
+  [nzContent]="coordinatesContent"
+  [nzFooter]="coordinatesFooter"
+  [nzWidth]="1100"
+  (nzOnCancel)="closeModal()">
+</nz-modal>
+
+<!--弹窗标题-->
+<ng-template #coordinatesTitle>{{indexLanguage.adjustmentCoordinate}}</ng-template>
+
+<ng-template #coordinatesContent>
+  <!--弹框主体内容-->
+  <div class="modal-step">
+    <!--步骤条-->
+    <div class="step-content">
+      <nz-steps [nzCurrent]="stepIndex" [nzStartIndex]="0" nzDirection="vertical">
+        <nz-step class="select-facility"
+                 nzTitle="{{indexLanguage.firstStep}}"></nz-step>
+        <nz-step nzTitle="{{indexLanguage.secondStep}}"></nz-step>
+      </nz-steps>
+    </div>
+    <!--第一步显示表格-->
+    <div class="facility-table" [hidden]="showContent">
+      <div class="facility-table-title">
+        <span>{{indexLanguage.theFirstStep}}</span>
+      </div>
+      <!--设施/设备列表-->
+      <div *ngIf="this.viewIndex===maintenanceView">
+        <xc-table [dataSet]="dataSet"
+                  [pageBean]="pageBean"
+                  [tableConfig]="tableConfig"
+                  (pageChange)="pageChange($event)">
+        </xc-table>
+      </div>
+      <div *ngIf="this.viewIndex!==maintenanceView">
+        <xc-table [dataSet]="dataSet"
+                  [pageBean]="pageBean"
+                  [tableConfig]="planProjectTableConfig"
+                  (pageChange)="pageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+    <!--第二步操作内容-->
+    <div class="addGroup" [hidden]="!showContent">
+      <div class="addGroup-title">
+        <span class="title-text">{{indexLanguage.secondStep}}</span>
+      </div>
+      <!--单选切换-->
+      <div class="addGroup-radio">
+        <span class="addGroup-radio-title">{{indexLanguage.arrangementType}}：</span>
+        <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="radioValueChange($event)">
+          <label nz-radio nzValue="{{arrangementTypeEnum.singleLine}}">{{indexLanguage.singleLine}}</label>
+          <label nz-radio nzValue="{{arrangementTypeEnum.doubleLine}}">{{indexLanguage.doubleLine}}</label>
+        </nz-radio-group>
+      </div>
+      <xc-form class="group-input" [column]="formColumn"
+               (formInstance)="formInstance($event)"></xc-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #coordinatesFooter>
+  <!--上一步-->
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one"
+          (click)="handleBack()">{{indexLanguage.lastStep}}</button>
+  <!--下一步-->
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.zero"
+          (click)="handleNext()">{{indexLanguage.nextStep}}</button>
+
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one"
+          [nzLoading]="isLoading"
+          [disabled]="isDisabledShow()"
+          (click)="addGroupHandleOk()"
+  >{{indexLanguage.confirm}}</button>
+  <!--取消-->
+  <button nz-button nzType="default" (click)="closeModal()">{{indexLanguage.cancel}}</button>
+</ng-template>
+<!--表格输入框排序-->
+<ng-template #serialNumberValue let-data="data">
+  <input nz-input placeholder="{{indexLanguage.serialNumber}}" type="number" [(ngModel)]="data.serialNumber"
+         (ngModelChange)="onChange($event, data.lastSerialNumber)"/>
+</ng-template>
+<!--坐标调整确认弹框-->
+<nz-modal
+  [(nzVisible)]="okIsVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>{{indexLanguage.confirmAdjustmentCoordinate}}</ng-template>
+
+  <ng-template #modalContent>
+    <p>{{indexLanguage.confirmTip}}</p>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">{{indexLanguage.confirm}}</button>
+    <button nz-button nzType="default" (click)="handleCancel()">{{indexLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

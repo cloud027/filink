@@ -1,0 +1,22 @@
+<nz-modal
+  [(nzVisible)]="xcVisible"
+  [nzWidth]="1000"
+  [nzTitle]="language.equipmentMap.addAttention"
+  [nzContent]="contentTemp"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter">
+  <!--  弹窗主体内容-->
+  <ng-template #contentTemp>
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  </ng-template>
+  <!--  弹窗底部按钮-->
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary" (click)="handleOk()" [disabled]="!isSelect">{{indexLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleCancel()">{{language.frequentlyUsed.cancel}}</button>
+  </ng-template>
+</nz-modal>

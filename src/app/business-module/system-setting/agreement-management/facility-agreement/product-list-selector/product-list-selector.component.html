@@ -1,0 +1,34 @@
+<nz-modal [nzWidth]="800"
+          [(nzVisible)]="productVisible"
+          [nzTitle]="productLanguage.productList"
+          (nzOnCancel)="productVisible=false"
+          [nzMaskClosable]="false"
+          [nzFooter]="modalFooter">
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</nz-modal>
+<ng-template #modalFooter>
+  <button nz-button nzType="primary" class="link-button"  (click)="handleConfirm()">{{commonLanguage.okText}}</button>
+  <button nz-button nzType="danger" class="link-button"  (click)="cleanUp()">{{commonLanguage.cleanUp}}</button>
+  <button nz-button nzType="danger" class="link-button"  (click)="productVisible=false">{{commonLanguage.cancelText}}</button>
+</ng-template>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectProductId" (ngModelChange)="productChange($event, data)">
+    <label nz-radio [nzValue]="data.productId">
+    </label>
+  </nz-radio-group>
+</ng-template>

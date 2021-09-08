@@ -1,0 +1,18 @@
+@import "../../../../style-module/config";
+.area-box {
+  width: 300px;
+  display: inline-block;
+  padding: 4.5px 11px;
+  border: 1px solid $button-delete-disable-border-color;
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  height: 32px;
+}
+
+.bg-color {
+  background-color: $button-delete-disable-color;
+  color: rgba(0, 0, 0, 0.25);
+}

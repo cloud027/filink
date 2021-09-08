@@ -1,0 +1,52 @@
+@import "../../../../style-module/config";
+.facility-detail {
+  padding: 10px;
+
+  .area-detail-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+
+  .facility-area-name {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    margin-right: 10px;
+    padding: 4px 11px;
+    width: 50%;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .facility-open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $button-danger-color;
+  }
+
+  .facility-open-button[disabled] {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: $button-delete-disable-color;
+    border-color: $button-danger-hover-color;
+    text-shadow: none;
+    box-shadow: none;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: $button-delete-disable-color;
+    border-color: $button-danger-hover-color;
+    text-shadow: none;
+    box-shadow: none;
+  }
+}

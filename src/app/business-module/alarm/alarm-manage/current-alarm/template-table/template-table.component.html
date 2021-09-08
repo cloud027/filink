@@ -1,0 +1,36 @@
+<nz-modal
+  class="alarm-template-table"
+  [(nzVisible)]="templateTable"
+  [nzTitle]="language.templateQuery"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzWidth]="720"
+  (nzOnCancel)="closePopUp()">
+  <ng-template #modalTitle>
+    {{language.templateQuery}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table
+      class="thisAlarm"
+      [dataSet]="dataSetTemplate"
+      [pageBean]="pageBeanTemplate"
+      [tableConfig]="tableConfigTemplate"
+      (pageChange)="pageTemplateChange($event)"
+    >
+    </xc-table>
+  </ng-template>
+
+  <!-- 底部点击按钮 -->
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="okText()">{{language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="closePopUp()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+<!-- 模板列表  单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange(data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>

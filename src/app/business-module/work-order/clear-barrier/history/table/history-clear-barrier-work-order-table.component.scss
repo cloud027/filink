@@ -1,0 +1,30 @@
+@import "../../../../../style-module/config";
+.history-table{
+  .area-name {
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 11px;
+    cursor: pointer;
+  }
+
+  .status-temp{
+    margin-right: 6px;
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
+  }
+
+  .ref-color{
+    color: $color;
+  }
+}
+.equipment-name {
+  .title {
+    color: $order-title-color;
+  }
+  &:hover{
+    border-color: $color;
+  }
+}

@@ -1,0 +1,136 @@
+@import "../config";
+// 新增人员信息中在职、离职日期样式调整
+.person-add {
+  .entry-time, .leave-time {
+    .ant-calendar-picker-input {
+      width: 300px;
+    }
+  }
+}
+
+// 新增班次中的时间选择框样式调整
+.shift-add {
+  .ant-time-picker {
+    width: 137px;
+  }
+}
+.time-filter {
+  .ant-time-picker .ant-time-picker-input {
+    height: 22px;
+    display: flex;
+    font-size: 12px;
+  }
+  .ant-time-picker-icon {
+    display: none;
+  }
+}
+.workforce-wrap {
+  // 查看排班按钮样式
+  .select-status {
+    color: $color;
+    border-color: $color;
+  }
+}
+
+
+.schedule-calendar-wrap {
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-date {
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    .disable-date-cell {
+      background-color: $eCharts-bg-color;
+      cursor: auto;
+    }
+
+    .date-text {
+      font-size: 13px;
+      color: $title-color;
+    }
+
+    .member-name-wrap {
+      font-size: 13px;
+      color: $index-left-unselected;
+
+      .prefix-name {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: $color;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-last-month-cell .ant-fullcalendar-date,
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-next-month-btn-day .ant-fullcalendar-date {
+    .date-text {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  // 表头样式修改
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-column-header {
+    text-align: left;
+    color: $title-color;
+  }
+
+  // 修改今天的高亮的样式
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-today .ant-fullcalendar-date {
+    background-color: $bg-c-w;
+
+    .member-name-wrap {
+      color: $index-left-unselected;
+
+      .prefix-name {
+        background-color: $color;
+      }
+    }
+
+    .date-text {
+      font-size: 13px;
+      color: $title-color;
+    }
+  }
+
+  // 选中的日期、hover效果日期格子样式
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-date:hover,
+  .ant-fullcalendar-fullscreen .ant-fullcalendar-selected-day .ant-fullcalendar-date {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background: $color;
+
+    .disable-date-cell {
+      background-color: $color;
+    }
+
+    .date-text {
+      font-size: 16px;
+      color: $calendar-date-selected;
+      font-weight: bold;
+    }
+
+    .member-name-wrap {
+      color: $calendar-date-selected;
+
+      .prefix-name {
+        background-color: $calendar-date-selected;
+      }
+    }
+  }
+
+  // 屏蔽年月的切换
+  .ant-fullcalendar-header .ant-radio-group {
+    display: none;
+  }
+
+  .ant-fullcalendar td {
+    border: 1px solid $border-color;
+    padding: 0;
+  }
+
+}

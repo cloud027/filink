@@ -1,0 +1,54 @@
+<!--报表分析-->
+<div class="report-analysis-warp">
+  <!--  头部标题 -->
+  <div class="report-header">
+    <h4 class="mar_none">{{language.reportAnalysis.reportAnalysis}}</h4>
+  </div>
+  <div class="report-content">
+    <nz-tabset (nzSelectedIndexChange)="changeReportType($event)"
+               [nzSelectedIndex] = "tabIndex">
+      <nz-tab *ngFor="let item of reportTabData; let i = index"
+              [nzTitle]="item">
+        <ng-template nz-tab>
+          <!--筛选条件-->
+          <app-filter-condition
+            [index]="i"
+            [activeIndex]="tabIndex"
+            [storeReportData] = "storeReportData"
+            (emitConditionData)="generateResults($event)"
+            (emitCacheDataChange)="getCacheResults($event)">
+          </app-filter-condition>
+
+          <!--统计数据 -->
+          <div *ngIf="isShowReport">
+            <div class="report-analysis-title">
+              <div class="pad-l-16">{{item}}</div>
+            </div>
+            <div class="report-analysis-content">
+              <!-- 统计表格-->
+              <xc-table
+                [dataSet]="dataSet"
+                [hidden]="!isHideGraph"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig">
+              </xc-table>
+              <!--统计图-->
+              <div [hidden]="isHideGraph" class="graph-box">
+                <div class="change-to-table" (click)="changeGraph()" (mouseenter)="showTip = true"
+                     (mouseleave)="showTip = false">
+                  <i class="icon-l iconfont  icon-fiLink fiLink-config-template"></i>
+                  <!--   与echarts图保存图片按钮tip一致，自定义样式tip保持一致 -->
+                 <span class="change-title-tip" [hidden]="!showTip">{{language.reportAnalysis.analysisTable}}</span>
+               </div>
+               <div *ngIf="isHaveGraphData" echarts [options]="reportAnalysisEchartsDataset" class="chart"></div>
+               <div class="empty-container" *ngIf="!isHaveGraphData">
+                 <nz-empty></nz-empty>
+               </div>
+             </div>
+           </div>
+         </div>
+       </ng-template>
+     </nz-tab>
+   </nz-tabset>
+ </div>
+</div>

@@ -1,0 +1,38 @@
+<nz-spin [nzSpinning]="isLoading">
+  <!--策略详情-->
+  <div class="lighting-details" [ngClass]="isOperation ? classStatus.detailsActive: ''">
+    <h3 class="title lighting-active">
+      {{isOperation ? languageTable.strategyList.strategyDetails : languageTable.strategyList.basicInformation}}
+    </h3>
+    <!--策略基本信息-->
+    <div class="policy-details">
+      <app-policy-details
+        [lightingData]="stepsFirstParams"
+      ></app-policy-details>
+    </div>
+    <!--策略操作按钮-->
+    <div class="policy-basic lighting-active" *ngIf="isOperation">
+      <app-policy-basic-operation
+        [operatePermissionEnum]="lightPolicyEnum"
+        (operationNotify)="handleOperation($event)"
+      ></app-policy-basic-operation>
+    </div>
+    <!--应用范围-->
+    <div class="applied lighting-active"
+         *ngIf="stepsFirstParams.strategyRefList&&stepsFirstParams.strategyRefList.length">
+      <app-applied-range
+        [lightingData]="stepsFirstParams"
+        [isDetail]="isOperation"
+      ></app-applied-range>
+    </div>
+    <!--策略列表-->
+    <div class="details">
+      <h3 class="title">{{languageTable.strategyList.strategyDetails}}</h3>
+      <div class="details-content">
+        <xc-table [dataSet]="stepsFirstParams.instructLightList"
+                  [tableConfig]="strategyTableConfig">
+        </xc-table>
+      </div>
+    </div>
+  </div>
+</nz-spin>

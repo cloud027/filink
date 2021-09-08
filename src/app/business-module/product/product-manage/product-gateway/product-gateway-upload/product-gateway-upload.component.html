@@ -1,0 +1,32 @@
+<!--上传网关图-->
+<div class="no-upload-container">
+  <div class="tip-container">
+    <!--按钮-->
+    <div class="btn-container">
+      <button class="link-button position-config wisdom-operate" nz-button type="button" (click)="onClickUpload()">
+        <i class="iconfont fiLink-upload"></i>
+        {{productLanguage.uploadFile}}
+      </button>
+    </div>
+    <div class="position-info">
+      <div class="no-model">
+        <div class="no-wisdom-model">
+          <div><img src="assets/img/product/image-no-gateway.png"></div>
+          <div class="no-img-tip">{{productLanguage.gatewayModelNotUploadedYet}}</div>
+        </div>
+      </div>
+      <div class="no-position">
+        <div class="no-wisdom-model">
+          <div><img src="assets/img/product/image-no-position.png"></div>
+          <div class="no-img-tip">{{productLanguage.gatewayPositionNotUploadedYet}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--上传组件-->
+<app-batch-upload-file *ngIf="isVisible"
+                       [(uploadVisible)]="isVisible"
+                       [(pageLoading)]="pageLoading"
+                       (uploadSuccess)="onClickDoUpload($event)"
+                       [uploadFileType]="uploadFileType.gateway"></app-batch-upload-file>

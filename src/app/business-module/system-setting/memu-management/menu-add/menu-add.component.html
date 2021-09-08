@@ -1,0 +1,45 @@
+<!--菜单添加-->
+<app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+<div class="mune-form">
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <div class="button-group">
+    <button class="link-button space" [nzLoading]="submitLoading" [disabled]="!isSystemDisabled"
+            *ngIf="!templateId" nz-button nzType="primary"
+            (click)="addMenuTemplate()">{{language.table.okText}}</button>
+    <button class="link-button space" [nzLoading]="submitLoading" [disabled]="!isSystemDisabled" *ngIf="templateId"
+            nz-button nzType="primary" (click)="updateMenuTemplate()">{{language.table.okText}}</button>
+    <button class="link-button space" nz-button nzType="danger"
+            (click)="cancel()">{{language.table.cancelText}}</button>
+    <button class="link-button" nz-button nzType="danger" (click)="showMenu()">{{language.table.preview}}</button>
+  </div>
+</div>
+
+<ng-template #menuTree let-formGroup="formGroup" let-col="col">
+  <app-menu-tree [nodes]="treeData" #tree></app-menu-tree>
+</ng-template>
+<!--预览菜单-->
+<nz-modal class="modalBox"
+          [(nzVisible)]="isVisible"
+          [nzTitle]="modalTitle"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzWidth]="500"
+          [nzBodyStyle]="{'overflow':'hidden','overflow-y': 'auto','display': 'flex','margin-left': '15px','height': '400px'}"
+          (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    <div>{{indexLanguage.menuPreview}}</div>
+  </ng-template>
+
+  <ng-template #modalContent>
+    <ul class="first-view">
+      <ng-container *ngFor="let item of menuNodeList">
+        <app-menu-item *ngIf="item.isShow !=='0'" [menuItem]="item" [isCollapsed]="false" [isMenuPreview]="true">
+        </app-menu-item>
+      </ng-container>
+    </ul>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleCancel()">{{indexLanguage.confirm}}</button>
+  </ng-template>
+</nz-modal>

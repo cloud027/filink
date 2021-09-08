@@ -1,0 +1,81 @@
+<div class="basic-operation-wrapper">
+  <nz-spin [nzSpinning]="loading">
+    <nz-card nzTitle="{{language.basicOperation}}" [nzBordered]="false">
+      <div class="operate-container">
+        <!--编辑设施-->
+        <div class="operate-item" [appAccessPermission]="'03-1-3'" (click)="updateFacility()">
+          <i class="icon-fiLink-l iconfont fiLink-edit-facility facility-edit operate-i detail-operate-btn"></i>
+          <span class="btn-name">{{language.facilityEdit}}</span>
+        </div>
+        <!--删除设施-->
+        <div class="operate-item" [appAccessPermission]="'03-1-4'" (click)="deleteFacility()">
+          <i class="icon-fiLink-l iconfont fiLink-delete-facility facility-delete operate-i detail-operate-btn"></i>
+          <span class="btn-name">{{language.facilityDelete}}</span>
+        </div>
+        <!--查看设施-->
+        <div class="operate-item" *ngIf="isCoreFusion && isJointClosure && intelligentLabelDetail"
+             [appAccessPermission]="'03-1-5-4'" (click)="viewFacilities()">
+          <i class="icon-fiLink-l iconfont fiLink-my-collection view-facilities operate-i detail-operate-btn"></i>
+          <span class="btn-name">{{language.ViewFacilities}}</span>
+        </div>
+        <!--布防-->
+        <div class="operate-item" *ngIf="hasControl" [appAccessPermission]="'03-1-14'"
+             (click)="updateDeviceStatus('1',language.editDeployStatusMsg)">
+          <i
+            class="icon-fiLink-l iconfont fiLink-defense deploy detail-operate-btn"></i>
+          <span class="btn-name">{{language.deployed}}</span>
+        </div>
+        <!--撤防-->
+        <div class="operate-item" *ngIf="hasControl" [appAccessPermission]="'03-1-15'"
+             (click)="updateDeviceStatus('2',language.editNoDefenceStatusMsg)">
+          <i class="icon-fiLink-l iconfont fiLink-protection-u removal detail-operate-btn"></i>
+          <span class="btn-name">{{language.removal}}</span>
+        </div>
+        <!--停用-->
+        <div class="operate-item" *ngIf="hasControl" [appAccessPermission]="'03-1-16'"
+             (click)="updateDeviceStatus('3',language.editNotUsedStatusMsg)">
+          <i class="icon-fiLink-l iconfont fiLink-disabled facility-off detail-operate-btn"></i>
+          <span class="btn-name">{{language.facilityOff}}</span>
+        </div>
+        <!--配置策略-->
+        <div class="operate-item" *ngIf="hasControl" [appAccessPermission]="'03-1-6'" (click)="clickButton()">
+          <i class="icon-fiLink-l iconfont fiLink-setting detail-operate-btn"></i>
+          <span class="btn-name">{{language.configurationStrategy}}</span>
+        </div>
+        <!--授权-->
+        <div class="operate-item" *ngIf="hasGuard" [appAccessPermission]="'09-5-1-2'" (click)="authorization()">
+          <i class="icon-fiLink-l iconfont fiLink-authorization detail-operate-btn"></i>
+          <span class="btn-name">{{language.authorization}}</span>
+        </div>
+        <nz-upload
+          [appAccessPermission]="'03-1-5-6'"
+          [nzDisabled]="checkHasRole('03-1-5-6')"
+          [nzShowUploadList]="false"
+          [nzCustomRequest]="uploadImg"
+          [nzBeforeUpload]="beforeUpload"
+        >
+          <ng-container>
+            <div class="operate-item">
+              <i class="iconfont fiLink-upload-img operate-icon detail-operate-btn"></i>
+              <span class="btn-name">{{language.uploadImg}}</span>
+            </div>
+          </ng-container>
+        </nz-upload>
+      </div>
+    </nz-card>
+  </nz-spin>
+</div>
+<!--纤芯成端-->
+<app-core-end [coreEndIsVisible]="isEndVisible" (closeCoreEnd)="isEndVisible=false" *ngIf="show"></app-core-end>
+<app-core-end-view [viewCoreEndIsVisible]="viewIsEndVisible" (viewCloseCoreEnd)="viewIsEndVisible=false"
+                   *ngIf="ViewShow"></app-core-end-view>
+<!--设施授权弹框-->
+<ng-template #openLockTemp>
+  <div>
+    <xc-table [dataSet]="lockInfo"
+              [pageBean]="pageBean"
+              [tableConfig]="lockInfoConfig">
+    </xc-table>
+  </div>
+</ng-template>
+

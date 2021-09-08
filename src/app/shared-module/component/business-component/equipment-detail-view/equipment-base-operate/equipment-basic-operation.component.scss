@@ -1,0 +1,30 @@
+@import "../../../../../style-module/config";
+// 基本操作按钮样式
+.operate-container {
+  display: flex;
+  flex-wrap: wrap;
+  // 每个操作按钮的样式
+  .operate-item {
+    display: flex;
+    margin-right: 20px;
+    width: 210px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    border-radius: 4px;
+    cursor: pointer;
+    color: $page-font-color;
+    .btn-name{
+      font-size: 13px;
+    }
+    // 鼠标悬停每个操作按钮样式
+    &:hover {
+      .detail-operate-btn{
+        color: $menu-font-color;
+      }
+      color: $menu-font-color;
+      background-color: $color;
+    }
+  }
+}

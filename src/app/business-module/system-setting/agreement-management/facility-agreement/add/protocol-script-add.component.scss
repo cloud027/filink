@@ -1,0 +1,55 @@
+@import "../../../../../style-module/config";
+.protocol-form {
+  position: relative;
+  .btn {
+    padding: 40px 0 20px 20px;
+    .btn-space {
+      margin-right: 20px;
+    }
+  }
+}
+.form-width {
+  width: 400px;
+
+  .file-input {
+    display: none;
+  }
+
+  .file-name {
+    margin-left: 10px;
+    margin-right: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .file-name-wrap {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    .del-icon {
+      position: absolute;
+      top: 13px;
+      color: $error-color;
+    }
+
+    &:hover {
+
+      .del-icon {
+        opacity: 1;
+      }
+    }
+  }
+}
+.auto-wrapper {
+  display: flex;
+  align-items: center;
+  .input-name {
+    width: 300px;
+  }
+  .auto-icon {
+    position: absolute;
+    left: 103%;
+    cursor: pointer;
+  }
+}

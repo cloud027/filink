@@ -1,0 +1,19 @@
+<!--当前告警和历史告警列表-->
+<div class="facility-alarm-panel-container">
+  <!--当前告警-->
+  <app-alarm-table *ngIf="this.currentAlarmRole"
+                   [facilityId]="facilityId"
+                   [appTenantPermission]="'1-2-2-1'"
+                   [facilityAlarmType]="facilityAlarmTypeEnum.currentAlarm"
+                   (alarmTypeEmit)="goToAlarmPage(facilityAlarmTypeEnum.currentAlarm)">
+  </app-alarm-table>
+  <!--历史告警-->
+  <app-alarm-table class="margin-top40"
+                   *ngIf="this.hisAlarmRole"
+                   [facilityId]="facilityId"
+                   [appTenantPermission]="'1-2-2-2'"
+                   [facilityAlarmType]="facilityAlarmTypeEnum.historyAlarm"
+                   (alarmTypeEmit)="goToAlarmPage(facilityAlarmTypeEnum.historyAlarm)">
+  </app-alarm-table>
+
+</div>

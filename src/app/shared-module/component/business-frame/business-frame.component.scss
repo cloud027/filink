@@ -1,0 +1,17 @@
+.business-frame-canvas {
+  height: 650px;
+  width: 100%;
+
+  .rightShow {
+    position: relative;
+    flex: 4;
+
+    .isShow {
+      position: absolute;
+      background: cornflowerblue;
+      z-index: 100;
+      min-height: 30px;
+      min-width: 90px;
+    }
+  }
+}

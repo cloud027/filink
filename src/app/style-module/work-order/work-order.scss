@@ -1,0 +1,263 @@
+@import "../config";
+
+// 待指派
+.assigned {
+  background-color: $statistics-assigned;
+}
+// 待处理
+.pending {
+  background-color: $statistics-pending;
+}
+// 处理中
+.processing {
+  background-color: $statistics-processing;
+}
+// 已转派
+.turnProcess {
+  background-color: $statistics-turnProcessing;
+}
+// 已完成
+.completed {
+  background-color: $statistics-completed;
+}
+// 已退单
+.singleBack {
+  background-color: $statistics-singleBack;
+}
+
+/*鼠标*/
+.cursor-pointer{
+  cursor: pointer;
+}
+
+/*选择巡检模板*/
+.select-inspection{
+  .ant-list-bordered{
+    height: 100%;
+  }
+}
+
+/*列表中进度*/
+.row-content{
+  .progress-content{
+    .ant-progress-line{
+      top: -2px;
+    }
+  }
+}
+/*巡检报告*/
+.report-warp{
+  .device-tree{
+    .ant-tree li span.ant-tree-switcher{
+      color: $color;
+    }
+    .tree-warp{
+      .ant-tree .font-highlight{
+        display: inline-block;
+        color: $title-color;
+        background: $button-disable-bg-color;
+      }
+    }
+  }
+}
+.inspect-tree{
+  .ztree.link-tree {
+    li span.button.chk.checkbox_true_part {
+      background-position: -25px -3px !important;
+    }
+    li span.button.chk.checkbox_true_part_focus {
+      background-position: -25px -3px !important;
+    }
+  }
+}
+
+/*列表上方title*/
+.table-common-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: #333;
+  padding-bottom: 20px;
+  background-color: $bg-c-w;
+  position: relative;
+  span{
+    margin-left: 16px;
+  }
+  &:before{
+    content: '';
+    display: block;
+    height: 10px;
+    background: $bg-c;
+    position: absolute;
+    width: 100%;
+    bottom: -5px;
+  }
+}
+/*表单宽度*/
+.form-column-width {
+  .ant-calendar-picker {
+    width: 300px !important;
+  }
+  .ant-time-picker{
+    width: 100%;
+  }
+  .area-name{
+    width: 300px;
+  }
+  .open-button {
+    position: absolute;
+    top: 4px;
+    margin-left: 4px;
+  }
+  textarea.ant-input {
+    height: 82px;
+    margin-bottom: 0;
+  }
+}
+/*页面title*/
+.page-detail-title {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.finished-tab .bold-icon{
+  font-weight: bold;
+}
+
+/*列表中模板样式处理*/
+.tab-text-over{
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  .over-type{
+    display: inline-block;
+    margin-right: 8px;
+    .iconfont {
+      margin-right: 5px !important;
+    }
+  }
+}
+
+/*卡片 今日新增不能点击样式*/
+.not-click-slider .swiper-container{
+  .swiper-wrapper{
+    .swiper-slide:last-child {
+      cursor: not-allowed !important;
+    }
+  }
+}
+
+/*巡检对象*/
+.inspect-object {
+  .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body{
+    height: 390px !important;
+  }
+  .virtual-table .ant-table-placeholder {
+    position: absolute;
+    top: 75px;
+    width: 100%;
+    z-index: 2;
+  }
+  .ant-spin-nested-loading{
+    top: -8px;
+  }
+}
+
+/*巡检设施/设备地图列表*/
+.order-selector-table {
+  .row-active {
+    color: $title-color !important;
+  }
+  .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
+    height: 330px !important;
+  }
+  .table-top-button{
+    margin-top: -10px;
+  }
+}
+/*工单转派表单*/
+/*.trans-form .xc-label {
+  min-width: 90px;
+}*/
+
+/*巡检任务列表查询输入框*/
+.task-unit{
+  width: 100%;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 11px;
+  outline: none;
+  display: inline-block;
+  border: 1px solid $button-disable-bg-color;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  &:hover{
+    border-color: $color;
+  }
+}
+/*没有复选框的列表*/
+.no-checkbox-table .ant-table {
+  .ant-table-thead tr > th:first-child {
+    left: 0 !important;
+  }
+  .ant-table-body tr > td:first-child {
+    left: 0 !important;
+  }
+}
+
+/**选择设施*/
+.map-selector-modal-area .map-selector-modal .map-body-area {
+  .table-right .table-content .ant-table-fixed-header .ant-table-scroll .ant-table-header {
+    overflow: hidden !important;
+  }
+}
+
+.view-table .ant-table-body{
+  max-height: 250px !important;
+  overflow: auto !important;
+}
+/** 时间选择*/
+.time-input {
+  .ant-time-picker-input{
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 11px;
+  }
+}
+
+/*杆型图*/
+.detail-box .gutter-box{
+  position: relative;
+  .export-qunee {
+    position: absolute;
+    top: 5px;
+    left: 13px;
+    z-index: -3;
+  }
+  .float-window {
+    height: 96%;
+    padding-top: 3%;
+  }
+}
+/**组件内样式*/
+.pic-selector .screen-render {
+  input{
+    cursor: pointer;
+  }
+}
+.select-alarm{
+  .xc-label{
+    min-width: 170px !important;
+    width: 170px !important;
+  }
+}

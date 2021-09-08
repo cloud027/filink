@@ -1,0 +1,25 @@
+<div  class="photo-info" [ngStyle]="{'color': pColor}">
+  <p class="photo-info-title">{{language.picDetails}}</p>
+  <p><span class="label">{{language.picInfo.name}}</span><span class="value" [title]="picInfo.picName" >{{picInfo.picName}}</span></p>
+  <!--设施信息-->
+  <p *ngIf="picInfo.objectType===objectTypeEnum.facility"><span class="label">{{language.picInfo.facilityName}}</span><span class="value" [title]="picInfo.deviceName">{{picInfo.deviceName}}</span></p>
+  <p *ngIf="picInfo.objectType===objectTypeEnum.facility"><span class="label">{{language.picInfo.facilityType}}</span><span class="value" [title]="picInfo.deviceType | translate:deviceTypeEnum">{{picInfo.deviceType | translate:deviceTypeEnum}}</span></p>
+  <p *ngIf="picInfo.objectType===objectTypeEnum.facility"><span class="label">{{language.picInfo.facilityNo}}</span><span class="value" [title]="picInfo.deviceCode">{{picInfo.deviceCode}}</span></p>
+  <!--设备信息-->
+  <p *ngIf="picInfo.objectType===objectTypeEnum.equipment"><span class="label">{{language.equipmentName}}</span><span class="value" [title]="picInfo.equipmentName">{{picInfo.equipmentName}}</span></p>
+  <p *ngIf="picInfo.objectType===objectTypeEnum.equipment"><span class="label">{{language.equipmentType}}</span>
+    <span class="value" title="{{picInfo.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+      {{picInfo.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+    </span>
+  </p>
+  <p *ngIf="picInfo.objectType===objectTypeEnum.equipment"><span class="label">{{language.deviceCode}}</span><span class="value" [title]="picInfo.equipmentCode">{{picInfo.equipmentCode}}</span></p>
+  <p><span class="label">{{language.picInfo.area}}</span><span class="value" title="{{picInfo.areaName}}">{{picInfo.areaName}}</span></p>
+  <p><span class="label">{{language.picInfo.address}}</span><span class="value" title="{{picInfo.address}}">{{picInfo.address}}</span></p>
+  <p><span class="label">{{language.picInfo.picSize}}</span><span class="value" [title]="picInfo.picSize">{{picInfo.picSize}}</span></p>
+  <p><span class="label">{{language.picInfo.imgType}}</span><span class="value" [title]="picInfo.type">{{picInfo.type}}</span></p>
+  <p><span class="label">{{language.picInfo.time}}</span><span class="value" [title]="picInfo.ctime | dynamic : 'date'">{{picInfo.ctime | dynamic : 'date'}}</span></p>
+  <p><span class="label">{{language.picInfo.source}}</span>
+    <span *ngIf="picInfo.resourceName" class="value selected" (click)="linkTo()" [title]="picInfo.resourceName">{{picInfo.resourceName}}</span>
+    <span *ngIf="!picInfo.resourceName" class="value selected" (click)="linkTo()" >{{picInfo.resourceName}}</span>
+  </p>
+</div>

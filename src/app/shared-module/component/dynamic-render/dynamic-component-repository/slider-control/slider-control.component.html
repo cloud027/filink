@@ -1,0 +1,16 @@
+<div class="options-body">
+  <div class="options-icon" [ngStyle]="{'background-color': sliderConfig.id === 'SET_VOLUME'? '#a99af6' : '#ffc328'}">
+    <i class="content-left-icon iconfont {{sliderConfig.icon}}"></i>
+  </div>
+  <div nz-col nzSpan="4" class="options-name">
+    {{sliderConfig.name}}</div>
+  <div class="options-slider">
+    <nz-slider
+      [disabled]="checkHasRole(operateCode)"
+      [(ngModel)]="value"
+      [nzMin]="sliderConfig.min"
+      [nzMax]="sliderConfig.max"
+      (nzOnAfterChange)="change($event)"></nz-slider>
+  </div>
+  <div class="options-num">{{value}}</div>
+</div>

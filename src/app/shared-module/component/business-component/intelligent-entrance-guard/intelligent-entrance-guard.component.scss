@@ -1,0 +1,240 @@
+@import '../../../../style-module/config';
+
+.label {
+  width: 50%;
+  display: inline-block;
+  line-height: 28px;
+  color: $disabled-font-color;
+}
+
+.lockStatus {
+  color: $disabled-font-color;
+}
+
+.sensingInformation {
+  color: $disabled-font-color;
+}
+
+.i-vertical {
+  vertical-align: middle
+}
+
+.no-lock-label {
+  width: 100px;
+  display: inline-block;
+  line-height: 32px;
+}
+
+.value {
+  vertical-align: middle;
+}
+
+:host ::ng-deep .ant-card-head .ant-card-head-title {
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+:host ::ng-deep .ant-card-body {
+  padding: 20px 32px;
+}
+
+.lock-chart {
+  height: 130px;
+}
+
+.sense-chart {
+  height: 300px;
+}
+
+.lock-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  span {
+    margin-right: 16px;
+    display: inline-block;
+    width: 218px;
+  }
+}
+
+.lock-middle {
+  p {
+    padding-left: 20px;
+    color: #282828;
+  }
+
+  .number {
+    font-size: 20px;
+  }
+
+  .open-count {
+    position: relative;
+  }
+}
+
+.open-lock {
+  background: #0ac929;
+  color: $bg-c-w;
+  height: 20px;
+}
+
+.lock-bottom {
+  padding-left: 20px;
+
+  .lock-status {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      text-align: left;
+      flex: 1;
+    }
+
+    .select {
+      text-align: left;
+      flex: 1;
+    }
+  }
+}
+
+.normal {
+  color: $bg-c-w;
+  border-radius: 2px;
+  padding: 1px 9px 1px 7px;
+  font-size: 12px;
+}
+
+.activate {
+  background: #0ac929;
+  color: $bg-c-w;
+  border-radius: 2px;
+  padding: 1px 9px 1px 7px;
+  font-size: 12px;
+}
+
+.fontStyle {
+  width: 0;
+  height: 0;
+  display: inline;
+}
+
+.update-time {
+  color: $disabled-font-color;
+  min-width: 202px;
+  display: block;
+
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 30px;
+  background: $bg-c-w;
+
+  i {
+    vertical-align: baseline !important;
+  }
+
+  .delete-control {
+    font-size: 14px;
+    color: $deleteBtn-color;
+    vertical-align: middle !important;
+  }
+}
+
+.select-sensor {
+  border-bottom: 2px solid $color;
+}
+
+.sensor-label {
+  cursor: pointer;
+}
+
+.empty {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+
+:host ::ng-deep .ant-calendar-range-picker-input {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+// 有源锁
+.guard-container {
+  display: flex;
+  height: 410px;
+
+  .control-info-container {
+    flex: 1;
+
+    ul {
+      li {
+        height: 28px;
+      }
+    }
+
+    .control-select {
+      width: 120px;
+    }
+  }
+
+  .lock-status-container {
+    flex: 1;
+    border-left: 1px solid $cutting-line;
+    border-right: 1px solid $cutting-line;
+    padding: 0 10px;
+
+    .lock-button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+  }
+
+  .sensor-info-container {
+    flex: 1;
+    padding: 0 10px;
+
+    .sensor-top {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      span {
+        display: inline-block;
+        width: 218px;
+      }
+    }
+
+    .sensor-chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    .sensor-tap {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+// 无源锁
+.passive-lock-container {
+  display: flex;
+
+  > div {
+    flex: 1
+  }
+}
+
+.padding-left4 {
+  padding-left: 4px;
+}
+
+

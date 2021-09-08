@@ -1,0 +1,58 @@
+<!--工单-->
+<nz-card nzTitle="{{language.picInfo.worker}}" [nzExtra]="extraTemplate">
+  <div class="equipment-tabs">
+    <nz-tabset >
+      <nz-tab *ngIf="checkHasRole('06-1-1')" nzTitle="{{workOrderLanguage.inspectionWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.inspection)">
+        <!--巡检工单-->
+        <app-work-order-common #workOrderInspectionCommon
+          [id]="deviceId"
+          [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+      <!--消障工单-->
+      <nz-tab *ngIf="checkHasRole('06-2-1')" nzTitle="{{workOrderLanguage.clearBarrierWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.clear)">
+        <app-work-order-common #workOrderClearBarrierCommon
+          [id]="deviceId"
+          [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+      <!--安装工单-->
+      <nz-tab *ngIf="checkHasRole('06-4-1')" nzTitle="{{workOrderLanguage.installWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.install)">
+        <app-work-order-common #workOrderInstallCommon
+                               [id]="deviceId"
+                               [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+      <!--告警确认工单-->
+      <nz-tab *ngIf="checkHasRole('06-5-1')" nzTitle="{{workOrderLanguage.alarmConfirmWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.alarmConfirm)">
+        <app-work-order-common #workOrderAlarmConfirmCommon
+                               [id]="deviceId"
+                               [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+      <!--拆除工单-->
+      <nz-tab *ngIf="checkHasRole('06-6-1')" nzTitle="{{workOrderLanguage.dismantleBarrierWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.remove)">
+        <app-work-order-common #workOrderRemoveCommon
+                               [id]="deviceId"
+                               [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</nz-card>
+
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMoreWorkOrder()"><span>{{language.more}} >></span></a>
+</ng-template>
+
+
+
+
+
+

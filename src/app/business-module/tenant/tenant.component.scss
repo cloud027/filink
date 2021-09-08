@@ -1,0 +1,9 @@
+@import "../../style-module/config";
+
+.tenant {
+  background: $bg-c-w;
+
+  > div {
+    background: $bg-c-w;
+  }
+}

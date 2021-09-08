@@ -1,0 +1,306 @@
+<div class="facility-migration">
+  <nz-tabset class="facility-migration-body">
+    <!--设备列表-->
+    <nz-tab [nzTitle]="language.rodDiagram" (nzSelect)="selectTabOne()">
+      <div class="buttons">
+        <!--编辑按钮-->
+        <button *ngIf="isUpData" class="button-upData" nz-button
+                (click)="upDataClick()"
+                [nzSize]="'large'" nzType="default">
+          <i class="icon-fiLink fiLink-edit iconfont button-i"></i> {{language.update}}
+        </button>
+        <!-- 查看设备仓按钮-->
+        <button *ngIf="isUpData" nz-button
+                (click)="viewEquipmentWarehouseList()"
+                [nzSize]="'large'" nzType="default">
+          <i
+            class="icon-fiLink fiLink-filink-equipment-warehouse-icon iconfont button-i"></i>{{assetsLanguage.viewEquipmentWarehouse}}
+        </button>
+        <!--同步产品-->
+        <button *ngIf="isUpData" nz-button [nzSize]="'large'" nzType="default" (click)="syncProduct()">
+          <i class="icon-fiLink fiLink-refresh-index iconfont button-i"></i> {{language.synchronizeProducts}}
+        </button>
+        <!--保存-->
+        <button *ngIf="isSave" nz-button [nzSize]="'large'" nzType="default" (click)="saveSync()" [disabled]="saveDisabled">
+          <i class="icon-fiLink fiLink-save iconfont button-i"></i>  {{language.save}}
+        </button>
+        <!--退出按钮-->
+        <button *ngIf="!isUpData" class="button-upData" nz-button
+                (click)="closeClick()"
+                [nzSize]="'large'" nzType="default">
+          <i class="icon-fiLink fiLink-open iconfont button-i"></i> {{language.quit}}
+        </button>
+        <span *ngIf="!isSave" (click)="onPrint()" class="print-box"><i class="iconfont icon-fiLink fiLink-stamp"></i></span>
+      </div>
+      <div id="print-wrap">
+        <div [ngClass]="!isUpData ? 'real-picture' : 'window'">
+          <div id="img-box"></div>
+          <app-real-picture [hidden]="isSave"
+                            #editPicture
+                            [isShowPoint]="'1'"
+                            [deviceId]="deviceId"
+                            [isShowRoundPoint]="!isUpData"
+                            [isOpenUpData]="isOpenUpData"
+                            [isExport]="true"
+                            [isUpData]="isUpData"
+                            [isAddEquip]="!isUpData"
+                            [canvasHeight]="canvasHeight"
+                            (clubInformation)="clubInformationChange($event)"
+                            (hasEquipment)="hasEquipment($event)"
+                            (addEquipment)="addEquipment($event)"
+                            (clickChange)="clickChange($event)"
+          ></app-real-picture>
+          <div class="gutter-row" nz-row nzGutter="10" *ngIf="isSave">
+            <div nz-col nzSpan="12">
+              <app-real-picture *ngIf="isSave" #devicePicture
+                                [isShowPoint]="'1'"
+                                [isProduct]="false"
+                                [deviceId]="deviceId"
+                                [isShowRoundPoint]="true"
+                                [isOpenUpData]="false"
+                                [isExport]="false"
+                                [isUpData]="false"
+                                [isAddEquip]="false"
+                                [canvasHeight]="canvasHeight"
+                                [isNotClickPoint]="true"
+                                (clubInformation)="clubInformationChange($event)"
+              ></app-real-picture>
+            </div>
+            <div nz-col nzSpan="12">
+              <app-real-picture *ngIf="isSave" #productPicture
+                                [isShowPoint]="'1'"
+                                [productId]="productId"
+                                [isProduct]="true"
+                                [productStatus]="productStatus"
+                                [isShowRoundPoint]="true"
+                                [isOpenUpData]="true"
+                                [isExport]="false"
+                                [isUpData]="true"
+                                [isAddEquip]="false"
+                                [canvasHeight]="canvasHeight"
+                                (hasEquipment)="hasEquipment($event)"
+                                (clickChange)="clickChange($event)"
+                                (clubInformation)="productInfoChange($event)"
+              ></app-real-picture>
+            </div>
+          </div>
+        </div>
+        <!--右侧信息栏-->
+        <div class="right-information" style="margin-top: 30px;" *ngIf="isUpData && !isSave">
+          <!--基础信息-->
+          <div>
+            <!--基础信息Title-->
+            <div class="basic-information-title">{{language.basicInformation}}</div>
+            <!--基础信息Body-->
+            <div class="basic-information-body">
+              <div class="body-div">
+                <div class="body-div-span"><span>{{language.name}}：</span></div>
+                <div class="body-div-span"><span>{{language.deviceCode_a}}：</span></div>
+                <div class="body-div-span"><span>{{language.model}}：</span></div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span"><span class="txt-h" [ngStyle]="{color: 'black'}">{{basicInformationData.name}}</span>
+                </div>
+                <div class="body-div-span" [title]="basicInformationData.assetsNo"><span
+                  [ngStyle]="{color: 'black'}" class="txt-h">{{basicInformationData.assetsNo}}</span>
+                </div>
+                <div class="body-div-span"><span [ngStyle]="{color: 'black'}" class="txt-h">{{basicInformationData.model}}</span>
+                </div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span"><span>{{language.status}}：</span></div>
+                <div class="body-div-span"><span>{{language.type}}：</span></div>
+                <div class="body-div-span"><span>{{language.installDate}}：</span></div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span"><span class="device-status"
+                                                 [ngClass]="bgColor ? bgColor: ''">{{basicInformationData.status}}</span>
+                </div>
+                <div class="body-div-span"><span [ngStyle]="{color: 'black'}" class="txt-h">{{basicInformationData.type}}</span>
+                </div>
+                <div class="body-div-span"><span class="txt-h"
+                  [ngStyle]="{color: 'black'}">{{basicInformationData.time | dynamic: 'dateDay' : null}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--上传信息-->
+          <div>
+            <!--上传信息Title-->
+            <div class="basic-information-title">{{language.uploadInformation}}</div>
+            <!--上传信息Body-->
+            <div *ngIf="isShowBasicInformation" class="basic-information-body">
+              <div class="body-div">
+                <div class="body-div-span" *ngFor="let item of uploadInformationKey[0]">
+                  <span>{{item.name + '：'}}</span>
+                </div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span" *ngFor="let item of uploadInformationKey[0]">
+                  <span [ngStyle]="{color: 'black'}">{{item.value + item.unit}}</span>
+                </div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span" *ngFor="let item of uploadInformationKey[1]">
+                  <span>{{item.name + '：'}}</span>
+                </div>
+              </div>
+              <div class="body-div">
+                <div class="body-div-span" *ngFor="let item of uploadInformationKey[1]">
+                  <span [ngStyle]="{color: 'black'}">{{item.value + item.unit}}</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!isShowBasicInformation" class="basic-information-body">
+              <div class="body-div">
+                <div class="body-div-span">{{language.noData}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+    <!--分组列表-->
+    <nz-tab [nzTitle]="language.networkTopologyDiagram" (nzSelect)="selectTabTwo()" [nzDisabled]="selectTabTwoDisabled">
+      <div style="width: 100%;height: 100%">
+        <div style="width: 100px;height: 100px;display: inline-block">
+          <img style="width: 100px;height: 35px;" src="../../../../../assets/img/gateway-config/gateway.png" alt="">
+          <span>{{gatewayName}}</span>
+        </div>
+        <div style="display: inline-block;float: right">
+          <nz-select [ngModel]="GatewaySelectModel" (ngModelChange)="selectGatewayChange($event)"
+                     [nzPlaceHolder]="'请选择网关'"
+                     style="width: 150px">
+            <nz-option *ngFor="let item of deviceGatewayData"
+                       [nzValue]="item.equipmentId" [nzLabel]="item.equipmentName"></nz-option>
+          </nz-select>
+          <span class="export-box"><i (click)="onExport()" class="iconfont icon-fiLink fiLink-export"></i></span>
+          <span style="margin-left: 10px;" (click)="onStamp()"><i class="iconfont icon-fiLink fiLink-stamp"></i></span>
+        </div>
+        <div id="gateway-canvas">
+          <div class="float-window-body"
+               *ngIf="isShow"
+               [style.left.px]="left"
+               [style.top.px]="top"
+          >
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.equipmentName}}
+                ：</span><span>{{floatWindowEquipmentName}}</span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.equipmentTypeTitle}}：</span>
+              <span class="icon" [class]="getEquipmentIconStyle(floatWindowEquipmentType)">  </span>
+              {{commonUtil.codeTranslate(indexEquipmentTypeEnum, $nzI18n, floatWindowEquipmentType, languageEnum.facility)}}
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.equipmentStatus}}：</span>
+              <span class="equipmentStatus"
+                    [ngClass]="commonUtil.getEquipmentStatusIconClass(floatWindowEquipmentStatus).bgColor">
+          {{commonUtil.codeTranslate(equipmentStatusEnum, $nzI18n, floatWindowEquipmentStatus, languageEnum.facility)}}
+        </span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.equipmentModel}}
+                ：</span><span>{{floatWindowEquipmentModel}}</span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.facilityNumber}}
+                ：</span><span>{{floatWindowEquipmentNo}}</span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{indexLanguage.installationTime}}
+                ：</span><span>{{floatWindowEquipmentInstallationTime | dynamic: 'dateDay' : null}}</span>
+            </div>
+          </div>
+          <!--传感器信息悬浮显示-->
+          <div class="float-window-body"
+               [ngStyle]="{'height': '100px'}"
+               *ngIf="isShowSenor"
+               [style.left.px]="left"
+               [style.top.px]="top"
+          >
+            <div class="font-type">
+              <span class="font-type-margin">{{productLanguage.sensorName}}：</span><span>{{floatWindowSenorName}}</span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{productLanguage.sensorType}}：</span><span>{{floatWindowSenorType}}</span>
+            </div>
+            <div class="font-type">
+              <span class="font-type-margin">{{productLanguage.sensorModel}}：</span><span>{{floatWindowSenorModel}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>
+<!--已有设备弹框-->
+<equipment-list-selector-component *ngIf="existEquipmentVisible"
+                                   [(equipmentVisible)]="existEquipmentVisible"
+                                   [isFilterEquipmentType]="true"
+                                   [filterConditions]="equipmentFilter"
+                                   [isGatewayConfig]="true"
+                                   (selectDataChange)="equipmentDataChange($event)">
+</equipment-list-selector-component>
+
+<!--新增设备弹框-->
+<nz-modal *ngIf="xcVisible"
+          [(nzVisible)]="xcVisible"
+          nzTitle="{{language.addEquipment}}"
+          [nzMask]="true"
+          nzWidth="60%"
+          class="ant-modal-equipment"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="xcVisible=false"
+          [nzFooter]="footer">
+
+  <!--  新增设备表单-->
+  <div class="overview-slide">
+    <app-equipment-detail #addEquipment
+                          *ngIf="xcVisible"
+                          [isHasTitle]="false"
+                          [isHasButton]="false"
+                          [isAddOperate]="true"
+                          [isWisdomPicture]="true"
+                          [deviceDetail]="deviceDetail"
+                          [equipmentType]="equipmentType"
+                          [gatewayName]="gatewayName"
+                          [gatewayPort]="portType+portNo"
+                          [gatewayPortTypeList]="portType"
+                          [gatewayNameDisabled]="false"
+                          (getExtraRequest)="getExtraRequest($event)"
+                          (getFormStatus)="getFormStatus($event)"
+                          (getFormDisabled)="getFormDisabled($event)"
+    ></app-equipment-detail>
+  </div>
+  <!-- 底部按钮-->
+  <ng-template #footer let-data="data">
+    <!-- 新增设备表单确定按钮-->
+    <button class="link-button margin-right20"
+            nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="addOkDisabled"
+            (click)="handleAddOk()">
+      {{language.handleOk}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="xcVisible=false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--查看设备仓列表弹窗-->
+<nz-modal *ngIf="isShowEquipmentListWindow"
+          [(nzVisible)]="isShowEquipmentListWindow"
+          nzTitle="{{assetsLanguage.equipmentWarehouseList}}"
+          [nzMask]="true"
+          nzWidth="70%"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="isShowEquipmentListWindow=false"
+          [nzContent]="equipmentWarehouse"
+          [nzFooter]="null">
+  <ng-template #equipmentWarehouse>
+    <app-equipment-warehouse-list [deviceId] = "deviceId"
+    (viewEquipmentInfoEmit)="showEquipmentInfo($event)"></app-equipment-warehouse-list>
+  </ng-template>
+</nz-modal>
+

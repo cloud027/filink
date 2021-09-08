@@ -1,0 +1,95 @@
+<div class="odn-device-resources" [appBarProgress]="ProgressShow">
+  <span class="select-area-statistical" *ngIf="pageTypeTitle!== 'queryDeviceSensor'" [title]="areaName?areaName:language.selectArea"
+        [class.placeholder]="!areaName"
+        (click)="showAreaSelect()">{{areaName ? areaName : language.selectArea}}</span>
+  <check-select-input (checkChange)="selectCheckBoxChange()" class="select-check" *ngIf="pageTypeTitle==='queryDeviceNumber'"  [isAllChecked]="true"
+                      [(ngModel)]="deviceTypeList" [placeholder]="language.deviceType"
+                      [checkList]="selectInfo"></check-select-input>
+  <nz-select *ngIf="pageTypeTitle!=='queryDeviceNumber'" [(ngModel)]="radioValue" (ngModelChange)="disabledResources()"
+             [nzPlaceHolder]="pageTypeTitle ==='queryDeviceSensor'?language.selectSensor:language.deviceType"
+              class="radio-select">
+    <nz-option *ngFor="let item of selectInfo" [nzDisabled]="item.isDisable" [nzLabel]="item.label"
+               [nzValue]="item.code"></nz-option>
+  </nz-select>
+  <span *ngIf="pageTypeTitle === 'queryDeviceSensor'" class="select-area-statistical"
+        [title]="deviceName?deviceName:language.selectDevice"
+        [class.placeholder]="!deviceName"
+        (click)="showDeviceSelect()">{{deviceName ? deviceName : language.selectDevice}}</span>
+  <nz-range-picker
+    class="margin-left10"
+    *ngIf="pageTypeTitle === 'queryDeviceSensor'"
+    nzShowTime
+    [(ngModel)]="rangDateValue"
+    (ngModelChange)="rangValueChange($event)"
+    (nzOnOpenChange)="onOpenChange($event)"
+  ></nz-range-picker>
+  <!--统计-->
+  <button *ngIf="pageTypeTitle !== 'queryDeviceSensor'" type="button"
+          [disabled]="btnDisabled"
+          class="link-button margin-left10" nz-button
+          nzType="primary"
+          (click)="statistical()">{{language.statistical}}
+  </button>
+  <button  *ngIf="pageTypeTitle === 'queryDeviceSensor'" type="button"
+           [disabled]="btnDisabled"
+          class="link-button margin-left10" nz-button
+          nzType="primary"
+          (click)="statistical()">{{language.statistical}}
+  </button>
+
+
+  <div *ngIf="pageTypeTitle !=='queryDeviceSensor'&& !hide&&showLoading">
+    <div class="barChart">
+      <app-echart-column
+                         class="chart-left margin-right10
+"
+                         (chartInstance)="getRingChartInstance($event)"></app-echart-column>
+      <app-echart-column
+                         class="chart-left"
+                         (chartInstance)="getBarChartInstance($event)"></app-echart-column>
+    </div>
+    <br>
+    <xc-table
+      [dataSet]="__dataset"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+
+  </div>
+  <div class="margin-top10"
+       *ngIf="pageTypeTitle ==='queryDeviceSensor'&& !hide&&showLoading">
+    <app-echart-column
+      (chartInstance)="getLineChartInstance($event)"></app-echart-column>
+  </div>
+
+</div>
+
+<div *ngIf="!hide&&!showLoading">
+  <nz-spin class="chart-loading"></nz-spin>
+</div>
+<div *ngIf="hide&&!showLoading" class="select-height"></div>
+<!--区域选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!--设施选择器-->
+<ng-template #deviceTemp>
+  <xc-table [dataSet]="deviceDataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="deviceTableConfig"
+            (pageChange)="_pageChange($event)">
+  </xc-table>
+</ng-template>
+
+<!--单选-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId"></label>
+  </nz-radio-group>
+</ng-template>
+
+

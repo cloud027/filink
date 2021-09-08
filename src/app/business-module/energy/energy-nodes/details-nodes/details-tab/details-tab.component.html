@@ -1,0 +1,15 @@
+<xc-table [dataSet]="tableData" [tableConfig]="tableConfig"> </xc-table>
+<!--工单状态模版-->
+<ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{ data.statusName }}">
+        <span [ngClass]="data.statusClass"> </span>
+        {{ data.statusName }}
+    </div>
+</ng-template>
+
+<!--消障工单数据来源-->
+<ng-template #dataResource let-data="data">
+    <div title="{{ data?.dataResourceType | translate: dataSourceEnum }}">
+        {{ data?.dataResourceType | translate: dataSourceEnum }}
+    </div>
+</ng-template>

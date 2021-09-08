@@ -1,0 +1,57 @@
+<xc-table
+    [dataSet]="dataSet"
+    #tableTemp
+    [selectedData]="selectedData"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)"
+>
+</xc-table>
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemplate let-data="data">
+    <div class="area-level">
+        <i [class]="'iconfont ' + data.statusIconClass + ' ' + data.statusColorClass"></i>
+        <span
+            class="status-text"
+            [ngStyle]="data.rowStyle"
+            title="{{
+                data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility
+            }}"
+        >
+            {{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}
+        </span>
+    </div>
+</ng-template>
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+    <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+    <span
+        class="status-text"
+        [ngStyle]="data.rowStyle"
+        title="{{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+    >
+        {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+    </span>
+</ng-template>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+    <input
+        nz-input
+        type="text"
+        [placeholder]="language.picInfo.pleaseChoose"
+        [(ngModel)]="filterDeviceName"
+        (click)="onShowFacility(filterValue)"
+    />
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component
+    *ngIf="facilityVisible"
+    [(facilityVisible)]="facilityVisible"
+    [multiple]="true"
+    [selectFacilityIds]="selectFacility"
+    title="{{ equipmentLanguage.facilityList }}"
+    (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>

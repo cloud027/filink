@@ -1,0 +1,326 @@
+@import "../css/config";
+@import "~src/app/style-module/config";
+
+.index-map-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 50px;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.view-switch {
+  width: 400px;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  margin: 0 auto;
+  padding-top: 10px;
+  max-height: calc(100vh - 85px);
+  font-size: 15px;
+  background: url("../../../../assets/img/index/index-switch.png") no-repeat;
+  background-size: 100%;
+  z-index: 99;
+  text-align: center;
+
+  .view-tab {
+    display: inline-block;
+    top: 30px;
+    cursor: pointer;
+    text-align: center;
+    flex: 1;
+  }
+
+  .tab-selected {
+    color: $color;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+
+  .left-view {
+    width: 10%;
+  }
+
+  .right-view {
+    width: 10%;
+  }
+
+  .plan-view {
+    width: 25%;
+    height: 20px;
+  }
+
+  .project-view {
+    width: 25%;
+    height: 20px;
+  }
+
+  .title-selected {
+    width: 1%;
+    height: 20px;
+    border-right: 1px solid #d9d9d9;
+  }
+
+  .maintenance-view {
+    width: 25%;
+    height: 20px;
+  }
+
+}
+
+.statistics-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  bottom: 0;
+  height: auto;
+
+  &:hover {
+    z-index: 101;
+  }
+
+  .statistics-panel-charts {
+    position: absolute;
+    z-index: 11;
+    right: 54px;
+    width: 350px;
+    max-height: calc(100vh - 85px);
+    background-color: white;
+    overflow: auto;
+  }
+
+  .statistics-panel-switch {
+    height: 100%;
+    background-color: white;
+    padding-top: 10px;
+
+    .statistics-panel-switch-item {
+      width: 35px;
+      border-bottom: solid 1px #e8e8e8;
+      margin: 4px 6px;
+      cursor: pointer;
+      font-size: 12px;
+      text-align: center;
+
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    .statistics-panel-switch-item:first-child {
+      border-top: solid 1px #e8e8e8;
+    }
+  }
+}
+
+.facility-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 500px;
+  z-index: 20;
+
+  &:hover {
+    z-index: 101;
+  }
+
+  .map-tab-container {
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: white;
+    width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    -moz-box-shadow: 2px 2px 5px $index-facility-card-shadow;
+    -webkit-box-shadow: 2px 2px 5px $index-facility-card-shadow;
+    box-shadow: 2px 2px 5px $index-facility-card-shadow;
+  }
+}
+
+.operate-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.title {
+  cursor: pointer;
+}
+
+.refresh-btn {
+  position: absolute;
+  right: 150px;
+  bottom: 8px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+
+  .icon-refresh {
+    background: url("../../../../assets/img/index/icon-refresh.png") no-repeat center;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.unfold-btn {
+  position: absolute;
+  left: 220px;
+  top: 14px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+
+  .icon-up {
+    width: 100%;
+    height: 100%;
+    background: url("../../../../assets/img/index/icon-up.png") no-repeat center;
+    background-size: 100% 100%;
+  }
+
+  .icon-expand {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg); /* IE 9 */
+    -moz-transform: rotate(0deg); /* Firefox */
+    -webkit-transform: rotate(0deg); /* Safari 和 Chrome */
+    -o-transform: rotate(0deg); /* Opera */
+  }
+
+  .icon-collapse {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -moz-transform: rotate(180deg); /* Firefox */
+    -webkit-transform: rotate(180deg); /* Safari 和 Chrome */
+    -o-transform: rotate(180deg); /* Opera */
+  }
+}
+
+.filter-top-filter {
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-table;
+}
+
+
+.filter-top {
+  position: absolute;
+  left: 260px;
+  top: 15px;
+  display: flex;
+  font-size: 12px;
+}
+
+
+// 设施状态
+.facility-status {
+  @extend .filter-top-filter;
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  $text-margin: 0 5px;
+}
+
+//地图设置
+.map-setting {
+  position: absolute;
+  right: 15px;
+  bottom: 8px;
+  display: flex;
+  cursor: pointer;
+}
+
+.out-topology {
+  bottom: 38px;
+  cursor: pointer;
+  right: 13px;
+  position: absolute;
+  padding-right: -18px;
+  display: flex;
+}
+
+
+[nz-carousel-content] {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  color: #fff;
+  overflow: hidden;
+}
+
+
+.BMap_CityListCtrl {
+  min-height: 26px;
+  min-width: 66px;
+}
+
+
+.clusterer-facility-table {
+  position: absolute;
+  z-index: 100;
+  left: calc(50% + 30px);
+  top: calc(50% - 25px);
+}
+
+
+.map-config-container {
+  padding: 40px 25px;
+  font-size: 12px;
+
+  .map-config-box {
+    .map-config-item {
+      display: flex;
+      height: 30px;
+      align-items: center;
+
+      .map-config-item-text {
+        width: 100px;
+      }
+
+      .map-config-item-content {
+        width: 300px;
+      }
+    }
+  }
+}
+
+.hide {
+  z-index: 0;
+}
+
+.number {
+  font-size: 18px !important;
+}
+
+.height-number {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.width-all {
+  width: 100%;
+}
+
+.progress-bar {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  top: 49%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 5px 15px 5px 10px;
+}
+
+.card-selected {
+  color: $index-operational-background-color;
+}

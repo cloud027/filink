@@ -1,0 +1,52 @@
+<!--系统菜单-->
+<div class="mune-form">
+  <app-tenant-menu-tree [nodes]="treeData"
+                        [languageConfig]="languageConfig"
+                        (dataChange)="dataChange($event)"
+                        #tree>
+  </app-tenant-menu-tree>
+  <div class="button-group">
+    <button class="link-button space"
+            [nzLoading]="submitLoading"
+            nz-button nzType="primary"
+            (click)="updateMenuTemplate()">{{language.config}}</button>
+    <button class="link-button margin-right20"
+            nz-button nzType="danger"
+            (click)="showMenu()">
+      {{this.language.preview}}
+    </button>
+    <button class="link-button"
+            nz-button nzType="danger"
+            (click)="cancel()">
+      {{language.cancelText}}
+    </button>
+  </div>
+</div>
+
+<!--预览菜单-->
+<nz-modal class="modalBox"
+          [(nzVisible)]="isVisible"
+          [nzTitle]="modalTitle"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzWidth]="500"
+          [nzBodyStyle]="{'overflow':'hidden','overflow-y': 'auto','display': 'flex','margin-left': '15px','height': '400px'}"
+          (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    <div>{{language.preview}}</div>
+  </ng-template>
+
+  <ng-template #modalContent>
+    <ul class="first-view">
+      <ng-container *ngFor="let item of menuNodeList">
+        <app-menu-item [languageConfig]="languageConfig" *ngIf="item.isShow !=='0'" [menuItem]="item"
+                       [isCollapsed]="false" [isMenuPreview]="true">
+        </app-menu-item>
+      </ng-container>
+    </ul>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleCancel()">{{this.language.okText}}</button>
+  </ng-template>
+</nz-modal>

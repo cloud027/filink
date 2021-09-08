@@ -1,0 +1,330 @@
+<div class="map-container" #map></div>
+
+<!--左上角选择框-->
+<div class="select-container">
+  <div class="map-select">
+    <nz-dropdown>
+      <a nz-dropdown>
+        <span class="map-select-name">{{searchTypeName}}</span>
+        <i nz-icon type="down" class="map-select-icon"></i>
+      </a>
+      <ul nz-menu>
+        <li nz-menu-item (click)="searchFacilityName()">
+          <a
+            *ngIf="indexType===mapTypeEnum.facility || viewIndex !== maintenanceView">{{indexLanguage.searchDeviceName}}</a>
+          <a
+            *ngIf="indexType===mapTypeEnum.equipment && viewIndex=== maintenanceView">{{indexLanguage.equipmentName}}</a>
+        </li>
+        <li nz-menu-item (click)="searchAddress()">
+          <a>{{indexLanguage.searchAddress}}</a>
+        </li>
+      </ul>
+    </nz-dropdown>
+  </div>
+  <div class="map-search">
+    <!--设施名称搜索-->
+    <div class="map-search-name" [ngStyle]="{'zIndex': IndexObj.facilityNameIndex}">
+      <input #deviceNameSearch
+             class="map-search-input"
+             placeholder="{{indexLanguage.enterFacilityName}}"
+             nz-input
+             (keyup)="keyUpEvent($event)"
+             [(ngModel)]="inputValue"
+             (input)="onInput($event.target?.value)"
+             [nzAutocomplete]="auto"
+      />
+      <nz-autocomplete nzBackfill #auto>
+        <nz-auto-option *ngFor="let option of options"
+                        (mousedown)="optionChange($event,option.facilityId||option.pointId,option.facilityName||option.pointName)"
+                        [nzValue]="option.facilityId||option.pointId"
+                        [nzLabel]="option.facilityName || option.equipmentName ||option.pointName">
+          {{ option.facilityName || option.equipmentName || option.pointName}}
+        </nz-auto-option>
+      </nz-autocomplete>
+    </div>
+    <!--百度地图地址搜索-->
+    <div class="b-map-location-search" [ngStyle]="{'zIndex': IndexObj.bMapLocationSearch}">
+      <div id="r-result"><input type="text" [(ngModel)]="addressInputValue" placeholder="{{indexLanguage.enterPlace}}"
+                                id="suggestId" size="20"
+                                value=""/></div>
+      <div id="searchResultPanel"></div>
+    </div>
+    <!--谷歌地图地址搜索-->
+    <div class="g-map-location-search" [ngStyle]="{'zIndex': IndexObj.gMapLocationSearch}">
+      <input #input [(ngModel)]="searchKey" placeholder="{{indexLanguage.enterPlace}}" (keyup.enter)="location()"/>
+      <div class="iconfont icon-fiLink fiLink-search location-icon" (click)="location()"></div>
+    </div>
+  </div>
+</div>
+
+
+<!--重合设备点列表弹框-->
+<div *ngIf="isShowTableWindow" class="coincide-table-table">
+  <div class="equipment-list-container">
+    <div class="equipment-table">
+      <xc-table [dataSet]="setData"
+                [pageBean]="equipmentTableConfig"
+                [tableConfig]="equipmentTableConfig">
+      </xc-table>
+    </div>
+  </div>
+</div>
+
+<!--设备名称搜索-->
+<ng-template #equipmentNameTemp let-data="data">
+  <div class="template-item hidden" (mouseover)="itemMouseOver($event, data)" (mouseout)="itemMouseOut($event)">
+    {{data.equipmentName}}
+  </div>
+</ng-template>
+
+
+<!--提示框-->
+<div *ngIf="isShowInfoWindow" class="info-window-container" [ngStyle]="{left: infoWindowLeft, top: infoWindowTop}">
+  <!--单个设施设备点-->
+  <ng-container *ngIf="infoData.type === windowType.m"
+                [ngTemplateOutlet]="mInfo"
+                [ngTemplateOutletContext]="{infoData: infoData}"
+  ></ng-container>
+  <!--重合设备点-->
+  <ng-container *ngIf="infoData.type === windowType.e"
+                [ngTemplateOutlet]="eInfo"
+                [ngTemplateOutletContext]="{infoData: infoData}"
+  ></ng-container>
+  <!--项目/规划设施点-->
+  <ng-container *ngIf="infoData.type === windowType.p"
+                [ngTemplateOutlet]="prInfo"
+                [ngTemplateOutletContext]="{infoData: infoData}"
+  ></ng-container>
+  <!--区域点-->
+  <ng-container *ngIf="infoData.type === windowType.a && viewIndex === maintenanceView && polymerizationChange !== '2'"
+                [ngTemplateOutlet]="aInfo"
+                [ngTemplateOutletContext]="{infoData: infoData}"
+  ></ng-container>
+  <!--规划点/项目点-->
+  <ng-container
+    *ngIf="infoData.type === windowType.a && (viewIndex === planView || viewIndex === projectView || polymerizationChange === '2')"
+    [ngTemplateOutlet]="pInfo"
+    [ngTemplateOutletContext]="{infoData: infoData}"
+  ></ng-container>
+</div>
+
+
+<!--区域点-->
+<ng-template #aInfo let-infoData="infoData">
+  <div class="info-window-a">
+    <div class="info-frame">
+      <div class="info-window-a-name">
+        <div class="info-window-a-title">{{indexLanguage.areaName}}</div>
+        <div class="info-window-a-arae-name">{{infoData.data.areaName}}</div>
+      </div>
+    </div>
+    <div class="info-frame">
+      <div class="info-window-a-name" *ngIf="indexType === mapTypeEnum.facility">
+        <div class="info-window-a-title">{{indexLanguage.deviceCount}}</div>
+        <div class="info-window-a-count">{{infoData.data.count}}</div>
+      </div>
+    </div>
+    <div>
+      <div class="info-frame">
+        <div class="info-window-a-name">
+          <div class="info-window-a-title">{{indexLanguage.totalNumberOfEquipment}}</div>
+        </div>
+        <!--根据设备权限控制数据显示-->
+        <div *ngIf="loadingEquipment">
+          <div *ngIf="infoData.data.equipment.length">
+            <div class="info-window-a-device" *ngFor="let equipment of infoData.data.equipment">
+              <div class="info-window-a-icon" [ngClass]="equipment.equipmentType"></div>
+              <div class="info-window-a-device-count">{{equipment.equipmentCount}}</div>
+            </div>
+          </div>
+          <div *ngIf="!infoData.data.equipment.length">
+            <div class="info-window-a-prompt">{{indexLanguage.noData}}</div>
+          </div>
+        </div>
+        <div class="info-window-a-alarm" *ngIf="!loadingEquipment">
+          <img src="../../../../assets/facility-icon/loading.gif">
+        </div>
+      </div>
+      <!--根据告警权限控制告警数据显示-->
+      <div *ngIf="this.roleAlarm">
+        <div class="info-window-a-name">
+          <div class="info-window-a-title">{{indexLanguage.totalNumberOfAlarms}}</div>
+        </div>
+        <div *ngIf="loadingAlarm">
+          <div class="info-window-a-alarm">
+            <span class="info-window-a-alarm-name info-window-a-alarm-critical">{{indexLanguage.critical}}</span>
+            <span class="info-window-a-alarm-urgent">{{infoData.data.alarmData.URGENT}}</span>
+            <span class="info-window-a-alarm-name info-window-a-alarm-main">{{indexLanguage.main}}</span>
+            <span class="info-window-a-alarm-mains">{{infoData.data.alarmData.MAIN}}</span>
+          </div>
+          <div class="info-window-a-bottom-alarm">
+            <span class="info-window-a-alarm-name info-window-a-alarm-secondary">{{indexLanguage.secondary}}</span>
+            <span class="info-window-a-alarm-secondarys">{{infoData.data.alarmData.SECONDARY}}</span>
+            <span class="info-window-a-alarm-name info-window-a-alarm-prompt">{{indexLanguage.prompt}}</span>
+            <span class="info-window-a-alarm-prompts">{{infoData.data.alarmData.PROMPT}}</span>
+          </div>
+        </div>
+        <div class="info-window-a-alarm" *ngIf="!loadingAlarm">
+          <img src="../../../../assets/facility-icon/loading.gif">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--规划点/项目点-->
+<ng-template #pInfo let-infoData="infoData">
+  <div class="info-window-a">
+    <!--规划名称-->
+    <div class="info-frame">
+      <div class="info-window-a-name">
+        <div class="info-window-a-title" *ngIf="viewIndex === planView">{{indexLanguage.planningPointName}}</div>
+        <div class="info-window-a-title"
+             *ngIf="viewIndex === projectView || polymerizationChange==='2'">{{indexLanguage.projectPointName}}</div>
+        <div class="info-window-a-arae-name">{{infoData.data.name}}</div>
+      </div>
+    </div>
+    <!--智慧杆总数-->
+    <div class="info-frame">
+      <div class="info-window-a-name">
+        <div class="info-window-a-title">{{indexLanguage.poleNum}}</div>
+        <div class="info-window-a-count">{{infoData.data.count}}</div>
+      </div>
+    </div>
+    <!--智慧杆型号-->
+    <div class="info-frame">
+      <div class="info-window-a-name">
+        <div class="info-window-a-title">{{indexLanguage.poleModel}}</div>
+      </div>
+      <!--智慧杆型号-->
+      <div *ngIf="infoData.data.poleModelMap.length">
+        <div class="info-window-a-plan">
+          <div class="info-window-a-model" *ngFor="let equipment of infoData.data.poleModelMap">
+            <div class="info-window-a-model-name">{{equipment.model}}</div>
+            <div class="info-window-a-model-count">{{equipment.modelCount}}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!infoData.data.poleModelMap.length">
+        <div class="info-window-a-prompt">{{indexLanguage.noData}}</div>
+      </div>
+    </div>
+    <!--建设状态-->
+    <div class="info-frame" *ngIf="polymerizationChange!=='2'">
+      <div class="info-window-a-name">
+        <div class="info-window-a-title">{{indexLanguage.constructionStatus}}</div>
+      </div>
+      <!--智慧杆型号-->
+      <div>
+        <div class="info-window-a-alarm">
+          <span class="info-window-a-alarm-name info-window-a-running">{{indexLanguage.toBeBuilt}}</span>
+          <span class="info-window-a-alarm-urgent">{{infoData.data.poleStatusMap.runnable}}</span>
+          <span class="info-window-a-alarm-name info-window-a-runnable">{{indexLanguage.underConstruction}}</span>
+          <span class="info-window-a-alarm-mains">{{infoData.data.poleStatusMap.running}}</span>
+        </div>
+        <div class="info-window-a-bottom-alarm">
+          <span class="info-window-a-alarm-name info-window-a-end">{{indexLanguage.hasBeenBuilt}}</span>
+          <span class="info-window-a-alarm-secondarys">{{infoData.data.poleStatusMap.end}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--重合设备点-->
+<ng-template #eInfo let-infoData="infoData">
+  <div class="info-window-c">
+    <div class="info-window-item" *ngFor="let equipmentData of infoData.data.equipmentData">
+      <div class="info-window-item-icon" [ngClass]="equipmentData.equipmentType"></div>
+      <div class="info-window-item-name">{{equipmentData.equipmentName}}</div>
+    </div>
+  </div>
+</ng-template>
+
+<!--设施/设备点-->
+<ng-template #mInfo let-infoData="infoData">
+  <div class="info-window-m">
+    <div class="info-window-m-name">
+      <div>
+        <span class="info-data-w"
+              [ngClass]="infoData.data.deviceStatusColor"
+              [ngStyle]="{'color':'#fff'}">{{infoData.data.deviceStatusName}}</span>
+        <span class="info-data-w-title">{{infoData.data.deviceName}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <div>
+      <span class="info-data-w"
+            [ngStyle]="{'background-color': infoData.data.areaLevelColor,'color':'#fff'}">{{infoData.data.areaLevelName}}{{typeLg === 'US' ? '' : InspectionLanguage.area}}</span>
+        <span class="info-window-m-font">{{infoData.data.areaName}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <div>
+      <span class="info-data-w" *ngIf="indexType === mapTypeEnum.facility"
+            [ngStyle]="{'background-color': infoData.data.deployStatusColor,'color':'#fff'}">{{infoData.data.deployStatusName}}</span>
+        <span class="iconfont icon-fiLink-s fiLink-filink-location-icon disabled-red-icon"></span>
+        <span class="info-window-m-font">{{infoData.data.address}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name-bottom">
+      <div class="info-window-m-name"
+           *ngIf="indexType === mapTypeEnum.facility&& infoData.data.equipmentCountInfoList.length">
+        <div *ngFor="let equipmentCountInfoList of infoData.data.equipmentCountInfoList">
+          <div class="info-window-m-icon"
+               [ngStyle]="{'background-color': equipmentCountInfoList._equipmentStatus,'color':'#fff'}"
+               [ngClass]="equipmentCountInfoList._equipmentType">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--项目/规划设施点-->
+<ng-template #prInfo let-infoData="infoData">
+  <div class="info-window-m">
+    <div class="info-window-m-name">
+      <div>
+        <span class="info-data-w"
+              [ngStyle]="{'background-color': infoData.data.pointStatusColor,'color':'#fff'}">{{infoData.data.pointStatus}}</span>
+        <span class="info-data-w-title">{{infoData.data.pointName}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <div>
+      <span class="info-data-w"
+            [ngStyle]="{'background-color': '#36cfc9','color':'#fff'}">{{indexLanguage.model}}</span>
+        <span class="info-window-m-font">{{infoData.data.pointModel}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <span class="info-data-w" *ngIf="viewIndex === planView"
+            [ngStyle]="{'background-color': '#9966FF','color':'#fff'}">{{indexLanguage.viewPlan}}</span>
+      <span class="info-data-w" *ngIf="viewIndex ===projectView"
+            [ngStyle]="{'background-color': '#9966FF','color':'#fff'}">{{indexLanguage.viewProject}}</span>
+      <span class="info-window-m-font">{{infoData.data.projectPlanName}}</span>
+    </div>
+  </div>
+</ng-template>
+
+
+<!--放大缩小-->
+<div class="zoom-control">
+  <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-in" (click)="zoomIn()"
+       title="{{indexLanguage.magnify}}"></div>
+  <div class="zoom-control-item zoom-control-item-out iconfont icon-fiLink fiLink-zoom-out" (click)="zoomOut()"
+       title="{{indexLanguage.narrow}}"></div>
+</div>
+
+<!--谷歌地图下 切换地图和卫星-->
+<div class="map-type-control" *ngIf="mapType === 'google'">
+  <!--  roadmap  地图-->
+  <div [ngClass]="mapTypeId === 'roadmap' ? 'map-type-title-s' : 'map-type-title'"
+       (click)="setMapType('roadmap')" title="{{indexLanguage.roadMapTitle}}">{{indexLanguage.roadMap}}</div>
+  <!--  satellite 卫星-->
+  <div [ngClass]="mapTypeId === 'satellite' ? 'map-type-title-s' : 'map-type-title'"
+       (click)="setMapType('satellite')"
+       title="{{indexLanguage.satelliteMapTitle}}">{{indexLanguage.satelliteMap}}</div>
+</div>
+

@@ -1,0 +1,175 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{ title }}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div class="remote-box-btn">
+      <button class="link-button ok-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isSubmit"
+      >{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 是否启用 -->
+<ng-template #isNoStartUsing let-data="data">
+  <nz-switch [ngModel]="isNoStartData"
+             [nzControl]="true"
+             (click)="isNoStartData = !isNoStartData">
+  </nz-switch>
+</ng-template>
+
+<!-- 设施设备-->
+<ng-template #deviceEquipmentTemp let-formGroup="formGroup" let-col="col">
+  <div>
+    <span class="area-name" [title]="deviceEquipmentName">{{deviceEquipmentName}}</span>
+    <button type="button" class="open-button" (click)="showDeviceEquipmentTemp()" [disabled]="display.deviceAndEquipmentDis"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+
+<!-- 通知人 -->
+<ng-template #notifierTemp let-formGroup="formGroup" let-data="data">
+  <xc-app-user [alarmUserConfig]="alarmUserConfig"></xc-app-user>
+</ng-template>
+
+<!-- 区域 -->
+<ng-template #areaSelector let-formGroup="formGroup" let-data="data">
+  <app-area [areaConfig]='areaConfig'></app-area>
+</ng-template>
+
+<!-- 告警级别 -->
+<ng-template #alarmFixedLevelListTemp let-formGroup="formGroup" let-selectedList>
+  <nz-select
+    [nzMaxTagCount]="5"
+    class="select-width"
+    nzMode="multiple"
+    nzPlaceHolder="{{language.pleaseChoose}}"
+    (nzBlur)="changeLevel()"
+    (ngModelChange)="onChangeLevel()"
+    [(ngModel)]="alarmFixedLevelListValue">
+    <nz-option *ngFor="let option of alarmFixedLevelList" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+</ng-template>
+
+<!-- 设施类型 -->
+<ng-template #deviceTypeTemp let-formGroup="formGroup" let-selectedList>
+  <nz-select
+    [nzMaxTagCount]="5"
+    class="select-width"
+    [disabled]="display.deviceTypeDisplay"
+    (nzOpenChange) = "showAuthorizeDevices()"
+    nzMode="multiple"
+    nzPlaceHolder="{{language.pleaseChoose}}"
+    (nzBlur)="changeDeviceType()"
+    (ngModelChange)="onSearchDeviceType()"
+    [(ngModel)]="deviceTypeListValue"
+  >
+    <nz-option *ngFor="let option of deviceTypeList" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+</ng-template>
+<!-- 设备类型 -->
+<ng-template #equipmentTypeTemp let-formGroup="formGroup" let-selectedList>
+  <nz-select
+    [nzMaxTagCount]="5"
+    class="select-width"
+    [disabled]="display.equipmentTypeDisplay"
+    (nzOpenChange) = "showAuthorizeEquipment()"
+    nzMode="multiple"
+    nzPlaceHolder="{{language.pleaseChoose}}"
+    (nzBlur)="changeEquipmentType()"
+    (ngModelChange)="onSearchEquipmentType()"
+    [(ngModel)]="equipmentTypeListValue"
+  >
+    <nz-option *ngFor="let option of equipmentTypeList" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+</ng-template>
+<!--设施设备-->
+<nz-modal *ngIf="isVisible"
+          [(nzVisible)]="isVisible"
+          [nzTitle]="language.deviceEquipment"
+          [nzContent] = "tableComponent"
+          [nzMaskClosable]="false"
+          [nzWidth]="1200"
+          (nzOnCancel)="close()"
+          [nzFooter]="modalFooter"
+          class="deviceEquipment">
+  <ng-template #tableComponent>
+    <nz-tabset nzSize="large">
+      <nz-tab nzTitle="{{language.deviceList}}">
+        <xc-table *ngIf="isShowTable"
+                  #deviceComponent
+                  [dataSet]="deviceData"
+                  [selectedData]="selectedDeviceData"
+                  [pageBean]="devicePageBean"
+                  [tableConfig]="deviceTableConfig"
+                  (pageChange)="devicePageChange($event)">
+        </xc-table>
+      </nz-tab>
+      <nz-tab nzTitle="{{language.equipmentList}}">
+        <xc-table *ngIf="isShowTable"
+                  #equipmentComponent
+                  [dataSet]="equipmentData"
+                  [selectedData]="selectedEquipmentData"
+                  [pageBean]="equipmentPageBean"
+                  [tableConfig]="equipmentTableConfig"
+                  (pageChange)="equipmentPageChange($event)">
+        </xc-table>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="sureClick()">{{language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="cancelModal()">{{language.cancelText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">{{language.empty}}</button>
+  </ng-template>
+</nz-modal>
+<!--设施业务状态-->
+<ng-template #businessStatusTemplate let-data="data">
+  <span >{{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}</span>
+</ng-template>
+<!-- 设备状态 -->
+<ng-template #equipmentStatus let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['statusIconClass']+' '+data['statusColorClass']">
+    </i><span class="status-text" title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}</span>
+  </div>
+</ng-template>
+<!--设备类型-->
+<ng-template #equipmentType let-data="data">
+  <i [ngClass]="data['iconClass']" class="equipment-type-icon">
+  </i><span class="status-text" title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+<!-- 设施状态 -->
+<ng-template #deviceStatus let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"></i>
+    <span class="status-text" title="{{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}">
+      {{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}
+    </span>
+  </div>
+</ng-template>
+<!--设施类型-->
+<ng-template #deviceType let-data="data">
+  <i [ngClass]="data['iconClass']" class="equipment-type-icon">
+  </i><span class="status-text" title="{{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}">
+     {{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}
+  </span>
+</ng-template>
+<!--加载-->
+<nz-spin [nzSimple]="true"
+         *ngIf="ifSpin"
+         class="loading"
+         [nzSpinning]="true"
+></nz-spin>

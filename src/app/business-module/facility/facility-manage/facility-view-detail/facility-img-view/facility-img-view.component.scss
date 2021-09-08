@@ -1,0 +1,26 @@
+@import "../../../../../style-module/config";
+.device-img-container {
+  display: flex;
+}
+
+.device-img-item {
+  margin-right: 20px;
+  height: 280px;
+  width: 33.33%;
+  font-size: 12px;
+  color: $table-font-color;
+  .photo {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 188px
+  }
+}
+.device-img-item:nth-of-type(2) {
+  margin-left: 10px;
+  margin-right: 10px
+}
+
+.info-item {
+  line-height: 28px;
+}

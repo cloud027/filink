@@ -1,0 +1,91 @@
+@import "../../../../style-module/config";
+//地图部分最外层
+#drag-box {
+  width: 100%;
+  height: 300px;
+
+  .map-right-button {
+    position: absolute;
+    bottom: 90px;
+    right: 45px;
+    z-index: 10;
+    cursor: pointer;
+    background-color: $bg-c-w;
+
+    .button-ul {
+      text-align: center;
+
+      .button-li {
+        padding: 5px 10px;
+      }
+
+      .button-li:hover {
+        cursor: pointer;
+      }
+
+      .button-icon-right {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .map-icon-part {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    bottom: 32px;
+    left: 50%;
+
+    .up-icon {
+      transform: translateX(-50%) rotate(90deg);
+      cursor: pointer;
+    }
+
+    .down-icon {
+      transform: translateX(-50%) rotate(270deg);
+      cursor: pointer;
+    }
+  }
+
+  .zoom-control-item {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 20px;
+    background-color: $bg-c-w;
+    position: absolute;
+    bottom: 120px;
+    right: 10px;
+    cursor: pointer;
+    &.ref-facility{
+      bottom: 162px;
+    }
+  }
+
+  // 地图外层样式
+  #drag-content {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 10px);
+  }
+
+  // 拖拽触发处
+  #drag-start {
+    bottom: 0;
+    width: 100%;
+    height: 10px;
+    cursor: row-resize;
+  }
+}
+
+// 地图和表格边距
+.table-top {
+  margin: 20px 0;
+}
+.table-container {
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+

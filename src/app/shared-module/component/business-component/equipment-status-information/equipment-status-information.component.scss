@@ -1,0 +1,48 @@
+@import '../../../../style-module/config';
+// 整体详情的样式
+.equipment-status-container {
+  display:block;
+  margin-left: 20px;
+ // width:60%;
+  white-space:nowrap;
+  .no-data-wrapper {
+    position: relative;
+    top: 60px;
+    left: 160px;
+  }
+  .status-ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .status-item{
+    display: flex;
+    margin: 4px 5px;
+    width: 45%;
+    text-align: left;
+    .status-label {
+      display: inline-block;
+      min-width: 25%;
+      max-width: 40%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      line-height: 34px;
+      color: $sp-icon-color-7;
+    }
+    .label-cl{
+      display: inline-block;
+      width: 5%;
+      line-height: 34px;
+      color: $sp-icon-color-7;
+    }
+    .status-value {
+      display: inline-block;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width: 68%;
+      line-height: 34px;
+    }
+  }
+}

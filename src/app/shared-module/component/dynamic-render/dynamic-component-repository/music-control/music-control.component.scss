@@ -1,0 +1,54 @@
+.options-body {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  top: 20px;
+
+  .options-icon {
+    position: absolute;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+    color: white;
+    background-color: #a99af6;
+    border-radius: 25px;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
+  }
+
+  .options-name {
+    position: absolute;
+    height: 25px;
+    top: 10px;
+    left: 25px;
+    padding-left: 10px;
+    line-height: 24px;
+    display: inline-block;
+  }
+
+  .options-slider {
+    left: 105px;
+    position: absolute;
+    width: 70%;
+    display: inline-block;
+  }
+
+  .options-num {
+    top: 10px;
+    right: 5px;
+    position: absolute;
+    display: inline-block;
+  }
+}
+
+/deep/ .ant-slider-handle {
+  position: absolute;
+  width: 6px;
+  height: 17px;
+  margin-top: -5px;
+  margin-left: -7px;
+  background-color: #fff;
+  border: solid 3px #36cfc9;
+  border-radius: 0;
+}

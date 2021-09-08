@@ -1,0 +1,29 @@
+<!--回路详情关联设施概览列表-->
+<nz-card nzTitle="{{language.loopLinkDevice}}">
+  <div class="box-warp">
+    <xc-table #tableComponent
+              [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</nz-card>
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.deviceStatusIconClass+' '+data.deviceStatusColorClass"></i>
+    <span class="status-text" title="{{data.deviceStatus | translate: deviceStatusEnum: languageEnum.facility}}">
+      {{data.deviceStatus | translate: deviceStatusEnum}}
+    </span>
+  </div>
+</ng-template>
+
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>
+

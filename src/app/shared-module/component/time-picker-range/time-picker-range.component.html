@@ -1,0 +1,18 @@
+<div class="time-range-wrap">
+  <nz-time-picker  [(ngModel)]="startTime"
+                   (nzOpenChange)="handleOpenChange($event)"
+                   (ngModelChange)="handleModelChange($event)"
+                   [nzClearText]="''"
+                   [nzFormat]="format"
+                   [nzDefaultOpenValue]="defaultOpenValue"
+  ></nz-time-picker>
+  <span class="time-space">~</span>
+  <nz-time-picker  [(ngModel)]="endTime"
+                   (nzOpenChange)="handleOpenChange($event)"
+                   (ngModelChange)="handleModelChange($event)"
+                   [nzClearText]="''"
+                   [nzFormat]="format"
+                   [nzDefaultOpenValue]="defaultOpenValue"
+  ></nz-time-picker>
+  <button *ngIf="!freeControl" nz-button nzType="primary" class="confirm-btn" (click)="confirmTime()">{{commonLanguage.confirm}}</button>
+</div>

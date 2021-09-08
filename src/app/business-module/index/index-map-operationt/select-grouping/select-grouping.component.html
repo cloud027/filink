@@ -1,0 +1,113 @@
+<!--地图框选-->
+<div class="select-grouping">
+  <!--框选图标-->
+  <div class="select-grouping-show iconfont icon-fiLink fiLink-map-selection select-grouping-show-color"
+       [class.show-no-polymerization] = "viewIndex === maintenanceView.maintenanceView && facilityType === mapTypeEnum.equipment"
+       title="{{indexLanguage.mapBoxToChoose}}"
+       (click)="groupingShow()">
+  </div>
+  <!--框选展开-->
+  <div (click)="showModal()" *ngIf="addGrouping" class="add-grouping-show"
+       [class.show-no-polymerization] = "viewIndex === maintenanceView.maintenanceView && facilityType === mapTypeEnum.equipment">
+    <div class="add-grouping-icon iconfont icon-fiLink fiLink-add-no-circle">
+    </div>
+    <div class="add-grouping-title">
+      {{indexLanguage.addToGroup}}
+    </div>
+  </div>
+  <!--添加分组弹框-->
+  <nz-modal
+    *ngIf="isVisible"
+    [(nzVisible)]="isVisible"
+    [nzTitle]="modalTitle"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    [nzWidth]="1100"
+    (nzOnCancel)="closeModal()">
+  </nz-modal>
+</div>
+
+<!--弹窗标题-->
+<ng-template #modalTitle>
+  {{indexLanguage.addToGroup}}
+</ng-template>
+
+<ng-template #modalContent>
+  <!--弹框主体内容-->
+  <div class="modal-step">
+    <!--步骤条-->
+    <div class="step-content">
+      <nz-steps [nzCurrent]="stepIndex" [nzStartIndex]="0" nzDirection="vertical">
+        <nz-step class="select-facility"
+                 nzTitle="{{deviceOrEquipment ? indexLanguage.selectFacility: indexLanguage.selectEquipment}}"></nz-step>
+        <nz-step nzTitle="{{indexLanguage.addGroup}}"></nz-step>
+      </nz-steps>
+    </div>
+    <!--第一步显示表格-->
+    <div class="facility-table" [hidden]="showContent">
+      <div class="facility-table-title">
+        <span>{{indexLanguage.theFirstStep}}</span>
+      </div>
+      <!--设施/设备列表-->
+      <xc-table [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+    <!--第二步操作内容-->
+    <div class="addGroup" [hidden]="!showContent">
+      <div class="addGroup-title">
+        <span class="title-text">{{indexLanguage.theSecondStep}}</span>
+      </div>
+      <!--单选切换-->
+      <div class="addGroup-radio">
+        <span class="addGroup-radio-title">{{indexLanguage.groupType}}：</span>
+        <nz-radio-group [(ngModel)]="radioValue">
+          <label nz-radio nzValue="{{groupTypeEnum.current}}">{{indexLanguage.selectExistingGroups}}</label>
+          <label nz-radio nzValue="{{groupTypeEnum.create}}">{{indexLanguage.createGroup}}</label>
+        </nz-radio-group>
+      </div>
+      <!--下拉选择分组-->
+      <div class="addGroup-select" *ngIf="radioValue=== groupTypeEnum.current">
+        <span class="addGroup-select-title">{{indexLanguage.selectGroup}}</span>
+        <!--nzMaxTagCount最多显示个数 nzMaxTagPlaceholder最多隐藏数-->
+        <nz-select
+          class="addGroup-select-option"
+          [nzMaxTagCount]="3"
+          [nzMaxTagPlaceholder]="5"
+          nzMode="default"
+          nzAllowClear="true"
+          nzPlaceHolder="{{indexLanguage.pleaseSelectGroup}}"
+          [(ngModel)]="selectValue">
+          <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.groupName"
+                     [nzValue]="option.groupId"></nz-option>
+        </nz-select>
+      </div>
+
+      <xc-form class="group-input" *ngIf="radioValue === groupTypeEnum.create" [column]="formColumn"
+               (formInstance)="formInstance($event)"></xc-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalFooter>
+  <!--上一步-->
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one"
+          (click)="handleBack()">{{indexLanguage.lastStep}}</button>
+  <!--下一步-->
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.zero"
+          (click)="handleNext()">{{indexLanguage.nextStep}}</button>
+  <!--确定-->
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one && radioValue=== groupTypeEnum.current"
+          (click)="modifyGrouphandleOk()" [nzLoading]="isLoading"
+          [disabled]="disabledModifyGroup()">{{indexLanguage.confirm}}</button>
+  <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one && radioValue === groupTypeEnum.create"
+          (click)="addGroupHandleOk()" [nzLoading]="isLoading"
+          [disabled]="disabledAddGroup()">{{indexLanguage.confirm}}</button>
+  <!--取消-->
+  <button nz-button nzType="default" (click)="closeModal()">{{indexLanguage.cancel}}</button>
+</ng-template>
+
+
+

@@ -1,0 +1,27 @@
+<!--项目智慧杆列表滑块组件-->
+<xc-statistical-slider [sliderConfig]="sliderConfig"
+                       [showCardNum]="4"
+                       (selectChange)="sliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)">
+</xc-statistical-slider>
+
+<!--项目智慧杆列表表格-->
+<div class="table-wrapper">
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--智慧杆状态模板-->
+<ng-template #pointStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass " ></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.pointStatus | translate : pointStatusEnum: languageEnum.planProject}}">
+      {{data.pointStatus | translate : pointStatusEnum: languageEnum.planProject}}
+    </span>
+  </div>
+</ng-template>

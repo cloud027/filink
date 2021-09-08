@@ -1,0 +1,71 @@
+@import "../../../../../style-module/config";
+.screen-render {
+  input {
+    cursor: pointer;
+  }
+  .area-name {
+    line-height: 15px;
+
+    .title {
+      color: $disabled-font-color;
+    }
+  }
+  .open-button {
+    border: none;
+    outline: none;
+    background: $bg-c-w;
+    cursor: pointer;
+    &:disabled > .fiLink-search-index {
+      color: $button-disable-bg-color;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.form {
+  width: 400px;
+  .area-name {
+    width: 300px;
+    height: 32px;
+    line-height: 24px;
+  }
+}
+
+.table {
+  .area-name {
+    height: 22px;
+    width: 100%;
+  }
+}
+
+.box-icon {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  align-self: center;
+}
+
+.alarm-level-name {
+  margin-left: 5px;
+}
+
+.select-name {
+  outline: none;
+  cursor: default;
+  &:hover{
+    border-color: $color;
+  }
+  &::-webkit-input-placeholder {
+    color: #bfbfbf;
+  }
+  &:-moz-placeholder {
+    color: #bfbfbf;
+  }
+  &::-moz-placeholder {
+    color: #bfbfbf;
+  }
+  &:disabled:hover {
+    border-color: $button-disable-bg-color;
+  }
+}

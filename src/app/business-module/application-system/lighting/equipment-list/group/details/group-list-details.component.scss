@@ -1,0 +1,72 @@
+@import "../../../../share/style/common-style";
+@import "../../../../../../style-module/config";
+
+.group-list {
+  background: $bg-c;
+  /*详情title*/
+  .group-header {
+    .title {
+      font-size: 14px;
+      font-weight: bold;
+      padding: 0 0 10px 10px;
+      background: $bg-c-w;
+    }
+  }
+
+  /*详情卡片*/
+  .group-card {
+    display: flex;
+    height: 150px;
+
+    .flex-card {
+      background: $bg-c-w;
+    }
+
+    .group-details {
+      width: 33.3%;
+      padding: 20px 10px;
+      margin-right: 10px;
+
+      .title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .label-left {
+        margin-right: 10px;
+        color: $disabled-font-color;
+      }
+    }
+
+    .group-map {
+      width: 66.7%;
+      height: 150px;
+      padding: 10px;
+    }
+  }
+
+  /*详情操作按钮*/
+  .group-operate {
+    padding-top: 10px;
+  }
+
+  /*详情列表*/
+  .group-content {
+    @include group-content-style;
+    .table-list{
+      padding-bottom: 20px;
+    }
+  }
+}
+.audio-btn-group{
+  text-align: center;
+  .start{
+    margin-right: 30px;
+  }
+  .btn-size{
+    line-height: 30px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+}

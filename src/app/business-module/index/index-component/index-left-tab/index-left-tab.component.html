@@ -1,0 +1,8 @@
+<div class="left-tab"
+     [ngClass]="{'left-active-tab' : active === item.key}"
+     *ngFor="let item of tabList"
+     title="{{indexLanguage[item.value]}}"
+     (click)="tabClick(item.key)">
+  <div class="mar-r-25 hidden">{{indexLanguage[item.value]}}</div>
+  <div class="iconfont-style"><span><i class="iconfont fiLink-adjust-angle font-style"></i></span></div>
+</div>

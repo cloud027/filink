@@ -1,0 +1,67 @@
+<!--区域新增、编辑表单-->
+<nz-spin class="area-detail-content" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div class="form-container">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20" nz-button nzType="primary" [nzLoading]="isLoading"
+              [disabled]="!isDisabled"
+              (click)="addArea()">{{language.handleOk}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+<!--责任单位点击按钮-->
+<ng-template #accountabilityUnit let-formGroup="formGroup" let-col="col">
+  <div class="unit-container">
+    <input nz-input type="text" readonly [(ngModel)]="selectUnitName">
+    <button type="button" class="open-button" (click)="showModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+<!--城市选择器-->
+<ng-template #customTemplate let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <div class="xc-city-picker">
+      <xc-city-picker [selectCityInfo]="selectCityInfo" [disabled]="cityDisabled"
+                      (cityInfoChange)="cityInfoChange($event)"></xc-city-picker>
+    </div>
+  </form>
+</ng-template>
+
+<!--区域选择器点击按钮-->
+<ng-template #areaSelector let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly [disabled]="pageType === update" [(ngModel)]="areaName">
+    <button type="button" [disabled]="pageType === update" class="open-button" (click)="showAreaSelectorModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+
+</ng-template>
+
+<!--责任单位选择器-->
+<xc-tree-selector #unitTreeSelector
+                  [(xcVisible)]="isVisible"
+                  (selectDataChange)="selectDataChange($event)"
+                  [treeCallback]="treeCallback"
+                  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [pageType]="pageType"
+  [level]="areaInfo.level"
+  [hasChild]="areaInfo.hasChild"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>

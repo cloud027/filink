@@ -1,0 +1,29 @@
+@import "../../../../style-module/config.scss";
+.order-box-warp{
+  .in-container {
+    padding-bottom: 20px;
+    padding-left: 16px;
+
+    .area-name {
+      outline: none;
+      cursor: default;
+      &:disabled:hover{
+        border-color: $border-color;
+      }
+    }
+
+    .open-button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: $bg-c-w;
+    }
+
+    .page-btn{
+      .fir{
+        margin-right: 20px
+      }
+    }
+  }
+}
+

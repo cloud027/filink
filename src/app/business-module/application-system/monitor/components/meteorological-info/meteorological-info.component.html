@@ -1,0 +1,86 @@
+<div
+  class="meteorological-info-box"
+  [ngClass]="{ 'details-page': workOrDetail === WorkOrDetailEnum.detailPage }"
+>
+  <!-- 当前温度 -->
+  <div class="air-temperature">
+    <div class="temperature-value">
+      <span>{{ MonitorConvenientEntranceList.temperature }}</span>
+      <span class="temperature-icon">℃</span>
+    </div>
+    <div class="other-value">
+      <div class="top">
+        <i class="iconfont fiLink-filink-yuliang-icon top-icon"></i>
+        <span class="value">{{ MonitorConvenientEntranceList.yuliang }}mm</span>
+      </div>
+      <div class="bottom">
+        <span>{{ MonitorConvenientEntranceList.winddirectionText }}</span>
+        <span>风速 {{ MonitorConvenientEntranceList.windspeed }}m/s</span>
+        <span>湿度 {{ MonitorConvenientEntranceList.humidity }}%</span>
+      </div>
+    </div>
+  </div>
+  <!-- 气象仪数据 -->
+  <div class="meteorological-box">
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-qiya-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">
+          {{ language.MonitorWorkbench.pressure }}
+        </p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.pressure }}hPa</p>
+      </div>
+    </div>
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-fushe-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">
+          {{ language.MonitorWorkbench.radiation }}
+        </p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.radiation }}w/m³</p>
+      </div>
+    </div>
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-ziwaixian-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">
+          {{ language.MonitorWorkbench.UVIndex }}
+        </p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.UVIndex }}UVI</p>
+      </div>
+    </div>
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-pm25-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">{{ language.MonitorWorkbench.PM25 }}</p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.PM25}}ug/m³</p>
+      </div>
+    </div>
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-pm10-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">{{ language.MonitorWorkbench.PM10 }}</p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.PM10 }}ug/m³</p>
+      </div>
+    </div>
+    <div class="item-box">
+      <div class="item-icon">
+        <i class="item-icon-icon iconfont fiLink-filink-zaosheng-icon"></i>
+      </div>
+      <div class="parameter">
+        <p class="param-title">{{ language.MonitorWorkbench.noise }}</p>
+        <p class="param-value">{{ MonitorConvenientEntranceList.noise }}dB(A)</p>
+      </div>
+    </div>
+  </div>
+</div>

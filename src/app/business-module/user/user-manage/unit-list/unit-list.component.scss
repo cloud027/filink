@@ -1,0 +1,30 @@
+@import "../../../../style-module/config";
+.dept-level {
+  display: inline-block;
+  text-align: center;
+  width: 48px;
+  height: 20px;
+  color: $menu-font-color;
+}
+
+.level-one {
+  background: $level-one;
+}
+
+.level-two {
+  background-color: $level-two;
+}
+
+.level-three {
+  background-color: $level-three;
+}
+
+.level-four {
+  background-color: $level-four;
+}
+
+.level-five {
+  background-color: $level-five;
+}
+
+

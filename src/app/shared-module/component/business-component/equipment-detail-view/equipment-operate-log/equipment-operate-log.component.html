@@ -1,0 +1,24 @@
+<!--操作日志-->
+<nz-card nzTitle="{{equipmentLanguage.operateLog}}" [nzExtra]="extraTemplate">
+  <div class="card-table-container">
+    <xc-table [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig">
+    </xc-table>
+  </div>
+</nz-card>
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMoreOperateLog()"><span>{{equipmentLanguage.more}} >></span></a>
+</ng-template>
+<!--操作结果-->
+<ng-template #optResult let-data="data">
+  <div *ngIf="data.optResult === optResultEnum.failure" class="result-container">
+    <i class="icon-fiLink fiLink-fail iconfont "></i>
+    <span class="status-text">{{indexLanguage.failure}}</span>
+  </div>
+  <div *ngIf="data.optResult === optResultEnum.success" class="result-container">
+    <i class="icon-fiLink fiLink-success iconfont "></i>
+    <span class="status-text">{{indexLanguage.success}}</span>
+  </div>
+</ng-template>

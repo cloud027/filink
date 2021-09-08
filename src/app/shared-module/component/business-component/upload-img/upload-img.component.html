@@ -1,0 +1,24 @@
+<div class='upload-img-wrapper'>
+  <nz-upload
+    class="avatar-uploader"
+    nzListType="picture-card"
+    [(nzFileList)]="fileList"
+    [nzShowUploadList]="true"
+    [nzRemove]="removeFile"
+    [nzShowButton]="fileList.length < 1"
+    [nzPreview]="handlePreview"
+    [nzBeforeUpload]="beforeUpload"
+  >
+    <ng-container>
+      <i class="upload-icon" nz-icon nzType="plus"></i>
+      <div class="ant-upload-text">{{language.uploadImg}}</div>
+    </ng-container>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+              (nzOnCancel)="previewVisible = false">
+      <ng-template #modalContent>
+        <img *ngIf="previewUrl" [src]="previewUrl" [ngStyle]="{ width: '100%' }" alt=" "/>
+      </ng-template>
+    </nz-modal>
+  </nz-upload>
+</div>
+

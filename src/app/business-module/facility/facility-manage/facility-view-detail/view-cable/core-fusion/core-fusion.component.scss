@@ -1,0 +1,255 @@
+@import "../../../../../../style-module/config";
+
+.box-warp {
+  padding: 10px;
+}
+
+.table-container {
+  position: relative;
+}
+
+.cable-table-title {
+  position: absolute;
+  top: 60px;
+
+}
+
+.cable-segment-table-title {
+  position: absolute;
+  top: 26px;
+
+}
+
+.title {
+  color: #333333;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.add-cable:hover {
+  background: #0c847f;
+}
+
+.area-detail-content {
+  padding: 10px;
+}
+
+.area-detail-title {
+  border-left: 2px solid #7cb0dd;
+  padding-left: 18px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+//步骤条
+.terminationStep {
+  padding-top: 100px;
+  float: left;
+  width: 200px;
+  height: 400px;
+  border-right: 1px solid #e8e8e8;
+  //border-color: gray;
+}
+
+.stepTitle {
+  border-left: 2px solid #009dda;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.terminationStepRightDiv {
+  margin: 5px 0 10px 0;
+
+  span {
+    font-size: 16px;
+    color: #333333;
+  }
+
+  div {
+    line-height: 30px;
+    float: right;
+
+    .terminationStepRightDivI {
+      margin-right: 10px;
+    }
+  }
+}
+
+.stepTitleTwo {
+  margin-top: 30px;
+  position: relative;
+  left: -18px;
+}
+
+.stepTitle > span {
+  font-size: 16px;
+  color: #333333;
+}
+
+// 右侧下拉选择框
+.terminationStepRight {
+  float: left;
+  width: 950px;
+  height: 450px;
+  padding-left: 27px;
+
+  #pic-canvas {
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    height: 440px
+  }
+}
+
+/deep/ .ant-steps-item-process .ant-steps-item-icon {
+  background: #36d1c9;
+  border-color: #36d1c9;
+}
+
+/deep/ .ant-steps-item-finish > .ant-steps-item-tail::after {
+  background-color: #36d1c9;
+}
+
+/deep/ .ant-steps-item-finish .ant-steps-item-icon {
+  border-color: #36d1c9;
+}
+
+/deep/ .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #36d1c9;
+}
+
+/deep/ .ant-steps-item-title {
+  font-size: 14px;
+}
+
+.stepFooter > {
+  display: inline-block;
+}
+
+.background {
+  border: 1px solid #36d1c9;
+}
+
+.area-name {
+  display: inline-block;
+  width: 50%;
+  border: 1px solid #ccc;
+  height: 32px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  outline: none;
+  cursor: default;
+
+  &:hover {
+    border-color: #36cfc9;
+  }
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.numberInput {
+  display: inline-block;
+  border: 1px solid #ccc;
+  height: 22px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  outline: none;
+  cursor: default;
+
+  &:hover {
+    border-color: #36cfc9;
+  }
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.width-style {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+input::-webkit-input-placeholder {
+  color: #BFBFBF;
+}
+
+#pic-canvas {
+  position: relative;
+  flex: 4;
+
+  .right-menu {
+    position: absolute;
+    min-width: 80px;
+    min-height: 26px;
+    margin: 2px 0 0;
+    font-size: 14px;
+    list-style: none;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-top: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background: white;
+    background-clip: padding-box;
+    z-index: 1000;
+
+    li {
+      width: 80px;
+      height: 23px;
+      border-top: 1px solid #e5e5e5;
+
+      a {
+        display: block;
+        padding: 2px 0 0 12px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.leftStepDirectory {
+  height: 450px;
+  width: 1200px;
+
+  .nz-steps {
+    width: 450px;
+
+    .nz-step {
+      height: 100px;
+    }
+  }
+}
+

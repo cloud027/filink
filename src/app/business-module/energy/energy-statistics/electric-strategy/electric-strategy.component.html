@@ -1,0 +1,11 @@
+<div class="electric-strategy-box">
+    <p class="title">{{ language.tariffStrategy }}</p>
+    <div class="table-box">
+        <xc-table
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)"
+        ></xc-table>
+    </div>
+</div>

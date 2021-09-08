@@ -1,0 +1,7 @@
+<nz-card nzTitle="{{language.faultMaintenanceExperience}}" class="common-card fault-experience" [nzExtra]="extraTemplate">
+  <app-trouble-suggest></app-trouble-suggest>
+</nz-card>
+<ng-template #extraTemplate>
+  <span class="update-time">{{language.updateTime}}： {{ updateTime | dynamic: 'date' : null}}</span>
+</ng-template>
+

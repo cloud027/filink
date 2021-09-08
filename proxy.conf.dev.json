@@ -1,0 +1,12 @@
+{
+  "/": {
+    "target": "http://10.5.24.236:4200/",
+    "secure": false
+  },
+  "/websocket": {
+    "target": "ws://10.5.24.236:4200",
+    "ws": true,
+    "secure": false,
+    "changeOrigin": true
+  }
+}

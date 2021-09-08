@@ -1,0 +1,46 @@
+<div class="data-task-box">
+  <p class="title">{{ language.dataAcquisitionCycle }}</p>
+  <div class="table-box">
+    <xc-table
+      #tableComponent
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </div>
+</div>
+
+<!-- 采集周期 -->
+<ng-template #acquisitionCycleTemp let-data="data">
+  <span
+    class="status-text"
+    title="{{ data.execType | translate: collectionTaskCycle:languageEnum.energy }}"
+  >
+    {{ data.execType | translate: collectionTaskCycle:languageEnum.energy }}
+  </span>
+</ng-template>
+
+<!-- 任务状态 -->
+<ng-template #taskStatusTemp let-data="data">
+  <span
+    class="status-text"
+    title="{{
+      data.collectStatus | translate: dataCollectionTaskStatus:'energy.collectionTaskStatusType'
+    }}"
+  >
+    {{ data.collectStatus | translate: dataCollectionTaskStatus:"energy.collectionTaskStatusType" }}
+  </span>
+</ng-template>
+
+<!--启用状态-->
+<ng-template #policyStatus let-data="data">
+  <nz-switch
+    (click)="switchChange(data)"
+    [nzControl]="true"
+    [nzLoading]="data.switchLoading"
+    [ngModel]="data.strategyStatus"
+  ></nz-switch>
+  {{ data.strategyStatus ? language.Enable : language.Disable }}
+</ng-template>

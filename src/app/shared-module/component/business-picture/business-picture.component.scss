@@ -1,0 +1,18 @@
+.business-picture-canvas {
+  height: 650px;
+  width: 100%;
+  overflow: auto;
+  //max-height: calc(100vh - 175px);
+}
+.no-data {
+  text-align: center
+}
+
+/deep/ .Q-Tooltip {
+  background-color: #555 !important;
+  color: #EEE;
+  z-index: 10000 !important;
+}
+/deep/ canvas {
+  width: 100%;
+}

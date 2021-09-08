@@ -1,0 +1,61 @@
+<!-- 告警名称 -->
+<!-- 当在表单提交时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.form" class="screen-render {{ useType }}">
+  <span class="area-name" [title]="checkAlarmName.name">{{checkAlarmName.name}}</span>
+  <button type="button" class="open-button" [disabled]="isDisabledAlarmSearchBtn"
+          (click)="showAlarmNameSelector()">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+</div>
+
+<!-- 当在列表 筛选时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.table && filterCondition" class="screen-render {{ useType }}">
+  <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+         (click)="showAlarmNameSelector()" [(ngModel)]="filterCondition.filterName || checkAlarmName.name" />
+</div>
+
+<nz-modal
+  [(nzVisible)]="isShowAlarmNameList"
+  [nzTitle]="language.alarmName"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzWidth]="820"
+  [nzStyle]="{top: '70px'}"
+  (nzOnCancel)="closeAlarmNameSelector()">
+  <ng-template #modalContent>
+    <!-- 告警名称列表 -->
+    <xc-table #restTableComponent
+              [dataSet]="alarmNameListData"
+              [pageBean]="pageBeanName"
+              [tableConfig]="alarmNameTableConfig"
+              (pageChange)="pageNameChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"  (click)="handleConfirm()">{{language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button"  (click)="closeAlarmNameSelector()">{{language.cancelText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+
+<!-- 告警名称中的默认级别 -->
+<ng-template #alarmDefaultLevelTemp let-data="data">
+  <div>
+    <span class="box-icon" [ngStyle]="data.defaultStyle"></span>
+    <span class="alarm-level-name">{{data.alarmDefaultLevel | translate : alarmLevelEnum : 'alarm'}}</span>
+  </div>
+</ng-template>
+
+<!-- 告警名称中的定制级别 -->
+<ng-template #alarmLevelTemp let-data="data">
+  <div>
+    <span class="box-icon" [ngStyle]="data.style"></span>
+    <span class="alarm-level-name">{{data.alarmLevel | translate : alarmLevelEnum : 'alarm'}}</span>
+  </div>
+</ng-template>
+<!--告警名称单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="checkAlarmNameBackups.ids[0]" (ngModelChange)="selectedChange(data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>

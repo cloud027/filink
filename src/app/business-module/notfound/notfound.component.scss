@@ -1,0 +1,50 @@
+.notfound {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  .icon-img {
+    align-self: center;
+    width: 200px;
+    height: 400px;
+    i {
+      font-size: 200px;
+    }
+  }
+
+  .notfound-reason {
+    height: 400px;
+    margin-left: 60px;
+    align-self: center;
+
+    h1 {
+      span {
+        font-weight: 500;
+      }
+    }
+
+    ul {
+      display: block;
+      list-style-type: disc;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      padding-inline-start: 40px;
+    }
+
+    p {
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+    }
+
+    .error-code {
+      display: block;
+      color: #646464;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+  }
+}

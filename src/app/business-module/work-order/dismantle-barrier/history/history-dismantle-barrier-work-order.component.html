@@ -1,0 +1,80 @@
+<div class="order-box-warp bg-c-w">
+  <div class="order-warp" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <!--统计图-->
+      <div class="gutter-box">
+        <div class="inspect-statistics-item-title">{{ workOrderLanguage.facilityTypeStat }}</div>
+        <div class="inspect-statistics-item-chart">
+          <div
+            *ngIf="deviceTypeStatisticsChartType === chartType.chart"
+            echarts
+            [options]="barChartOption"
+            class="demo-chart chart"
+          ></div>
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.text" class="no-data">
+            {{ InspectionLanguage.noData }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <!--统计图-->
+      <div class="gutter-box">
+        <div class="inspect-statistics-item-title">{{ workOrderLanguage.equipmentTypeStat }}</div>
+        <div class="inspect-statistics-item-chart">
+          <div
+            *ngIf="deviceTypeStatisticsChartType === chartType.chart"
+            echarts
+            [options]="equipmentBarChartOption"
+            class="demo-chart chart"
+          ></div>
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.text" class="no-data">
+            {{ InspectionLanguage.noData }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--第三列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <!--  工单状态环形进度  -->
+      <div class="gutter-box">
+        <div class="inspect-statistics-item-title">{{ workOrderLanguage.statusProportion }}</div>
+        <div class="inspect-statistics-item-chart">
+          <div class="status-circle" *ngIf="statusChartType === chartType.chart">
+            <div class="circle-item">
+              <canvas
+                id="canvas_completed"
+                width="{{ canvasLength }}"
+                height="{{ canvasLength }}"
+              ></canvas>
+              <div class="circle-text">
+                <div class="title">{{ workOrderLanguage.completed }}</div>
+                <div class="number">{{ inspectCompletedPercent }}</div>
+              </div>
+            </div>
+            <div class="circle-item">
+              <canvas
+                id="canvas_singleBack"
+                width="{{ canvasLength }}"
+                height="{{ canvasLength }}"
+              ></canvas>
+              <div class="circle-text">
+                <div class="title">{{ workOrderLanguage.singleBack }}</div>
+                <div class="number">{{ inspectSingleBackPercent }}</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="statusChartType === chartType.text" class="no-data">
+            {{ InspectionLanguage.noData }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 表格部分 -->
+  <div class="table-container bg-c-w">
+    <app-history-dismantle-barrier-work-order-table></app-history-dismantle-barrier-work-order-table>
+  </div>
+</div>

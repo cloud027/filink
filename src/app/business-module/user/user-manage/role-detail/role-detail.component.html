@@ -1,0 +1,39 @@
+<nz-spin class="user-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="page-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="footer" >
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="submit()">
+        {{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+
+<!--权限和设施选择模版-->
+<ng-template #operateSelector let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <button type="button" class="button-style"  nz-button (click)="showSelectorModal()">
+      <i class="icon-fiLink-l iconfont fiLink-facility-list"></i>
+      <span >{{language.permissionAndFacility}}</span>
+    </button>
+  </form>
+</ng-template>
+<!--角色选择器-->
+<xc-tree-role-selector [(xcVisible)]="roleSelectorVisible"
+                       [treeSelectorConfig]="roleSelectorConfig"
+                       (selectDataChange)="selectDataChange($event)">
+</xc-tree-role-selector>
+
+

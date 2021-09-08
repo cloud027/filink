@@ -1,0 +1,138 @@
+<div class="work-order-detail">
+  <!--标题-->
+  <div><span class="page-detail-title">{{pageTitle}}</span></div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div  class="tab-area">
+      <button class="link-button" nz-button
+              nzType="primary"
+              (click)="submitClearData()"
+              type="button"
+              *ngIf="isShowBtn"
+              [nzLoading]="isLoading" [disabled]="!isFormDisabled">{{InspectionLanguage.handleOk}}
+      </button>
+      <button type="button" class="link-button" nz-button nzType="danger" (click)="goBack()">{{InspectionLanguage.handleCancel}}</button>
+    </div>
+  </div>
+
+  <!--单位模板-->
+  <ng-template #accountabilityUnit let-formGroup="formGroup" let-col="col">
+    <div class="unit-width" >
+      <input nz-input class="area-name" [disabled]="unitDisabled" [title]="selectDepartName" [(ngModel)]="selectDepartName" readonly />
+      <button type="button" class="open-button" [disabled]="unitDisabled">
+        <i class="icon-fiLink fiLink-search-index iconfont" (click)="showSelectorModal()"></i>
+      </button>
+    </div>
+  </ng-template>
+  <!--告警关联单位-->
+  <xc-tree-area-selector
+    [(xcVisible)]="isUnitsVisible"
+    (selectDataChange)="selectUnitDataChange($event)"
+    [treeSelectorConfig]="treeUnitSelectorConfig">
+  </xc-tree-area-selector>
+  <!--告警模板-->
+  <ng-template #alarmTemp let-formGroup="formGroup" let-col="col">
+    <div>
+      <input nz-input class="area-name" [title]="alarmName?alarmName:''" [disabled]="unitDisabled"
+             readonly [(ngModel)]="alarmName" >
+      <button type="button" class="open-button" [disabled]="unitDisabled">
+        <i class="icon-fiLink fiLink-search-index iconfont" (click)="showAlarmSelectorModal()"></i>
+      </button>
+    </div>
+  </ng-template>
+  <!-- 设施名称 -->
+  <ng-template #deviceNameTemp let-filterValue="filterValue">
+    <app-alarm-object [alarmObjectConfig]="alarmObjectConfig" [filterValue]="filterValue" [title]="language.deviceName"></app-alarm-object>
+  </ng-template>
+  <ng-template #isCleanTemp let-data="data">
+    <div>{{getAlarmCleanStatusName(data.alarmCleanStatus)}}</div>
+  </ng-template>
+  <ng-template #isConfirmTemp let-data="data">
+    <div>{{ getAlarmConfirmStatusName(data.alarmConfirmStatus) }}</div>
+  </ng-template>
+  <!--关联告警选择-->
+  <ng-template #alarmSelectorModalTemp>
+    <div class="alarm-tab">
+      <xc-table #restTableComponent
+                [dataSet]="_dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </ng-template>
+
+  <!--告警单选框-->
+  <ng-template #radioTemp let-data="data">
+    <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange($event, data)">
+      <label nz-radio [nzValue]="data.id"></label>
+    </nz-radio-group>
+  </ng-template>
+  <!--期望完工时间-->
+  <ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col">
+    <form [formGroup]="formGroup">
+      <nz-date-picker [nzDisabledDate]="disabledEndDate"  nzShowTime formControlName="expectedCompletedTime"></nz-date-picker>
+    </form>
+  </ng-template>
+  <!--工单状态-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}" [ngStyle]="data.rowStyle">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--单位搜索-->
+  <ng-template #unitNameSearch let-filterValue="filterValue">
+    <span class="area-name" (click)="showModal(filterValue)" [title]="selectDepartName"
+          [class.placeholder]="!selectDepartName">{{selectDepartName ? selectDepartName : InspectionLanguage.pleaseClickToSelect}}</span>
+  </ng-template>
+  <!--树配置-->
+  <xc-tree-selector
+    [(xcVisible)]="isVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="unitTreeSelectorConfig">
+  </xc-tree-selector>
+  <!--告警级别-->
+  <ng-template #alarmLevelTemp let-data="data">
+    <div class="hidden" title="{{data.levelName}}">
+      <span class="status-temp alarmLevel" [ngStyle]="{background: data.levelStyle}"> </span>
+      {{data.levelName}}
+    </div>
+  </ng-template>
+  <!--设施类型图标-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="hidden" title="{{data.deviceTypeName}}">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTemp let-data="data">
+    <div class="tab-text-over" title="{{data.equipmentTypeName}}">
+      <span class="status-temp" [ngClass]="data.equipClass"></span>
+      {{data.equipmentTypeName}}
+    </div>
+  </ng-template>
+  <!--自动派单-->
+  <ng-template #autoDispatch>
+    <nz-radio-group [(ngModel)]="dispatchValue" [nzDisabled]="isDispatch" name="autoDispatch" (ngModelChange)="selectDispatch($event)">
+      <label nz-radio [nzValue]="dispatchEnum.right">{{InspectionLanguage.right}}</label>
+      <label nz-radio [nzValue]="dispatchEnum.deny">{{InspectionLanguage.deny}}</label>
+    </nz-radio-group>
+  </ng-template>
+</div>
+<!-- 告警对象 -->
+<ng-template #alarmEquipmentTemp let-filterValue = "filterValue">
+    <span class="equipment-name area-name" [title]="checkEquipmentObject.name" (click)="openEquipmentSelector(filterValue)">
+      <span class="title" *ngIf="!checkEquipmentObject.name">{{language.clickSelect}}</span>
+      {{checkEquipmentObject.name}}</span>
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>

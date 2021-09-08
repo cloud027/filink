@@ -1,0 +1,93 @@
+<div class="in-container">
+  <span class="area-detail-title">
+    {{title}}
+  </span>
+  <div class="strategy-add">
+    <!--步骤条组件-->
+    <div class="xc-steps">
+      <app-xc-steps
+        (notify)="changeSteps($event)"
+        [isActiveStepsCount]="isActiveSteps"
+        [setData]="setData">
+      </app-xc-steps>
+    </div>
+    <div class="assembly">
+      <!--第一步 基本信息-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+        <app-basic-information
+          #basicInfo
+          [stepsFirstParams]="stepsFirstParams"
+          [isScope]="isScope"
+          [basicInfo]="applicationFinal.strategy"
+          (formValid)="infoValid($event,finalValueEnum.STEPS_FIRST)">
+        </app-basic-information>
+      </div>
+
+      <!--第二步 策略详情组件-->
+      <div *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+      <!--联动策略第二步-->
+        <app-strategy-management-details #strategyDetails
+          *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.linkage"
+          [linkageStrategyInfo]="stepsFirstParams.linkageStrategyInfo"
+          [strategyRefList]="stepsFirstParams.strategyRefList"
+          [stepsFirstParams]="stepsFirstParams"
+          (strategyDetailValidChange)="infoValid($event,finalValueEnum.STEPS_SECOND)">
+        </app-strategy-management-details>
+        <!--照明策略 第二步-->
+        <app-strategy-details  [stepsFirstParams]="stepsFirstParams"
+                               *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.lighting"
+                               (strategyDetailValidChange)="infoValid($event,finalValueEnum.STEPS_SECOND)"
+        ></app-strategy-details>
+        <!--信息发布策略 第二步-->
+        <app-release-strategy [stepsFirstParams]="stepsFirstParams"
+                              *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.information"
+                              (strategyDetailValidChange)="infoValid($event,finalValueEnum.STEPS_SECOND)"
+        ></app-release-strategy>
+        <!--广播发布策略 第二步-->
+        <app-broadcast-strategy [stepsFirstParams]="stepsFirstParams"
+                                *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.broadcast"
+                                (strategyDetailValidChange)="infoValid($event,finalValueEnum.STEPS_SECOND)"
+        ></app-broadcast-strategy>
+      </div>
+
+
+      <!--第三步 完成页面组价-->
+      <div
+        class="finish-details"
+        *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD">
+        <!--联动策略  第三步-->
+        <app-strategy-manage-details *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.linkage"
+                                     [middleData]="stepsFirstParams"
+                                     [isOperation]="isOperation">
+        </app-strategy-manage-details>
+        <!--照明策略  第三步-->
+        <app-lighting-details *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.lighting"
+                              [stepsFirstParams]="stepsFirstParams"
+                              [isOperation]="isOperation">
+
+        </app-lighting-details>
+        <!--信息屏策略 第三步-->
+        <app-release-details *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.information"
+                             [stepsFirstParams]="stepsFirstParams"
+                             [isOperation]="isOperation"
+        ></app-release-details>
+        <!--广播策略 第三步-->
+        <app-broadcast-details *ngIf="stepsFirstParams.strategyType === strategyStatusEnum.broadcast"
+                             [stepsFirstParams]="stepsFirstParams"
+                             [isOperation]="isOperation"
+        ></app-broadcast-details>
+      </div>
+
+
+      <!--按钮组-->
+      <app-button-group #buttonGroupComponent
+        [isLoading]="isSaveLoading"
+        [isDisabled]="nextButtonDisable"
+        [isActiveSteps]="isActiveSteps"
+        (changeSteps)="changeSteps($event)"
+        (submitNotify)="handStepsSubmit()"
+        (cancelNotify)="handCancelSteps()"
+      ></app-button-group>
+    </div>
+  </div>
+</div>

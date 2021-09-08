@@ -1,0 +1,76 @@
+<div class="done-box">
+    <!-- 策略基本信息 -->
+    <div class="basic-info">
+        <p class="title">{{ language.doneComponent.basicInformationOfStrategy }}</p>
+        <div class="container-box">
+            <p class="title">{{ language.doneComponent.basicInfo }}</p>
+            <div class="container-basic">
+                <p>
+                    <span class="title"
+                        >{{ language.doneComponent.nameOfElectricityChargeStrategy }}:</span
+                    >
+                    <span class="context">xxx策略</span>
+                </p>
+                <p>
+                    <span class="title">{{ language.doneComponent.scopeOfApplication }}:</span>
+                    <span class="context">区域</span>
+                </p>
+                <p>
+                    <span class="title">{{ language.doneComponent.remarks }}:</span>
+                    <span class="context">remarks</span>
+                </p>
+            </div>
+            <!-- 表格 -->
+            <div class="table-box">
+                <p class="title">{{ language.doneComponent.scopeOfApplication }}</p>
+                <xc-table
+                    [dataSet]="strategyTableSet"
+                    [tableConfig]="strategyTableConfig"
+                >
+                </xc-table>
+            </div>
+        </div>
+    </div>
+    <!-- 策略详情 -->
+    <div class="detail-box">
+        <div class="title">{{language.doneComponent.strategyDetails}}</div>
+        <!-- 电量范围 -->
+        <div class="fanwei electric-box">
+            <div class="title">{{language.powerRange}}</div>
+            <p class="container">
+                <span class="title">{{language.electricStrategy.powerRange}}</span>
+                <span class="start">0</span>
+                <span class="icon-line">-</span>
+                <span class="end">2600</span>
+            </p>
+            <p class="container">
+                <span class="title">{{language.secondPowerConsumption}}</span>
+                <span class="start">0</span>
+                <span class="icon-line">-</span>
+                <span class="end">2600</span>
+            </p>
+            <p class="container">
+                <span class="title">{{language.thirdPowerConsumption}}</span>
+                <span class="start">0</span>
+                <span class="icon-line">-</span>
+                <span class="end">2600</span>
+            </p>
+        </div>
+        <!-- 电量单价 -->
+        <div class="danjia electric-box">
+            <div class="title">{{language.unitPriceOfElectricity}}</div>
+            <p class="container">
+                <span class="title">{{language.unitPriceOfTheFirstStage}}</span>
+                <span class="start">0</span>
+            </p>
+            <p class="container">
+                <span class="title">{{language.unitPriceOfTheSecondStage}}</span>
+                <span class="start">0</span>
+            </p>
+            <p class="container">
+                <span class="title">{{language.unitPriceOfTheThirdStage}}</span>
+                <span class="start">0</span>
+            </p>
+        </div>
+    </div>
+</div>

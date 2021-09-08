@@ -1,0 +1,309 @@
+<div  class="overall-background">
+  <!--  信息发布工作台-->
+  <div *ngIf="paging.Total">
+  <div class="box-title">
+    {{language.informationWorkbench.workbench}}
+  </div>
+  <div  class="strategy">
+    <!--使用中的策略列表-->
+    <div class="use-strategies">
+      <!--标题  按钮-->
+      <div class="line">
+        <!-- 使用中的策略-->
+        <div class="strategies-title">
+          <span class="title">{{language.frequentlyUsed.strategiesUse}}</span>
+          <!-- 当前第几页-->
+          <span class="title-paging">
+            <span>{{language.frequentlyUsed.currentNo}}</span>
+            <span class="paging-num">{{paging.pageIndex}}</span>
+            {{language.frequentlyUsed.page}}，
+            <!-- 共多少页-->
+            <span>{{language.frequentlyUsed.common}}</span>
+            <span class="paging-num">{{paging.totalPage}}</span>{{language.frequentlyUsed.page}}，
+            <!-- 共计多少条-->
+            <span>{{language.frequentlyUsed.total}}</span>
+            <span class="paging-num">{{paging.Total}}</span>{{language.frequentlyUsed.strip}}
+            </span>
+        </div>
+        <div class="right-btn">
+          <button [appAccessPermission]="releasePolicyEnum.primaryAddKey"
+                  class="add" nz-button nzType="primary" (click)="onAddStrategy()">
+            <i class="iconfont  fiLink-add-no-circle"></i>
+            {{language.frequentlyUsed.add}}</button>
+          <!--全部策略-->
+          <span [appAccessPermission]="releasePolicyEnum.primaryKey"
+                class="all-strategy" (click)="onGoStrategyList()">{{language.frequentlyUsed.allStrategy}}</span>
+        </div>
+      </div>
+
+      <!--列表内容-->
+      <div class="list-content">
+        <nz-row class="content-card">
+          <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-last icon-left"
+             [ngClass]="{'not-allowed':paging.pageIndex <= 1}"
+             (click)="onPagingChange('left')"></i>
+          <nz-col nzSpan="12" class="content-space" *ngFor="let data of listData, let i = index"
+                  (click)="handShowConvenient($event,i)">
+            <div [ngClass]="{'card-content':true,'be-selected':data.state}">
+              <div class="top-title">
+                <i class="iconfont fiLink-informationboard title-icon"></i>
+                <div class="titles">
+                  <p [appAccessPermission]="releasePolicyEnum.primaryDetailsKey"
+                     class="strategy-title" [title]="data.strategyName"
+                     (click)="strategyDetails(data.strategyId)">{{data.strategyName}}</p>
+                  <p class="content-strategyType">{{data.strategyType}}</p>
+                </div>
+                <div class="switch-strategy"
+                     (click)="onEnableOrDisableStrategy($event,data.strategyId,data.strategyStatus,i)">
+                  <nz-switch [nzControl]="true" [(ngModel)]="data.strategyStatus"></nz-switch>
+                  {{data.strategyStatus ? language.frequentlyUsed.enable : language.frequentlyUsed.disabled}}
+                </div>
+              </div>
+              <nz-row class="execType">
+                <nz-col nzSpan="6" class="content-strategyType" [title]="currentLangType ? language.frequentlyUsed.executionCycle : ''">
+                  {{language.frequentlyUsed.executionCycle}}:</nz-col>
+                <!-- 执行周期-->
+                <nz-col nzSpan="18">
+                  <i class="iconfont fiLink-filink-riqi-icon execType-icon"></i>
+                  {{data.execType}}
+                </nz-col>
+              </nz-row>
+              <nz-row class="effectivePeriodTime">
+                <nz-col nzSpan="6" class="content-strategyType"  [title]="currentLangType ? language.frequentlyUsed.validity : ''">
+                  {{language.frequentlyUsed.validity}}:</nz-col>
+                <nz-col nzSpan="18">
+                  <i class="iconfont fiLink-time effectivePeriodTime-icon"></i>
+                  {{data.effectivePeriodTime}}
+                </nz-col>
+              </nz-row>
+            </div>
+          </nz-col>
+
+          <nz-col nzSpan="12" class="content-space" *ngIf="listData.length>0 && listData.length<6">
+            <div class="card-content">
+              <div class="available-img">
+                <img src="../../../../../assets/img/application-system/defect.png"/>
+              </div>
+              <div class="available-text">
+                {{language.strategyList.information}}
+              </div>
+            </div>
+          </nz-col>
+
+          <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-next icon-right"
+             [ngClass]="{'not-allowed':paging.pageIndex >= paging.totalPage}"
+             (click)="onPagingChange('right')"></i>
+        </nz-row>
+
+      </div>
+
+    </div>
+    <!--便捷入口-->
+    <div class="convenient-entrance">
+      <!--标题 便捷入口-->
+      <div class="title line">{{language.frequentlyUsed.convenientEntrance}}</div>
+      <div *ngIf="convenientEntranceSwitch" class="convenient">
+        <nz-row class="bottom-time">
+          <div nz-col nzSpan="16" class="title-label">
+            <p class="strategy-title" [title]="detailData.strategyName">{{detailData?.strategyName}}</p>
+
+            <span class="execStatus">{{detailData?.execStatus}}</span>
+          </div>
+          <nz-select nz-col nzSpan="8" [(ngModel)]="selectProgramId" (ngModelChange)="changeProgram()">
+            <nz-option *ngFor="let program of programList"
+                       [nzValue]="program.programId" [nzLabel]="program.programName"></nz-option>
+          </nz-select>
+        </nz-row>
+
+        <!--有效期-->
+        <div class="term-validity">{{language.frequentlyUsed.validity}}：{{detailData?.effectivePeriodTime}}</div>
+
+        <div class="preview-box">
+          <xc-video [hidden]="!isVideo"
+                    [hasChangeBtn]="true"
+                    [options]="{width: '100%', height: '250px'}"
+                    [sourceArray]="[programIdPath]"
+                    [isControl]="true"
+                    (handlePrevChange)="handlePrevChange(true)"
+                    (handleNextChange)="handlePrevChange(false)"></xc-video>
+          <div class="picture" [hidden]="isVideo">
+            <img [hidden]="isVideo" [src]="programIdPath" class="preview" alt="">
+            <div class="picture-btn">
+              <div class="btn-box">
+                <div class="btn-icon">
+                  <i class="iconfont fiLink-pic-left icon-up" (click)="handlePrevChange(true)"></i>
+                </div>
+                <div class="btn-icon"></div>
+                <div class="btn-icon">
+                  <i class="iconfont fiLink-pic-right icon-up" (click)="handlePrevChange(false)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <nz-row class="light light-switch">
+          <div nz-col nzSpan="4" class="explain">
+            <!-- 开关-->
+            <i class="icon-fiLink-l iconfont fiLink-open switch"></i>
+            {{language.frequentlyUsed.switch}}
+          </div>
+          <!--开关不用绑定任何值 默认关闭  已确认-->
+          <nz-radio-group class="open-close" [(ngModel)]="radioValue" (ngModelChange)="onEnableStrategyDetail()">
+            <label nz-radio [nzDisabled]="openRole" [nzValue]="true">{{language.frequentlyUsed.open}}</label>
+            <label nz-radio [nzDisabled]="closeRole" [nzValue]="false">{{language.frequentlyUsed.close}}</label>
+          </nz-radio-group>
+        </nz-row>
+
+        <nz-row class="light">
+          <div nz-col nzSpan="4" class="explain">
+            <!-- 亮度-->
+            <i class="icon-fiLink-l iconfont fiLink-light brightness"></i>
+            {{language.frequentlyUsed.brightness}}
+          </div>
+          <nz-col nzSpan="12">
+            <nz-slider [nzDisabled]="sliderRole" [nzMin]="0" [nzMax]="255" [(ngModel)]="detailData?.instructInfo.light"
+                       (nzOnAfterChange)="onAdjustBrightness()"></nz-slider>
+          </nz-col>
+          <nz-col nzSpan="4">
+            <span class="light-num">{{detailData?.instructInfo?.light || 0}}</span>
+          </nz-col>
+        </nz-row>
+        <nz-row class="light">
+          <nz-col nzSpan="4" class="explain">
+            <!-- 音量-->
+            <i class="icon-fiLink-l iconfont fiLink-filink-yinliang-icon volume"></i>
+            {{language.frequentlyUsed.volume}}
+          </nz-col>
+          <nz-col nzSpan="12">
+            <nz-slider [nzDisabled]="volumeRole" [nzMin]="0" [nzMax]="15" [(ngModel)]="detailData?.instructInfo.volume"
+                       (nzOnAfterChange)="onAdjustVolume()"></nz-slider>
+          </nz-col>
+          <nz-col nzSpan="4">
+            <span class="light-num">{{detailData?.instructInfo?.volume || 0}}</span>
+          </nz-col>
+        </nz-row>
+        <div class="btn-up-and-down">
+          <button [appAccessPermission]="releaseTableEnum.primaryUpKey"
+                  nzType="primary" [disabled]="true" class="instructions" nz-button nz-dropdown>
+            <i class="iconfont fiLink-up-electric"></i>{{language.frequentlyUsed.upElectric}}
+          </button>
+          <button [appAccessPermission]="releaseTableEnum.primaryDownKey"
+                  nzType="primary" [disabled]="true" class="instructions" nz-button nz-dropdown>
+            <i class="iconfont fiLink-down-electric"></i>{{language.frequentlyUsed.downElectric}}
+          </button>
+          <button [appAccessPermission]="releasePolicyEnum.primaryIssueKey" nzType="primary" nz-button nz-dropdown
+                  (click)="onInstructionIssue()">
+            <i class="iconfont fiLink-filink-celuexiafa-icon"></i>{{language.informationWorkbench.programDistribution}}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="!convenientEntranceSwitch" class="convenient unchecked">
+        <!-- 暂未选中策略-->
+        <p>{{language.frequentlyUsed.noPolicySelected}}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!--缺省页-->
+  <div *ngIf="!paging.Total" class="overall-background">
+    <!--  信息发布工作台-->
+    <div class="box-title">
+      {{language.informationWorkbench.workbench}}
+    </div>
+    <div class="default-page">
+      <img src="../../../../../assets/img/application-system/available.png">
+      <!-- 还没有发布信息哦,快去创建吧 -->
+      <p class="default-p">{{language.informationWorkbench.createIt}}~</p>
+      <button [appAccessPermission]="releasePolicyEnum.primaryAddKey"
+              class="link-button" nz-button nzType="primary" (click)="onAddStrategy()">
+        <i class="iconfont  fiLink-add-no-circle"></i>
+        {{language.frequentlyUsed.add}}</button>
+    </div>
+  </div>
+  <div class="statistical">
+    <div class="statistical-left">
+      <!--工单增量-->
+      <div class="line-chart" *ngIf="isWorkOrderRole">
+        <div class="bottom-line">
+          <div class="statistics-title overflow-hidden"
+               [title]="language.frequentlyUsed.increaseWorkOrder">{{language.frequentlyUsed.increaseWorkOrder}}</div>
+          <nz-range-picker class="select-time" [(ngModel)]="workOrderIncrementTime.startAndEndTime"
+                           [nzAllowClear]="false"
+                           (ngModelChange)="workOrderIncrementStatistics()"></nz-range-picker>
+        </div>
+        <div *ngIf="isShowWorkOrder" echarts [options]="workOrderIncrement" class="chart"></div>
+        <div *ngIf="!isShowWorkOrder" class="empty-container">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+      <!--设备节目投放数量-->
+      <div class="line-chart programLaunchQuantity">
+        <div class="bottom-line">
+          <div class="statistics-title overflow-hidden"
+               [title]="language.informationWorkbench.programLaunchQuantity">{{language.informationWorkbench.programLaunchQuantity}}</div>
+          <nz-range-picker class="select-time" [(ngModel)]="programLaunchQuantityTime.startAndEndTime"
+                           [nzAllowClear]="false"
+                           (ngModelChange)="launchQuantityStatistics()"></nz-range-picker>
+        </div>
+        <div *ngIf="isShowProgramLaunch" echarts [options]="programLaunchQuantity" class="chart"></div>
+        <div *ngIf="!isShowProgramLaunch" class="empty-container">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+    </div>
+    <!--设备播放时长-->
+    <div class="line-chart duration">
+      <div class="bottom-line">
+        <div class="statistics-title overflow-hidden"
+             [title]="language.informationWorkbench.playingTime">{{language.informationWorkbench.playingTime}}</div>
+        <nz-range-picker class="select-time" [(ngModel)]="durationTime.startAndEndTime" [nzAllowClear]="false"
+                         (ngModelChange)="durationStatistics()"></nz-range-picker>
+      </div>
+      <div *ngIf="isShowDuration" echarts [options]="duration" class="chart"></div>
+      <div *ngIf="!isShowDuration" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+
+  <div class="pie-chart">
+
+    <!--设备状态-->
+    <div class="line-chart equipment-status-data">
+      <div nz-row class="bottom-statistics">
+        <nz-col nzSpan="8">
+          <div class="statistics-title"
+               [title]="language.frequentlyUsed.equipmentStatus">{{language.frequentlyUsed.equipmentStatus}}</div>
+        </nz-col>
+      </div>
+      <div *ngIf="isShowEquipmentStatus" echarts [options]="equipmentStatusData" class="chart"></div>
+      <div *ngIf="!isShowEquipmentStatus" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+    <!--告警分类数量统计-->
+    <div class="line-chart programLaunchQuantity" *ngIf="isAlarmStatisticsRole">
+      <div nz-row class="bottom-statistics alarm-number">
+        <div class="left">
+          <div class="statistics-title"
+               [ngClass]="{'overflow-hidden': currentLangType}"
+               [title]="language.informationWorkbench.quantityStatistics">{{language.informationWorkbench.quantityStatistics}}</div>
+          <div [appAccessPermission]="informationWorkBenchEnum.currentAlarm"
+               class="detail all-strategy"
+               (click)="goToAlarm()">{{language.frequentlyUsed.viewDetails}}</div>
+        </div>
+        <nz-range-picker class="select-time" [(ngModel)]="alarmClassificationTime.startAndEndTime"
+                         [nzAllowClear]="false"
+                         (ngModelChange)="statisticsAlarmLevelType()"></nz-range-picker>
+      </div>
+      <div *ngIf="isShowAlarmClassification" echarts [options]="alarmClassification" class="chart"></div>
+      <div *ngIf="!isShowAlarmClassification" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,262 @@
+@import '../../../../style-module/config.scss';
+
+.facility-detail-panel-container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: calc(100vh - 175px);
+  font-size: 12px;
+  padding: 0 15px;
+
+  .heartbeat-info-more {
+    cursor: pointer;
+    color: $index-card-more;
+  }
+
+  .bottom-distance {
+    margin-bottom: 5px;
+  }
+
+  .monitor-info {
+    margin-top: 20px;
+
+    .monitor-info-title {
+      display: flex;
+      margin-bottom: 3px;
+
+      .line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+
+    .monitor-info-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .monitor-info-item {
+        width: 50%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+
+        .monitor-info-title {
+          width: 100px;
+          color: $index-alarm-title;
+        }
+
+        .monitor-info-icon {
+          @extend .icon-size;
+        }
+
+        .monitor-info-text {
+          flex: 1;
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+
+  .lock-status {
+    margin-top: 20px;
+
+    .lock-status-title-name {
+      display: flex;
+      margin-bottom: 3px;
+
+      .line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+
+    .lock-status-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .lock-status-item {
+        width: 50%;
+        display: flex;
+        height: 30px;
+        align-items: center;
+
+        .lock-status-title {
+          width: 97px;
+          color: $index-alarm-title;
+        }
+
+        .lock-status-icon {
+          @extend .icon-size;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .heartbeat-info {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    padding: 30px 0;
+
+    .heartbeat-info-icon {
+      width: 20px;
+      height: 20px;
+      background-size: 100% 100%;
+      @extend .icon-heartbeat;
+    }
+
+    .heartbeat-info-time {
+      padding-left: 10px;
+      flex: 1;
+    }
+
+  }
+
+  .smartTag {
+    margin-top: 20px;
+
+    .smart-tag-title-name {
+      display: flex;
+      margin-bottom: 3px;
+
+      .line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+
+    .facility-item {
+      width: 50%;
+      display: flex;
+      float: left;
+      padding-top: 5px;
+
+      .label {
+        color: $index-alarm-title;
+        max-width: 85px;
+        min-width: 60px;
+      }
+
+      .value {
+        text-align: left;
+      }
+
+      .more {
+        width: 100%;
+        cursor: pointer;
+        color: $index-card-more;
+        float: right;
+        text-align: right;
+      }
+
+    }
+  }
+
+
+  .icon-size {
+    cursor: default;
+    background-size: 100% 100%;
+    width: 20px;
+    height: 20px;
+  }
+
+  .item {
+    display: flex;
+    height: 24px;
+    align-items: center;
+  }
+
+  .m-right {
+    margin-right: 10px;
+  }
+
+  .w-all {
+    width: 100% !important;
+  }
+
+  .chat-height {
+    height: 200px
+  }
+
+  .nz-select-style {
+    width: 120px;
+    margin-top: -10px;
+    float: right;
+    font-size: 12px;
+  }
+
+  // 在线
+  .icon-online {
+    background: url("../../../../../assets/img/index/icon-online.png") no-repeat center;
+  }
+
+  // 离线
+  .icon-offline {
+    background: url("../../../../../assets/img/index/icon-offline.png") no-repeat center;
+  }
+
+  // 布防
+  .icon-vector-object {
+    background: url("../../../../../assets/img/index/icon-vector-object.png") no-repeat center;
+  }
+
+  // 未布防
+  .icon-vector-object-u {
+    background: url("../../../../../assets/img/index/icon-vector-object-u.png") no-repeat center;
+  }
+
+  // 收藏
+  .icon-collection {
+    background: url("../../../../../assets/img/index/icon-collection.png") no-repeat center;
+  }
+
+  // 已收藏
+  .icon-collection-o {
+    background: url("../../../../../assets/img/index/icon-collection-o.png") no-repeat center;
+  }
+
+  // 充电（太阳能板）
+  .icon-charging {
+    background: url("../../../../../assets/img/index/icon-charging.gif") no-repeat center;
+  }
+
+  // 放电（太阳能板）
+  .icon-discharge {
+    background: url("../../../../../assets/img/index/icon-discharging.gif") no-repeat center;
+  }
+
+  // 门正常
+  .icon-door-normal {
+    background: url("../../../../../assets/img/index/icon-door-normal.png") no-repeat center;
+  }
+
+  // 门异常
+  .icon-door-opening {
+    background: url("../../../../../assets/img/index/icon-door-opening.gif") no-repeat center;
+  }
+
+  // 锁正常
+  .icon-lock-normal {
+    cursor: pointer !important;
+    background: url("../../../../../assets/img/index/icon-lock-normal.png") no-repeat center;
+  }
+
+  // 锁异常
+  .icon-lock-opening {
+    background: url("../../../../../assets/img/index/icon-lock-opening.gif") no-repeat center;
+  }
+
+  // 锁失效
+  .icon-lock-invalid {
+    background: url("../../../../../assets/img/index/icon-lock-invalid.png") no-repeat center;
+  }
+
+  // 心跳
+  .icon-heartbeat {
+    background: url("../../../../../assets/img/index/icon-heartbeat.png") no-repeat center;
+  }
+}

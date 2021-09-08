@@ -1,0 +1,20 @@
+
+<!-- 当在表单提交时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.form" class="screen-render {{ useType }}">
+  <span class="area-name" [title]="checkUnit.name">{{checkUnit.name}}</span>
+  <button class="open-button" type="button" (click)="showModal();">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+</div>
+
+<!-- 当在列表 筛选时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.table" class="screen-render {{ useType }}">
+  <span class="area-name" (click)="showModal()" [title]="checkUnit.name">
+  <span class="title" *ngIf="!checkUnit.name">{{language.clickSelect}}</span>
+  {{checkUnit.name}}</span>
+</div>
+
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

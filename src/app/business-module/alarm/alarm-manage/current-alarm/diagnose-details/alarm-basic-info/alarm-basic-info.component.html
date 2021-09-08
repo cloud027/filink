@@ -1,0 +1,132 @@
+<div class="alarm-basic-info" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box">
+        <div class="item-height title">
+          <!--告警名称 告警等级样式 清除状态 确认状态 进程状态-->
+          <span class="alarm-title" [nz-tooltip]="alarmInfo?.alarmName">{{ alarmInfo.alarmName}}</span>
+          <span class="alarm-status" [ngStyle]="alarmInfo.alarmLeaveClass">{{alarmInfo.alarmLeaveName}}</span>
+          <span class="alarm-status" [ngClass]="alarmInfo.alarmCleanStatusClass">{{ alarmInfo.alarmCleanStatusName }}</span>
+          <span class="alarm-status" [ngClass]="alarmInfo.alarmConfirmStatusClass">{{ alarmInfo.alarmConfirmStatusName }}</span>
+          <span class="alarm-status processing" *ngIf="alarmInfo.alarmProcesseStatus">{{ alarmInfo.alarmProcesseStatus }}</span>
+        </div>
+        <!--首次发生时间-->
+        <div class="item-height happen-time">
+          <label>{{language.alarmBeginTime}}：</label>
+          <span>{{alarmInfo.alarmBeginTime | dynamic: 'date' : null}}</span>
+        </div>
+        <!--告警类别-->
+        <div class="item-height">
+          <label class="label-title">{{language.AlarmType}}：</label>
+          <span>{{alarmInfo.alarmClassificationName}}</span>
+        </div>
+        <!--告警持续时间-->
+        <div class="item-height sustain-time">
+          <label class="label-title">{{language.alarmContinousTime}}：</label>
+          <span>{{alarmInfo.alarmContinousTime}}</span>
+        </div>
+        <!--责任单位-->
+        <div class="item-height dept-box">
+          <i class="icon-fiLink iconfont fiLink-departments" [nz-tooltip]="language.responsibleDepartment"></i>
+          <span class="dept hidden" [title]="alarmInfo.responsibleDepartment">{{alarmInfo.responsibleDepartment}}</span>
+        </div>
+        <!--频次-->
+        <div class="frequency">
+          <div class="big-circle">
+            <div class="small-circle">
+              <span class="frequency-num" [ngStyle]="{fontSize: alarmInfo.fontSize + 'px'}">{{alarmInfo.alarmHappenCount}}</span>
+            </div>
+          </div>
+          <p class="frequency-text">{{language.alarmHappenCount}}</p>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box">
+        <div class="item-height gather">
+          <!--所属区域名称 告警设施名称 设施类型名称 详细地址-->
+          <span class="alarm-title" [nz-tooltip]="alarmInfo?.areaName">{{alarmInfo.areaName}}</span>
+          <span class="alarm-title" [nz-tooltip]="alarmInfo?.alarmDeviceName">{{alarmInfo.alarmDeviceName}}</span>
+          <span class="alarm-title">
+            <i class="icon-fiLink iconfont" [nz-tooltip]="alarmInfo?.deviceTypeName"
+               [ngClass]="alarmInfo.deviceTypeIcon"></i>{{alarmInfo.deviceTypeName}}
+          </span>
+        </div>
+        <div class="item-height address">
+          <i class="icon-fiLink iconfont fiLink-filink-location-icon" [nz-tooltip]="language.address"></i>
+          <span>{{alarmInfo.address}}</span>
+        </div>
+        <!--告警对象-->
+        <div class="item-height alarm-object">
+          <label>{{language.alarmobject}}：</label>
+          <span>{{alarmInfo.alarmObject}}</span>
+        </div>
+        <!--设备类型 设备名称-->
+        <div class="item-height item-top">
+          <label class="label-title">{{language.equipmentType}}：</label>
+          <span>
+            <i class="icon-fiLink iconfont" [nz-tooltip]="alarmInfo?.equipmentName"
+               [ngClass]="alarmInfo.equipmentIcon"></i>{{alarmInfo.equipmentName}}
+          </span>
+        </div>
+        <!--确认用户 清除用户-->
+        <div class="item-height item-top">
+          <label class="label-title">{{language.alarmConfirmPeopleNickname}}：</label>
+          <span>{{alarmInfo.alarmConfirmPeopleNickname}}</span>
+        </div>
+        <div class="item-height item-top">
+          <label class="label-title">{{language.alarmCleanPeopleNickname}}：</label>
+          <span>{{alarmInfo.alarmCleanPeopleNickname}}</span>
+        </div>
+      </div>
+    </div>
+    <!--第三列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box tran">
+        <div class="time">
+          <!--最近发生时间-->
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.alarmNearTime}}：</label>
+            <span *ngIf="alarmInfo.alarmNearTime">
+              <i class="icon-fiLink iconfont fiLink-time"></i>
+              {{alarmInfo.alarmNearTime | dynamic: 'date' : null}}
+            </span>
+          </div>
+          <!--确认时间-->
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.alarmConfirmTime}}：</label>
+            <span *ngIf="alarmInfo.alarmConfirmTime">
+              <i class="icon-fiLink iconfont fiLink-time"></i>
+              {{alarmInfo.alarmConfirmTime | dynamic: 'date' : null}}
+            </span>
+          </div>
+          <!--清除时间-->
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.alarmCleanTime}}：</label>
+            <span *ngIf="alarmInfo.alarmCleanTime">
+              <i class="icon-fiLink iconfont fiLink-time"></i>
+              {{alarmInfo.alarmCleanTime | dynamic: 'date' : null}}
+            </span>
+          </div>
+        </div>
+        <!--告警附加信息-->
+        <div class="remark">
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.alarmAdditionalInformation}}：</label>
+            <span class="one-text">{{alarmInfo.extraMsg}}</span>
+          </div>
+          <!--告警处理建议-->
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.alarmTreatmentRecommendations}}：</label>
+            <span class="one-text">{{alarmInfo.alarmProcessing}}</span>
+          </div>
+          <!--备注-->
+          <div class="item-height item-bottom">
+            <label class="label-title">{{language.remark}}：</label>
+            <span class="one-text">{{alarmInfo.remark}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<!--告警处理统计-->
+<!--筛选条件-->
+<app-screening-condition #appScreenCondition
+                         [currentPage]="'alarmDispose'"
+                         (search)="search($event)" [appBarProgress]="progressShow"></app-screening-condition>
+
+<div *ngIf="!result">
+  <div class="bar-chart">
+    <app-echart-column (chartInstance)="getRingChartInstance($event)"></app-echart-column>
+    <app-echart-column (chartInstance)="getBarChartInstance($event)"></app-echart-column>
+  </div>
+  <br>
+  <xc-table
+    class="alarm-statistical"
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    >
+  </xc-table>
+</div>

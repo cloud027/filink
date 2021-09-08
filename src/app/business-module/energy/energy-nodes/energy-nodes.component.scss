@@ -1,0 +1,112 @@
+@import '../../../style-module/config.scss';
+.energy-nodes {
+    position: relative;
+    background-color: $bg-c;
+
+    .title {
+        font-size: 16px;
+        font-weight: 900;
+        padding: 16px;
+        padding-top: 0;
+        color: #333;
+        background-color: #fff;
+    }
+    .table-box {
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 16px;
+    }
+
+    .box-icon {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        display: inline-block;
+        align-self: center;
+    }
+
+    .uncommit-color {
+        color: $handle-uncommit-color;
+    }
+
+    .commit-color {
+        color: $handle-commit-color;
+    }
+
+    .processing-color {
+        color: $handle-processing-color;
+    }
+
+    .done-color {
+        color: $handle-done-color;
+    }
+
+    .undone-color {
+        color: $handle-undone-color;
+    }
+
+    .status-text {
+        margin-left: 5px;
+    }
+}
+
+.one-text {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: top;
+    text-overflow: ellipsis;
+}
+
+.equipmentName-box {
+    margin-right: 6px;
+}
+
+.equipmentName-box:not(:last-child) > .status-text:after {
+    content: ',';
+}
+
+.widthStyle {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    height: 22px;
+    padding: 4px 11px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    outline: none;
+    cursor: default;
+    &:hover {
+        border-color: #36cfc9;
+    }
+
+    &:disabled {
+        cursor: no-drop;
+        background-color: #f5f5f5;
+        color: rgba(0, 0, 0, 0.25);
+    }
+}
+
+.inputBox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alarm-model {
+    cursor: pointer;
+    color: #36cfc9;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.ref-color {
+    color: $color;
+}

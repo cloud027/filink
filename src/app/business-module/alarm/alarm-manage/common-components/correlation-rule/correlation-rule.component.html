@@ -1,0 +1,41 @@
+<div class="correlation-rule">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  <!-- 启用状态 -->
+  <ng-template #isNoStartTemp let-data="data">
+    <div class="switch-box">
+      <span *ngIf="isSwitch" class="switch-over"></span>
+      <nz-switch [ngModel]="data.status === isStatus.enable"
+                 [nzControl]="true"
+                 [nzLoading]="data.clicked"
+                 [appAccessPermission]="data.appAccessPermission"
+                 (click)="clickSwitch(data)">
+      </nz-switch>
+      <span class="no-start-temp">{{data.statusName}}</span>
+    </div>
+  </ng-template>
+  <!--查看规则-->
+  <app-view-rule *ngIf="isShowViewRule"
+                 [(xcVisible)]="isShowViewRule"
+                 [ruleId]="ruleId"
+  ></app-view-rule>
+  <!-- 根原因告警 -->
+  <ng-template #alarmReason let-filterValue = "filterValue">
+    <app-alarm-name [isFilter]="true" [alarmNameConfig]='alarmReasonConfig' [filterCondition]="filterValue" ></app-alarm-name>
+  </ng-template>
+  <!-- 相关告警 -->
+  <ng-template #correlationAlarm let-filterValue = "filterValue">
+    <app-alarm-name [isFilter]="true" [alarmNameConfig]='correlationAlarmConfig' [filterCondition]="filterValue" ></app-alarm-name>
+  </ng-template>
+  <!--分析周期-->
+  <ng-template #analyzePeriodTemp let-filterValue="filterValue">
+    <div class="input-box">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>3)value=value.slice(0,3)"
+             [placeholder]="language.pleaseEnter" [(ngModel)]="filterValue.filterValue" />
+    </div>
+  </ng-template>
+</div>

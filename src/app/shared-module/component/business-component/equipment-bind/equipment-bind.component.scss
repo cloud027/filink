@@ -1,0 +1,14 @@
+@import "../../../../style-module/config";
+.error-equipment-doc{
+  border-color: $error-color;
+}
+.bind-table{
+  width: 100%;
+}
+.error-warp{
+  color: $error-color;
+}
+
+.ant-select {
+  width: 130px;
+}

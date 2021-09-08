@@ -1,0 +1,49 @@
+<div class="in-container">
+  <span class="area-detail-title">
+    {{title}}
+  </span>
+  <div class="strategy-add">
+    <div class="xc-steps">
+      <!--步骤条组件-->
+      <app-xc-steps
+        (notify)="changeSteps($event)"
+        [isActiveStepsCount]="isActiveSteps"
+        [setData]="setData"></app-xc-steps>
+    </div>
+    <div class="assembly">
+      <!--基本信息-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+        <app-basic-information
+          #basicInfo
+          [stepsFirstParams]="stepsFirstParams"
+          [basicInfo]="applicationFinal.release"
+          (formValid)="infoValid($event,finalValueEnum.STEPS_FIRST)">
+        </app-basic-information>
+      </div>
+      <!--策略详情-->
+      <div *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+        <!--信息发布策略 第二步-->
+        <app-release-strategy [stepsFirstParams]="stepsFirstParams"
+                              (strategyDetailValidChange)="infoValid($event,finalValueEnum.STEPS_SECOND)"
+        ></app-release-strategy>
+      </div>
+     <!--完成页面-->
+      <div *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD" class="finish-details">
+        <!--信息屏策略 第三步-->
+        <app-release-details [stepsFirstParams]="stepsFirstParams"
+                             [isOperation]="isOperation"
+        ></app-release-details>
+      </div>
+      <!--按钮组-->
+      <app-button-group
+        [isLoading]="isSaveLoading"
+        [isDisabled]="nextButtonDisable"
+        [isActiveSteps]="isActiveSteps"
+        (changeSteps)="changeSteps($event)"
+        (submitNotify)="handStepsSubmit()"
+        (cancelNotify)="handCancelSteps()"
+      ></app-button-group>
+    </div>
+  </div>
+</div>
+

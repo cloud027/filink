@@ -1,0 +1,175 @@
+<div class="group-list">
+  <!--详情title-->
+  <div class="group-header">
+    <h4 class="title">{{languageTable.contentList.groupDetail}}</h4>
+  </div>
+  <!--详情卡片-->
+  <div class="group-card">
+    <div class="group-details flex-card">
+      <h4 class="title">{{groupName}}</h4>
+      <div>
+        <span class="label-left">{{languageTable.strategyList.remark}}:</span>
+        <span>{{remark}}</span>
+      </div>
+    </div>
+    <div class="group-map flex-card">
+      <app-details-map [isGroupDetail]="true" [sourceDataList]="sourceDataList" [heightStyle]="heightStyle"></app-details-map>
+    </div>
+  </div>
+  <!--详情操作按钮-->
+  <div class="group-operate">
+    <app-application-operate
+      [operationList]="operationList"
+      (operationNotify)="handleEquipmentOperation($event)">
+    </app-application-operate>
+  </div>
+  <!--详情列表-->
+  <div class="group-content">
+    <div class="header">
+      <h4 class="title">{{languageTable.strategyList.facilities}}</h4>
+    </div>
+    <div class="table-list">
+      <nz-tabset>
+        <!--设施列表-->
+        <nz-tab [nzTitle]="languageTable.equipmentTable.facilities">
+          <xc-table
+            [dataSet]="facilityRefGroupData"
+            [pageBean]="facilityRefGroupPageBean"
+            [tableConfig]="facilityRefGroupTableConfig"
+            (pageChange)="onFacilityRefGroupPageChange($event)">
+          </xc-table>
+        </nz-tab>
+        <!--设备列表-->
+        <nz-tab [nzTitle]="languageTable.equipmentTable.equipmentList">
+          <xc-table
+            [dataSet]="equipmentRefGroupData"
+            [pageBean]="equipmentRefGroupPageBean"
+            [tableConfig]="equipmentRefGroupTableConfig"
+            (pageChange)="onEquipmentRefGroupPageChange($event)">
+          </xc-table>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+</div>
+
+<!--亮度调整-->
+<nz-modal
+  *ngIf="isBrightness"
+  [(nzVisible)]="isBrightness"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="isBrightness=false"
+  [nzTitle]="languageTable.equipmentTable.light"
+  [nzFooter]="scheduleModalFooter"
+  nzWidth="500">
+  <app-slider-model (sliderNotify)="handleSlider($event)"></app-slider-model>
+  <ng-template #scheduleModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="handleOk()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!--所属设施过滤模版-->
+<ng-template #deviceSelectorTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="facilityLanguage.picInfo.pleaseChoose"
+         [(ngModel)]="filterDeviceNameStr"
+         (click)="onShowDeviceSelector(filterValue)">
+</ng-template>
+<!--设备列表处的设施类型模版-->
+<ng-template #deviceTypeRefEquipTemp let-data="data">
+  <i [ngClass]="data.deviceIcon" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusRef let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text" title="{{data.equipmentStatus | translate:equipmentStatusEnum:languageEnum.facility}}">
+      {{data.equipmentStatus | translate:equipmentStatusEnum:languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板-->
+<ng-template #equipmentTypeRef let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text" [ngStyle]="data['rowStyle']"
+        title="{{data.equipmentType | translate:equipmentTypeEnum:languageEnum.facility}}">
+    {{data.equipmentType | translate:equipmentTypeEnum:languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--设施状态模板-->
+<ng-template #deviceStatusRef let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.deviceStatusIconClass+' '+data.deviceStatusColorClass"></i>
+    <span class="status-text" title="{{data.deviceStatus | translate:deviceStatusCodeEnum}}">
+     {{data.deviceStatus | translate:deviceStatusCodeEnum}}</span>
+  </div>
+</ng-template>
+
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>
+<!--音量调整-->
+<nz-modal
+  *ngIf="isVolume"
+  [(nzVisible)]="isVolume"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="isVolume=false"
+  [nzTitle]="languageTable.equipmentTable.volume"
+  [nzFooter]="volumeModalFooter"
+  nzWidth="500">
+  <app-volume-slider-model [volumeValue]="volumeValue" (sliderNotify)="handleVolumeSlider($event, 0)"></app-volume-slider-model>
+  <ng-template #volumeModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="confirmVolume()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!--现场广播-->
+<nz-modal
+  *ngIf="isOnline"
+  [(nzVisible)]="isOnline"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="handleCloseOnline()"
+  [nzTitle]="languageTable.equipmentTable.onlineBroadcast"
+  [nzFooter]="onlineModalFooter"
+  nzWidth="500">
+  <app-online-broadcast-model [sourceId]="sourceId" [onlineVolumeValue]="onlineVolumeValue"
+                              [equipmentList] = "recordEquipmentList"
+                              (sliderNotify)="handleVolumeSlider($event, 1)" (sourceNotify)="handleSource($event)"></app-online-broadcast-model>
+  <ng-template #onlineModalFooter>
+    <div class="audio-btn-group">
+      <span (click)="switchOnlineOperate('0')" *ngIf="!isStop">
+        <i class="iconfont fiLink-pic-bofang1 btn-size"></i>
+      </span>
+      <span (click)="switchOnlineOperate('1')" *ngIf="isStop">
+        <i class="icon-fiLink-l iconfont fiLink-video-tingzhibofang btn-size"></i>
+      </span>
+    </div>
+  </ng-template>
+</nz-modal>
+<!--插播-->
+<app-insert-broadcast-model *ngIf="isInsert"
+                            [title]="languageTable.equipmentTable.insertBroadcast"
+                            [insertVolumeValue]="insertVolumeValue"
+                            [insertType]="insertType"
+                            [(xcVisible)]="isInsert"
+                            [equipmentList]="selectedEquipmentData"
+></app-insert-broadcast-model>
+

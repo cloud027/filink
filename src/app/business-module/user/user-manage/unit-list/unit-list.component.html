@@ -1,0 +1,33 @@
+<div class="table-wrapper">
+  <!-- 单位树形列表-->
+  <xc-table-virtual [dataSet]="_dataSet"
+                    [levelKey]="'deptLevel'"
+                    [nameKey]="'deptName'"
+                    [tableConfig]="tableConfig"
+                    [selectedOption]="selectedOption"
+                    [selectedPlaceHolder]="language.selectedPlaceHolder">
+  </xc-table-virtual>
+</div>
+
+<!-- 单位级别 -->
+<ng-template #deptLevelTemp let-data="data">
+  <span class="dept-level" [ngClass]="data.deptLevel|deptStyle">
+    {{data.deptLevel | deptLevel:$nzI18n}}
+  </span>
+</ng-template>
+
+<!-- 单位下属人员列表模态框 -->
+<ng-template #subordinatesTemp>
+  <div [ngStyle]="{marginTop: '-25px'}">
+    <xc-table [dataSet]="staffDataSet"
+              [pageBean]="staffPageBean"
+              [tableConfig]="staffTableConfig"
+              (pageChange)="staffPageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--角色名-->
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.role?.roleName}}">{{data.role?.roleName}}</span>
+</ng-template>

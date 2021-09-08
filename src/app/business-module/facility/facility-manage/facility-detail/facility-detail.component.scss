@@ -1,0 +1,60 @@
+@import '~src/app/style-module/config';
+
+.facility-detail {
+  padding: 20px;
+
+  .area-detail-title {
+    border-left: 2px solid $sp-icon-color-3;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: $primary-title-size;
+    font-weight: 900;
+  }
+
+  .auto-wrapper {
+    display: flex;
+    align-items: center;
+
+    .auto-icon {
+      position: absolute;
+      left: 103%;
+      cursor: pointer;
+    }
+  }
+
+  .address-p {
+    padding: 0 10px;
+    color: $color;
+
+    &:hover {
+      border-color: $color;
+    }
+
+    .position-address {
+      vertical-align: middle;
+      margin-left: 5px
+    }
+  }
+
+  .city-input {
+    width: 31%;
+  }
+
+  .button-container {
+    margin-bottom: 10px;
+  }
+}
+
+// 自定义样式
+.custom-template {
+  display: flex;
+  align-items: center;
+  .input-name{
+    width: 300px;
+  }
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+

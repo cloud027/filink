@@ -1,0 +1,52 @@
+@import "../../../../style-module/config";
+
+.loop-warp {
+  padding: 10px;
+
+  .detail-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}
+
+.loop-type {
+  display: inline-block;
+  width: 100%;
+  height: 32px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  margin: 20px 0;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  outline: none;
+  cursor: default;
+
+  &:hover {
+    border-color: $color;
+  }
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: $bg-c-w;
+  }
+}
+
+// 自定义样式
+.custom-template {
+  display: flex;
+  align-items: center;
+
+  .input-name {
+    width: 300px;
+  }
+
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

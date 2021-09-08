@@ -1,0 +1,286 @@
+<nz-card [nzTitle]="language.intelligentEntranceGuard" [nzExtra]="extraTemplate"
+         *ngIf="lockControlInfo.equipmentModelType !== hostTypeCode.PassiveLock">
+  <!--非无源锁显示信息-->
+  <div class="guard-container">
+    <div class="control-info-container">
+      <ul>
+        <li>
+          <!--控制盒信息-->
+          <span class="label">{{language.boxInformation}}：</span>
+          <span class="value">
+            <nz-select class="control-select" [(ngModel)]="selectedControl" (ngModelChange)="controlChange($event)">
+              <nz-option *ngFor="let item of lockControlInfoAll;let index = index"
+                         [nzValue]="index" [nzLabel]="item.equipmentName">
+              </nz-option>
+            </nz-select>
+          </span>
+          <button class="open-button">
+            <i class="delete-control" nz-tooltip [nzTitle]="language.viewHost" nz-icon nzType="exclamation-circle" nzTheme="outline" (click)="deleteControl()"></i>
+          </button>
+        </li>
+        <!--设施类型-->
+        <li>
+          <span class="label">{{language.deviceStatus_a}}：</span>
+          <span class="value normal" [ngClass]="deviceInfo.deviceStatusBgColor"
+                *ngIf="deviceInfo?.deviceStatusLabel">
+            {{deviceInfo?.deviceStatusLabel}}
+          </span>
+        </li>
+        <!--部署状态-->
+        <li>
+          <span class="label">{{language.deployStatus}}：</span>
+          <span class="value">
+            {{deviceInfo?.deployStatusLabel}}
+          </span>
+          <i class="i-vertical" [ngClass]="deviceInfo?.deployStatusIconClass"></i>
+        </li>
+        <!--软件版本-->
+        <li>
+          <span class="label">{{language.softwareVersion}}：</span>
+          <span class="value" *ngIf="lockControlInfo?.softwareVersion">
+            {{lockControlInfo?.softwareVersion}}
+          </span>
+        </li>
+        <!--硬件版本-->
+        <li>
+          <span class="label">{{language.hardwareVersion}}：</span>
+          <span class="value" *ngIf="lockControlInfo?.hardwareVersion">
+            {{lockControlInfo?.hardwareVersion}}
+          </span>
+        </li>
+        <!--软件版本更新时间 假数据-->
+        <li [hidden]="deviceType === deviceTypeCode.well">
+          <span class="label">{{language.SvuTime}}：</span>
+          <span class="value" *ngIf="lockControlInfo?.versionUpdateTime">
+            {{lockControlInfo?.versionUpdateTime | dynamic: 'date' : null}}
+          </span>
+        </li>
+        <!--通信模式-->
+        <li [hidden]="deviceType === deviceTypeCode.well">
+          <span class="label">{{language.moduleType}}：</span>
+          <span class="value" *ngIf="lockControlInfo.actualValue?.moduleType?.data">
+            {{lockControlInfo?.actualValue?.moduleType?.data === moduleTypeCode.G2 ? moduleTypeValue.G2 :
+              lockControlInfo?.actualValue?.moduleType?.data === moduleTypeCode.NB ?moduleTypeValue.NB :
+              lockControlInfo?.actualValue?.moduleType?.data === moduleTypeCode.G4 ?moduleTypeValue.G4 : ''}}
+          </span>
+          <i *ngIf="lockControlInfo?.actualValue?.moduleType?.data" class="i-vertical"
+             [class]="'icon-l iconfont fontStyle fiLink-communication-model'"></i>
+        </li>
+        <!--运营商-->
+        <li [hidden]="deviceType === deviceTypeCode.well">
+          <span class="label">{{language.operator}}：</span>
+          <span class="value" *ngIf="lockControlInfo?.actualValue?.operator?.data">
+            {{lockControlInfo?.actualValue?.operator?.value}}
+          </span>
+        </li>
+        <!--信号强弱-->
+        <li>
+          <span class="label">{{language.wirelessModuleSignal}}：</span>
+          <span class="value" *ngIf="lockControlInfo.actualValue?.wirelessModuleSignal?.data">
+            {{lockControlInfo?.actualValue?.wirelessModuleSignal?.data}}dB
+          </span>
+          <i *ngIf="lockControlInfo?.actualValue?.wirelessModuleSignal?.data"
+             class="icon-l iconfont iconfont i-vertical"
+             [ngClass]="lockControlInfo?.actualValue?.wirelessModuleSignal?.data |guardIconClass:'signalIntensity'"></i>
+        </li>
+        <!--电量-->
+        <li>
+          <span class="label">{{language.electricity}}：</span>
+          <span class="value" *ngIf="lockControlInfo.actualValue?.electricity?.data">
+            {{lockControlInfo?.actualValue?.electricity?.data}}%
+          </span>
+          <i *ngIf="lockControlInfo?.actualValue?.electricity?.data"
+             class="icon-l iconfont iconfont i-vertical"
+             [ngClass]="lockControlInfo?.actualValue?.electricity?.data | guardIconClass:'electricQuantity'"></i>
+        </li>
+        <!--供电方式-->
+        <li>
+          <span class="label">{{language.sourceType}}：</span>
+          <span class="value">{{lockControlInfo?._sourceType
+            }}</span>
+        </li>
+        <!--太阳能 假数据-->
+        <li  *ngIf="lockControlInfo?.sourceType === '1'">
+          <span class="label">{{language.solarEnergy}}：</span>
+          <span class="value">
+            {{lockControlInfo?._solarCell}}
+          </span>
+        </li>
+        <!--控制单元状态 激活 休眠-->
+        <li>
+          <span class="label">{{language.controlUnitStatus}}：</span>
+          <span class="value activate" [ngStyle]="{background:lockControlInfo?.activeStatus=== activeStatus.active?'#0ac929':'#c5c5c5'}" *ngIf="lockControlInfo?.activeStatus">
+            {{lockControlInfo?.activeStatus=== activeStatus.active?language.active:language.dormancy}}
+          </span>
+        </li>
+        <!--ICCID-->
+        <li>
+          <span class="label">{{language.iccid}}：</span>
+          <span class="value">
+            {{lockControlInfo?.actualValue?.iccid?.data}}
+          </span>
+        </li>
+        <!--SIM卡失效时间-->
+        <li>
+          <span class="label">{{language.simFailureTime}}：</span>
+          <span class="value"> {{lockControlInfo?.simFailureTime | dynamic: 'date' : null}}
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="lock-status-container">
+      <!--门锁状态-->
+      <p class="lockStatus">{{language.doorLockStatus}}</p>
+      <div class="lock-top" *ngIf="!isEquipment">
+        <span style=""><nz-range-picker  [nzAllowClear]="false" [nzStyle]="{width:'218px'}" [(ngModel)]="deviceSensorDateRange"
+                                    (nzOnOpenChange)="onChange($event)"
+        ></nz-range-picker></span>
+      </div>
+      <div class="lock-middle" *ngIf="!isEquipment">
+        <!--开锁次数-->
+        <p class="lock-sum">{{language.openLockCount}}</p>
+        <p class="number">{{openCount}}</p>
+        <div class="open-count">
+          <nz-spin class="facility-detail" [nzSpinning]="openCountLoading">
+            <div echarts [options]="option" class="lock-chart"></div>
+            <nz-empty class="empty" *ngIf="noOpenCount"></nz-empty>
+          </nz-spin>
+        </div>
+      </div>
+      <div  class="lock-button-container">
+        <button nz-tooltip [nzTitle]="commonLanguage.refresh" class="open-button" (click)="refreshLock()"><i
+          class="icon-fiLink-l icon-tilt iconfont fiLink-refresh"></i></button>
+        <button [appAccessPermission]="'03-1-11'" class="open-lock" [disabled]="(!indeterminate)&&(!allChecked)"
+                nz-button
+                (click)="openLock()"> {{language.remoteUnlock}}
+        </button>
+      </div>
+      <div class="lock-bottom" [hidden]="deviceType === deviceTypeCode.well">
+        <div class="lock-status">
+          <!--门名称-->
+          <span class="select hidden" style="">
+            <label [nzDisabled]="lockInfo.length===0"
+                   nz-checkbox
+                   [nzIndeterminate]="indeterminate"
+                   [(ngModel)]="allChecked"
+                   (nzCheckedChange)="checkAll($event)"><span >{{language.doorName}}</span></label>
+          </span>
+          <!--锁状态-->
+          <span class="padding-left4" >{{language.lockStatus}}</span>
+          <!--门状态-->
+          <span class="padding-left4" [hidden]="deviceType === deviceTypeCode.well">{{language.doorStatus}}</span>
+        </div>
+        <div class="lock-status" *ngFor="let item of lockInfo ">
+          <span class="select hidden" style="" >
+            <label nz-checkbox [(ngModel)]="item.checked" (nzCheckedChange)="checkItem()">
+            <span  nz-tooltip [nzTitle]="item.doorName">{{item.doorName}}</span>
+            </label>
+          </span>
+          <!--锁开锁关-->
+          <span class="select hidden">
+            <i class="icon-l" [ngClass]="item.lockStatus === lockStatus.lockOpen ? 'icon-lock-opening':item.lockStatus === lockStatus.lockOff ?'icon-lock-normal': 'icon-lock-invalid'"></i>
+            {{item.lockStatus ===lockStatus.lockOpen?language.lockOpen:item.lockStatus ===lockStatus.lockOff?language.lockOff:language.lockInvalid}}</span>
+          <!--门开门关-->
+          <span class="select hidden"><i class="icon-l" [ngClass]="item.doorStatus === lockStatus.lockOpen ? 'icon-door-opening' : 'icon-door-normal'"></i>
+            {{item.doorStatus === lockStatus.lockOpen?language.doorOpen:language.doorOff}}</span>
+        </div>
+      </div>
+      <div class="lock-bottom" *ngIf="deviceType === deviceTypeCode.well">
+        <div class="lock-status">
+          <!--锁状态-->
+          <span class="select hidden" style="">
+            <label [nzDisabled]="lockInfo.length===0"
+                   nz-checkbox
+                   [nzIndeterminate]="indeterminate"
+                   [(ngModel)]="allChecked"
+                   (nzCheckedChange)="checkAll($event)"><span >{{language.lockStatus}}</span></label>
+          </span>
+          <!--外盖-->
+          <span class="padding-left4">{{language.outCover}}</span>
+          <!--内盖-->
+          <span class="padding-left4">{{language.innerCover}}</span>
+        </div>
+        <div class="lock-status" *ngFor="let item of lockInfo ">
+          <!--锁开锁关-->
+          <span class="select hidden" style="">
+            <label nz-checkbox [(ngModel)]="item.checked" (nzCheckedChange)="checkItem()">
+              <span class="select hidden">
+            <i class="icon-l" [ngClass]="item.lockStatus === lockStatus.lockOpen ? 'icon-lock-opening':item.lockStatus === lockStatus.lockOff ?'icon-lock-normal': 'icon-lock-invalid'"></i>
+            {{item.lockStatus === lockStatus.lockOpen ?language.lockOpen:item.lockStatus ===lockStatus.lockOff?language.lockOff:language.lockInvalid}}</span>
+            </label>
+          </span>
+          <!--盖开盖关-->
+          <span class="select hidden"><i class="icon-l" [ngClass]="item.outCoverStatus === lockStatus.lockOpen ? 'icon-door-opening' : 'icon-door-normal'"></i>
+            {{item.outCoverStatus ===lockStatus.lockOpen?language.coverOpen:language.coverOff}}</span>
+          <span  class="select hidden"><i class="icon-l" [ngClass]="item.innerCoverStatus === lockStatus.lockOpen ? 'icon-door-opening' : 'icon-door-normal'"></i>
+            {{item.innerCoverStatus === lockStatus.lockOpen?language.coverOpen:language.coverOff}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="sensor-info-container">
+      <!--传感信息-->
+      <p class="sensingInformation">{{language.sensingInformation}}</p>
+      <div class="lock-top sensor-top">
+        <span><nz-range-picker nzShowTime [nzAllowClear]="false" [nzStyle]="{width:'218px'}" [(ngModel)]="dateRange"
+                                    (nzOnOpenChange)="sensorDateChange($event)"
+        ></nz-range-picker></span>
+      </div>
+      <div class="sensor-chart-container">
+        <div echarts [options]="deviceSensorOption" class="sense-chart"></div>
+        <nz-empty class="empty" *ngIf="noSensorData"></nz-empty>
+      </div>
+      <div class="sensor-tap">
+        <!--温度表示这个值为告警状态图标颜色变红-->
+        <span (click)="selectItem('temperature')" class="sensor-label" [class.select-sensor]="sensorType === 'temperature'">{{language.temperature}} {{lockControlInfo.actualValue?.temperature?.data}}℃
+          <i class="icon-fiLink-l iconfont fiLink-temperature"
+             [class.icon-tilt]="lockControlInfo.actualValue?.temperature?.alarmFlag==='2'"
+          ></i>
+        </span>
+        <!--湿度-->
+        <span (click)="selectItem('humidity')" class="sensor-label" [class.select-sensor]="sensorType === 'humidity'">{{language.humidity}} {{lockControlInfo.actualValue?.humidity?.data}}%
+          <i class="icon-fiLink-l iconfont fiLink-humidity"
+             [class.icon-tilt]="lockControlInfo.actualValue?.humidity?.alarmFlag==='2'"
+          ></i></span>
+        <!--水浸-->
+        <span>{{language.leach}}
+          <i class="icon-fiLink-l iconfont fiLink-water-immersion"
+             [class.icon-tilt]="lockControlInfo.actualValue?.leach?.alarmFlag==='2'"
+          ></i></span>
+        <!--倾斜 人井没有倾斜-->
+        <span [hidden]="deviceType === deviceTypeCode.well" (click)="selectItem('lean')" class="sensor-label" [class.select-sensor]="sensorType === 'lean'">{{language.lean}} {{lockControlInfo.actualValue?.lean?.data}}°
+          <i class="icon-fiLink-l icon-tilt iconfont fiLink-tilt"
+             [class.icon-tilt]="lockControlInfo.actualValue?.lean?.alarmFlag==='2'"
+          ></i></span>
+      </div>
+    </div>
+  </div>
+</nz-card>
+
+<!--无源锁显示信息-->
+  <nz-card [nzTitle]="language.lockInfo" *ngIf="lockControlInfo.equipmentModelType === hostTypeCode.PassiveLock">
+  <div class="passive-lock-container">
+    <div *ngFor="let item of lockInfo ">
+      <span class="no-lock-label">{{language.doorName}}：</span>
+      <span >{{item.doorName}}</span>
+    </div>
+    <div>
+      <span class="no-lock-label">{{language.lockType}}：</span>
+      <!--无源锁-->
+      <span >{{language.config.PASSIVE_LOCK}}</span>
+    </div>
+  </div>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <span class="update-time">{{language.updateTime}}： {{currentTime | dynamic: 'date' : null}}</span>
+</ng-template>
+<!--主控删除弹框-->
+<ng-template #controlInfoTemp>
+  <div>
+    <xc-table [dataSet]="lockControlInfoAll"
+              [pageBean]="pageBean"
+              [tableConfig]="controlInfoConfig"
+    >
+    </xc-table>
+  </div>
+</ng-template>

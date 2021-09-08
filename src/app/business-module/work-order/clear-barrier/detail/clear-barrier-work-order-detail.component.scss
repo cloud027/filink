@@ -1,0 +1,59 @@
+@import '../../share/style/common-picture.scss';
+.work-order-detail {
+  padding: 0 0 20px 16px;
+
+  .link-button{
+    margin-right: 20px
+  }
+
+  .area-name {
+    outline: none;
+    &:hover{
+      border-color: $color;
+    }
+  }
+
+  .unit-width{
+    width: 300px
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $button-danger-color;
+  }
+
+  .alarm-tab{
+    margin-top: -35px;
+  }
+
+  .tab-area{
+    margin-top: 20px;
+  }
+
+}
+
+.alarmLevel{
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+  top: 2px;
+}
+
+.equipment-name {
+  height: 22px;
+  width: 100%;
+  line-height: 15px;
+  vertical-align: middle;
+  .title {
+    color: $order-title-color;
+  }
+  &:hover{
+    border-color: $color;
+  }
+}
+

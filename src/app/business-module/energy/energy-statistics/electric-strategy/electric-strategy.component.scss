@@ -1,0 +1,16 @@
+@import '../../../../style-module/config.scss';
+.electric-strategy-box {
+    background-color: $bg-c;
+    .title {
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+        padding: 0 16px 16px 16px;
+        background-color: #fff;
+    }
+    .table-box {
+        background-color: #fff;
+        margin-top: 10px;
+        padding: 16px;
+    }
+}

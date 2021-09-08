@@ -1,0 +1,63 @@
+:host ::ng-deep .ztree.link-tree {
+  li span.button.chk.checkbox_true_part {
+    background-position: -25px -3px !important;
+  }
+
+  li span.button.chk.checkbox_true_part_focus {
+    background-position: -25px -3px !important;
+  }
+}
+
+// 边框阴影备用
+.box-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15), 0 -1px 0 rgba(0, 0, 0, .02);
+}
+
+.tree-selector-tree-box {
+  display: flex;
+
+  .tree-input {
+    width: 300px;
+  }
+
+  .tree-card-box {
+    height: 400px;
+    margin-top: 10px;
+
+    .card-tree {
+      height: 350px;
+      width: 250px;
+      padding: 10px;
+      overflow: auto
+    }
+  }
+
+  .tree-right-table-box {
+    width: 56%;
+
+    .select-num-box {
+      padding: 0 10px;
+      display: flex;
+      justify-content: space-between;
+
+      .select-num {
+        line-height: 32px;
+      }
+    }
+
+    .tree-table {
+      padding: 10px;
+
+      .tree-table-card-box {
+        width: 100%;
+        overflow: auto;
+        .tree-table-card{
+          height: 400px;
+          .tree-table-xc{
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

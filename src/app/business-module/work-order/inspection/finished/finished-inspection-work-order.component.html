@@ -1,0 +1,130 @@
+<div class="table-container">
+  <div class="order-warp" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="12">
+      <!--统计图-->
+      <div class="gutter-box">
+        <div class="inspect-statistics-item-title">{{workOrderLanguage.facilityTypeStat}}</div>
+        <div class="inspect-statistics-item-chart">
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.chart" echarts [options]="barChartOption" class="demo-chart chart"></div>
+          <div *ngIf="deviceTypeStatisticsChartType === chartType.text" class="no-data">{{InspectionLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="12">
+      <!--  工单状态环形进度  -->
+      <div class="gutter-box">
+        <div class="inspect-statistics-item-title">{{workOrderLanguage.statusProportion}}</div>
+        <div class="inspect-statistics-item-chart">
+          <div class="status-circle" *ngIf="statusChartType === chartType.chart">
+            <div echarts [options]="completedChartOption" class="ring-chart"></div>
+            <div echarts [options]="singleBackChartOption" class="ring-chart"></div>
+            <div class="over-box"></div>
+          </div>
+          <div *ngIf="statusChartType === chartType.text" class="no-data">{{InspectionLanguage.noData}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--已完工表格finished-tab-->
+  <div class="table-wrapper">
+    <xc-table [dataSet]="tableDataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+
+  <!--查看modal-->
+    <nz-modal [(nzVisible)]="isCompleteVisible"
+              [nzMaskClosable]="false"
+              [nzWidth]="1200"
+              [nzTitle]="title"
+              (nzOnCancel)="closeModal()"
+              [nzFooter]="modalFooter">
+      <xc-table #orderTableComponent
+                [dataSet]="seeDataSet"
+                [pageBean]="seePageBean"
+                [tableConfig]="seeTableConfig"
+                (pageChange)="seePageChange($event)">
+      </xc-table>
+      <ng-template #modalFooter>
+        <button class="link-button" nz-button nzType="danger" type="button" (click)="closeModal()">{{InspectionLanguage.handleCancel}}</button>
+      </ng-template>
+    </nz-modal>
+  <!--状态模板-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}">
+      <span class="status-temp" [ngClass]="data.statusClass"> </span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+
+  <!--责任单位-->
+  <ng-template #UnitNameSearch let-filterValue = "filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="departFilterValue.filterName || filterValue.filterName" />
+  </ng-template>
+  <!--单位树-->
+  <xc-tree-area-selector
+    [(xcVisible)]="responsibleUnitIsVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+
+  <!-- 责任人 -->
+  <ng-template #roleTemp let-data="data">
+    <span class="width-style" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+  </ng-template>
+
+  <!--巡检区域弹框-->
+  <ng-template #AreaSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly
+           (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName" />
+  </ng-template>
+  <!--区域选择树-->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [pageType]="InspectionLanguage.area"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)">
+  </xc-tree-area-selector>
+  <!--设施类型图标-->
+  <ng-template #deviceTemps let-data="data">
+    <div class="hidden" title="{{data.deviceTypeName}}">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipmentTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!--用户列表-->
+  <ng-template #userSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowUserTemp"
+    [(xcVisible)]="isShowUserTemp"
+    [selectUserList]="selectUserList"
+    (selectDataChange)="onSelectUser($event)">
+  </app-select-user>
+  <!--关联工单用户列表-->
+  <ng-template #refUserSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue, true)" [(ngModel)]="filterValue.filterName || refCheckUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowRefUserTemp"
+    [(xcVisible)]="isShowRefUserTemp"
+    [selectUserList]="selectRefUserList"
+    (selectDataChange)="onSelectUser($event, true)">
+  </app-select-user>
+</div>

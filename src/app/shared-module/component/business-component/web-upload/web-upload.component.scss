@@ -1,0 +1,114 @@
+@import "../../../../style-module/web-upload/webuploader";
+@import "../../../../style-module/config";
+.user_other_documents{
+  .web-uploader-container {
+    position: relative;
+  }
+  .webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+  }
+  .webuploader-pick {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background: #00b7ee;
+    padding: 10px 15px;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .webuploader-pick-hover {
+    background: #00a2d4;
+  }
+
+  .webuploader-pick-disable {
+    opacity: 0.6;
+    pointer-events:none;
+  }
+
+
+  .zw-document-uploader{position: relative; cursor: pointer;margin-top: 8px;}
+  .zw-document-uploader.zw-hidden{display: none;}
+  .zw-document-uploader.zw-ib{display: inline-block;}
+  .zw-document-uploader-item .zw-upload-blank-view{color: deepskyblue;cursor:pointer;margin-left: 10px}
+  .zw-document-uploader-item .zw-upload-blank-file{margin: 4px 24px 4px 0;display: inline-block;}
+  .zw-document-uploader-item .zw-upload-blank-delete{color: red;cursor:pointer;margin-left: 5px}
+
+  .upload-progress-box{
+    display: inline-block;
+    font-size: 16px;
+  }
+  .upload-progress-box .upload-progress{
+    display: inline-block;
+    width: 150px;
+    height: 15px;
+    border: 1px solid #000;
+    margin-left:  10px;
+    position: relative;
+    top: 3px;
+  }
+  .upload-progress-box .upload-progress_bg{
+    background:rgba(3, 9, 162, 0.78);
+    width: 0;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+  }
+}
+.upload-box {
+  width: 100%;
+  .progress-box{
+    display: flex;
+  }
+  .progress-warp{
+    width: 70%;
+    .progress-main{
+      width: 100%;
+    }
+  }
+  .upload-btn{
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+  }
+}
+.progress-box{
+  width: 100%;
+  .progress-warp{
+    width: 100%;
+    margin-right: 8px;
+    height: 32px;
+    line-height: 32px;
+  }
+  .upload-btn{
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    &:after{
+      display: block;
+      content: '';
+      clear: both;
+      visibility: hidden;
+    }
+    .upload-item-btn{
+      display: inline-block;
+      height: 24px;
+      line-height: 24px;
+      padding: 0 5px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+  }
+  .iconfont{
+    margin-right: 5px;
+  }
+}
+.load-msg{
+  line-height: 28px;
+  &.text{
+    margin-top: 10px;
+  }
+}

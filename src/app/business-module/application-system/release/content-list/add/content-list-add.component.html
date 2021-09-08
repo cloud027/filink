@@ -1,0 +1,44 @@
+<div class="in-container">
+  <!--  标题-->
+  <div class="container-title">
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <!--  表单-->
+  <xc-form [column]="formColumn"
+           (formInstance)="formInstance($event)">
+  </xc-form>
+
+  <!--  文件上传模板-->
+  <ng-template #upload>
+    <xc-upload-file [fileList]="certificateFileList"
+                    [uploadBtnDisabled]="certificateUploadBtnDisabled"
+                    [fileInfo]="certificateFileInfo"
+                    (removeFileChange)="removeFileChange($event)"
+                    (uploadChange)="uploadFile($event)"></xc-upload-file>
+  </ng-template>
+
+  <!--  审核人-->
+  <ng-template #checker let-formGroup="formGroup">
+    <form [formGroup]="formGroup">
+      <nz-select formControlName="reviewedUser" class="select-user">
+        <nz-option *ngFor="let data of reviewedByArr" [nzValue]="data.id" [nzLabel]="data.userName"></nz-option>
+      </nz-select>
+    </form>
+  </ng-template>
+
+  <!--按钮-->
+  <div class="btn">
+    <button class="link-button btn-space"
+            nz-button nzType="primary"
+            [disabled]="!isDisabled"
+            (click)="onConfirm()"
+            [nzLoading]="isLoading">{{language.frequentlyUsed.confirm}}
+    </button>
+    <button class="link-button" nz-button
+            (click)="onCancel()">{{language.frequentlyUsed.cancel}}</button>
+  </div>
+</div>
+
+

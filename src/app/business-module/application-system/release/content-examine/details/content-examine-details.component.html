@@ -1,0 +1,231 @@
+<!--加载-->
+<nz-spin [nzSpinning]="isLoading"
+         [nzSize]="'large'">
+  <!--内容工单-->
+  <div class="title">{{language.auditContent.contentWorkOrder}}</div>
+
+  <div class="body-background ">
+    <!--  卡片 工单基本信息-->
+    <div class="top-card">
+      <!-- 工单基本信息-->
+      <div class="card-content-spacing basic-left">
+        <div class="spacing">
+          <!--工单名称-->
+          <span class="work-name">{{informationData?.workOrderName}}</span>
+          <!--工单状态-->
+          <span class="work-status">{{informationData?.workOrderStatus}}</span>
+        </div>
+        <!--创建时间-->
+        <div class="spacing">
+          <span class="label">{{language.auditContent.creationTime}}：</span>
+          <span class="label">{{informationData?.createTime}}</span>
+        </div>
+        <!--责任人-->
+        <div class="spacing">
+          <i class="icon-fiLink-l iconfont fiLink-user-menu personLiable"></i>
+          <span>{{informationData?.personLiableName}}</span>
+        </div>
+      </div>
+
+      <div class="card-content-spacing basic-right">
+        <!--期望完工时间-->
+        <nz-row class="spacing">
+          <nz-col class="label" [title]="currentLangType ? language.auditContent.expectedCompletionTime : ''" nzSpan="4">
+            {{language.auditContent.expectedCompletionTime}}：</nz-col>
+          <nz-col nzSpan="19">
+            <i class="icon-fiLink-l iconfont fiLink-completed-o time"></i>
+            {{informationData?.expectCompTime}}
+          </nz-col>
+        </nz-row>
+        <!--实际完工时间-->
+        <nz-row class="spacing">
+          <nz-col class="label" [title]="currentLangType ? language.auditContent.actualCompletionTime : ''" nzSpan="4">
+            {{language.auditContent.actualCompletionTime}}：</nz-col>
+          <nz-col nzSpan="19">
+            <i class="icon-fiLink-l iconfont fiLink-completed-o time"></i>
+            {{informationData?.actualCompTime}}
+          </nz-col>
+        </nz-row>
+        <!--备注-->
+        <nz-row class="spacing">
+          <nz-col class="label" nzSpan="4">{{language.frequentlyUsed.remarks}}：</nz-col>
+          <nz-col nzSpan="19" class="remake" nz-tooltip [nzTitle]="informationData?.program?.remark"
+          >{{informationData?.program?.remark}}</nz-col>
+        </nz-row>
+      </div>
+
+
+    </div>
+
+    <!--  卡片 基本操作-->
+    <div class="card-content">
+      <!--  基本操作 -->
+      <div class="card-titles">{{language.auditContent.basicOperation}}</div>
+      <div class="card-content-spacing operation">
+        <!-- 删除-->
+        <div [appAccessPermission]="contentWorkWordEnum.delete"
+             [ngClass]="{'btn':isMyWorkOrder,'not-my-work-order':!isMyWorkOrder}"
+             (click)="onChargeback(workOrderActTypeEnum.delete)">
+          <i class="iconfont fiLink-facility-list icon-transfer"></i>
+          <p class="button-text">{{language.frequentlyUsed.delete}}</p>
+        </div>
+
+        <!-- 取消-->
+        <div [appAccessPermission]="contentWorkWordEnum.cancel"
+             *ngIf="buttonShow" [ngClass]="{'btn':isMyWorkOrder,'not-my-work-order':!isMyWorkOrder}"
+             (click)="onChargeback(workOrderActTypeEnum.cancel)">
+          <i class="iconfont fiLink-fail icon-transfer"></i>
+          <p class="button-text">{{language.frequentlyUsed.cancel}}</p>
+        </div>
+
+        <!-- 转派-->
+        <div [appAccessPermission]="contentWorkWordEnum.transfer"
+          *ngIf="buttonShow" [ngClass]="{'btn':isMyWorkOrder,'not-my-work-order':!isMyWorkOrder}"
+             (click)="onChargeback(workOrderActTypeEnum.transfer)">
+          <i class="iconfont fiLink-filink-zhuanpai-icon icon-transfer"></i>
+          <p class="button-text">{{language.auditContent.transfer}}</p>
+        </div>
+
+        <!-- 退单 -->
+        <div [appAccessPermission]="contentWorkWordEnum.chargeback"
+          *ngIf="buttonShow" [ngClass]="{'btn':isMyWorkOrder,'not-my-work-order':!isMyWorkOrder}"
+             (click)="onChargeback(workOrderActTypeEnum.chargeback)">
+          <i class="iconfont fiLink-filink-tuidan-icon icon-transfer"></i>
+          <p class="button-text">{{language.auditContent.chargeback}}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!--  卡片 内容审核-->
+    <div class="card-content">
+      <!--  内容审核-->
+      <div class="card-titles">{{language.auditContent.contentExamine}}</div>
+      <div class="card-content-spacing" nz-row>
+        <!-- 内容审核左边部分-->
+        <div nz-col nzSpan="12">
+          <xc-video [hidden]="!isVideo"
+                    [options]="{width: '620px', height: '380px'}"
+                    [sourceArray]="[programPath]"></xc-video>
+
+          <img [hidden]="isVideo" [src]="programPath" class="preview-img" alt="">
+        </div>
+        <!-- 内容审核右边部分-->
+        <div *ngIf="isProgramShow" nz-col nzSpan="12">
+          <!--节目申请人-->
+          <nz-row>
+            <p nz-col nzSpan="4" class="label">{{language.auditContent.programApplicant}}：</p>
+            <p nz-col nzSpan="4">{{informationData?.program.applyUser}}</p>
+          </nz-row>
+          <!--节目用途-->
+          <nz-row class="spacing">
+            <P nz-col nzSpan="4" class="label">{{language.auditContent.programPurpose}}：</P>
+            <p nz-col nzSpan="4">{{informationData?.program.programPurpose}}</p>
+          </nz-row>
+          <!--审核结果-->
+          <div nz-row class="spacing">
+            <P nz-col nzSpan="4" class="label">{{language.auditContent.findingsOfAudit}}：</P>
+            <nz-radio-group nz-col nzSpan="12" [(ngModel)]="workOrderData.auditResults">
+              <!-- 通过-->
+              <!-- 通过-->
+              <label nz-radio [nzDisabled]="!buttonShow || !isMyWorkOrder"
+                     nzValue="0">{{language.frequentlyUsed.pass}}</label>
+              <!-- 不通过-->
+              <label nz-radio [nzDisabled]="!buttonShow || !isMyWorkOrder"
+                     nzValue="1">{{language.frequentlyUsed.noPass}}</label>
+            </nz-radio-group>
+          </div>
+          <!--审核意见-->
+          <nz-row class="spacing">
+            <P nz-col nzSpan="4" class="label">{{language.auditContent.examineOpinion}}：</P>
+            <textarea nz-col [disabled]="!buttonShow || !isMyWorkOrder" [(ngModel)]="workOrderData.examineAdvise"
+                      nzSpan="4" rows="4"
+                      class="text-input" [ngClass]="{'border-tips':tipsShow}" (input)="inputEvent()"
+                      nz-input></textarea>
+          </nz-row>
+          <!--意见提示-->
+          <nz-row class="advice-tips">
+            <P nz-col nzSpan="4"></P>
+            <!-- 最多输入255位！-->
+            <p nz-col nzSpan="4" *ngIf="tipsShow" class="remake-tips">{{language.frequentlyUsed.bitsAtMost}}</p>
+          </nz-row>
+          <!--提交-->
+          <nz-row class="spacing" *ngIf="buttonShow && isMyWorkOrder">
+            <p nz-col nzSpan="4"></p>
+            <button nz-col nzSpan="4" nz-button [nzType]="'primary'" class="btn-submit"
+                    [disabled]="tipsShow"
+                    [appAccessPermission]="contentWorkWordEnum.submit"
+                    (click)="onWorkOrderOperation(workOrderActTypeEnum.submit)">
+              <span>{{language.frequentlyUsed.submit}}</span>
+            </button>
+          </nz-row>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 退单模态框 title 退单原因-->
+  <nz-modal *ngIf="isChargeBack"
+            [(nzVisible)]="isChargeBack"
+            [nzTitle]="language.auditContent.chargebackReason"
+            (nzOnCancel)="onHandleCancel()"
+            [nzFooter]="modalFooter">
+    <textarea nz-input rows="4" [ngClass]="{'border-tips':tipsChargeBack}" (input)="inputEvent()"
+              [(ngModel)]="workOrderData.causeReason"></textarea>
+    <div class="advice-tips">
+      <!-- 最多输入255位！-->
+      <p *ngIf="tipsChargeBack" class="remake-tips">{{language.frequentlyUsed.bitsAtMost}}</p>
+    </div>
+    <ng-template #modalFooter>
+      <button class="link-button" nz-button
+              (click)="isChargeBack = false">{{language.frequentlyUsed.cancel}}</button>
+      <button class="link-button btn-space" nz-button nzType="primary" [disabled]="tipsChargeBack"
+              (click)="onHandleOk(workOrderActTypeEnum.chargeback)">{{language.frequentlyUsed.confirm}}
+      </button>
+    </ng-template>
+  </nz-modal>
+
+  <!-- 转派模态框 title 转派原因-->
+  <nz-modal *ngIf="isTransfer"
+            [(nzVisible)]="isTransfer"
+            [nzTitle]="language.auditContent.reasonsForTransfer"
+            (nzOnCancel)="onHandleCancel()"
+            [nzFooter]="modalFooterTransfer">
+    <!--  指定人-->
+    <span class="examine">{{language.auditContent.designatedPerson}}:</span>
+    <nz-select [(ngModel)]="designee" class="select-user">
+      <nz-option *ngFor="let data of designeeArr" [nzValue]="data.id" [nzLabel]="data.userName"></nz-option>
+    </nz-select>
+    <textarea [(ngModel)]="workOrderData.transferReason" [ngClass]="{'border-tips':tipsTransfer}"
+              (input)="inputEvent()" class="transfer-box" rows="4" nz-input></textarea>
+    <div class="advice-tips">
+      <!-- 最多输入255位！-->
+      <p *ngIf="tipsTransfer" class="remake-tips">{{language.frequentlyUsed.bitsAtMost}}</p>
+    </div>
+    <ng-template #modalFooterTransfer>
+      <button class="link-button" nz-button
+              (click)="isTransfer = false">{{language.frequentlyUsed.cancel}}</button>
+      <button class="link-button btn-space" nz-button nzType="primary" [disabled]="tipsTransfer"
+              (click)="onHandleOk(workOrderActTypeEnum.transfer)">{{language.frequentlyUsed.confirm}}
+      </button>
+    </ng-template>
+  </nz-modal>
+
+  <!-- 二次确认模态框 温馨提示-->
+  <nz-modal *ngIf="isDelete" [(nzVisible)]="isDelete" [nzTitle]="language.frequentlyUsed.reminder"
+            (nzOnCancel)="onHandleCancel()"
+            (nzOnOk)="onHandleOk(workOrderActTypeEnum.delete)">
+    <!-- 是否确认删除工单 -->
+    <p>{{language.auditContent.deleteTheWorkOrder}}！</p>
+  </nz-modal>
+
+  <!-- 二次确认模态框 温馨提示-->
+  <nz-modal *ngIf="isCancel" [(nzVisible)]="isCancel" [nzTitle]="language.frequentlyUsed.reminder"
+            (nzOnCancel)="onHandleCancel()"
+            (nzOnOk)="onHandleOk(workOrderActTypeEnum.cancel)">
+    <!-- 是否确认取消工单 -->
+    <p>{{language.auditContent.cancelTheWorkOrder}}！</p>
+  </nz-modal>
+</nz-spin>
+

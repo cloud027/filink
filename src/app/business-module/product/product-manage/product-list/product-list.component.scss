@@ -1,0 +1,26 @@
+@import "../../../../style-module/config";
+// 上传模版按钮样式
+.upload-msg{
+  text-align: center;
+  margin-top: 10px
+}
+// 上传文件模版按钮
+.upload-template-btn{
+  margin-top:15px;
+  margin-left:175px;
+  width: 120px;
+  text-align: center;
+  line-height: 32px;
+  border: 1px solid $upload-template;
+  border-radius: 6px;
+  color: $upload-template;
+  cursor: pointer;
+  .upload-icon{
+    margin-right: 6px;
+  }
+}
+.upload-tip-circle{
+  padding-left: 5px;
+  padding-bottom: 3px;
+  color: $detail-text-color;
+}

@@ -1,0 +1,38 @@
+<div class="add-warehousing-wrap">
+  <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+  <div class="warehousing-form">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="footer">
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="submit()">
+        {{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+</div>
+<!--规格型号选择模板-->
+<ng-template #materialModelSelector let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <div class="custom-template">
+      <label>
+        <input nz-input class="input-name" readonly formControlName="materialModel">
+      </label>
+      <button type="button" class="open-button icon-template" (click)="showModelSelect()">
+        <i class="icon-fiLink fiLink-search-index iconfont"></i>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<!--规格型号选择器弹窗-->
+<app-material-model *ngIf="modelSelectVisible"
+                    [(isVisible)]="modelSelectVisible"
+                    [isRadio]="true"
+                    [selectRadioId]="selectModelId"
+                    [productTypeDataSource]="productTypeDataSource"
+                    (handleOkEvent)="handleModelOk($event)"
+></app-material-model>

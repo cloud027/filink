@@ -1,0 +1,109 @@
+<div class="table-wrapper">
+  <xc-table
+     #tableComponent
+    [dataSet]="_dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--危险等级-->
+<ng-template #dangerLevel let-data="data" class="risk-level">
+  <div *ngIf="data.dangerLevel === dangerLevelEnum.danger" class="hidden icon-middle">
+    <i class="icon fiLink-dangerous iconfont dangerous"></i>
+    <span class="space">{{language.log.danger}}</span></div>
+  <div *ngIf="data.dangerLevel === dangerLevelEnum.prompt" class="hidden icon-middle">
+    <i class="icon fiLink-no-more iconfont no-more"></i>
+    <span class="space">{{language.log.prompt}}</span></div>
+  <div *ngIf="data.dangerLevel === dangerLevelEnum.general" class="hidden icon-middle">
+    <i class="icon fiLink-prompt-w iconfont prompt-w"></i>
+    <span class="space">{{language.log.general}}</span></div>
+</ng-template>
+
+<!--操作结果-->
+<ng-template #optResult let-data="data">
+  <div class="hidden" *ngIf="data.optResult === optResultEnum.failure || data.optResult === language.log.failure">
+    <i class="icon fiLink-fail iconfont vertical"></i>
+    <span class="space">{{language.log.failure}}</span></div>
+  <div class="hidden" *ngIf="data.optResult === optResultEnum.success || data.optResult === language.log.success">
+    <i class="icon fiLink-success iconfont vertical"></i>
+    <span class="space">{{language.log.success}}</span></div>
+</ng-template>
+
+<!--操作类型-->
+<ng-template #optType let-data="data">
+  <div class="hidden">{{data.optType | translate: optTypeEnum : languageEnum.log}}</div>
+</ng-template>
+
+<!-- 查看详情弹窗 -->
+<nz-modal *ngIf="particulars"
+          [(nzVisible)]="particulars"
+          [nzTitle]="particularsTitle"
+          [nzContent]="modalContent"
+          [nzFooter]="null"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="particulars=false"
+          [nzWidth]="460"
+          [nzCancelText]="null"
+          [nzOkText]="null">
+  <ng-template #modalContent>
+    <div class="box">
+      <div class="item-height item-bottom">
+        <span class="title">{{logInfo.optName}}</span>
+        <!--危险级别-->
+        <span class="log-status danger-status" *ngIf="logInfo.dangerLevel === dangerLevelEnum.danger" >
+          {{language.log.danger}}
+        </span>
+        <span class="log-status general-status" *ngIf="logInfo.dangerLevel === dangerLevelEnum.general" >
+          {{language.log.general}}
+        </span>
+        <span class="log-status prompt-status" *ngIf="logInfo.dangerLevel === dangerLevelEnum.prompt" >
+          {{language.log.prompt}}
+        </span>
+        <!--操作类型-->
+        <span class="log-status opt-color" *ngIf="logInfo.optType !== ''">{{logInfo.optType | translate: optTypeEnum : languageEnum.log}}</span>
+      </div>
+      <!--操作用户-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.optUserName}} :</label>
+        <span class="one-text">{{logInfo.optUserName}}</span>
+      </div>
+      <!--操作终端-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.optTerminal}} :</label>
+        <span class="one-text">{{logInfo.optTerminal}}</span>
+      </div>
+      <!--操作对象-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.optObj}} :</label>
+        <span class="one-text">{{logInfo.optObj}}</span>
+      </div>
+      <!--操作时间-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.optTime}} :</label>
+        <span class="one-text">{{logInfo.optTime | dynamic: 'date' : null}}</span>
+      </div>
+      <!--操作结果-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.optResult}} :</label>
+        <span class="one-text" *ngIf="logInfo.optResult === optResultEnum.failure || logInfo.optResult === language.log.failure">
+          {{language.log.failure}}
+        </span>
+        <span class="one-text" *ngIf="logInfo.optResult === optResultEnum.success || logInfo.optResult === language.log.success">
+          {{language.log.success}}
+        </span>
+      </div>
+      <!--详细信息-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.detailInfo}} :</label>
+        <span [title]="logInfo.detailInfo" class="one-text table-text-td">{{logInfo.detailInfo}}</span>
+      </div>
+      <!--备注-->
+      <div class="item-height item-bottom">
+        <label class="label-title">{{language.systemSetting.remark}} :</label>
+        <span class="one-text">{{logInfo.remark}}</span>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>

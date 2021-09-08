@@ -1,0 +1,35 @@
+<!--预览杆型图-->
+<div class="no-upload-container">
+  <div class="tip-container">
+    <!--按钮-->
+    <div class="btn-container">
+      <button class="link-button position-config wisdom-operate" nz-button type="button" (click)="onClickUpload()">
+        <i class="iconfont fiLink-upload"></i>
+        {{productLanguage.uploadFile}}
+      </button>
+    </div>
+    <div class="position-info">
+      <div class="no-model">
+        <div class="no-wisdom-model">
+          <div><img src="assets/img/product/image-no-pole.png"></div>
+          <div class="no-img-tip">{{productLanguage.lightPoleModelNotUploadedYet}}</div>
+        </div>
+      </div>
+      <div class="no-position">
+        <div class="no-wisdom-model">
+          <div><img src="assets/img/product/image-no-position.png"></div>
+          <div class="no-img-tip">{{productLanguage.lightPolePositionNotUploadedYet}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--上传文件组件-->
+<app-batch-upload-file #batchUploadTemp *ngIf="isVisible"
+                       [(uploadVisible)]="isVisible"
+                       (uploadSuccess)="onClickDoUpload($event)"
+                       [productId]="productId"
+                       [(pageLoading)]="pageLoading"
+                       [uploadFileType]="uploadFileTypeEnum.pole">
+</app-batch-upload-file>
+

@@ -1,0 +1,29 @@
+@import "../../../../style-module/config";
+
+.in-container {
+
+  .area-detail-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}
+
+// 自定义表单项样式
+.custom-template {
+  display: flex;
+  align-items: center;
+
+
+  .area-width{
+    width: 300px;
+    margin-right: 10px;
+  }
+  .open-button {
+    border: none;
+    outline: none;
+    background: $button-danger-color;
+  }
+}

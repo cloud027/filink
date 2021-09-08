@@ -1,0 +1,11 @@
+.progress-bar {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  top: 49%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 5px 15px 5px 10px;
+  z-index: 1000;
+}

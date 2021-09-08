@@ -1,0 +1,114 @@
+<!--编辑网关图-->
+<div [class]="showBtn? 'no-upload-container': 'no-upload-container-no'">
+  <div class="tip-container">
+    <!--按钮-->
+    <div class="btn-container" *ngIf="showBtn">
+      <button class="link-button position-config wisdom-operate" nz-button type="button"
+              (click)="uploadModalVisible=true">
+        <i class=" iconfont fiLink-upload"></i>
+        {{productLanguage.uploadFile}}
+      </button>
+    </div>
+    <div class="position-info">
+      <div class="no-model" id="gateway-canvas">
+        <div class="export-qunee"><i (click)="onPrintImage()" class="iconfont icon-l  fiLink-export"
+                                     nz-tooltip="{{productLanguage.exportImage}}"></i></div>
+        <!--端口信息-->
+        <div class="port-detail-container" id="port-detail">
+          <ul class="port-item-container">
+            <!--端口标识-->
+            <li class="port-item">
+              <div class="field-info-label">{{productLanguage.portFlag}}:</div>
+              <div
+                class="field-info-value">{{currentPort.portFlag | translate: portTypeEnum: languageEnum.product}}</div>
+            </li>
+            <!--端口类型-->
+            <li class="port-item">
+              <div class="field-info-label">{{productLanguage.portType}}:</div>
+              <div class="field-info-value">{{currentPort.portType}}</div>
+            </li>
+            <!--端口号-->
+            <li class="port-item">
+              <div class="field-info-label">{{productLanguage.gatewayPortNo}}:</div>
+              <div class="field-info-value">{{currentPort.portNumber}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--右侧端口信息-->
+      <div class="no-position">
+        <div *ngIf="gatewayImageDetail && gatewayImageDetail. portInfoList.length > 0">
+          <div class="port-info-item" *ngFor="let item of gatewayImageDetail. portInfoList">
+            <div class="port-desc">
+              <span class="port-name">{{item.portFlag | translate: portTypeEnum: languageEnum.product}}</span>
+              <span class="item-separation">|</span>
+              <span class="port-type-num">{{item.portType}}-{{item.portNumber}}</span>
+            </div>
+            <div class="port-desc operate">
+             <span class="port-name">
+              <i class="fiLink-location iconfont port-operate-icon" (click)="onLocationPort(item)"
+                 nz-tooltip="{{productLanguage.locationPort}}"></i>
+              </span>
+            </div>
+            <nz-divider></nz-divider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--上传网关图组件-->
+<app-batch-upload-file *ngIf="uploadModalVisible" [(uploadVisible)]="uploadModalVisible"
+                       [(pageLoading)]="pageLoading"
+                       (uploadSuccess)="onClickDoUpload($event)"></app-batch-upload-file>
+<!--通信端口弹框-->
+<nz-modal
+  *ngIf="communicationPortDetailVisible"
+  [nzVisible]="communicationPortDetailVisible"
+  [nzNoAnimation]="true"
+  [nzFooter]="modalFooter"
+   nzWrapClassName="vertical-center-modal"
+  [nzWidth]="500"
+  (nzOnCancel)="communicationPortDetailVisible=false"
+  [nzTitle]="productLanguage.portDetail">
+  <div class="communication-port-detail">
+    <!--类型和型号-->
+    <div>
+      <span
+        class="communication-port-flag">{{currentPort.portFlag | translate: portTypeEnum: languageEnum.product}}</span>
+      <span class="communication-port-type">{{currentPort.portType}}</span>
+    </div>
+    <div class="communication-port-field">
+      <ul class="field-info">
+        <!--波特率-->
+        <li class="field-info-item">
+          <div class="field-info-label">{{productLanguage.baudRate}}:</div>
+          <div class="field-info-value">{{currentPort.baudRate}}</div>
+        </li>
+        <!--数据位-->
+        <li class="field-info-item">
+          <div class="field-info-label">{{productLanguage.dataBit}}:</div>
+          <div class="field-info-value">{{currentPort.dataBit}}</div>
+        </li>
+        <!--停止位-->
+        <li class="field-info-item">
+          <div class="field-info-label">{{productLanguage.stopBit}}:</div>
+          <div class="field-info-value">{{currentPort.stopBit}}</div>
+        </li>
+        <!--流控-->
+        <li class="field-info-item">
+          <div class="field-info-label">{{productLanguage.fluidControl}}:</div>
+          <div class="field-info-value">{{currentPort.fluidControl}}</div>
+        </li>
+        <!--检验方式-->
+        <li class="field-info-item">
+          <div class="field-info-label">{{productLanguage.checkWay}}:</div>
+          <div class="field-info-value">{{currentPort.checkWay | translate : checkTypeEnum : languageEnum.product}}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>
+

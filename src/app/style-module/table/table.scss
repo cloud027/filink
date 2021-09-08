@@ -1,0 +1,468 @@
+@import "../config";
+// 表格上方操作按钮
+$table-topBtn-width: 20px;
+$table-topBtn-height: 20px;
+$table-topBtn-size: 20px !important;
+// 表格筛选内操作按钮
+$table-operateBtn-width: 16px;
+$table-operateBtn-height: 16px;
+$table-operateBtn-size: 16px !important;
+.ant-table {
+  border: none;
+
+  tr {
+    border-bottom: 1px solid $table-border-color;
+  }
+
+  .xc-no-data-tr {
+    .xc-no-data {
+      width: 100px;
+      color: $table-font-color;
+      border-bottom: none;
+    }
+  }
+}
+
+.firefox-border {
+  .ant-table {
+    // 解决火狐浏览器上 下边框不显示的问题
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+  }
+}
+
+.ant-table-thead > tr > th {
+  height: $table-header-height;
+  padding: 0 10px;
+  font-size: $table-font-size;
+  color: $table-font-color;
+  background-color: $table-bg-color;
+  font-weight: bold;
+}
+
+.ant-table-thead > .table-search {
+  > th {
+    height: $table-tr-height;
+    font-size: 12px;
+    background-color: $bg-c-w;
+    border: none;
+  }
+
+  .ant-input, .ant-select-selection--single {
+    height: 22px;
+    display: flex;
+    font-size: 12px;
+  }
+
+  .ant-select-selection__rendered {
+    line-height: 22px;
+    width: calc(100% - 20px);
+  }
+  .ant-select-selection-selected-value{
+    font-weight: normal;
+  }
+}
+
+tr.ant-table-expanded-row {
+  background: $bg-c-w;
+}
+
+tr.ant-table-expanded-row:hover {
+  //background-color: #e6f7ff;
+  background: none;
+}
+
+
+// 表格内边框
+.ant-table-tbody > tr > td {
+  border-bottom:1px solid $table-border-color;
+  transition: all 0.3s, border 0s;
+}
+
+tr > th, .ant-table-tbody > tr > td {
+  height: $table-tr-height;
+  padding: 0 10px;
+  font-size: $table-font-size;
+  color: $table-font-color;
+}
+
+.ant-table-fixed {
+  table-layout: fixed;
+}
+
+.table-text-td {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  //white-space: pre;
+  white-space: pre;
+  word-break: keep-all;
+  //white-space: nowrap;
+}
+
+.table-text-td-margin{
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.table-top-button {
+  padding: 0 0 10px;
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+
+  .left-button {
+    margin-right: 10px
+  }
+}
+
+// 为了解决表格无数据 滚动条被隐藏掉了
+//.ant-table-fixed-header .ant-table-scroll .ant-table-header {
+//  overflow: visible;
+//  padding-bottom: 20px;
+//  margin-bottom: -20px;
+//  opacity: 0.9999;
+//}
+//
+//.ant-table-scroll {
+//  overflow: auto;
+//  overflow-x: scroll;
+//}
+//
+.ant-table-placeholder {
+  //margin-top: 10px;
+  display: none;
+}
+
+.virtual-table {
+  .ant-table-placeholder {
+    //margin-top: 10px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    padding: 0 !important;
+  }
+}
+
+
+.xc-no-data {
+  position: sticky;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+// 表格展开箭头
+.ant-table-row-expand-icon {
+  cursor: pointer;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  line-height: 14px;
+  border: none;
+  background: none;
+  font-family: "iconfont" !important;
+  font-size: 12px;
+  font-style: normal;
+  color: $color;
+}
+
+.ant-table-row-collapsed:after {
+  content: '\e632';
+  //background-image: url("assets/img/common-icon/icon_arrow.png");
+  //background-repeat: no-repeat;
+  //background-position: center, center;
+  display: inline-block;
+  transform: rotate(-90deg);
+}
+
+.ant-table-row-expanded:after {
+  content: '\e632';
+  //background-image: url("assets/img/common-icon/icon_arrow.png");
+  //background-repeat: no-repeat;
+  //background-position: center, center;
+  display: inline-block;
+  //transform: rotate(-180deg);
+}
+
+// 表格时间搜索图标对齐
+.table-search {
+  .ant-calendar-picker-clear, .ant-calendar-picker-icon {
+    margin-top: -8px;
+  }
+
+  .ant-calendar .ant-calendar-ok-btn {
+    background-color: $color;
+
+    &:hover {
+      background-color: $color;
+
+    }
+  }
+
+  .ant-calendar-picker-input {
+    line-height: 1;
+  }
+
+  .ant-calendar-picker {
+    width: 100% !important;
+    //min-width: 150px;
+  }
+
+  .ant-calendar-picker-icon {
+    display: none;
+  }
+
+  .ant-calendar-range-picker-input {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  // 表格搜索下面的多选
+  .ant-select-selection--multiple .ant-select-search--inline {
+    display: none;
+  }
+
+  .ant-select-selection--multiple {
+    height: 22px;
+    min-height: 0;
+    padding-bottom: 0;
+    cursor: text;
+    zoom: 1;
+  }
+
+  .ant-select-selection--multiple .ant-select-selection__placeholder {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .ant-select-selection--multiple .ant-select-selection__choice {
+    position: relative;
+    float: left;
+    max-width: 92%;
+    margin-right: 4px;
+    padding: 0 20px 0 10px;
+    overflow: hidden;
+    color: #626262;
+    background-color: $bg-c-w;
+    border: none;
+    border-radius: 2px;
+    cursor: default;
+    transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  .ant-select-selection--multiple > ul > li, .ant-select-selection--multiple .ant-select-selection__rendered > ul > li {
+    height: 20px;
+    margin-top: 0;
+    font-size: 12px;
+    border: none;
+    line-height: 22px;
+    font-weight: normal;
+  }
+
+  .ant-select-selection--multiple .ant-select-selection__clear {
+    top: 13px;
+  }
+
+  .ant-input-number {
+    height: 22px;
+    font-size: 12px;
+
+    .ant-input-number-input {
+      height: inherit;
+      line-height: 22px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre;
+      word-break: keep-all;
+    }
+  }
+}
+
+.ant-calendar .ant-calendar-ok-btn {
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  color: #fff !important;
+  background-color: $color;
+  border-color: $color;
+}
+
+.ant-calendar .ant-calendar-ok-btn:hover, .ant-calendar .ant-calendar-ok-btn:focus {
+  color: $button-danger-color;
+  background-color: $color;
+  border-color: $color;
+}
+
+.ant-calendar-picker:hover .ant-calendar-picker-input:not(.ant-input-disabled) {
+  border-color: $color;
+}
+
+.ant-calendar-picker-clear {
+  height: 16px;
+}
+
+// 导出弹框的radio样式
+.radio-label {
+  position: relative;
+
+  .ant-radio {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .radio-font {
+    font-size: 70px;
+    color: $color;
+  }
+}
+
+cdk-virtual-scroll-viewport {
+  display: block;
+  position: relative;
+  overflow-y: scroll !important;
+  contain: strict;
+  transform: translateZ(0);
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+}
+
+//// 表格拖拽的时候不自动适配宽度多余宽度将分配给倒数第二列
+//.no-auto-width {
+//  .ant-table-fixed {
+//    colgroup {
+//      col:nth-last-of-type(2) {
+//        width: auto !important;
+//        min-width: 80px !important;
+//      }
+//    }
+//  }
+//}
+
+// 处理弹框table拖拽线样式
+nz-modal xc-table .resize-proxy {
+  height: calc(100% - 42px) !important;
+}
+
+// 处理弹框table table-top-button
+nz-modal.alarm-filtration .table-top-button {
+  padding: 0 0 8px !important;
+}
+
+.ant-table-pagination.ant-pagination {
+  float: right;
+  margin: 16px 0 0;
+}
+
+.es-pagination {
+  margin-top: 16px;
+  overflow: hidden;
+  .page-total-count {
+    float: right;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 20px;
+  }
+  .ant-pagination {
+    float: right;
+  }
+}
+
+
+@mixin box-shadow-left() {
+  .ant-table-th-right-sticky, .ant-table-td-right-sticky {
+    box-shadow: -6px 3px 6px 0 rgba(0, 0, 0, .05);
+  }
+}
+
+@mixin box-shadow-right() {
+  .ant-table-th-left-sticky, .ant-table-td-left-sticky {
+    box-shadow: 6px 3px 6px 0 rgba(0, 0, 0, .05);
+  }
+}
+
+.ant-table-scroll-position-middle {
+  @include box-shadow-right;
+  @include box-shadow-left;
+}
+
+.ant-table-scroll-position-left {
+  @include box-shadow-left;
+}
+
+.ant-table-scroll-position-right {
+  @include box-shadow-right;
+}
+
+.ant-table-empty .ant-table-body {
+  overflow: auto scroll !important;
+}
+
+// 拖拽排序时的样式
+.cdk-drag-preview {
+  display: table;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+
+.page-total-color{
+  color: $color;
+}
+
+.table-operate-btn{
+  color: #1890ff;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+
+.top-right-button-pad-bottom{
+  padding-bottom: 9px
+}
+
+.table-top-button-flex{
+  flex:1;
+}
+
+.top-btn-select{
+  width: 150px;
+}
+
+.check-box-set-column{
+  width: 100%
+}
+.import-btn{
+  display: none;
+}
+
+.date-filter{
+  display: flex;
+  .date-filter-operator{
+    width: 70px;
+  }
+}
+
+.custom-top-btn{
+  margin-right: 10px;
+  cursor: pointer
+}
+
+.nz-select-width{
+  width: 100% !important;
+  line-height: 1
+}

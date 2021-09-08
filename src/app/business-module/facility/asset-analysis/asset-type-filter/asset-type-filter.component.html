@@ -1,0 +1,36 @@
+<!--form表单-->
+<div class="asset-type-condition">
+  <div class="asset-type-form">
+    <xc-form [column]="formColumn"
+             (formInstance)="formInstance($event)">
+    </xc-form>
+  </div>
+  <div class="asset-type-button">
+    <button nz-button nzType="primary" class="operation-button-size" (click)="analysis()" [disabled]="isClick">{{language.assetAnalysis.analysis}}</button>
+    <button nz-button nzType="danger"  class="operation-button" (click)="reset()">{{language.assetAnalysis.reset}}</button>
+  </div>
+</div>
+
+<!--区域选择器模板-->
+<ng-template #AreaSelectRef let-formGroup="formGroup" let-col="col">
+  <input nz-input type="text" class="area-box" readonly [(ngModel)]="areaName" [title]="areaName">
+  <button type="button" class="search" (click)="showAreaSelect()"><i class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--项目选择器点击按钮-->
+<ng-template #ProjectSelectRef let-formGroup="formGroup" let-col="col">
+  <input nz-input type="text" class="area-box" readonly [(ngModel)]="projectName" [title]="projectName">
+  <button type="button" class="search" (click)="showProjectSelect()"><i
+    class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-selector
+        [(xcVisible)]="isVisible"
+        (selectDataChange)="selectDataChange($event)"
+        [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<app-select-project *ngIf="isShow" [multiple]="true" [selectList]="selectData"
+                    [(isVisible)]="isShow"
+                    (selectDataChange)="projectSelectChange($event)"></app-select-project>

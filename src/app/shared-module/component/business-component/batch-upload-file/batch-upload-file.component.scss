@@ -1,0 +1,66 @@
+@import "../../../../style-module/config";
+
+.upload-container {
+  display: flex;
+  text-align: center;
+
+  .upload-item {
+    height: 130px;
+    width: 130px;
+    border: 1px dashed $table-bg-color;
+
+    &:not(:last-child) {
+      margin-right: 40px;
+    }
+
+    .upload-desc {
+      margin-top: 20px;
+
+      .upload-icon {
+        font-size: 28px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .file-error {
+    border-color: $error-color;
+  }
+  .file-right {
+    border-color: $color;
+  }
+}
+
+// 一键导入和模版下载
+.upload-template-container {
+  margin-top: 40px;
+  margin-left: 105px;
+  display: flex;
+
+  .upload-all {
+    cursor: pointer;
+    color: $upload-all-color;
+
+    .upload-all-icon {
+      color: $upload-all-color;
+      font-size: 16px;
+    }
+
+    .upload-msg {
+      margin-left: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      color: $upload-all-color;
+    }
+  }
+
+  .delimiter {
+    margin: 0 50px;
+    color: $separation-color;
+  }
+}
+// 文件警告提醒
+.warning-msg {
+  margin-top: 20px;
+  color: $error-color;
+}

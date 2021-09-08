@@ -1,0 +1,71 @@
+<div class="resources">
+<!--  区域选择 -->
+  <input nz-input readonly class="select-name-sta"
+         [placeholder]="language.selectArea"
+         (click)="showAreaSelect()" [(ngModel)]="areaName"
+         [title]="areaName" />
+  <!--  告警名称选择 -->
+  <input nz-input readonly *ngIf="currentPageType === currentPageTypeEnum.alarmName "
+         class="select-name-sta" [title]="alarmName"
+         [placeholder]="language.alarmName"
+         (click)="showAlarmNameSelect()" [(ngModel)]="alarmName" />
+  <!--设施选择-->
+  <check-select-input *ngIf="sineDeviceType === 'normal' || sineDeviceType === 'alarmIncrement'"
+                      class="alarm-statistical"
+                      [checkList]="selectInfo"
+                      [isAllChecked]="true"
+                      [placeholder]="language.alarmSourceType"
+                      [(ngModel)]="deviceTypeListValue"></check-select-input>
+
+  <!--设施类型单选-->
+  <nz-select *ngIf="sineDeviceType === 'areaAlarm' "
+             nzPlaceHolder="{{language.alarmSourceType}}"
+             title="{{deviceTypeListValue}}"
+             [(ngModel)]="deviceTypeListValue">
+    <nz-option *ngFor="let option of selectInfo" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+  <nz-range-picker [(ngModel)]="firstTimeModel"
+                   [nzDisabledDate]="disabledEndDate"
+                   (nzOnOpenChange)="nzOnOpenChange($event)"
+  ></nz-range-picker>
+
+  <!--统计-->
+  <button type="button" class="link-button" [disabled]="disabledResources()"
+          nz-button nzType="primary" (click)="resources()">{{ language.statistical }}</button>
+  <!--按模板统计-->
+  <button *ngIf="sineDeviceType !== 'alarmIncrement'" type="button" class="link-button" nz-button nzType="primary"
+          (click)="display.templateTable=true">{{ language.statisticsByTemplate }}</button>
+</div>
+
+<div class="device-select" *ngIf="sineDeviceType === 'normal'&& !hide">
+  <ul>
+    <li *ngFor="let item of selectDeviceTypeList"
+        [class.active]="item == deviceActive"
+        (click)="clickDeviceSelect(item)">
+      {{ item.label }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="hide" class="select-height"></div>
+<!--区域选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!-- 按照模板查询 -->
+<div class="box-warp" *ngIf="display.templateTable">
+  <app-template [bool]="bool" [currentPage]="currentPageType" [equipmentIsRadio]="equipmentIsRadio"
+                (resultAndClose)="templateTable($event)"></app-template>
+</div>
+
+<!--  告警名称选择弹窗-->
+<app-alarm-name-select *ngIf=" currentPageType === currentPageTypeEnum.alarmName && alarmNameSelectVisible"
+                       [(alarmNameSelectVisible)]="alarmNameSelectVisible"
+                       (selectDataChange)="onSelectAlarmName($event)"
+                       [selectAlarms] = "selectAlarms"
+                       >
+</app-alarm-name-select>
+

@@ -1,0 +1,59 @@
+<!--系统参数-->
+<app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+<div class="security-policy-form">
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <div *ngIf="urlType=== systemParameterConfigEnum.note" class="telephone">
+    <p>
+      {{language.systemSetting.testCall}}
+    </p>
+    <app-telephone-input #telephone (telephoneInit)="telephoneInit($event)"
+                         (phoneChange)="phoneChange()"></app-telephone-input>
+  </div>
+  <div class="button-group">
+    <button class="link-button"
+            [disabled]="!isSystemDisabled"
+            nz-button nzType="primary"
+            [appAccessPermission]="code"
+            (click)="formHandleOk()">{{language.table.okText}}</button>
+    <button class="link-button space-l" nz-button nzType="danger"
+            (click)="formHandleCancel()">{{language.table.cancelText}}</button>
+    <button *ngIf="![systemParameterConfigEnum.email, systemParameterConfigEnum.note, systemParameterConfigEnum.push].includes(urlType)"
+            class="link-button space-l" nz-button nzType="danger" (click)="formHandleReset()">{{language.form.reset}}</button>
+    <!-- 邮箱设置-->
+    <button *ngIf="urlType=== systemParameterConfigEnum.email" class="link-button space-l"
+            nz-button nzType="danger"
+            [disabled]="!(formStatus.getData('toAddress')&&isSystemDisabled)"
+            [appAccessPermission]="code"
+            (click)="formTestEMail()">{{language.systemSetting.test}}
+    </button>
+    <!-- 短息设置-->
+    <button *ngIf="urlType=== systemParameterConfigEnum.note" class="link-button space-l"
+            nz-button nzType="danger"
+            [disabled]="!(phoneError&&isSystemDisabled)"
+            [appAccessPermission]="code"
+            (click)="formTestPhone()">{{language.systemSetting.test}}
+    </button>
+    <!--  ftp设置-->
+    <button *ngIf="urlType=== systemParameterConfigEnum.ftp" class="link-button space-l"
+            nz-button nzType="danger"
+            [disabled]="!isSystemDisabled"
+            [appAccessPermission]="code"
+            [nzLoading]="submitLoading"
+            (click)="formTestFTP()">{{language.systemSetting.test}}
+    </button>
+
+  </div>
+</div>
+
+<ng-template #logo>
+  <input #uploadImg *ngIf="isVisible" type="file" class="style-d" id="file" (change)="fileChange($event)">
+  <button nz-button (click)="upload()" class="style-f">
+    <i nz-icon type="upload"></i><span>{{language.systemSetting.uploadPictures}}</span>
+  </button>
+  <div class="data-img style-f">
+    <img *ngIf="src" id="img" alt="" [src]="src">
+  </div>
+</ng-template>
+<!-- 音频 -->
+<audio id="music" hidden="true"></audio>
+

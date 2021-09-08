@@ -1,0 +1,69 @@
+ @import "../../../../../../style-module/config";
+
+.page-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.user-detail{
+  padding: 0 16px;
+}
+
+.title-data {
+  border-bottom: 1px solid $border-color;
+  position: absolute;
+  width: 100%;
+  left: 0;
+
+  .label-style {
+    background: $color;
+    color: $bg-c-w;
+    padding: 2px;
+  }
+}
+
+.custom-template {
+  align-items: center;
+
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  background: $bg-c-w;
+  cursor: pointer;
+}
+
+.alarm-menu {
+  position: relative;
+  .all-btn {
+    padding-left: 20px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+  }
+  .ok-btn {
+    margin-right: 20px;
+  }
+}
+
+.alarm-filtration-rule {
+  position: absolute;
+  right: 30px;
+  top: 0;
+  color: $bg-c-w;
+  background-color: $color;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 0 rgba(0,0,0,.045);
+  border: 1px solid $button-danger-hover-color;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+

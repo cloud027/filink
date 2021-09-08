@@ -1,0 +1,119 @@
+@import "../../../../style-module/config.scss";
+$left-panel-width: 410px;
+//工单列表样式
+.work-order-list-panel {
+  width: $left-panel-width;
+  background-color: white;
+  border-top: 1px solid $border-color;
+
+  //区域选择器
+  .app-logic-area {
+    width: $left-panel-width;
+    height: 240px;
+    border-bottom: 1px solid $border-color;
+    .logic-left{
+      width: 30%;
+      float: left;
+      height: 100%;
+      background-color: #f6fbfc;
+      box-shadow: 2px 0 0 0 #e8e8e8;
+    }
+    .logic-right{
+      width: 70%;
+      height: 100%;
+      float: left;
+    }
+    &::after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  //工单状态和类型选择器
+  .app-order-state-radio {
+    height: 95px;
+    border-bottom: 1px solid $border-color;
+    .text-content {
+      margin: 0 5px;
+      color: $index-card-title-color;
+      flex: 1;
+    }
+    //单选按钮和多选按钮的样式
+    .order-state-type-radio {
+      border: none;
+      .radio-container {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        width: 380px;
+
+        .radio {
+          text-align: center;
+          font-size: 12px;
+          .radio-text {
+            white-space: pre-wrap;
+            width: 50px;
+            margin: 0 5px;
+            color: black;
+          }
+          .radio-content {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  //工单状态和类型选择器
+  .app-order-state-checkbox {
+    height: 95px;
+    border-bottom: 1px solid $border-color;
+
+    .text-content {
+      flex: 1;
+      margin: 0 5px;
+      color: $index-card-title-color;
+
+    }
+    //单选按钮和多选按钮的样式
+    .order-state-type-checkbox {
+      border: none;
+      .checkbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        overflow-x: auto;
+        height: 55px;
+        margin-right: 5px;
+
+        .checkbox {
+          text-align: center;
+          font-size: 12px;
+          width: 70px;
+          .checkbox-text {
+            white-space: nowrap;
+            width: 50px;
+            margin: 0 7px;
+            color: black;
+          }
+        }
+        // radio按钮样式
+        .radio {
+          text-align: center;
+          font-size: 12px;
+          .radio-text {
+            white-space: pre-wrap;
+            width: 50px;
+            margin: 0 5px;
+            color: black;
+          }
+          //radio按钮内容样式
+          .radio-content {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+}

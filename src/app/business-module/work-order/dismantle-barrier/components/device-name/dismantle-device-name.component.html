@@ -1,0 +1,72 @@
+<nz-modal
+  nzWidth="80%"
+  *ngIf="equipmentVisible"
+  [(nzVisible)]="equipmentVisible"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  [nzTitle]="title"
+  (nzOnCancel)="equipmentVisible = false"
+>
+  <ng-template #modalContent>
+    <!--设施列表组件-->
+    <div>
+      <xc-table
+        #tableComponent
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+        (pageChange)="pageChange($event)"
+      >
+      </xc-table>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="Confirm()">
+      {{ language.okText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="equipmentVisible = false">
+      {{ language.cancelText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">
+      {{ commonLanguage.cleanUp }}
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectDeviceId" (ngModelChange)="onEquipmentChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i
+      [class]="
+        'icon-fiLink-l iconfont ' +
+        data['deviceStatusIconClass'] +
+        ' ' +
+        data['deviceStatusColorClass']
+      "
+    ></i>
+    <span
+      [ngStyle]="data.rowStyle"
+      class="status-text"
+      title="{{ data.deviceStatus | translate: deviceStatusEnum:'facility.config' }}"
+    >
+      {{ data.deviceStatus | translate: deviceStatusEnum:"facility.config" }}
+    </span>
+  </div>
+</ng-template>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text" [title]="data['deviceType']">{{
+      data["deviceType"] | translate: deviceTypeCode
+    }}</span>
+  </div>
+</ng-template>

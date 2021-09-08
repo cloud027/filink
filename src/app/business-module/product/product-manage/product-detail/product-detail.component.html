@@ -1,0 +1,137 @@
+<!--新增或编辑产品信息表单-->
+<nz-spin class="product-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="product-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <!--基础表单-->
+    <xc-form [column]="formColumn" [hidden]="showEquipmentForm"
+             (formInstance)="formCheck($event)">
+    </xc-form>
+    <!--特殊的设备表单-->
+    <xc-form [column]="equipmentFormColumn" [hidden]="!showEquipmentForm"
+             (formInstance)="equipmentFormCheck($event)">
+    </xc-form>
+    <!-- 上一步-->
+    <div class="button-container">
+      <button *ngIf="productType===productTypeEnum.equipment && showLastStep"
+              class="link-button margin-right20"
+              (click)="onClickLast()"
+              nz-button nzType="primary">
+        {{productLanguage.lastStep}}
+      </button>
+      <!--保存-->
+      <button class="link-button margin-right20"
+              nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="saveBtnDisabled" (click)="onClickSaveProduct()">
+        {{commonLanguage.confirm}}
+      </button>
+      <!--下一步-->
+      <button *ngIf="productType===productTypeEnum.equipment && showNextStep"
+              class="link-button margin-right20"
+              (click)="onClickNext()"
+              [disabled]="isDisabled"
+              nz-button nzType="primary">
+        {{productLanguage.nextStep}}
+      </button>
+      <!--取消-->
+      <button class="link-button" nz-button nzType="danger" (click)="onCancel()">
+        {{commonLanguage.cancel}}
+      </button>
+    </div>
+  </div>
+</nz-spin>
+<!--产品类型模版-->
+<ng-template #productTypeRef>
+  <div class="select-container">
+    <xc-nz-select
+      class="mount-type-select"
+      [nzDisabled]="pageType === pageOperateEnum.update"
+      [(ngModel)]="productType"
+      (ngModelChange)="onChangeProductType($event)"
+      nzPlaceHolder="{{productLanguage.pleaseSelect}}">
+      <xc-nz-option *ngFor="let item of productTypeSelect"
+                    [nzLabel]="item.label"
+                    [nzValue]="item.code">
+      </xc-nz-option>
+    </xc-nz-select>
+    <xc-nz-select
+      [nzDisabled]="pageType === pageOperateEnum.update"
+      class="product-model-select"
+      [(ngModel)]="equipmentOrDeviceType"
+      (ngModelChange)="onChangeType($event)"
+      nzPlaceHolder="{{productLanguage.pleaseSelect}}">
+      <xc-nz-option *ngFor="let item of productTypeModelSelect"
+                    [nzLabel]="item.label"
+                    [nzValue]="item.code">
+      </xc-nz-option>
+    </xc-nz-select>
+  </div>
+</ng-template>
+<!--上传图片-->
+<ng-template #uploadImgTemp>
+  <app-upload-img [url]="productImgUrl" (getUploadList)="getFile($event)"></app-upload-img>
+</ng-template>
+<!--端口信息模版-->
+<ng-template #portInfoTemp>
+  <div class="port-info-container">
+    <div class="port-add" (click)="onClickAddPort()">
+      <span><i class="icon-fiLink fiLink-pic-to-big iconfont"></i></span>
+      <span class="add-title">{{productLanguage.addPort}}</span>
+    </div>
+    <div class="port-info-border" [hidden]="!showAddPort">
+      <div class="port-info-btn">
+        <i nz-icon nzType="save" nzTheme="outline" class="button-save" [title]="commonLanguage.save"
+           (click)="onClickSavePort()"></i>
+        <i nz-icon nzType="close" nzTheme="outline" class="button-close" (click)="onClickClosePort()"></i>
+      </div>
+      <xc-form [column]="portFormConfig"
+               (formInstance)="portFormCheck($event)"></xc-form>
+    </div>
+    <!--端口列表-->
+    <div class="port-table">
+      <xc-table #portTable
+        [dataSet]="portDataSet"
+        [pageBean]="portPageInfo"
+        [tableConfig]="tableConfig"
+        (pageChange)="onPortPageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</ng-template>
+
+<!--新增端口时端口类型默认时电力端口-->
+<ng-template #portTypeRef>
+  <input nz-input class="port-flag" [disabled]="true" [(ngModel)]="portFlag"
+         placeholder="{{productLanguage.pleaseEnter}}"/>
+</ng-template>
+<!--云平台产品下拉选-->
+<ng-template #platformProd let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select nzPlaceHolder="{{productLanguage.pleaseSelect}}" formControlName="appId">
+      <xc-nz-option *ngFor="let item of appIdList" [nzLabel]="item.appName" [nzValue]="item.appId"></xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>
+
+
+<!--供应商列表-->
+<ng-template #supplierTemp let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly placeholder="{{commonLanguage.clickSelect}}"  [ngModel]="selectSupplier.supplierName" [disabled]="pageType === pageOperateEnum.update">
+    <button type="button" class="open-button" (click)="isShowSupplier = true" [disabled]="pageType === pageOperateEnum.update"><i
+      class="icon-fiLink iconfont fiLink-search-index"></i></button>
+  </div>
+
+</ng-template>
+<app-select-supplier
+  *ngIf="isShowSupplier"
+  [(isVisible)]="isShowSupplier"
+  [multiple]="false"
+  [selectSupplierList]="[selectSupplier]"
+  (isVisibleChange)="isShowSupplier=false"
+  (selectDataChange)="onSelectSupplier($event)">
+</app-select-supplier>

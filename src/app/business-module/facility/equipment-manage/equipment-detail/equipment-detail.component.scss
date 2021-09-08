@@ -1,0 +1,43 @@
+@import "../../../../style-module/config";
+.equipment-detail {
+  // 标题样式
+  .equipment-detail-title {
+    margin-left: 10px;
+    padding-left: 18px;
+    font-size: 16px;
+    font-weight: 900;
+    border-left: 2px solid $detail-title-color;
+    color: $title-color;
+
+    .equipment-detail {
+      padding: 10px;
+    }
+  }
+  .button-container{
+    margin-top: 40px;
+  }
+}
+  // 打开设施选择器按钮样式 模版样式
+  .open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $bg-c-w;
+  }
+  // 自定义样式
+.custom-template {
+  display: flex;
+  align-items: center;
+  .input-name{
+    width: 300px;
+  }
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+// 挂载位置下拉选
+.mount-position-select{
+  width: 300px;
+}
+

@@ -1,0 +1,86 @@
+<!--设施列表元素-->
+<div class="device-box">
+  <!--设施列表分类卡片-->
+  <div class="device-select-box">
+    <div class="device-select-title">{{this.language.deviceListCard}}</div>
+    <div class="device-select-check">
+      <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="ngModelChange()">
+        <label class="device-select-radio" nz-radio nzValue="1">{{this.language.visible}}</label>
+        <label nz-radio nzValue="0">{{this.language.invisible}}</label>
+      </nz-radio-group>
+    </div>
+  </div>
+  <!--设施列表字段-->
+  <div class="device-select-box">
+    <div class="device-select-title">{{this.language.deviceListField}}</div>
+    <div class="device-select-check">
+      <nz-checkbox-wrapper class="device-select-check-box">
+        <div *ngFor="let item of deviceListField">
+          <div class="device-select-check-label">
+            <label nz-checkbox nzValue="{{item.elementCode}}"
+                   class="tenant-device-name-show"
+                   [ngModel]="item.isShow==='1'"
+                   (ngModelChange)="log(item,item.isShow)"
+                   [nzDisabled]="item.elementCode==='name'">
+              {{item.elementCode | tenantConfigTranslate}}
+            </label>
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </div>
+  </div>
+  <!--设施功能按钮-->
+  <div class="device-select-box">
+    <div class="device-select-title">{{this.language.deviceFunctionButtons}}</div>
+    <div class="device-select-check">
+      <nz-checkbox-wrapper class="device-select-check-box">
+        <div *ngFor="let item of deviceButton">
+          <div class="device-select-check-label">
+            <label nz-checkbox nzValue="{{item.elementCode}}"
+                   [ngModel]="item.isShow==='1'"
+                   (ngModelChange)="log(item,item.isShow)"
+                   [nzDisabled]="item.elementCode==='name'">{{item.elementCode | tenantConfigTranslate}}</label>
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </div>
+  </div>
+  <!--设施列表操作菜单-->
+  <div class="device-select-box">
+    <div class="device-select-title">{{this.language.deviceOperationMenu}}</div>
+    <div class="device-select-check">
+      <nz-checkbox-wrapper class="device-select-check-box">
+        <div *ngFor="let item of deviceOperationMenu">
+          <div class="device-select-check-label">
+            <label nz-checkbox nzValue="{{item.elementCode}}"
+                   [ngModel]="item.isShow==='1'"
+                   (ngModelChange)="log(item,item.isShow)"
+                   [nzDisabled]="item.elementCode==='name'">{{item.elementCode | tenantConfigTranslate}}</label>
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </div>
+  </div>
+  <!--设施详情卡片-->
+  <div class="device-select-box">
+    <div class="device-select-title index-title-box-list">{{this.language.deviceDetailCard}}</div>
+    <div class="device-select-check">
+      <div *ngFor="let item of deviceDetailsCard">
+        <div class="index-title-box">
+          <span class="index-title">{{item.elementCode | tenantConfigTranslate}}</span>
+          <span class="index-title-icon" (click)="detailCardCheck(deviceDetailsCard,item.elementCode)">
+            <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow==='1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow ==='0'"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--配置按钮-->
+<div class="button-group">
+  <button class="link-button  margin-right20" [nzLoading]="submitLoading"
+          nz-button nzType="primary" (click)="updateMenuTemplate()">{{this.language.config}}</button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+</div>

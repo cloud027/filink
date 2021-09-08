@@ -1,0 +1,25 @@
+@import '../../share/style/common-picture.scss';
+.alarm-confirm-detail {
+  padding: 0 0 20px 16px;
+  .tab-area{
+    margin-top: 20px;
+    .link-button{
+      margin-right: 20px;
+    }
+  }
+  .area-name {
+    outline: none;
+    &:hover {
+      border-color: $color;
+    }
+    &:disabled:hover{
+      cursor: not-allowed;
+    }
+  }
+  .open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $bg-c-w;
+  }
+}

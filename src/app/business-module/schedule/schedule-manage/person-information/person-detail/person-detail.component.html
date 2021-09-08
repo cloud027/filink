@@ -1,0 +1,97 @@
+<div class="in-container">
+  <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+  <div class="person-add">
+    <!--步骤条组件-->
+    <div class="xc-steps">
+      <app-xc-steps
+        [isActiveStepsCount]="isActiveSteps"
+        [setData]="setData">
+      </app-xc-steps>
+    </div>
+    <div class="assembly">
+      <!--第一步 基本信息-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+        <xc-form [column]="formColumn"
+                 (formInstance)="personFormInstance($event)">
+        </xc-form>
+      </div>
+      <!-- 关联用户-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+        <app-associate-user #userInfo
+                            [notShowStepSecond]="notShowStepSecond"
+                            [stepsFirstParams]="stepsFirstParams"
+                            (formValid)="infoValid($event)"></app-associate-user>
+      </div>
+      <!--按钮-->
+      <div class="person-btn">
+        <!--上一步-->
+        <button nz-button nzType="primary" class="link-button prev-step"
+                (click)="handPrevSteps(isActiveSteps)"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+          {{commonLanguage.back}}
+        </button>
+        <!--下一步-->
+        <button nz-button nzType="primary" class="link-button next-step"
+                (click)="handNextSteps(isActiveSteps)"
+                [disabled]="isNextStepDisabled"
+                *ngIf="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+          {{commonLanguage.nextStep}}
+        </button>
+        <!--确定-->
+        <button nz-button nzType="primary" class="link-button next-step"
+                [nzLoading]="isSaveLoading"
+                (click)="handStepsSubmit()"
+                [disabled]="isConfirmDisabled"
+                *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+          {{commonLanguage.okText}}
+        </button>
+        <!--取消-->
+        <button class="link-button cancel-step"
+                (click)="handCancelSteps()"
+                nz-button nzType="danger">
+          {{commonLanguage.cancel}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 单位选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly [(ngModel)]="selectUnitName"
+           [title]="selectUnitName">
+    <button type="button" class="open-button" (click)="showDeptSelectorModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+<!--单位选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [pageType]="pageType"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="deptSelectChange($event)">
+</xc-tree-area-selector>
+<!-- 电话号码 -->
+<ng-template #telephoneTemp let-formGroup="formGroup" let-col="col">
+  <app-telephone-input #telephoneInput
+                       (phoneChange)="getPhone($event)"
+                       [hint]="null"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <span class="hint">{{phoneNumberMsg}}</span>
+</ng-template>
+<!--入职日期-->
+<ng-template #entryTime let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="entryTime" class="entry-time"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!--离职日期-->
+<ng-template #leaveTime let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="leaveTime" class="leave-time" [nzDisabledDate]="disabledDate"></nz-date-picker>
+  </form>
+</ng-template>

@@ -1,0 +1,139 @@
+<div class="alarm-warp">
+  <xc-statistical-slider
+    [sliderConfig]="sliderConfig"
+    (slideShowChange)="slideShowChange($event)"
+    (selectChange)="sliderChange($event)"
+    [showCardNum]="cardNum"
+   >
+  </xc-statistical-slider>
+  <div class="select-alarm-box">
+      <div class="select-alarm" [ngStyle]="{left: leftDistance + 'px'}">
+        <span>{{ this.language.displayUsage }}</span>
+        <nz-select
+          class="show-type"
+          nzPlaceHolder="{{language.pleaseChoose}}"
+          [(ngModel)]="alarmHintValue"
+          (ngModelChange)="alarmHintValueModelChange()">
+          <nz-option *ngFor="let option of alarmHintList" [nzLabel]="option.label"
+                     [nzValue]="option.code"></nz-option>
+        </nz-select>
+      </div>
+      <div class="table-wrapper">
+        <xc-table #table
+                  [dataSet]="dataSet"
+                  [pageBean]="pageBean"
+                  [tableConfig]="tableConfig"
+                  (pageChange)="pageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+<!--  告警级别-->
+  <ng-template #alarmFixedLevelTemp let-data="data">
+    <div class="flex-show">
+      <div class="box-icon" [ngStyle]="data.style"></div>
+      <span class="level-left">{{ data.alarmFixedLevel | translate : alarmLevelEnum : languageEnum.alarm}} </span>
+    </div>
+  </ng-template>
+<!--  表格清除状态-->
+  <ng-template #isCleanTemp let-data="data">
+    <div>{{ data.alarmCleanStatus | translate : alarmCleanStatusEnum }}</div>
+  </ng-template>
+<!--  表格确认状态-->
+  <ng-template #isConfirmTemp let-data="data">
+    <div>{{ data.alarmConfirmStatus | translate : alarmConfirmStatusEnum }}</div>
+  </ng-template>
+  <!--设施类型-->
+  <ng-template #alarmSourceTypeTemp let-data="data">
+    <i [ngClass]="data['deviceTypeIcon']" class="equipment-type-icon"></i>
+    <span class="status-text" [title]="data.alarmDeviceTypeId  | translate : deviceTypeEnum">{{data.alarmDeviceTypeId | translate : deviceTypeEnum}}</span>
+  </ng-template>
+  <!-- 修改备注弹框 -->
+  <nz-modal
+    class="update-remark-pop-up"
+    [(nzVisible)]="display.remarkTable"
+    [nzTitle]="modalTitle"
+    [nzMaskClosable]="false"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="display.remarkTable=false">
+    <ng-template #modalTitle>
+      {{language.updateRemark}}
+    </ng-template>
+    <ng-template #modalContent>
+      <xc-form class="alarm-remark" [column]="formColumnRemark" (formInstance)="formInstanceRemark($event)"></xc-form>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" class="link-button" [disabled]="!remarkDis"
+              (click)="updateAlarmRemark();display.remarkTable=false">{{language.okText}}
+      </button>
+      <button nz-button nzType="danger" class="link-button" (click)="display.remarkTable=false">{{language.cancelText}}</button>
+    </ng-template>
+  </nz-modal>
+  <!-- 按照模板查询 -->
+  <div class="box-warp" *ngIf="display.templateTable">
+    <app-template-table (resultAndClose)="templateTable($event)"></app-template-table>
+  </div>
+  <!-- 告警名称 -->
+  <ng-template #alarmName let-filterValue="filterValue">
+    <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue"></app-alarm-name>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipmentTypeTemp let-data="data">
+      <i [ngClass]="data['equipmentIcon']" class="equipment-type-icon"></i>
+    <span class="status-text" [title]="data.alarmSourceType">{{data.alarmSourceType}}</span>
+  </ng-template>
+  <!-- 区域 -->
+  <ng-template #areaSelector let-data="data" let-filterValue="filterValue">
+    <app-area [areaConfig]='areaConfig' [filterValue]="filterValue"></app-area>
+  </ng-template>
+  <!-- 设施名称 -->
+  <ng-template #deviceNameTemp let-filterValue="filterValue">
+    <app-alarm-object [alarmObjectConfig]="alarmObjectConfig" [filterValue]="filterValue" [title]="deviceTitle"></app-alarm-object>
+  </ng-template>
+  <!-- 诊断设置 -->
+  <nz-modal [(nzVisible)]="display.diagnoseSet"
+            *ngIf="display.diagnoseSet"
+            [nzMaskClosable]="false"
+            [nzTitle]="setModalTitle"
+            [nzContent]="setModalContent"
+            [nzFooter]="editModalFooter"
+            class="diagnose-pop"
+            (nzOnCancel)="setHandleCancel()">
+    <ng-template #setModalTitle>
+      {{language.alarmDiagnosticSet}}
+    </ng-template>
+    <ng-template #setModalContent>
+      <nz-spin [nzSpinning]="ifSpin">
+        <xc-form [column]="tableColumnSet" (formInstance)="formInstanceSet($event)"></xc-form>
+      </nz-spin>
+    </ng-template>
+    <ng-template #editModalFooter>
+      <button nz-button nzType="primary" class="link-button" (click)="setHandle()" [nzLoading]="isLoading"  [disabled]="!diagnoseSetDis">{{language.okText}}</button>
+      <button nz-button nzType="danger" class="link-button" (click)="setHandleCancel()">{{language.cancelText}}</button>
+    </ng-template>
+  </nz-modal>
+</div>
+
+<!-- 告警对象 -->
+<ng-template #alarmEquipmentTemp let-filterValue = "filterValue">
+  <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+         (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkAlarmEquipment.name" />
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>
+<!-- 频次 -->
+<ng-template #frequencyTemp let-filterValue = "filterValue">
+    <span class="input-box">
+      <input type="text" class="width-style area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+</ng-template>
+
+

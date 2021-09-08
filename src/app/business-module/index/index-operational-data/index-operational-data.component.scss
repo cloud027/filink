@@ -1,0 +1,74 @@
+@import "../../../style-module/config.scss";
+$left-panel-width: 410px;
+
+.left-panel {
+  position: absolute;
+  left: 10px;
+  top: 46px;
+  padding-bottom: 46px;
+  max-height: calc(100vh - 85px);
+  overflow: auto;
+  font-size: 12px;
+
+  // 运维数据tap
+  .left-panel-tabs {
+    width: $left-panel-width;
+    background-color: white;
+    border-radius: 4px;
+
+    //.left-panel-border {
+    //  border-right: 1px solid #ccc;
+    //}
+
+    .facility-list {
+      width: 33%;
+    }
+
+    .myCollection-list {
+      width: 27%;
+    }
+
+    .work-order-list {
+      width: 40%;
+    }
+
+    .left-panel-tab {
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      line-height: 22px;
+      height: 30px;
+
+      .icon-type {
+        width: 22px;
+        height: 22px;
+        float: left;
+        margin: 4px 5px 0 15px;
+        color: #ffffff;
+        border-radius: 50%;
+        background-color: $index-card-title-color;
+      }
+
+      .text-content {
+        color: $index-window-color;
+        margin-top: 4px;
+        text-align: left;
+      }
+    }
+    .tab-selected {
+      .text-content {
+        color: $index-operational-background-color;
+        font-weight: bold;
+      }
+      .icon-type {
+        background-color: $index-operational-background-color;
+      }
+    }
+  }
+}
+
+.card-selected {
+  color: $index-operational-background-color;
+}

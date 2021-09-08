@@ -1,0 +1,100 @@
+<!--为了减少性能消耗采用手写弹框-->
+<div class="map-selector-model-disk" [hidden]="!xcVisible">
+  <div class="map-selector-model">
+    <!--title-->
+    <div class="map-selector-title">
+      <span class="map-selector-title-font">{{inspectionLanguage.inspectObject}}</span>
+      <span class="map-selector-pointer" (click)="handleCancel()">
+        <i class="map-selector-icon" nz-icon type="close" theme="outline"></i>
+      </span>
+    </div>
+    <!--content-->
+    <div class="map-selector-body">
+      <div class="right-map">
+        <nz-card class="right-map-card">
+          <!--地图-->
+          <div id="_mapContainer" class="map-container"></div>
+          <!--查询-->
+          <div class="select-container">
+            <div class="map-select">
+              <nz-dropdown>
+                <a nz-dropdown>
+                  <span class="map-search-type map-search-type-width">{{searchTypeName}}</span>
+                  <i nz-icon type="down" class="map-search-type"></i>
+                </a>
+                <!--搜索类型-->
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item (click)="searchFacilityName()">
+                    <a>{{indexLanguage.searchDeviceName}}</a>
+                  </li>
+                  <li nz-menu-item (click)="searchAddress()">
+                    <a>{{indexLanguage.searchAddress}}</a>
+                  </li>
+                </ul>
+              </nz-dropdown>
+            </div>
+            <div class="map-search">
+              <!--设施名称搜索-->
+              <div class="map-search-name" [ngStyle]="{'zIndex': IndexObj.facilityNameIndex}">
+                <input class="address-input"
+                  placeholder="{{indexLanguage.enterFacilityName}}"
+                  nz-input
+                  [(ngModel)]="inputValue"
+                  (input)="onInput()"
+                  [nzAutocomplete]="auto"
+                  (keydown)="keyDownEvent($event)"/>
+                <nz-autocomplete nzBackfill #auto>
+                  <nz-auto-option *ngFor="let option of options"
+                                  (mousedown)="optionChange($event,option)"
+                                  [nzValue]="option.deviceId"
+                                  [nzLabel]="option.name">
+                    {{ option.name }}
+                  </nz-auto-option>
+                </nz-autocomplete>
+              </div>
+              <!--百度地图地址搜索-->
+              <div class="b-map-location-search" [ngStyle]="{'zIndex': IndexObj.bMapLocationSearch}">
+                <div id="r-result" >
+                  <input class="map-input" type="text" placeholder="{{indexLanguage.enterPlace}}" id="_suggestId" size="20" value=""/>
+                </div>
+                <div id="_searchResultPanel"></div>
+              </div>
+            </div>
+          </div>
+          <!--放大缩小-->
+          <div class="zoom-control">
+            <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-in zoom-margin"
+                 (click)="zoomIn()" title="{{indexLanguage.narrow}}"></div>
+            <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-out" (click)="zoomOut()"
+                 title="{{indexLanguage.magnify}}"></div>
+          </div>
+          <div class="progress-bar" *ngIf="isShowProgressBar">
+            <p>{{language.loading}}...</p>
+            <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+          </div>
+        </nz-card>
+      </div>
+      <!--table-->
+      <div class="table-left">
+        <div class="table-content">
+          <div class="table-width table-auto">
+            <xc-table-virtual class="table-width inspect-object"
+                              [dataSet]="tableData"
+                              [tableConfig]="selectorConfig">
+            </xc-table-virtual>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-selector-footer">
+      <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">{{language.cancel}}</button>
+    </div>
+  </div>
+  <!--工单类型-->
+  <ng-template #deviceIcon let-data="data">
+    <div class="hidden" title="{{data.iconName}}" >
+      <span class="column-icon" [ngClass]="data.picture"></span>
+      {{data.iconName}}
+    </div>
+  </ng-template>
+</div>

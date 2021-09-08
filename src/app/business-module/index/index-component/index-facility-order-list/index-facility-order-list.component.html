@@ -1,0 +1,60 @@
+<!--工单列表-->
+<div class="facility-list-container" *ngIf="this.orderData.length">
+  <div class="order-select-title" [hidden]="!isSelect">
+    <div class="select">
+      <nz-select
+        class="select-option"
+        [(ngModel)]="searchWorkOrderName"
+        (ngModelChange)="searchWorkOrder($event)"
+        nzSize="small"
+        nzAllowClear="false">
+        <nz-option *ngFor="let item of orderData" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      </nz-select>
+    </div>
+    <div class="facility-list-title-more" title="{{indexLanguage.more}}" (click)="goToWorkOrderPage()">{{indexLanguage.more}}<span>>></span></div>
+  </div>
+
+  <!--巡检工单列表-->
+  <div *ngIf="searchWorkOrderName === indexWorkOrderTypeEnum.inspection" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'1-2-3-2'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig"
+    >
+    </xc-table>
+  </div>
+
+  <!--销障工单列表-->
+  <div *ngIf="searchWorkOrderName === indexWorkOrderTypeEnum.clearFailure" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'1-2-3-3'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig"
+    >
+    </xc-table>
+  </div>
+  <!--安装工单列表-->
+  <div *ngIf="searchWorkOrderName === indexWorkOrderTypeEnum.install" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'1-2-3-5'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig">
+    </xc-table>
+  </div>
+  <!--告警确认工单列表-->
+  <div *ngIf="searchWorkOrderName === indexWorkOrderTypeEnum.confirm" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'1-2-3-6'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig">
+    </xc-table>
+  </div>
+  <!--拆除工单列表-->
+  <div *ngIf="searchWorkOrderName === indexWorkOrderTypeEnum.remove" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'1-2-3-8'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig"
+    >
+    </xc-table>
+  </div>
+
+<!--工单状态装换模板-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.statusName}}">
+    <span [ngClass]="data.statusClass"></span>
+    {{data.statusName}}
+  </div>
+</ng-template>
+
+

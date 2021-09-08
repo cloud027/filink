@@ -1,0 +1,34 @@
+<xc-table
+    [dataSet]="dataSet"
+    #tableTemp
+    [selectedData]="selectedData"
+    [pageBean]="pageBeanGroup"
+    [tableConfig]="tableConfigGroup"
+    (pageChange)="pageGroupChange($event)"
+>
+</xc-table>
+
+<!-- 分组详情-->
+<nz-modal
+    *ngIf="showGroupViewDetail"
+    [(nzVisible)]="showGroupViewDetail"
+    nzTitle="{{ language.tabConfig.groupDetail }}"
+    nzWidth="70%"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="showGroupViewDetail = false"
+>
+    <app-group-view-detail [groupModel]="currentGroup"></app-group-view-detail>
+    <ng-template #modalFooter>
+        <button
+            nz-button
+            class="link-button"
+            nzType="primary"
+            (click)="showGroupViewDetail = false"
+        >
+            {{ commonLanguage.confirm }}
+        </button>
+        <button nz-button class="link-button" nzType="danger" (click)="showGroupViewDetail = false">
+            {{ commonLanguage.cancel }}
+        </button>
+    </ng-template>
+</nz-modal>

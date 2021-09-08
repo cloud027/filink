@@ -1,0 +1,37 @@
+<div class="config-container">
+  <div>
+    <span class="area-detail-title">
+      {{language.configuration}}
+    </span>
+  </div>
+  <div class="control-select-container" *ngIf="deviceId">
+    <!--控制盒信息-->
+    <span class="label">{{language.boxInformation}}：</span>
+    <span class="value">
+            <nz-select class="control-select" [(ngModel)]="selectedControl" (ngModelChange)="controlChange($event)">
+              <nz-option *ngFor="let item of controlInfoAll;let index = index"
+                         [nzValue]="index" [nzLabel]="item.equipmentName">
+              </nz-option>
+            </nz-select>
+          </span>
+  </div>
+  <div class="config-f">
+    <div class="config-s" *ngFor="let item of formColumnData;let index = index">
+      <div class="config-item-container">
+        <span class="config-item-title">{{item.name}}</span>
+      </div>
+      <xc-form [column]="item.formColumn" (formInstance)="formInstance($event,index)"></xc-form>
+    </div>
+  </div>
+  <div  class="button-container" *ngIf="pramsConfigData.length>0">
+    <button class="link-button margin-right20" nz-button nzType="primary" [disabled]="checkedInfo" [nzLoading]="isLoading"
+             (click)="setControl()">{{language.handleOk}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+  </div>
+
+  <div class="button-container" *ngIf="noDataShow&&pramsConfigData.length===0">
+    {{language.noRelatedData}}
+  </div>
+
+</div>

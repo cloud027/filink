@@ -1,0 +1,71 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="content-link">
+      <button class="link-button mr-r-20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="getButtonStatus()">{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 部门选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div>
+    <span class="area-name" [title]="selectUnitName">{{selectUnitName}}</span>
+    <button type="button" class="open-button" (click)="showDeptSelectorModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  [canClear]="false"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>
+
+<!--账户有效期-->
+<ng-template #accountLimit let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <div class="flex-minx">
+      <nz-input-group nzCompact>
+        <input type="text" nz-input
+               formControlName="countValidityTime" class="width-50" placeholder="1-999">
+        <nz-select [(ngModel)]="timeType" [ngModelOptions]="{standalone: true}" (ngModelChange)="timeTypeChange()">
+          <nz-option [nzLabel]="language.year" [nzValue]="'year'"></nz-option>
+          <nz-option [nzLabel]="language.month" [nzValue]="'month'"></nz-option>
+          <nz-option [nzLabel]="language.day" [nzValue]="'day'"></nz-option>
+        </nz-select>
+      </nz-input-group>
+      <label class="width-px-210">({{language.tips}})</label>
+    </div>
+  </form>
+</ng-template>
+
+
+<!-- 电话号码 -->
+<ng-template #telephone let-formGroup="formGroup" let-col="col">
+  <app-telephone-input (phoneChange)="getPhone($event)"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <span class="hint">{{phoneNumberMsg}}</span>
+</ng-template>
+
+<!-- 修改页面电话号码 -->
+<ng-template #telephoneModify let-formGroup="formGroup" let-col="col">
+  <app-telephone-input #telephoneInput (phoneChange)="getPhone($event)"
+                       [hint]="null"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <span class="hint">{{phoneNumberMsg}}</span>
+</ng-template>

@@ -1,0 +1,64 @@
+<div class="view-facility-picture">
+  <div class="facility-title">
+    <!--查看设施-->
+    <p class="title">{{language.facility.ViewFacilities}}</p>
+  </div>
+  <div class="facility-info">
+    <div class="facility-box">
+      <!--设施名称-->
+      <p>{{language.facility.deviceName_a}}</p>
+      <app-business-picture canSelectFrame="true" [deviceID]="deviceId" (frameSelectChange)="frameChange($event)"
+                            (sideSelectChange)="BoxSideChange($event)"></app-business-picture>
+    </div>
+    <div class="facility-frame">
+      <!--框盘-->
+      <p>{{language.facility.FramePlate}}</p>
+      <app-business-frame [frameID]="frameID" [portID]="portID"
+                          (portSelectChange)="portChange($event)"></app-business-frame>
+    </div>
+    <div class="facility-port">
+      <!--本端端口信息-->
+      <p>{{language.facility.LocalPortInformation}}</p>
+      <app-facility-port-info [eChartOption]="eChartOption" [portID]="portID"></app-facility-port-info>
+    </div>
+  </div>
+  <div class="facility-table">
+    <!--对端端口信息-->
+    <p>{{language.facility.EndPortInformation}}</p>
+    <div>
+      <xc-table [dataSet]="_dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+<div class="back">
+  <button class="link-button" nz-button nzType="danger"
+          (click)="goBack()">{{language.facility.goBack}}</button>
+</div>
+<!--对端端口适配器类型-->
+<ng-template #adapterType let-data="data">
+  <div class="hidden" *ngIf="data.adapterType === adapterTypeEnum.FC"><span>{{language.facility.FC}}</span></div>
+  <div class="hidden" *ngIf="data.adapterType === adapterTypeEnum.SC"><span>{{language.facility.SC}}</span></div>
+</ng-template>
+<!--对端端口状态-->
+<ng-template #portStatus let-data="data">
+  <div class="hidden" *ngIf="data.oppositePortStatus === portStateEnum.PRE_OCCUPY"><span>{{language.facility.PreOccupy}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortStatus === portStateEnum.OCCUPY"><span>{{language.facility.Occupy}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortStatus === portStateEnum.FREE"><span>{{language.facility.Free}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortStatus === portStateEnum.EXCEPTION"><span>{{language.facility.Exception}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortStatus === portStateEnum.VIRTUAL_OCCUPY"><span>{{language.facility.VirtualOccupy}}</span></div>
+</ng-template>
+<!--对端端口标签类型-->
+<ng-template #markType let-data="data">
+  <div class="hidden" *ngIf="data.oppositePortMarkType === labelTypeEnum.RFID"><span>{{language.facility.Rfid}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortMarkType === labelTypeEnum.QR_CODE"><span>{{language.facility.QrCode}}</span></div>
+</ng-template>
+<!--对端端口标签状态-->
+<ng-template #rfidStatus let-data="data">
+  <div class="hidden" *ngIf="data.oppositePortRfidStatus === rfidStatusEnum.Normal"><span>{{language.facility.Normal}}</span></div>
+  <div class="hidden" *ngIf="data.oppositePortRfidStatus === rfidStatusEnum.Abnormal"><span>{{language.facility.Abnormal}}</span></div>
+</ng-template>
+

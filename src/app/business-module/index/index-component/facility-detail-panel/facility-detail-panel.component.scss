@@ -1,0 +1,342 @@
+@import "../../../../style-module/config";
+
+// 设施详情内图标
+$facility-info-width: 20px;
+$facility-info-height: 20px;
+$facility-info-size: 20px !important;
+
+.facility-detail-panel-container {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 175px);
+  padding: 0 15px;
+  font-size: 12px;
+  overflow-y: auto;
+
+  .heartbeat-info-more {
+    width: 70%;
+    text-align: right;
+    cursor: pointer;
+    color: $index-card-more;
+  }
+
+  .bottom-distance {
+    margin-bottom: 5px;
+  }
+
+
+  // 设施设备详情
+  .detail {
+    .detail-top {
+      display: flex;
+      font-size: 12px;
+      color: $page-font-color;
+
+      .info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          display: flex;
+          flex: 1;
+          height: 30px;
+          align-items: center;
+
+          .facility-type-and-name {
+            width: 200px;
+            color: $index-window-color;
+            word-break: break-all;
+            font-size: $page-font-size;
+          }
+        }
+
+        .facility-status {
+          @extend .item;
+
+          .facility-type-icon {
+            width: $facility-info-width;
+            height: $facility-info-height;
+            font-size: $facility-info-size;
+            border-radius: 2px;
+            text-align: center;
+            margin-right: 8px;
+            background: #1ec5ff no-repeat center;
+            background-size: 100% 100%;
+            color: #fff;
+            line-height: 1.1;
+          }
+
+          .online-status {
+            margin-right: 10px;
+
+            .icon {
+              @extend .icon-size;
+              margin-right: 3px;
+            }
+          }
+
+          .facility-status-text {
+            height: 20px;
+            padding: 0 9px;
+            color: white;
+            border-radius: 2px;
+            margin-right: 10px;
+          }
+
+          .deploy-status {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .icon {
+              margin-right: 3px;
+            }
+          }
+        }
+
+        .facility-number {
+          @extend .item;
+
+          .facility-number-title {
+            width: 74px;
+            color: #b3b3b3;
+          }
+
+          .facility-number-code {
+            margin-left: 5px
+          }
+        }
+      }
+
+      .pic {
+        position: relative;
+        width: 130px;
+        height: 85px;
+        background-color: #eee;
+        cursor: pointer;
+
+        .collection {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          height: 20px;
+          width: 20px;
+          font-size: 20px;
+          cursor: pointer;
+        }
+
+        .info-img {
+          height: 100%;
+          display: inline-block;
+          width: 100%;
+        }
+      }
+    }
+
+    .detail-bottom {
+      .detail-bottom-item {
+        @extend .item;
+
+        .detail-bottom-item-title {
+          width: 74px;
+          color: #b3b3b3;
+        }
+
+        .detail-bottom-item-value {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  // 监控信息
+
+  .monitor-info {
+    margin-top: 20px;
+
+    .monitor-info-title {
+      display: flex;
+      margin-bottom: 3px;
+
+      .monitor-info-name {
+        color: $index-window-color;
+        font-size: 12px;
+      }
+
+      .title-line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid #e8e8e8;
+      }
+    }
+
+    .monitor-info-list {
+      flex-wrap: wrap;
+      height: 120px;
+      overflow-y: auto;
+    }
+  }
+
+  // 设备信息
+  .facility-info {
+    margin-top: 20px;
+
+    .facility-info-title {
+      display: flex;
+      margin-bottom: 3px;
+      .equipment-title{
+        display: flex;
+      }
+      .title-line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid #e8e8e8;
+
+        .line-tabs {
+          display: flex;
+          flex: 1;
+          right: 10px;
+          float: right;
+
+          .line-tab {
+            text-align: center;
+
+            .text-content {
+              cursor: pointer;
+              float: left;
+              width: 60px;
+            }
+          }
+        }
+      }
+    }
+
+    .facility-info-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .facility-info-item {
+        width: 68px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+
+        .facility-info-title {
+          width: 30px;
+          color: #b3b3b3;
+        }
+
+        .facility-info-icon {
+          width: $facility-info-width;
+          height: $facility-info-height;
+          border-radius: 2px;
+          font-size: $facility-info-size;
+          background: no-repeat center $index-icon-color;
+          background-size: 100% 100%;
+          color: #fff;
+          cursor: default;
+          text-align: center;
+          line-height: 1.1;
+        }
+
+        .facility-info-text {
+          flex: 1;
+          width: 55px;
+          padding-left: 12px;
+        }
+      }
+      //暂无数据样式
+      .no-data {
+        margin-left: 45%;
+      }
+    }
+  }
+
+  // 设备操作
+  .options-type {
+    margin-top: 20px;
+
+    .title-text {
+      display: flex;
+      margin-bottom: 3px;
+
+      .title-line {
+        flex: 1;
+        margin-left: 5px;
+        border-bottom: 1px solid #e8e8e8;
+      }
+    }
+
+    .options-title {
+      width: 100%;
+      margin-top: 15px;
+
+      .button-title {
+        width: 100px;
+        margin-right: 10px;
+      }
+
+      .options-name {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .icon-size {
+    cursor: default;
+    background-size: 100% 100%;
+    width: 20px;
+    height: 20px;
+  }
+
+  .item {
+    display: flex;
+    height: 24px;
+    align-items: center;
+  }
+
+  .m-right {
+    margin-right: 16px;
+  }
+
+
+  .chat-height {
+    height: 200px
+  }
+
+  .nz-select-style {
+    width: 120px;
+    margin-top: -10px;
+    float: right;
+    font-size: 12px;
+  }
+
+}
+
+.tab-selected {
+  color: $index-operational-background-color;
+}
+
+// 覆盖监控信息的样式
+.facility-detail-panel-container .monitor-info .monitor-info-list ::ng-deep.equipment-status-container {
+  margin-left: 0 !important;
+  margin-top: 10px;
+
+  .status-item {
+    margin: 4px 0;
+
+    .status-label, .status-value {
+      line-height: 16px !important;
+      height: 20px;
+    }
+
+    .label-cl {
+      display: inline-block !important;
+      height: 20px;
+      width: 5%;
+      line-height: 15px;
+      color: $sp-icon-color-7;
+    }
+  }
+}

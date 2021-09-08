@@ -1,0 +1,48 @@
+<div class="submit-delivery">
+  <app-detail-title [pageTitle]="storageLanguage.submitDelivery"></app-detail-title>
+  <div class="delivery-form">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="footer">
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="submit()">
+        {{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+</div>
+<!-- 单位选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div class="custom-template">
+    <input nz-input type="text" class="dept-name" readonly [(ngModel)]="selectUnitName"
+           [title]="selectUnitName">
+    <button type="button" class="open-button icon-template" (click)="showDeptSelectorModal()">
+      <i class="icon-fiLink fiLink-search-index iconfont"></i>
+    </button>
+  </div>
+</ng-template>
+
+<!--单位选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [pageType]="pageType"
+  [level]="unitInfo.deptLevel"
+  [hasChild]="unitInfo.childDepartmentList&&unitInfo.childDepartmentList.length>0"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="deptSelectChange($event)"
+>
+</xc-tree-area-selector>
+<!--领用人员选择-->
+<ng-template #collectUserTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <nz-select formControlName="collectUser" [(ngModel)]="collectUser">
+      <nz-option *ngFor="let item of deptChargeUserList"
+                 [nzLabel]="item.label" [nzValue]="item.code">
+      </nz-option>
+    </nz-select>
+  </form>
+</ng-template>

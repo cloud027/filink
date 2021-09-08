@@ -1,0 +1,44 @@
+<div class="in-container">
+  <span class="area-detail-title">
+    新增策略
+  </span>
+  <div class="xc-steps">
+    <app-xc-steps
+      (notify)="handChangeSteps($event)"
+      [isActiveStepsCount]="isActiveSteps"
+      [setData] = "setData"></app-xc-steps>
+  </div>
+  <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+    <app-basic-information
+      #basicInfo
+      (notify)="handBasicSteps($event)"></app-basic-information>
+  </div>
+  <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+    <app-security-strategy
+      #strategyDetails
+      (notify)="handBasicSteps($event)"
+      (notify)="handPrevSteps($event)"></app-security-strategy>
+  </div>
+  <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_THIRD">
+    <app-security-details
+      [isOperation]="isOperation"
+      (notify)="handPrevSteps($event)"
+      [isShowButton]="isShowButton"></app-security-details>
+  </div>
+  <div class="strategy-btn">
+    <button nz-button nzType="primary" class="prev-step"
+            (click)="handPrevSteps(isActiveSteps)"
+            *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">上一步
+    </button>
+    <button nz-button nzType="primary" class="next-step"
+            (click)="handNextSteps(isActiveSteps)"
+            *ngIf="isActiveSteps !== finalValueEnum.STEPS_THIRD">下一步
+    </button>
+    <button nz-button nzType="primary" class="next-step"
+            (click)="handStepsSubmit()"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD">确认</button>
+    <button class="link-button cancel-step"
+            (click)="handCancelSteps()"
+            nz-button nzType="danger">取消</button>
+  </div>
+</div>

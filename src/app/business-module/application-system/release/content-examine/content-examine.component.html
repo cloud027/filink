@@ -1,0 +1,58 @@
+<!--  内容审核工单-->
+<div class="box-title">
+  {{language.auditContent.contentAudit}}
+</div>
+
+
+<div class="table-wrapper">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+
+  <!--工单状态-->
+  <ng-template #workOrderStatusTemp let-data="data">
+    <div class="area-level">
+      <i [class]="'icon-fiLink-l iconfont '+data['statusIconClass']+' '+data['statusColorClass']"></i>
+      <span class="status-text" [title]="data['workOrderStatus']">{{data['workOrderStatus']}}</span>
+    </div>
+  </ng-template>
+
+  <!--审核意见换行处理-->
+  <ng-template #auditOpinionTable let-data="data">
+    <div class="transfer-reason"
+         [title]="data['examineAdvise']">
+      {{data['examineAdvise']}}
+    </div>
+  </ng-template>
+
+  <!--转派原因文字换行处理-->
+  <ng-template #transferReasonTable let-data="data">
+    <div class="transfer-reason"
+         [title]="data['transferReason']">
+      {{data['transferReason']}}
+    </div>
+  </ng-template>
+
+  <!--退单原因文字换行处理-->
+  <ng-template #causeReasonTable let-data="data">
+    <div class="transfer-reason"
+         [title]="data['causeReason']">
+      {{data['causeReason']}}
+    </div>
+  </ng-template>
+
+  <!--备注换行处理-->
+  <ng-template #remarkTable let-data="data">
+    <div class="transfer-reason"
+         [title]="data['remark']">
+      {{data['remark']}}
+    </div>
+  </ng-template>
+
+  <!-- 责任人 -->
+  <ng-template #roleTemp let-data="data">
+    <span class="width-style" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+  </ng-template>
+</div>

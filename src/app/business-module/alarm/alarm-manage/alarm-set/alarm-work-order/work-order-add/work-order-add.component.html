@@ -1,0 +1,93 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{ title }}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div class="all-btn">
+      <button class="link-button ok-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isSubmit"
+              >{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 是否启用 -->
+<ng-template #isNoStartUsing let-data="data">
+  <nz-switch [ngModel]="isNoStartData"
+             [nzControl]="true"
+             (click)="isNoStartData = !isNoStartData">
+  </nz-switch>
+</ng-template>
+
+<!-- 设施类型 -->
+<ng-template #deviceTypeTemp let-formGroup="formGroup" let-selectedList>
+  <nz-select
+    [nzMaxTagCount]="5"
+    class="select-width"
+    nzMode="multiple"
+    [nzAllowClear]="true"
+    nzPlaceHolder="{{facilityLanguage.picInfo.pleaseChoose}}"
+    [(ngModel)]="deviceTypeListValue"
+    (ngModelChange)="deviceTypeChange($event)"
+  >
+    <nz-option *ngFor="let option of deviceTypeList" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+</ng-template>
+<!-- 设备类型 -->
+<ng-template #equipmentTypeTemp let-formGroup="formGroup" let-selectedList>
+  <nz-select
+    [nzMaxTagCount]="5"
+    class="select-width"
+    nzMode="multiple"
+    nzPlaceHolder="{{language.pleaseChoose}}"
+    [(ngModel)]="equipmentTypeListValue"
+    (ngModelChange)="onSearchEquipmentType($event)"
+  >
+    <nz-option *ngFor="let option of equipmentTypeList" [nzLabel]="option.label"
+               [nzValue]="option.code"></nz-option>
+  </nz-select>
+</ng-template>
+<!-- 告警名称 -->
+<ng-template #alarmName let-formGroup="formGroup" let-data="data">
+  <app-alarm-name [isFilter]="true" [alarmNameConfig]='alarmNameConfig' ></app-alarm-name>
+</ng-template>
+
+<!-- 区域 -->
+<ng-template #areaSelector let-formGroup="formGroup" let-data="data">
+  <div>
+    <span class="area-name" [title]="areaName">{{areaName}}</span>
+    <button type="button" class="open-button"
+            (click)="showAreaSelectorModal()"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+<!--区域选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  [canClear]="false"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>
+<!--责任单位点击按钮-->
+<ng-template #accountabilityUnit let-formGroup="formGroup" let-col="col">
+  <div class="unit-width">
+    <span class="area-name" [class.disabled]="unitDisabled" [title]="selectUnitName">{{selectUnitName}}</span>
+    <button type="button" class="open-button" [disabled]="unitDisabled" (click)="showModal()"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+
+<!--责任单位选择器-->
+<xc-tree-area-selector #unitTreeSelector
+                  [(xcVisible)]="isVisible"
+                  (selectDataChange)="selectDataChange($event)"
+                  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-area-selector>

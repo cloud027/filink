@@ -1,0 +1,115 @@
+@import "../../../../style-module/config.scss";
+.in-container{
+  padding-bottom: 20px;
+  padding-left: 16px;
+  .temp-button{
+    margin-top: 20px;
+  }
+  .area-detail-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+  .temp-tab{
+    width: 617px;
+    table-layout: fixed;
+    word-break: break-all;
+    .editable-row{
+      .editable-cell {
+        position: relative;
+        width: 100%;
+        max-height: 72px;
+        overflow-y: auto;
+        &.name{
+          max-width: 165px;
+        }
+        &.remark{
+          max-width: 337px;
+        }
+      }
+      .text-area{
+        margin-top: 4px;
+        min-height: 72px;
+        padding: 4px 5px;
+      }
+      .editable-cell-value-wrap {
+        padding: 4px 5px;
+        box-sizing: border-box;
+        border: 1px solid transparent;
+        cursor: pointer;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &:hover .editable-cell-value-wrap {
+        box-sizing: border-box;
+        border: 1px solid $button-danger-hover-color;
+        border-radius: 4px;
+        min-height: 29px;
+      }
+    }
+    .no-data{
+      text-align: center;
+    }
+    .border-right{
+      position: relative;
+      &:after {
+          content: '';
+          display: inline-block;
+          height: 16px;
+          border-right: 1px solid $button-danger-hover-color;
+          position: absolute;
+          top: 12px;
+          right: 0;
+      }
+    }
+  }
+
+  .mr20{
+    margin-right: 20px;
+  }
+  .add-btn{
+    height: 30px;
+    line-height: 30px;
+
+    .cursor {
+      cursor: pointer;
+      color: $color;
+      &.addBtnClass{
+        cursor: not-allowed;
+      }
+    }
+
+    .iconfont {
+      position: relative;
+      top: -2px;
+      margin-right: 5px;
+    }
+  }
+}
+.temp-form {
+  width: 612px;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: 5px;
+  border: 1px dashed $inspect-template-bg;
+  display: none;
+  .form-box{
+    width: 480px;
+  }
+  .btn-box{
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    .link-buttons{
+      border: none;
+      outline: 0;
+      cursor: pointer;
+      background: $bg-c-w;
+      margin-left: 5px;
+    }
+  }
+}

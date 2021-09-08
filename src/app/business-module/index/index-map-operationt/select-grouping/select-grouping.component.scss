@@ -1,0 +1,164 @@
+@import "~src/app/style-module/config";
+
+.select-grouping {
+  display: inline-table;
+  border: 1px $operational-button-frame-color solid;
+  border-radius: 3px;
+  cursor: pointer;
+
+
+  //icon颜色
+  .select-grouping-show-color {
+    color: #36cfc9;
+  }
+
+  //地图框选按钮
+  .select-grouping-show {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    right: 10px;
+    bottom: 204px;
+    line-height: 35px;
+    background: white;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid $operational-button-frame-color;
+
+    // 无项目聚合按钮的样式
+    &.show-no-polymerization {
+      bottom: 162px;
+    }
+
+    &:hover {
+      border: 1px solid $operational-button-background-color;
+      box-shadow: 0 0 3px #36cfc9;
+    }
+  }
+
+  //添加到分组按钮
+  .add-grouping-show {
+    display: flex;
+    flex-direction: row;
+    right: 54px;
+    bottom: 204px;
+    width: 120px;
+    height: 34px;
+    background: white;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+
+    // 无项目聚合分组页签的样式
+    &.show-no-polymerization {
+      bottom: 162px;
+    }
+
+    &:hover {
+      z-index: 101;
+    }
+
+
+    // 添加分组图标
+    .add-grouping-icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin: 0 10px 0 10px;
+      background: #36cfc9 no-repeat center;
+      background-size: 100% 100%;
+      border-radius: 100%;
+      color: #fff;
+      line-height: 0.9;
+    }
+
+    .fiLink-add-no-circle:before {
+      font-size: 10px;
+    }
+
+    // 添加分组标题
+    .add-grouping-title {
+      font-size: 12px;
+      color: #333333;
+    }
+  }
+
+}
+
+// 弹框主体内容
+.modal-step {
+  height: 360px;
+  // 步骤条
+  .step-content {
+    display: inline-block;
+    float: left;
+    width: 166px;
+    height: 100%;
+    border-right: 1px solid #e0dfdf;
+
+    // 步骤条标题
+    .select-facility {
+      height: 150px;
+      margin-top: 50px;
+    }
+  }
+
+  //第一步显示表格 #13C2C2
+  .facility-table {
+    display: inline-block;
+    float: left;
+    width: 740px;
+    margin-left: 40px;
+
+    .facility-table-title {
+      height: 25px;
+      margin: 10px 0 20px 0;
+      padding-left: 10px;
+      border-left: 2px solid #56a9f5;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  //第二步操作内容
+  .addGroup {
+    display: inline-block;
+    float: left;
+    margin-left: 30px;
+
+    .addGroup-title {
+      height: 25px;
+      padding-left: 10px;
+      margin: 10px 0 20px 0;
+      border-left: 2px solid #56a9f5;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    //单选切换
+    .addGroup-radio {
+      width: 400px;
+      height: 50px;
+
+      .addGroup-radio-title {
+        margin: 0 60px 0 10px;
+      }
+
+    }
+
+    //下拉选择分组
+    .addGroup-select {
+      width: 450px;
+      height: 50px;
+
+      .addGroup-select-option {
+        width: 300px
+      }
+
+      .addGroup-select-title {
+        margin: 0 70px 0 10px;
+      }
+    }
+
+  }
+}

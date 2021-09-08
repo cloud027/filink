@@ -1,0 +1,40 @@
+<!-- <xc-table
+#tableTemp
+    [dataSet]="dataSet"
+    [selectedData]="selectedData"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+>
+</xc-table> -->
+<app-area-table-virtual
+    #tableTemp
+    [dataSet]="dataSet"
+    [selectedData]="selectedData"
+    [tableConfig]="tableConfig"
+>
+</app-area-table-virtual>
+<!-- <xc-table-virtual
+    #tableTemp
+    [dataSet]="dataSet"
+    [selectedData]="selectedData"
+    [tableConfig]="tableConfig"
+>
+</xc-table-virtual> -->
+
+<!--区域级别模板-->
+<ng-template #areaLevelTemp let-data="data">
+    <span class="area-level" [ngClass]="data.level | areaStyle">
+        {{ data.level | translate: areaLevelEnum:languageEnum.facility }}
+    </span>
+</ng-template>
+<!--责任单位模板-->
+<ng-template #UnitNameSearch let-filterValue="filterValue">
+    <span class="dept-name-select hidden" (click)="showModal(filterValue)" [class.placeholder]="!selectUnitName&&!filterValue.filterName"
+          [title]="selectUnitName">{{(filterValue.filterName||selectUnitName)||commonLanguage.clickSelect}}</span>
+  </ng-template>
+  <!--责任单选选择器-->
+  <xc-tree-selector
+    [(xcVisible)]="unitIsVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-selector>

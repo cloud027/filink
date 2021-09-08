@@ -1,0 +1,70 @@
+<!--回路列表弹框-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzTitle]="title"
+          nzWidth="70%"
+          [nzContent]="dynamicTemp"
+          (nzOnCancel)="xcVisible = false"
+          [nzFooter]="footer"
+          [nzMaskClosable]="false">
+  <ng-template #dynamicTemp>
+    <div class="step-modal-box">
+      <!--步骤条组件-->
+      <div class="steps-box">
+        <div class="step-item" *ngFor="let item of stepData" [ngClass]="item.activeClass">
+          <div class="step-num">{{item.stepNumber}}</div>
+          <div class="step-finish" (click)="backSteps(item)"><i class="icon-fiLink fiLink-pass iconfont"></i></div>
+          <div class="step-title" (click)="backSteps(item)">{{item.title}}</div>
+        </div>
+      </div>
+      <div class="step-warp">
+        <!--选择设施 第一步-->
+        <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST" class="step-group-table">
+          <div class="page-detail-title">{{indexLanguage.theFirstStep}}</div>
+          <xc-table
+            [dataSet]="tableDataSet"
+            [pageBean]="pageDeviceBean"
+            (pageChange)="pageDeviceChange($event)"
+            [tableConfig]="tableDeviceConfig">
+          </xc-table>
+        </div>
+        <!--回路 第二步-->
+        <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+          <div class="page-detail-title">{{indexLanguage.theNextStep}}{{title}}</div>
+          <!--表单-->
+          <xc-table [dataSet]="dataSet"
+                    [pageBean]="pageBean"
+                    [tableConfig]="tableConfig"
+                    (pageChange)="pageChange($event)">
+          </xc-table>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <!-- 底部按钮-->
+  <ng-template #footer>
+    <button class="link-button" nz-button nzType="danger" (click)="handlePrev()"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">{{indexLanguage.lastStep}}</button>
+    <button nz-button class="link-button" nzType="primary" (click)="handleNext()" [disabled]="!isNext"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_FIRST">{{indexLanguage.nextStep}}</button>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="handleOk()" [disabled]="!isSelect">{{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="xcVisible = false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+<!--回路类型模版-->
+<ng-template #loopTypeTemplate let-data="data">
+ <span *ngIf="data.loopType !== loopTypeEnum.customize" title="{{data.loopType | translate: loopTypeEnum: languageEnum.facility}}">
+          {{data.loopType | translate: loopTypeEnum: languageEnum.facility}}
+ </span>
+  <span *ngIf="data.loopType === loopTypeEnum.customize" title="{{data.customizeLoopType}}">
+     {{data.customizeLoopType}}
+  </span>
+</ng-template>
+<!--回路状态枚举翻译-->
+<ng-template #loopStatusTemplate let-data="data">
+ <span class="status-text"
+       title="{{data.loopStatus | translate: loopStatusEnum: languageEnum.facility}}">
+          {{data.loopStatus | translate: loopStatusEnum: languageEnum.facility}}
+    </span>
+</ng-template>

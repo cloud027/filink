@@ -1,0 +1,7 @@
+
+<!--筛选条件-->
+<app-screening-condition [currentPage]="'alarmIncrement'"
+                         (search)="search($event)"
+                         [appBarProgress]="progressShow"></app-screening-condition>
+
+<div *ngIf="display.brokenLine" [options]="options" class="broken-line"  echarts id="brokenLine"></div>

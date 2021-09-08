@@ -1,0 +1,351 @@
+<div class="workbench-warp">
+  <div class="workbench-header">
+    <div class="card-right">
+      <h4 class="title">{{languageTable.equipmentTable.strategyConsole}}</h4>
+      <div class="equipment-box">
+        <!--单灯数量-->
+        <div class="equipment-right">
+          <div class="number single">{{equipmentCountList.singleControllerCount}}</div>
+          <div class="content">{{languageTable.strategyList.singleLights}}</div>
+        </div>
+        <!--集控数量-->
+        <div class="equipment-right">
+          <div class="number centre">{{equipmentCountList.centralControllerCount}}</div>
+          <div class="content">{{languageTable.strategyList.controlQuantity}}</div>
+        </div>
+        <!--智慧杆数量-->
+        <div class="equipment-right border-none">
+          <div class="number">{{multiFunctionPoleCount}}</div>
+          <div class="content">{{languageTable.strategyList.wisdomPoles}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-list" *ngIf="dataSet && dataSet.length">
+      <div class="card-box">
+        <!--卡片头部-->
+        <div class="card-title">
+          <div class="text">
+            <!-- 使用中的策略-->
+            <span class="title">{{languageTable.strategyList.strategiesUse}}</span>
+            <span class="pagination">
+              <span>{{languageTable.equipmentTable.currentPage}}
+                <span class="active-color">{{pageBean.pageIndex}}</span>
+                {{languageTable.equipmentTable.page}}，
+              </span>
+              <span>{{languageTable.equipmentTable.common}}<span class="active-color">{{totalPage}}</span>
+                {{languageTable.equipmentTable.page}}，</span>
+              <span>{{languageTable.equipmentTable.total}}<span class="active-color">
+                {{pageBean.Total}}</span>{{languageTable.equipmentTable.strip}}</span>
+            </span>
+          </div>
+          <div class="card-header">
+            <button
+              nz-button
+              nzType="primary"
+              [appAccessPermission]="lightPolicyEnum.primaryAddKey"
+              (click)="handGoPage()">
+              <i class="icon-fiLink fiLink-add-no-circle iconfont"></i>
+              {{languageTable.strategyList.strategyAdd}}
+            </button>
+            <a href="javascript:void(0);" class="policy-add"
+               [appAccessPermission]="lightPolicyEnum.primaryKey"
+               (click)="handPolicyPage()">{{languageTable.strategyList.allStrategy}}</a>
+          </div>
+        </div>
+        <!--卡片内容-->
+        <div class="card-content">
+          <nz-card class="card-details"
+                   *ngFor="let item of dataSet, let i = index"
+                   [ngClass]="{'be-selected': item.state}"
+                   (click)="handShowConvenient($event, item, i)">
+            <div class="title">
+              <div class="strategy"
+                   [appAccessPermission]="lightPolicyEnum.primaryDetailsKey"
+                   (click)="handStrategyDetails(item)">
+                <div class="light">
+                  <i class="icon-fiLink fiLink-light iconfont"></i>
+                </div>
+                <div>
+                  <div class="title-tips">
+                    <span [title]="item.strategyName">{{item.strategyName}}</span>
+                  </div>
+                  <div class="strategy-tips">
+                    {{languageTable.policyControl.lighting}}
+                  </div>
+                </div>
+              </div>
+              <div class="title-switch">
+                <nz-switch
+                  [nzControl]="true"
+                  (click)="switchChange(item.strategyStatus, item.strategyId,i)"
+                  [ngModel]="item.strategyStatus">
+                </nz-switch>
+                {{item.strategyStatus ? languageTable.frequentlyUsed.enable : languageTable.frequentlyUsed.disabled}}
+              </div>
+            </div>
+            <div class="execute execute-bottom">
+              <span class="label-left" [title]="currentLangType ? languageTable.strategyList.execCron : ''">{{languageTable.strategyList.execCron}}：</span>
+              <span class="label-right">
+                <i class="icon-fiLink fiLink-filink-riqi-icon iconfont"></i>
+                {{item.execType}}
+              </span>
+            </div>
+            <div class="execute">
+              <span class="label-left" [title]="currentLangType ? languageTable.strategyList.effectivePeriodTime : ''">{{languageTable.strategyList.effectivePeriodTime}}：</span>
+              <span class="label-right">
+                <i class="icon-fiLink fiLink-time iconfont"></i>
+                {{item.startEndTime}}
+              </span>
+            </div>
+          </nz-card>
+          <nz-card class="card-details available-data" *ngIf="dataSet.length>0 && dataSet.length<6">
+            <div>
+              <div class="available-img">
+                <img src="../../../../../assets/img/application-system/defect.png">
+              </div>
+              <div class="available-text">
+                {{languageTable.strategyList.information}}
+              </div>
+            </div>
+          </nz-card>
+        </div>
+        <!--分页-->
+        <div>
+          <i class="icon-fiLink fiLink-pic-view-last iconfont paging-icon prev-page"
+             [ngClass]="{'not-allowed':pageBean.pageIndex <= 1}"
+             (click)="handlePage(videoControlEnum.prev)"></i>
+          <i class="icon-fiLink fiLink-pic-view-next iconfont paging-icon next-page"
+             [ngClass]="{'not-allowed':pageBean.pageIndex >= totalPage}"
+             (click)="handlePage(videoControlEnum.next)"></i>
+        </div>
+      </div>
+      <!--便捷入口-->
+      <div class="content-right">
+        <h4 class="content-title">
+          {{languageTable.strategyList.convenient}}
+        </h4>
+        <div class="content-box">
+          <div *ngIf="convenientData.strategyId && isConvenient">
+            <div class="convenient-title">
+              <h4 class="title">{{convenientData.strategyName}}</h4>
+            </div>
+
+            <!--  开关-->
+            <div class="instruct-list">
+              <div class="instruct-title">
+                <span class="light">
+                  <i class="icon-fiLink-l iconfont fiLink-open switch"></i>
+                </span>
+                <span>
+                  {{languageTable.frequentlyUsed.switch}}
+                </span>
+              </div>
+              <div class="instruct-volume">
+                <!--开关不用绑定任何值 默认关闭  已确认-->
+                <nz-radio-group class="open-close" [(ngModel)]="radioValue" (ngModelChange)="onEnableStrategyDetail()">
+                  <label [nzDisabled]="openRole" nz-radio [nzValue]="true">{{languageTable.frequentlyUsed.open}}</label>
+                  <label [nzDisabled]="closeRole" nz-radio
+                         [nzValue]="false">{{languageTable.frequentlyUsed.close}}</label>
+                </nz-radio-group>
+              </div>
+            </div>
+            <div class="instruct-list">
+              <div class="instruct-title">
+                <span class="light">
+                  <i class="icon-fiLink fiLink-light iconfont"></i>
+                </span>
+                <span>
+                  {{languageTable.equipmentTable.light}}
+                </span>
+              </div>
+              <div class="instruct-volume">
+                <nz-slider
+                  (nzOnAfterChange)="handleConvenientChange(convenientData)"
+                  [nzDisabled]="sliderRole"
+                  [nzMin]="sliderValue.min"
+                  [nzMax]="sliderValue.lightMax"
+                  [(ngModel)]="convenientVal"></nz-slider>
+              </div>
+              <div>{{convenientVal}}</div>
+            </div>
+            <!--应用范围-->
+            <div class="equipment-list">
+              <h4 class="equipment-title">{{languageTable.strategyList.applicationScope}}</h4>
+              <div class="equipment-tabs">
+                <nz-tabset>
+                  <!--设备列表-->
+                  <nz-tab [nzTitle]="languageTable.equipmentTable.equipmentList">
+                    <xc-table [dataSet]="equipmentData"
+                              class="table-list"
+                              [pageBean]="equipmentPageBean"
+                              (pageChange)="equipmentPageChange($event)"
+                              [tableConfig]="equipmentTableConfig">
+                    </xc-table>
+                  </nz-tab>
+                  <!--分组列表-->
+                  <nz-tab [nzTitle]="languageTable.equipmentTable.groupList">
+                    <xc-table [dataSet]="groupData"
+                              class="table-list"
+                              [pageBean]="groupPageBean"
+                              (pageChange)="groupPageChange($event)"
+                              [tableConfig]="groupTableConfig">
+                    </xc-table>
+                  </nz-tab>
+                  <!--回路列表-->
+                  <nz-tab [nzTitle]="languageTable.equipmentTable.loopList">
+                    <ng-template nz-tab>
+                      <xc-table [dataSet]="loopData"
+                                class="table-list"
+                                [pageBean]="loopPageBean"
+                                (pageChange)="loopPageChange($event)"
+                                [tableConfig]="loopTableConfig">
+                      </xc-table>
+                    </ng-template>
+                  </nz-tab>
+                </nz-tabset>
+              </div>
+            </div>
+          </div>
+          <div class="convenient" *ngIf="!convenientData.strategyId || !isConvenient">
+            {{languageTable.strategyList.policySelected}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--暂无数据-->
+    <div class="available" *ngIf="!dataSet.length && isAvailable">
+      <div>
+        <div class="icon">
+          <img src="../../../../../assets/img/application-system/available.png">
+        </div>
+        <div class="strategy">{{languageTable.strategyList.workbenchStrategy}}</div>
+        <div class="btn">
+          <button
+            nz-button
+            nzType="primary"
+            [appAccessPermission]="'09-1-3-2'"
+            (click)="handGoPage()">
+            <i class="icon-fiLink fiLink-add-no-circle iconfont"></i>
+            {{languageTable.strategyList.strategyAdd}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--统计-->
+    <div class="chart-list">
+      <div class="charts-statistics">
+        <div class="whole whole-left">
+          <!--亮灯率-->
+          <div class="chart-box chart-width">
+            <div class="statistics">
+              <h4 class="title" title="{{languageTable.strategyList.lightingRate}}">
+                {{languageTable.strategyList.lightingRate}}</h4>
+              <div class="work-statistics">
+              <span class="work-title"
+                    (click)="handleChange(item.id)"
+                    *ngFor="let item of lightRateList"
+                    [ngClass]="lightingRateNumber === item.id ? OperationButtonEnum.active : ''">
+                {{item.name}}
+              </span>
+              </div>
+            </div>
+            <div *ngIf="!isLightingRate" echarts [options]="lightingRateData" class="chart"></div>
+            <div class="empty-container" *ngIf="isLightingRate">
+              <nz-empty></nz-empty>
+            </div>
+          </div>
+          <!--工单增量-->
+          <div class="chart-box chart-width chart-none" *ngIf="isWorkOrderRole">
+            <div class="statistics">
+              <h4 class="title text-overflow-hidden"
+              title="{{languageTable.strategyList.workOrder}}">{{languageTable.strategyList.workOrder}}</h4>
+              <div class="work-statistics">
+              <span class="work-title"
+                    (click)="handleChangeWorkOrder(item.id)"
+                    *ngFor="let item of workOrderList"
+                    [ngClass]="workOrderQueryType === item.id ? OperationButtonEnum.active : ''">
+                {{item.name}}
+              </span>
+              </div>
+            </div>
+            <div *ngIf="!isWorkOrder" echarts [options]="workOrderData" class="chart"></div>
+            <div class="empty-container" *ngIf="isWorkOrder">
+              <nz-empty></nz-empty>
+            </div>
+          </div>
+        </div>
+        <!--用电量统计-->
+        <div class="whole whole-right">
+          <div class="chart-box chart-none">
+            <div class="work-order-left">
+              <h4 class="title text-overflow-hidden"
+              title="{{languageTable.strategyList.electricity}}">{{languageTable.strategyList.electricity}}</h4>
+              <div class="work-statistics">
+                <nz-select style="width: 80px;"
+                           (ngModelChange)="handleElectricityChange($event)"
+                           [(ngModel)]="electricityNumber">
+                  <nz-option
+                    [nzValue]="item.id"
+                    [nzLabel]="item.name"
+                    [title]="item.name"
+                    *ngFor="let item of electricityDate">
+                  </nz-option>
+                </nz-select>
+              </div>
+              <div class="statistics-date">
+                <nz-week-picker #weekPicker class="time-picker" [nzStyle]="{width: '208px'}"
+                                *ngIf="electricityNumber === 5" [(ngModel)]="date"
+                                (ngModelChange) = "getElectConsStatisticsData()"
+                                nzPlaceHolder="{{languageTable.reportAnalysis.pleaseChooseWeek}}"
+                                name="date"></nz-week-picker>
+                <nz-month-picker class="time-picker" [nzStyle]="{width: '208px'}"
+                                 *ngIf="electricityNumber === 6" [(ngModel)]="date"
+                                 (ngModelChange) = "getElectConsStatisticsData()"
+                                 nzPlaceHolder="{{languageTable.reportAnalysis.pleaseChooseMonth}}"
+                                 name="date"></nz-month-picker>
+                <nz-year-picker class="time-picker" [nzStyle]="{width: '208px'}"
+                                *ngIf="electricityNumber === 8" [(ngModel)]="date"
+                                (ngModelChange) = "getElectConsStatisticsData()"
+                                nzPlaceHolder="{{languageTable.reportAnalysis.pleaseChooseYear}}"
+                                [ngSwitch]=""
+                                name="date"></nz-year-picker>
+              </div>
+            </div>
+            <div *ngIf="!isElectricity" echarts [options]="electricity" class="chart"></div>
+            <div class="empty-container" *ngIf="isElectricity">
+              <nz-empty></nz-empty>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-order">
+        <!--设备状态统计-->
+        <div class="equipment-status">
+          <h4 class="title">{{languageTable.strategyList.equipmentStatus}}</h4>
+          <div *ngIf="!isEquipmentStatus" echarts [options]="equipmentStatusData" class="chart"></div>
+          <div class="empty-container" *ngIf="isEquipmentStatus">
+            <nz-empty></nz-empty>
+          </div>
+        </div>
+        <!--告警统计-->
+        <div class="equipment-status interval" *ngIf="isAlarmStatisticsRole">
+        <div class="top-part">
+          <div class="left">
+            <h4 class="title">{{languageTable.strategyList.alarmStatistics}}</h4>
+            <div [appAccessPermission]="informationWorkBenchEnum.currentAlarm"
+                 class="detail all-strategy"
+                 (click)="goToAlarm()">{{languageTable.frequentlyUsed.viewDetails}}</div>
+          </div>
+          <nz-range-picker class="select-time" [(ngModel)]="alarmClassificationTime.startAndEndTime"
+                           [nzAllowClear]="false"
+                           (ngModelChange)="getStatisticsAlarmLevel()"></nz-range-picker>
+        </div>
+          <div *ngIf="!isAlarmStatistics" echarts [options]="emergencyData" class="chart"></div>
+          <div class="empty-container" *ngIf="isAlarmStatistics">
+            <nz-empty></nz-empty>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

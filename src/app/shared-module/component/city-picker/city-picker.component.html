@@ -1,0 +1,22 @@
+<div class="city-picker-box">
+  <!--省-->
+  <nz-select class="city-picker-item margin-right10"  [(ngModel)]="provinceValue"
+             [nzPlaceHolder]="language.selectPlaceholder" (ngModelChange)="provinceNameChange($event)"
+             [nzDisabled]="disabled"
+  >
+    <nz-option *ngFor="let item of provinceData" [nzValue]="item.areaId" [nzLabel]="item.areaName"></nz-option>
+  </nz-select>
+  <!--市-->
+  <nz-select class="city-picker-item margin-right10"  [(ngModel)]="cityValue" [nzPlaceHolder]="language.selectPlaceholder"
+             (ngModelChange)="cityNameChange($event)"
+             [nzDisabled]="!provinceValue||disabled">
+    <nz-option *ngFor="let item of cityData" [nzValue]="item.areaId" [nzLabel]="item.areaName"></nz-option>
+
+  </nz-select>
+  <!--区-->
+  <nz-select class="city-picker-item" [(ngModel)]="districtValue" [nzPlaceHolder]="language.selectPlaceholder"
+             (ngModelChange)="districtNameChange($event)"
+             [nzDisabled]="!cityValue||disabled">
+    <nz-option *ngFor="let item of districtData" [nzValue]="item.areaId" [nzLabel]="item.areaName"></nz-option>
+  </nz-select>
+</div>

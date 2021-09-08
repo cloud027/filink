@@ -1,0 +1,123 @@
+<div class="delivery">
+  <div class="table-common-title">
+    <span>{{storageLanguage.materialDelivery}}</span>
+  </div>
+  <div class="table-wrapper" [hidden]="isShowCharts">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+  <!-- 统计图-->
+  <app-storage-synopsis-chart #storageChart [hidden]="!isShowCharts"
+                              [materialCodeIsSingle]="false"
+                              [isStockIn]="false"
+                              (switchTable)="isShowCharts = false"
+  ></app-storage-synopsis-chart>
+</div>
+<!--设备和设施图标样式-->
+<ng-template #materialType let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.materialType === materialTypeEnum.facility" class="status-text"
+        title="{{data.materialCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.materialCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.materialType === materialTypeEnum.equipment" class="status-text"
+        title="{{data.materialCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.materialCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+  <!-- 物料分类为其他时的展示 -->
+  <span *ngIf="data.materialType === materialTypeEnum.other" class="status-text"
+        title="{{storageLanguage.otherTotal}}">
+    {{storageLanguage.otherTotal}}
+  </span>
+</ng-template>
+<!--状态-->
+<ng-template #materialStatus let-data="data">
+  <i [ngClass]="data.statusClass"></i>
+  <span class="status-text" title="{{data.materialStatus | translate: materialStatusEnum: languageEnum.storage}}">
+    {{data.materialStatus | translate: materialStatusEnum: languageEnum.storage}}
+  </span>
+</ng-template>
+<!--导入-->
+<ng-template #importTemp>
+  <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <button nz-button><i nz-icon type="upload"></i><span>{{commonLanguage.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>
+<!--物料单价-->
+<ng-template #unitPriceTemp let-data="data">
+  <span title="{{data.materialUnitPrice | number: '1.2-2'}}">{{data.materialUnitPrice | number: '1.2-2'}}</span>
+</ng-template>
+<ng-template #departmentTemp let-data="data">
+  <span class="width-style" title="{{data.collectDeptName}}">{{data.collectDeptName}}</span>
+</ng-template>
+<!--责任单位模板-->
+<ng-template #unitNameSearch let-filterValue="filterValue">
+  <span class="dept-name-select hidden" (click)="showModal(filterValue)"
+        [class.placeholder]="!selectUnitName&&!filterValue.filterName"
+        [title]="selectUnitName">{{(filterValue.filterName || selectUnitName) || commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--责任单选选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event,false)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+<!--规格型号选择-->
+<ng-template #materialModelTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+         (click)="openMaterialModel(filterValue)" [(ngModel)]="filterValue.filterName || selectModelObject.name"/>
+</ng-template>
+<app-material-model *ngIf="isShowModel"
+                    [(isVisible)]="isShowModel"
+                    [selectModelList]="selectModelList"
+                    [productTypeDataSource]="productTypeDataSource"
+                    (handleOkEvent)="handleModelOk($event)">
+</app-material-model>
+<!--领用人员列表-->
+<ng-template #userSearchTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+         (click)="openUserSelector(filterValue, false)" [(ngModel)]="filterValue.filterName || checkUserObject.name"/>
+</ng-template>
+<app-select-user
+  *ngIf="isShowUserTemp"
+  [(xcVisible)]="isShowUserTemp"
+  [selectUserList]="selectUserList"
+  (selectDataChange)="onSelectUser($event)"
+  [departmentNameCondition]="false">
+</app-select-user>
+<!--出库人员列表-->
+<ng-template #deliveryUserTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+         (click)="openUserSelector(filterValue, true)" [(ngModel)]="filterValue.filterName || checkUserObject.name"/>
+</ng-template>
+<app-select-user
+  *ngIf="isShowDeliveryUserTemp"
+  [(xcVisible)]="isShowDeliveryUserTemp"
+  [selectUserList]="selectDeliveryUserList"
+  (selectDataChange)="onSelectUser($event)"
+  [departmentNameCondition]="false">
+</app-select-user>
+<!--供应商列表-->
+<ng-template #supplierTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+         (click)="openSupplierSelector(filterValue)" [(ngModel)]="filterValue.filterName || selectSupplierObject.name"/>
+</ng-template>
+<app-select-supplier
+  *ngIf="isShowSupplier"
+  [(isVisible)]="isShowSupplier"
+  [selectSupplierList]="selectSupplierList"
+  (isVisibleChange)="isShowSupplier=false"
+  (selectDataChange)="onSelectSupplier($event)">
+</app-select-supplier>
+<!--编辑出库弹窗-->
+<app-modify-delivery #updateDelivery
+                     *ngIf="showUpdateDeliveryModel"
+                     [(showEditDeliveryNum)]="showUpdateDeliveryModel"
+                     [deliveryId]="deliveryId"
+                     (handleOkEvent)="handleUpdateDelivery($event)"
+                     (visibleChange)="showUpdateDeliveryModel=false">
+</app-modify-delivery>

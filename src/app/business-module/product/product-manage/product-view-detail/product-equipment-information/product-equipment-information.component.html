@@ -1,0 +1,9 @@
+<!--设备信息-->
+<div class="equipment-info-container">
+  <ul class="eq-info">
+    <li class="info-item"  *ngFor="let item of equipmentKeys">
+      <div class="eq-label">{{productLanguage[item]}}:</div>
+      <div class="eq-value">{{equipmentInfo[item]}}</div>
+    </li>
+  </ul>
+</div>

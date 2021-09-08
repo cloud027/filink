@@ -1,0 +1,40 @@
+.equipment-warp{
+  .table-wrapper{
+    position: relative;
+    margin-top: -5px;
+    .security{
+      position: absolute;
+      top: -10px;
+      left: 0;
+    }
+    .equipment-list{
+      margin-top: 10px;
+    }
+  }
+  .equipment-lighting{
+    margin: 0;
+  }
+}
+.security-table{
+  margin-top: 30px;
+}
+
+// 超过div长度隐藏显示省略号
+.transfer-reason {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.audio-btn-group{
+  text-align: center;
+  .start{
+    //margin-right: 30px;
+  }
+  .btn-size{
+    line-height: 30px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
+

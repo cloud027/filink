@@ -1,0 +1,143 @@
+@import "../../../style-module/config";
+
+.index-statistics-container {
+  .statistics-title {
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    font-size: 14px;
+    padding-left: 10px;
+    font-weight: bold;
+    color: $index-window-background-color;
+    border-bottom: 1px solid $border-color;
+
+    .statistics-title-select {
+      float: right;
+      margin-right: 10px;
+
+      .statistics-title-select-component {
+        font-weight: normal;
+        width: 100px;
+      }
+    }
+  }
+
+  // 统计总数
+  .statistics-total-count {
+    height: 118px;
+    width: 100%;
+    line-height: 30px;
+    padding: 25px 10px 0 10px;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+
+    .statistics-total-item {
+      float: left;
+      margin: 0 auto;
+      text-align: center;
+      list-style: none;
+      font-size: 16px;
+      color: $title-color;
+
+      .statistics-total-name {
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .statistics-total-numbers {
+        font-weight: 400;
+        font-size: 16px;
+      }
+
+      .statistics-total-bottom {
+        height: 68px;
+        background: url("../../../../assets/img/index/icon-right-empty.png") no-repeat center;
+        border-radius: 3px;
+
+        .statistics-total-center {
+          height: 68px;
+          line-height: 68px;
+        }
+
+        .icon-fiLink-xl {
+          font-size: 40px !important;
+          color: $statistics-facility-all;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .pic-arrow {
+      margin-top: 20px;
+    }
+  }
+
+  .statistics-no-data {
+    margin: 0 auto;
+    padding-top: 17px;
+  }
+
+  .statistics-content {
+    height: 260px;
+    border-bottom: 1px solid $border-color;
+
+    .padding-t {
+      padding-top: 35px;
+    }
+
+    .chart-style {
+      height: 230px;
+    }
+
+    .echarts-padding-style {
+      font-weight: bolder;
+      margin: 10px 10px 10px 10px;
+      border-left: 5px solid #13c2c2;
+      padding-left: 10px;
+      .ec-hd{
+        display: inline-block;
+      }
+      .ec-icon{
+        cursor: pointer;
+        width: 17px;
+        height: 17px;
+        position: absolute;
+        right: 5px;
+      }
+    }
+  }
+
+  .opticalBox-color {
+    color: $statistics-opticalBox;
+  }
+
+  .manWell-color {
+    color: $statistics-manWell;
+  }
+
+  .patchPanel-color {
+    color: $statistics-patchPanel;
+  }
+
+  .jointClosure-color {
+    color: $statistics-jointClosure;
+  }
+
+  .all-facility-color {
+    color: $statistics-fiberBox;
+  }
+
+  .device-amount {
+    width: 100%;
+    display: flex;
+  }
+
+  .all-device {
+    width: 100%;
+
+    .device-item {
+      width: 16%;
+    }
+  }
+}
+

@@ -1,0 +1,22 @@
+@import '../../../../style-module/config.scss';
+.data-task-box {
+    background-color: $bg-c;
+    .title {
+        align-items: center;
+        color: #333;
+        font-size: 16px;
+        font-weight: 900;
+        padding: 0 16px 16px 16px;
+        background-color: #fff;
+    }
+    .table-box {
+        background-color: #fff;
+        margin-top: 10px;
+        padding: 16px;
+        ::ng-deep .task-btn {
+            width: auto;
+            padding: 0 20px;
+        }
+    }
+}
+

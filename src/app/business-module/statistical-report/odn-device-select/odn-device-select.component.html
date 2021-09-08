@@ -1,0 +1,31 @@
+<span nz-input class="select-area" style="width: 170px" [title]="_checkedStr?_checkedStr:placeholder"
+      [class.placeholder]="_checkedStr?false:true"
+      (click)="showSelect()">{{_checkedStr ? _checkedStr : placeholder}}</span>
+
+<nz-modal [(nzVisible)]="isVisible" [nzMaskClosable]="false" [nzTitle]="language.statistical.selectDevice"
+          [nzWidth]="400"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div>
+    <xc-search-input
+      [selectInfo]="selectInfo"
+      [searchValue]="searchValue"
+      (modelChange)="modelChange($event)"
+      (inputChange)="inputChange($event)"
+    ></xc-search-input>
+  </div>
+  <nz-card style="height: 300px;margin-top: 10px;overflow: auto" id="nzCard">
+    <ul *ngIf="checkList.length>0">
+      <li *ngIf="checkList.length>0">
+        <label nz-checkbox
+               (ngModelChange)="allChecked($event)"
+               [(ngModel)]="checkAllStatus">{{language.statistical.selectAll}}</label>
+      </li>
+      <li *ngFor="let item of checkList">
+        <label nz-checkbox
+               (ngModelChange)="checkItem(item)" [disabled]="item.isDisable"
+               [(ngModel)]="item.checked"><span [class.searchItem]="item.style">{{item.label}}</span></label>
+      </li>
+    </ul>
+    <nz-empty *ngIf="!(checkList.length>0)" style="padding: 50px 0"></nz-empty>
+  </nz-card>
+</nz-modal>

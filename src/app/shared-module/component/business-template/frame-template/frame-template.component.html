@@ -1,0 +1,59 @@
+<div class="frame-template">
+  <div class="search-info">
+    <div class="parameter-config">
+      <div class="parameter-item">
+        <!--名称-->
+        <label>{{language.template.name}}</label>
+        <input type="text" nz-input maxlength="32" class="name-input" [(ngModel)]="frameInfo.name">
+      </div>
+      <div class="parameter-item ranks">
+        <!--行列数-->
+        <label>{{language.template.ranks}}</label>
+        <div style="display: flex">
+          <nz-input-number [nzPrecision]="0" [nzMin]="1" [nzMax]="48" [nzStep]="1"
+                           [(ngModel)]="frameInfo.row"></nz-input-number>
+          <span>*</span>
+          <nz-input-number [nzPrecision]="0" [nzMin]="1" [nzMax]="24" [nzStep]="1"
+                           [(ngModel)]="frameInfo.col"></nz-input-number>
+        </div>
+      </div>
+      <div class="parameter-item">
+        <!--摆放方向-->
+        <label>{{language.PutDirection}}</label>
+        <nz-select [(ngModel)]="frameInfo.putState" (ngModelChange)="selectState($event)">
+          <!--横向-->
+          <nz-option [nzValue]="1" nzLabel="{{language.template.transverse}}"></nz-option>
+          <!--竖向-->
+          <nz-option [nzValue]="0" nzLabel="{{language.template.longitudinal}}"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div class="search-item">
+      <app-template-search #templateSearch
+                           [templateType]="templateType"
+                           (chooseTemplate)="selectTemplate($event)">
+
+      </app-template-search>
+      <div>
+        <!--保存-->
+        <button class="link-button"
+                nz-button nzType="primary"
+                (click)="handleSave()"
+                [disabled]="!canPreview('save')">{{language.save}}
+        </button>
+        <!--预览-->
+        <button class="link-button"
+                nz-button nzType="danger"
+                [disabled]="!canPreview('view')"
+                (click)="preview()">{{language.preview}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="template-info" id="frame-template">
+
+  </div>
+</div>
+<nz-modal [(nzVisible)]="saveShow" nzTitle="{{language.SaveTemplate}}" (nzOnCancel)="saveCancel()" (nzOnOk)="saveOk()">
+  <p>{{language.sureSaveTemplate}}</p>
+</nz-modal>

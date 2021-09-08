@@ -1,0 +1,53 @@
+<!--项目列表-->
+
+<!--项目列表上方统计-->
+<xc-statistical-slider [sliderConfig]="sliderConfig"
+                       [showCardNum]="5"
+                       (selectChange)="sliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)">
+</xc-statistical-slider>
+<div class="table-wrapper">
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--项目状态模板-->
+<ng-template #projectStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass "></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.status | translate: projectStatusEnum: languageEnum.planProject}}">
+      {{data.status | translate: projectStatusEnum: languageEnum.planProject}}
+    </span>
+  </div>
+</ng-template>
+
+<!--项目智慧杆状态确认弹窗-->
+<nz-modal
+  *ngIf="isShowPointStatusWindow"
+  [(nzVisible)]="isShowPointStatusWindow"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="modalPlanFooter"
+  (nzOnCancel)="handleCancel()"
+  nzWidth="60%">
+  <div class="pad-l-20">
+    <div class="confirmInfo-box"><i class="icon-fiLink iconfont fiLink-filink-weizhi-x-icon icon-fiLink-2"></i>
+      <span>{{language.confirmProject}}</span>
+    </div>
+    <xc-table #wisdomListTable
+      [dataSet]="wisdomListDataSet"
+      [pageBean]="wisdomListPageBean"
+      (pageChange)="wisdomListPageChange($event)"
+      [tableConfig]="tableWisdomListConfig"
+    ></xc-table>
+  </div>
+  <ng-template #modalPlanFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+            (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

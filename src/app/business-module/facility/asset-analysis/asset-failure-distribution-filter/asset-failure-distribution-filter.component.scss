@@ -1,0 +1,41 @@
+@import '../../../../style-module/config';
+.asset-failure-distribution-condition {
+  display: flex;
+  .asset-failure-distribution-form {
+    display: inline-block;
+    width: 100%;
+    float:left;
+  }
+  .asset-failure-distribution-button {
+    float: left;
+    margin-left: -85px;
+    .operation-button {
+      width: 100px;
+      height: 35px;
+      margin-left: 30px;
+    }
+    .operation-button-size {
+      width: 100px;
+      height: 35px;
+    }
+  }
+  .search {
+    position: absolute;
+    top:3px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $button-danger-color;
+  }
+  .select-width {
+    width: 90%;
+  }
+}
+
+.area-box {
+  width: 90%;
+  margin-right: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}

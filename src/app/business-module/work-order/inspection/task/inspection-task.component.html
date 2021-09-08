@@ -1,0 +1,141 @@
+<div class="order-box-warp">
+  <div class="table-common-title"><span>{{language.inspectionTask}}</span></div>
+  <!-- 表格 -->
+  <div class="table-wrapper table-container">
+    <xc-table [dataSet]="tsakDataList"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+    <!--启用状态-->
+    <ng-template #templateStatus let-data="data">
+      <div class="switch-task">
+        <span *ngIf="isShowSwitch" class="switch-over"></span>
+        <nz-switch [ngModel]="data.opened === Status.enable"
+                   [nzLoading]="data.clicked"
+                   [appAccessPermission] = "data.opened === Status.enable ? Permission.disable : Permission.enable"
+                   [nzControl]="true"
+                   [nzDisabled]="data.isDisabled"
+                   (click)="clickSwitch(data)">
+        </nz-switch>
+        <span *ngIf="data.opened === Status.enable" class="open-type" >{{language.enable}}</span>
+        <span *ngIf="data.opened === Status.disable" class="open-type" >{{language.disable}}</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <!--关联工单模态框-->
+  <nz-modal [(nzVisible)]="isAssociatedWorkOrderVisible"
+            [nzMaskClosable]="false"
+            [nzWidth]="1200"
+            [nzTitle]="inspectionTaskTitle"
+            (nzOnCancel)="close()"
+            [nzFooter]="associatedWorkOrderFooter">
+    <xc-table #tableComponent
+              [dataSet]="associatedWorkOrder_dataSet"
+              [pageBean]="associatedWorkOrderPageBean"
+              [tableConfig]="associatedWorkOrderTableConfig"
+              (pageChange)="pageChangeAssociatedWorkOrder($event)">
+    </xc-table>
+    <ng-template #associatedWorkOrderFooter>
+      <button class="link-button" nz-button nzType="danger" type="button" (click)="close()">{{language.handleCancel}}</button>
+    </ng-template>
+    <ng-template #orderUnitNameSearch let-filterValue = "filterValue">
+      <input readonly class="task-unit" type="text" (click)="showOrderModal(filterValue)" [title]="selectOrderUnitName"
+             placeholder="{{language.pleaseClickToSelect}}" [(ngModel)]="selectOrderUnitName">
+    </ng-template>
+    <xc-tree-area-selector
+      [(xcVisible)]="isOrderVisible"
+      (selectDataChange)="selectOrderDataChange($event)"
+      [treeSelectorConfig]="treeSelectorConfig">
+    </xc-tree-area-selector>
+  </nz-modal>
+  <!--关联工单的工单状态 -->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--责任单位 -->
+  <ng-template #unitNameSearch let-filterValue = "filterValue">
+    <input readonly class="task-unit" type="text" (click)="showModal(filterValue)" [title]="selectUnitName"
+           placeholder="{{language.pleaseClickToSelect}}" [(ngModel)]="filterValue.filterName || departFilterValue.filterName" />
+  </ng-template>
+
+  <xc-tree-area-selector
+    [(xcVisible)]="isVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+
+  <!--巡检区域弹框-->
+  <ng-template #areaSearch let-filterValue="filterValue">
+    <input type="text" class="area-name" placeholder="{{language.pleaseChoose}}" readonly
+           (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName" />
+  </ng-template>
+  <!--区域选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)">
+  </xc-tree-area-selector>
+
+  <!-- 巡检周期筛选带操作符模板 -->
+  <ng-template #taskPeriodPeTemp let-filterValue = "filterValue">
+    <span class="inputBox">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue" />
+    </span>
+  </ng-template>
+
+  <!-- 期望用时筛选带操作符模板 -->
+  <ng-template #procPlanDateTemp let-filterValue = "filterValue">
+    <span class="inputBox">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+  </ng-template>
+
+  <!-- 设施总数筛选带操作符模板 -->
+  <ng-template #deviceCountTemp let-filterValue = "filterValue">
+    <span class="inputBox">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+  </ng-template>
+  <!--设施类型-->
+  <ng-template #deviceTypeTemp let-data="data">
+    <div title="{{data.deviceTypeName}}" class="tab-text-over">
+      <span class="status-temp" [ngClass]="data.deviceIcon"></span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!--进度-->
+  <ng-template #schedule let-data="data">
+    <div title="{{data.progressSpeed}}%">
+      <nz-progress [nzPercent]="data.progressSpeed" nzSize="small"></nz-progress>
+    </div>
+  </ng-template>
+</div>
+<!--巡检报告-->
+<app-inspection-object [(xcVisible)]="inspectionObjectVisible" [inspectObjectId]="inspectObjectId"></app-inspection-object>
+<!--用户列表-->
+<ng-template #userSearchTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly class="cursor-pointer"
+         (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+</ng-template>
+<app-select-user
+  *ngIf="isShowUserTemp"
+  [(xcVisible)]="isShowUserTemp"
+  [selectUserList]="selectUserList"
+  (selectDataChange)="onSelectUser($event)">
+</app-select-user>

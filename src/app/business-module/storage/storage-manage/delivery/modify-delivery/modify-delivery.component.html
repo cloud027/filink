@@ -1,0 +1,24 @@
+<!--修改出库数量弹窗-->
+<nz-modal class="edit-num-modal"
+          *ngIf="showEditDeliveryNum"
+          [(nzVisible)]="showEditDeliveryNum"
+          [nzWidth]="500"
+          [nzTitle]="storageLanguage.editNumber"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="visibleChange.emit()">
+  <ng-template #modalContent>
+    <nz-spin [nzSpinning]="isSpin">
+      <xc-form [column]="editNumFormColumn" (formInstance)="editNumInstance($event)"></xc-form>
+    </nz-spin>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary" (click)="submit()"
+            [disabled]="isEditNumDisabled"
+            [nzLoading]="isEditNumLoading">
+      {{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger"
+            (click)="visibleChange.emit()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

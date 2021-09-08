@@ -1,0 +1,9 @@
+
+<nz-card [nzTitle]="language.sensorList">
+  <xc-table
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</nz-card>

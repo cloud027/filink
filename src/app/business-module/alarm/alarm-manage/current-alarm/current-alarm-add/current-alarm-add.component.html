@@ -1,0 +1,74 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{ title }}
+    </span>
+  </div>
+  <div>
+    <xc-form class="currentAlarmAdd" [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div class="btn-warp">
+      <button class="link-button sub-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isDisabled">{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 首次发生时间 -->
+<ng-template #firstTimeTemp let-formGroup="formGroup" let-data="data">
+  <nz-range-picker [(ngModel)]="timeModel.firstTimeModel"
+                   (ngModelChange)="firstTimeChange($event)"
+                   (nzOnOpenChange)="firstTimeOnOpenChange($event)"
+                   nzShowTime></nz-range-picker>
+</ng-template>
+
+<!-- 告警名称 -->
+<ng-template #alarmName let-formGroup="formGroup" let-col="col">
+  <app-alarm-name [alarmNameConfig]='alarmNameConfig'></app-alarm-name>
+</ng-template>
+<!-- 区域 -->
+<ng-template #areaSelector let-formGroup="formGroup" let-col="col">
+  <app-area [areaConfig]='areaConfig'></app-area>
+</ng-template>
+
+<!-- 责任单位 -->
+<ng-template #unitTemp let-formGroup="formGroup" let-col="col">
+  <app-unit [unitConfig]='unitConfig'></app-unit>
+</ng-template>
+<!-- 设施名称 -->
+<ng-template #facilityTemp let-formGroup="formGroup" let-col="col">
+  <app-alarm-object [alarmObjectConfig]="alarmFacilityConfig"
+                    [title]="language.deviceName">
+  </app-alarm-object>
+</ng-template>
+<!--告警对象-->
+<ng-template #equipmentTemp
+             let-col="col">
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="area-name"
+             nz-input
+             [disabled]= "false"
+             placeholder="{{language.pleaseChoose}}"
+             [(ngModel)]="checkAlarmObject.name"
+             [title]="checkAlarmObject.name"
+      >
+    </label>
+    <i class="icon-template" (click)="equipmentVisible = true">
+        <span class="icon-fiLink fiLink-search-index iconfont"></span>
+    </i>
+  </div>
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [isCheckOkBtn]="false"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>

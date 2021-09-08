@@ -1,0 +1,19 @@
+<!--查看智能标签-->
+<nz-modal nzVisible = "true"
+          [nzMaskClosable]="false"
+          [nzWidth]="1200"
+          [nzTitle]="language.cableSegmentSmartLabel"
+          (nzOnCancel)="handleCancel()"
+          [nzFooter]="labelFooter">
+  <xc-table [dataSet]="label_dataSet"
+            [pageBean]="label_pageBean"
+            [tableConfig]="label_tableConfig"
+  >
+  </xc-table>
+  <ng-template #labelFooter>
+    <button class="link-button" nz-button nzType="primary" type="button" (click)="handleCancel()">
+      {{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button" (click)="handleCancel()">
+      {{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,18 @@
+<div class="table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<ng-template #loginSourceTemp let-data="data">
+  <span *ngIf="data.loginSource === loginSourceEnum.pcTerminal">{{language.pcTerminal}}</span>
+  <span *ngIf="data.loginSource === loginSourceEnum.mobileTerminal">{{language.mobileTerminal}}</span>
+</ng-template>
+
+<!-- 进度条 -->
+<div class="progress-bar" *ngIf="isShowProgressBar">
+  <p>{{commonLanguage.loading}}...</p>
+  <nz-progress [nzPercent]="percentOl" nzStatus="active"></nz-progress>
+</div>

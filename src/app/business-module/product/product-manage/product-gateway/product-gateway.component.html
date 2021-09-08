@@ -1,0 +1,4 @@
+<!--顶部标题-->
+<div class="page-top-title">{{pageTitle}}</div>
+<app-product-gateway-upload *ngIf="pageOperateType===operateEnum.add" [productId]="productId" (afterUploadGateway)="afterUploadGateway($event)"></app-product-gateway-upload>
+<app-product-gateway-update *ngIf="pageOperateType===operateEnum.update" [productId]="productId"></app-product-gateway-update>

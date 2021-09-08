@@ -1,0 +1,97 @@
+@import "../../../../style-module/config";
+@import "../../share/style/common-style";
+.float-l {
+  float: left
+}
+
+.mr-t-20 {
+  margin-top: 20px
+}
+
+
+.door {
+  margin-right: 24px;
+}
+
+.door-p-text {
+  text-align: center;
+  border-bottom: 1px solid $borderColorApplication;
+}
+
+.text-area-none {
+  resize: none
+}
+
+.lock {
+  margin-right: 22px;
+}
+
+.label-style {
+  display: inline-block;
+  width: 70px;
+  margin-right: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.status-text {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.facility-alarm-c {
+  color: $status-alarm;
+}
+
+.facility-normal-c {
+  color: $status-normal;
+
+}
+
+.facility-offline-c {
+  color: $status-offline;
+
+}
+
+.facility-lost-c {
+  color: $status-lost;
+
+}
+
+.facility-unknown-c {
+  color: $status-unknown;
+}
+
+.device-type-icon {
+  vertical-align: middle;
+  font-size: 19px;
+}
+
+
+.term {
+  display: inline-block;
+  text-align: center;
+  width: 62px;
+  height: 20px;
+  color: $menu-font-color;
+}
+
+.unexpired {
+  background-color: $level-two;
+}
+
+.expired {
+  background-color: $level-five;
+}
+
+.longTerm {
+  background-color: $level-two;
+}
+
+::ng-deep .temp-auth .table-top-button .left-button {
+  padding: 0;
+}
+.fl{
+  float: left;
+}

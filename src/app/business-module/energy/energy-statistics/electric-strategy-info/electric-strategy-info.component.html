@@ -1,0 +1,100 @@
+<div class="strategy-info-box">
+    <!-- 策略详情 -->
+    <p class="title">{{ language.strategyInfo.strategyInfo }}</p>
+    <div nz-row nzGutter="10" class="card-box">
+        <div nz-col nzSpan="12">
+            <nz-card class="card-item">
+                <p class="title">xxx策略</p>
+                <div class="creationTime-box">
+                    <span class="span-title">{{ language.strategyInfo.creationTime }}:</span>
+                    <span class="container">2020-11-11 11:11:11</span>
+                </div>
+                <!-- 用户 -->
+                <div class="user-box">
+                    <i nz-icon nzType="user" nzTheme="outline" class="iconfont create-user"></i>
+                    <span>admin</span>
+                </div>
+                <!-- 时间 -->
+                <div>
+                    <i
+                        nz-icon
+                        nzType="clock-circle"
+                        nzTheme="outline"
+                        class="iconfont clock-circle"
+                    ></i>
+                    <span
+                        >{{ strategyInfoData.startTime | date: 'yyyy-MM-dd' }} ~{{
+                            strategyInfoData.endTime | date: 'yyyy-MM-dd'
+                        }}</span
+                    >
+                </div>
+            </nz-card>
+        </div>
+        <div nz-col nzSpan="12">
+            <nz-card class="card-item right-container">
+                <p>
+                    <span class="span-title">{{language.strategyInfo.scopeOfApplication}}:</span>
+                    <span class="container">区域</span>
+                </p>
+                <div class="remarks-box">
+                    <span class="span-title">{{language.strategyInfo.remarks}}:</span>
+                    <span class="container">这是一条备注</span>
+                </div>
+            </nz-card>
+        </div>
+    </div>
+    <div nz-row class="basic-operation-box">
+        <div nz-col nzSpan="24">
+            <p class="title">{{language.strategyInfo.basicOperationOfStrategy}}</p>
+            <div class="operation-icon">
+                <div class="edit" (click)='handleEdit()'>
+                    <i class="icon-fiLink iconfont fiLink-edit"></i>
+                    <span>编辑</span>
+                </div>
+                <div class="delete" (click)='handleDelete()'>
+                    <i class="icon-fiLink iconfont fiLink-delete"></i>
+                    <span>删除</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-box">
+        <xc-table [dataSet]="strategyTableSet" [tableConfig]="strategyTableConfig"></xc-table>
+    </div>
+    <div class="strategy-details-box">
+        <p class="title">{{language.strategyInfo.strategyDetails}}</p>
+        <div class="details">
+            <div class="electric-box details-item">
+                <div class="item">
+                    <span class="span-title">{{language.electricStrategy.powerRange}}</span>
+                    <span class="container">0-2600</span>
+                </div>
+                <div class="item">
+                    <span class="span-title">{{language.electricStrategy.monthRange}}</span>
+                    <span class="container">2161-4800</span>
+                </div>
+                <div class="item">
+                    <span class="span-title">{{language.electricStrategy.timeRange}}</span>
+                    <span class="container">4801-以上</span>
+                </div>
+            </div>
+            <div class="price-box details-item">
+                <div class="electric-box">
+                    <div class="item">
+                        <span class="span-title">{{language.unitPriceOfTheFirstStage}}</span>
+                        <span class="container">0.573</span>
+                    </div>
+                    <div class="item">
+                        <span class="span-title">{{language.unitPriceOfTheSecondStage}}</span>
+                        <span class="container">0.623</span>
+                    </div>
+                    <div class="item">
+                        <span class="span-title">{{language.unitPriceOfTheThirdStage}}</span>
+                        <span class="container">0.873</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

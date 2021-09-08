@@ -1,0 +1,41 @@
+@import "../config";
+
+/******************************故障状态******************************/
+// 未提交
+.uncommit {
+  background-color: $handle-uncommit-color;
+}
+// 已提交
+.commit {
+  background-color: $handle-commit-color;
+}
+// 处理中
+.processing {
+  background-color: $handle-processing-color;
+}
+// 已完成
+.done {
+  background-color: $handle-done-color;
+}
+// 已打回
+.undone {
+  background-color: $handle-undone-color;
+}
+
+/******************************故障状态1******************************/
+// 紧急
+.urgent {
+  background-color: $statistics-alarm-urgent;
+}
+// 主要
+.main {
+  background-color: $statistics-alarm-serious;
+}
+// 次要
+.secondary {
+  background-color: $statistics-alarm-secondary;
+}
+// 提示
+.prompt {
+  background-color: $statistics-alarm-prompt;
+}

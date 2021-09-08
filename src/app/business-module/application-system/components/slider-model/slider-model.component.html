@@ -1,0 +1,20 @@
+<!--亮度调节-->
+<div class="instruct-list">
+  <div class="instruct-title">
+    <span class="light">
+      <i class="icon-fiLink fiLink-light iconfont"></i>
+    </span>
+    <span>
+      {{languageTable.equipmentTable.light}}
+    </span>
+  </div>
+  <div class="instruct-volume">
+    <nz-slider
+      [nzMin]="sliderValue.min"
+      (nzOnAfterChange)="handleConvenientChange()"
+      [nzMax]="lightMax"
+      [(ngModel)]="dimmingLightValue">
+    </nz-slider>
+  </div>
+  <div>{{dimmingLightValue}}</div>
+</div>

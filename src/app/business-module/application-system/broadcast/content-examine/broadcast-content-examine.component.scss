@@ -1,0 +1,7 @@
+// 超过div长度隐藏显示省略号
+.transfer-reason {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

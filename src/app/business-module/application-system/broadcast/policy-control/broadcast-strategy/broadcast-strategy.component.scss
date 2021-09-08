@@ -1,0 +1,176 @@
+@import "../../../share/style/common-style";
+@import "../../../../../style-module/config";
+
+.release-strategy {
+  padding: 20px;
+
+  .title-required {
+    color: $error-color;
+    margin-right: 3px;
+  }
+
+  .volume {
+    align-items: center;
+
+  }
+
+  .play-date {
+    display: flex;
+    margin-bottom: 40px;
+
+    .play-left {
+      width: 100px;
+
+      .icon-wrap {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        border-radius: 50%;
+        color: $bg-c-w;
+        margin-right: 3px;
+      }
+
+      .light-wrap {
+        background-color: $statistics-jointClosure;
+      }
+
+      .volume-wrap {
+        background-color: $index-facility-selected;
+      }
+    }
+
+    .play-time {
+      display: flex;
+      align-items: center;
+
+      .picker {
+        margin-right: 5px;
+        cursor: pointer;
+      }
+
+      .fiLink-pic-to-big {
+        margin-right: 5px;
+      }
+
+      .icon-fiLink {
+        cursor: pointer;
+      }
+    }
+
+    .slider-list {
+      display: flex;
+      align-items: center;
+
+      .slider {
+        width: 250px;
+      }
+    }
+    &:last-of-type{
+      margin-bottom: 0;
+    }
+  }
+
+  .release-program {
+    display: flex;
+    margin-bottom: 40px;
+
+    .play-left {
+      width: 100px;
+    }
+
+    .program-select {
+      width: 600px;
+
+      .program-add {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .title {
+          padding-left: 10px;
+          color: #35cfc9;
+        }
+      }
+
+      .program-border {
+        border: 1px dashed $border-color;
+        border-radius: 3px;
+        padding: 10px;
+
+        .strategy-close {
+          display: flex;
+          justify-content: flex-end;
+
+          .button-save {
+            padding-right: 10px;
+            color: $color;
+            cursor: pointer;
+            font-size: 16px;
+          }
+
+          .button-close {
+            color: $color;
+            cursor: pointer;
+            font-size: 16px;
+          }
+        }
+
+        .program-list {
+          .program-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .program-left {
+              width: 100px;
+            }
+
+            .program-right {
+              .area-name {
+                @include input-style;
+              }
+
+              .open-button {
+                @include button-style;
+              }
+
+              .program-picker-time {
+                width: 300px;
+                margin-right: 10px;
+              }
+            }
+          }
+        }
+      }
+
+      .program-table {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        .program-tip {
+          width: 100%;
+          text-align: right;
+          padding-right: 10px;
+          color: $deleteBtn-color;
+          font-size: 13px;
+        }
+
+        .operate-btn {
+          cursor: pointer;
+        }
+
+        .xc-no-data-tr {
+          .xc-no-data{
+            width: 100px;
+            color: $table-font-color;
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}
+

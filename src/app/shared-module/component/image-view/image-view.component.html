@@ -1,0 +1,51 @@
+<div class="image-view">
+  <div class="image-view-center">
+    <!--图片区域-->
+    <div class="image-area">
+      <div class="image">
+        <div class="image-center">
+          <img #img
+               [src]="curPicInfo.picUrlBase"
+               (mousedown)="imgMousedown($event)"
+               (mousemove)="imgMousemove($event)"
+               (mouseup)="imgMouseup()"
+               (mouseleave)="imgMouseup()"
+               [alt]="curPicInfo.picName">
+        </div>
+      </div>
+      <div class="image-tool">
+        <i class="icon iconfont fiLink-pic-to-big" (click)="imgToSize(0.1)"></i>
+        <i class="icon iconfont fiLink-pic-to-small" (click)="imgToSize(-0.1)"></i>
+        <i class="icon iconfont fiLink-pic-fd-reset" (click)="imgResetScale()"></i>
+        <i class="icon iconfont fiLink-pic-reset" (click)="imgReset()"></i>
+        <i class="icon iconfont fiLink-pic-view-last" (click)="last()"></i>
+        <i class="icon iconfont fiLink-pic-view-next" (click)="next()"></i>
+        <i class="icon iconfont fiLink-pic-view-left" (click)="imgLeft()"></i>
+        <i class="icon iconfont fiLink-pic-view-right" (click)="imgRight()"></i>
+      </div>
+      <div class="image-footer">
+        <div class="image-footer-last">
+          <i class="icon iconfont fiLink-pic-previous-l" (click)="last()" *ngIf="curPicInfo.indexNo > 1"></i>
+        </div>
+        <div class="image-list">
+          <ul>
+            <li *ngFor="let item of slidePicList"
+                (click)="choosePic(item)"
+                [ngClass]="{'active': item.devicePicId === curPicInfo.devicePicId}"><img [src]="item.picUrlThumbnail" alt="item.picName"></li>
+          </ul>
+        </div>
+        <div class="image-footer-next">
+          <i class="icon iconfont fiLink-pic-next-l" (click)="next()" *ngIf="curPicInfo.indexNo < picList.length"></i>
+        </div>
+      </div>
+    </div>
+    <!--图片详情-->
+    <div class="image-info">
+      <app-photo-info [picInfo]="curPicInfo" [pColor]="'white'" (pageLink)="close()"></app-photo-info>
+    </div>
+  </div>
+</div>
+<!--头部关闭-->
+<div class="image-view-header">
+  <i class="icon iconfont fiLink-close" (click)="close()"></i>
+</div>

@@ -1,0 +1,32 @@
+<div class="diagnose-title" *ngIf="showTitle === 'alarm'">
+  {{language.alarmAnalysis}}
+  <span *ngIf="selectIndex===0">{{language.overload}}</span>
+  <span *ngIf="selectIndex===1">{{language.shortOut}}</span>
+  <span *ngIf="selectIndex===2">{{language.electricLeakage}}</span>
+</div>
+<div class="maintenance-box">
+  <div class="reason-warp">
+    <div class="suggest-left">
+      <p class="fault-title">{{language.troubleReason}}</p>
+      <div class="caption">
+        <p>{{language.maintenanceSuggest}}</p>
+        <p>{{language.resourceNeedsSuggest}}</p>
+      </div>
+    </div>
+    <div class="reason-list common-card">
+      <nz-tabset>
+        <nz-tab nzTitle="{{option.breakdownReason}}（{{option.percentage}}%）" *ngFor="let option of troubleList; let i = index" (nzClick)="changeIndex(i)">
+          <div class="maintenance-advice">
+            <div>{{option.maintenanceProgramAdvise}}</div>
+          </div>
+          <div class="resource-advice" >
+            <div>{{option.resourceNeedAdvise}}</div>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+  <div class="total-echart">
+    <div *ngIf="errorReasonStatisticsChartType === 'chart'" echarts [options]="ringChartOption" class="pie-chart"></div>
+  </div>
+</div>

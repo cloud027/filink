@@ -1,0 +1,25 @@
+@import "~src/app/style-module/config";
+
+$left-panel-width: 400px;
+@mixin filter-top-filter {
+  background-color: white;
+  border: 1px $operational-button-frame-color solid;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-table;
+}
+
+@mixin top-checkbox {
+  padding: 5px 9px;
+  font-size: 12px;
+  height: 30px;
+  .checkbox-facility-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    padding-bottom: 3px;
+  }
+  .text {
+    font-size: 12px;
+  }
+}

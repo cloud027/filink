@@ -1,0 +1,48 @@
+.group-input {
+  .ant-row {
+    margin: -20px;
+  }
+}
+
+.map-tab-container .ant-tabs-nav .ant-tabs-tab {
+  padding: 12px 14px;
+}
+
+.facility-group {
+  .ant-select-selection--multiple .ant-select-selection__placeholder {
+    margin-left: 5px;
+  }
+
+  .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
+    margin-top: -11px;
+    height: 22px;
+    color: #333333;
+    font-size: 12px;
+  }
+}
+
+.facility-table,.work-order-table,.my-attention-list {
+  .ant-table-thead > tr > th {
+    font-size: 12px;
+  }
+
+  .ant-table-tbody > tr > td {
+    font-size: 12px;
+  }
+}
+
+.index-icon-l{
+  font-size: 13px !important;
+}
+
+.select .select-option .ant-select-selection {
+  width: 120px;
+  margin: 5px;
+}
+
+.select-option .ant-select-selection__placeholder {
+  color: #000000;
+}
+
+
+

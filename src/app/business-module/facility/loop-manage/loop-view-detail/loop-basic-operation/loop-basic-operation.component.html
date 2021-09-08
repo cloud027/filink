@@ -1,0 +1,17 @@
+<!--回路操作-->
+<nz-spin [nzSpinning]="loading">
+  <nz-card nzTitle="{{language.loopBasicOperation}}">
+    <!--拉闸-->
+    <div class="operate-content">
+      <div class="operate-item" (click)="loopStatusChange(loopStatusEnum.brake)" [appAccessPermission]="'03-10-6'">
+        <i class="iconfont fiLink-pull-gate operate-icon"></i>
+        <span class="btn-name">{{language.brake}}</span>
+      </div>
+      <!--合闸-->
+      <div class="operate-item" (click)="loopStatusChange(loopStatusEnum.closing)" [appAccessPermission]="'03-10-5'">
+        <i class="iconfont fiLink-close-gate operate-icon"></i>
+        <span class="btn-name">{{language.closing}}</span>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>

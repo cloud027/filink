@@ -1,0 +1,176 @@
+@import '../../../../../../style-module/config';
+
+.alarm-basic-info {
+  height: 260px;
+
+  .gutter-row {
+    height: 100%;
+
+    .icon-fiLink {
+      vertical-align: top;
+      margin-right: 6px;
+    }
+
+    .gutter-box {
+      background: $menu-font-color;
+      padding: 30px 16px;
+      height: 100%;
+      position: relative;
+
+      &.tran{
+        background: transparent;
+        padding: 0;
+
+        .time{
+          background: $menu-font-color;
+          padding: 15px 16px;
+          height: 125px;
+        }
+
+        .remark{
+          margin-top: 10px;
+          background: $menu-font-color;
+          padding: 20px 16px;
+          height: 125px;
+        }
+      }
+      .item-bottom {
+        margin-bottom: 5px;
+      }
+
+      .item-height {
+        height: 26px;
+        line-height: 26px;
+        &.item-top {
+          margin-top: 5px;
+        }
+
+        .label-title{
+          display: inline-block;
+          width: 125px;
+          color: $sp-icon-color-7;
+          vertical-align: top;
+        }
+
+        .fiLink-departments{
+          font-size: 14px;
+          margin-right: 5px;
+          font-weight: bold;
+        }
+      }
+      .dept-box{
+        .iconfont{
+          display: inline-block;
+        }
+        .dept{
+          display: inline-block;
+          width: 55%;
+        }
+      }
+
+      .title {
+        .alarm-title {
+          font-size: 16px;
+          font-weight: 600;
+          margin-right: 15px;
+        }
+
+        .alarm-status{
+          display: inline-block;
+          height: 22px;
+          line-height: 22px;
+          color: $button-danger-color;
+          padding: 0 5px;
+          margin-left: 5px;
+          border-radius: 2px;
+          font-size: 12px;
+        }
+      }
+
+      .gather{
+        .alarm-title {
+          font-size: 14px;
+          font-weight: 600;
+          margin-right: 10px;
+          display: inline-block;
+          white-space: nowrap;
+          max-width: calc(33.3% - 10px);
+          overflow: hidden;
+          text-overflow:ellipsis;
+        }
+      }
+
+      .happen-time{
+        color: $sp-icon-color-7;
+        margin-bottom: 35px;
+      }
+
+      .sustain-time{
+        margin: 5px 0 35px 0;
+      }
+
+      .frequency{
+        position: absolute;
+        right: 60px;
+        bottom: 30px;
+        width: 80px;
+        height: 105px;
+        text-align: center;
+        z-index: 3;
+
+        .big-circle{
+          width: 78px;
+          height: 78px;
+          border-radius: 50%;
+          border: 1px solid $frequency-color;
+          padding: 8px;
+
+          .small-circle {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 50%;
+            background: $frequency-color;
+          }
+        }
+
+        .frequency-num {
+          font-size: 22px;
+          color: $menu-font-color;
+          font-weight: bold;
+        }
+
+        .frequency-text {
+          color: $switch-bg-color;
+          margin-top: 10px;
+        }
+      }
+
+      .address{
+        color: $switch-bg-color;
+        margin-bottom: 35px;
+        .fiLink-filink-location-icon{
+          margin-right: 6px;
+        }
+      }
+
+      .alarm-object{
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+
+    .one-text {
+      display: inline-block;
+      white-space: nowrap;
+      width: calc(100% - 126px);
+      overflow: hidden;
+      text-overflow:ellipsis;
+    }
+
+    .processing {
+      background: $equipment-business-free-bg;
+    }
+  }
+}

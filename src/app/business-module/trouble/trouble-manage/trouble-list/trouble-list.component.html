@@ -1,0 +1,134 @@
+<div class="trouble-list">
+  <!-- 故障卡片 -->
+  <xc-statistical-slider
+    [sliderConfig]="sliderConfig"
+    (slideShowChange)="slideShowChange($event)"
+    (selectChange)="sliderChange($event)"
+    [showCardNum]="cardNum"
+  >
+  </xc-statistical-slider>
+  <div class="box-warp-trouble">
+    <div class="content-warp">
+      <!-- 显示方式下拉框 -->
+      <div class="select-trouble" [ngStyle]="{left: labelLeft + 'px'}">
+        <span>{{ this.language.displayUsage }}</span>
+        <nz-select
+          class="select-box"
+          nzPlaceHolder="{{language.pleaseChoose}}"
+          [(ngModel)]="troubleHintValue"
+          (ngModelChange)="troubleHintValueModelChange()">
+          <nz-option *ngFor="let option of troubleHintList" [nzLabel]="option.label"
+                     [nzValue]="option.code"></nz-option>
+        </nz-select>
+      </div>
+      <!-- 故障列表 -->
+      <div class="table-wrapper">
+        <xc-table #table
+                  [dataSet]="dataSet"
+                  [pageBean]="pageBean"
+                  [tableConfig]="tableConfig"
+                  (pageChange)="pageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+  </div>
+  <!--  处理状态  -->
+  <ng-template #handleStatusTemp let-data="data">
+    <i class="iconfont" [ngClass]="data.handleStatusClass"></i>
+    <span class="status-text">{{ data.handleStatusName }}</span>
+  </ng-template>
+  <!--  故障级别 -->
+  <ng-template #troubleLevelTemp let-data="data">
+    <div class="trouble-flex">
+      <div class="box-icon" [ngStyle]="data.style"></div>
+      <span class="trouble-level">{{ data.troubleLevelName }} </span>
+    </div>
+  </ng-template>
+  <!--设施类型-->
+  <ng-template #troubleDeviceType let-data="data">
+    <i [ngClass]="data.deviceTypeClass"></i>
+    <span class="status-text" [title]="data.deviceTypeName">{{data.deviceTypeName}}</span>
+  </ng-template>
+  <!-- 故障设施 -->
+  <ng-template #facilityTemp let-filterValue="filterValue">
+    <app-alarm-object [alarmObjectConfig]="troubleFacilityConfig"
+                      [filterValue]="filterValue"
+                      [isRadio]="isRadio"
+                      [isTrouble]="isTrouble"
+                      [title]="language.troubleFacility"></app-alarm-object>
+  </ng-template>
+  <!-- 故障设备 -->
+  <ng-template #equipmentTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+           (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkTroubleObject.name" />
+  </ng-template>
+  <equipment-list-selector-component
+    *ngIf="equipmentVisible"
+    [(equipmentVisible)]="equipmentVisible"
+    [multiple]="true"
+    [isTrouble]="true"
+    [showSelectedCount]="true"
+    [showCleanBtn]="true"
+    [selectEquipments]="selectEquipments"
+    (selectDataChange)="onSelectEquipment($event)">
+  </equipment-list-selector-component>
+
+  <!--  故障设备展示  -->
+  <ng-template #troubleEquipment let-data="data">
+    <div class="one-text" [title]="data.equipmentName" *ngIf="data.equipmentName">
+      <span *ngFor="let equipment of data.equipmentTypeArr" class="equipmentName-box">
+        <i class="icon-fiLink iconfont" [ngClass]="equipment.picture"></i>
+        <span class="status-text">{{equipment.name}}</span>
+      </span>
+    </div>
+  </ng-template>
+  <!-- 修改备注弹框 -->
+  <nz-modal
+    class="update-remark-pop-up"
+    [(nzVisible)]="remarkTable"
+    [nzTitle]="modalTitle"
+    [nzMaskClosable]="false"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="remarkTable=false">
+    <ng-template #modalTitle>
+      {{language.updateRemark}}
+    </ng-template>
+    <ng-template #modalContent>
+      <xc-form [column]="formColumnRemark" (formInstance)="formInstanceRemark($event)"></xc-form>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" class="link-button" [disabled]="!isRemarkDisabled"
+              (click)="troubleRemark();remarkTable=false">{{language.okText}}
+      </button>
+      <button nz-button nzType="danger" class="link-button" (click)="remarkTable=false">{{language.cancelText}}</button>
+    </ng-template>
+  </nz-modal>
+  <!-- 责任单位 -->
+  <ng-template #UnitNameSearch let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="filterValue.filterName || selectUnitName" />
+  </ng-template>
+  <!-- 责任单位树 -->
+  <xc-tree-selector
+    [(xcVisible)]="isVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-selector>
+  <!--描述-->
+  <ng-template #refAlarmTemp let-data="data">
+    <div (click)="showRefAlarmModal(data)" class="alarm-model one-text" [title]="data.troubleDescribe"
+         *ngIf="data.troubleSourceCode === troubleSourceEnum.alarm; else noModel" [title]="data.troubleDescribe"
+    >{{data.troubleDescribe}}</div>
+    <ng-template #noModel>
+      <div class="one-text" [title]="data.troubleDescribe">{{data.troubleDescribe}}</div>
+    </ng-template>
+  </ng-template>
+
+  <!--关联告警-->
+  <app-relevance-alarm *ngIf="isShowRefAlarm"
+                       [(xcVisible)]="isShowRefAlarm"
+                       [modalData]="alarmData"
+                       (selectDataChange)="closeRefAlarm($event)">
+  </app-relevance-alarm>
+</div>

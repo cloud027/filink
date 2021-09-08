@@ -1,0 +1,51 @@
+<!--模版配置-->
+<nz-spin class="product-equipment-template" [nzSpinning]="pageLoading">
+  <div>
+    <span class="template-title">
+      {{productLanguage.configTemplate}}
+    </span>
+  </div>
+  <!--表单-->
+  <div class="template-tabSet" *ngIf="configTemplate.length > 0">
+    <nz-tabset [nzSelectedIndex]="0">
+      <nz-tab *ngFor="let tab of configTemplate;let index = index" nzTitle="{{tab.name}}">
+        <div class="form-container" nz-row>
+          <div *ngIf="tab.type !== 'component'">
+            <div class="config-s" nz-col [nzSpan]="24" *ngFor="let conf of tab.configurationsList">
+              <div *ngIf="conf.configurationList && conf.configurationList.length > 0">
+                <div class="config-item-container" *ngIf="conf.name">
+                  <span class="config-item-title">{{conf.name}}</span>
+                </div>
+                <div *ngFor="let form of conf.configurationList">
+                  <div class="config-item-container" *ngIf="form.name">
+                    <span class="config-item-title form-item-title">{{form.name}}</span>
+                  </div>
+                  <xc-form [column]="form.formColumn" (formInstance)="formInstance($event, form)"></xc-form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="tab.type === 'component' && equipmentType === equipmentEnum.gateway">
+            <!--列表配置-->
+            <app-product-form-table (checkCommit)="checkCommit($event)" [formTableData]="tempTableData"></app-product-form-table>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <div class="no-config" *ngIf="configTemplate.length === 0">{{productLanguage.noConfig}}</div>
+  <!--按钮-->
+  <div class="button-container">
+    <!--保存-->
+    <button class="link-button margin-right20"
+            (click)="saveEquipmentTemplate()"
+            [disabled]="saveBtnDisabled"
+            nz-button nzType="primary">
+      {{commonLanguage.confirm}}
+    </button>
+    <!--取消-->
+    <button class="link-button" nz-button nzType="danger" (click)="onClickCancel()">
+      {{commonLanguage.cancel}}
+    </button>
+  </div>
+</nz-spin>

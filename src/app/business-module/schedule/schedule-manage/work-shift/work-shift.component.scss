@@ -1,0 +1,12 @@
+.time-filter {
+  display: flex;
+  .date-filter-operator{
+    width: 70px;
+  }
+  .check-box-set-column{
+    width: 100%
+  }
+  .table-top-button-flex{
+    flex:1;
+  }
+}

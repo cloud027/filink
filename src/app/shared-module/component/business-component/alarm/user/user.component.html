@@ -1,0 +1,40 @@
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.form" class="screen-render {{ useType }}">
+  <span class="area-name" [title]="checkAlarmNotifier.name">{{checkAlarmNotifier.name}}</span>
+  <button type='button' class="open-button" [disabled]="isDisabled" (click)="openUserSelector()">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i>
+  </button>
+</div>
+<!-- 为表格时的展示 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.table && filterValue" class="screen-render {{ useType }}">
+    <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+           (click)="openUserSelector()" [(ngModel)]="filterValue.filterName || checkAlarmNotifier.name" />
+</div>
+
+<!-- 通知人列表弹框-->
+<nz-modal
+  class="alarmUser"
+  [(nzVisible)]="isVisibleUserTable"
+  [nzTitle]="language.notifier"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzWidth]="820"
+  [nzStyle]="{top: '70px'}"
+  (nzOnCancel)="closeModal()">
+  <ng-template #modalTitle>
+    {{language.notifier}}
+  </ng-template>
+  <ng-template #modalContent>
+    <span class="selected-count">{{commonLanguage.selected}}：{{checkAlarmNotifierBackups.ids.length}} {{commonLanguage.count}}</span>
+    <xc-table #xCTableComp
+      [dataSet]="userListData"
+      [pageBean]="pageBeanUser"
+      [tableConfig]="tableConfigUser"
+      (pageChange)="pageUserChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleConfirm()">{{language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="closeModal()">{{language.cancelText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>

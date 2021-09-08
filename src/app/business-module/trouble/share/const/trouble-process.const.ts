@@ -1,0 +1,29 @@
+/**
+ * 流程节点
+ */
+export const TROUBLE_FLOW = {
+  // 流程节点1
+  one: 'sid-528B7184-B251-4556-A6BC-293385BF0CCA',
+  // 流程节点2
+  two: 'sid-C4B4A170-C173-4EAC-95C5-3871C99AE6DF',
+  // 流程节点3
+  three: 'sid-2D4C5B6D-A68D-41FD-A0D9-7779525F0E97',
+  // 流程节点4
+  four: 'sid-889B319A-0BE1-498C-AD4F-3C5794683914',
+  // 流程节点5
+  five: 'sid-0FC7F325-66DC-402D-99CA-E480C370F85B',
+  // 流程节点6
+  six: 'sid-685F95E0-9706-4E42-9E71-5FFCC9EDA10E',
+  // 流程节点7
+  seven: 'sid-94C31000-7BF9-4BFF-89C7-313ED5C0E11D',
+  // 流程节点8
+  eight: 'sid-7EF192AF-9381-4455-BA0D-9F57357B4DCA',
+  // 流程节点9
+  nine: 'sid-A92BB01F-33F7-41A9-AB92-1220C409AC01',
+  // 流程节点10
+  ten: 'sid-261B1F5C-840F-44BA-B02C-C0730AC7EBAF',
+  // 流程节点11
+  eleven: 'sid-856121C2-4BA0-4323-8FA3-3075F83DD493',
+  // 流程节点12
+  twelve: 'sid-9101F8C2-153C-4A11-974C-7E2C24EA4FA5',
+};

@@ -1,0 +1,69 @@
+<!-- 当在表单提交时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.form" class="screen-render {{ useType }}">
+  <input readonly="readonly" class="area-name select-name" [placeholder]="language.pleaseChoose" [disabled]="isClick" [title]="checkAlarmObject.name" [(ngModel)]="checkAlarmObject.name" />
+  <button class="open-button" type="button" (click)="showAlarmNameSelector()" [disabled]="isClick">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+</div>
+<!-- 当在列表 筛选时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.table && filterValue" class="screen-render {{ useType }}">
+  <input type="text" nz-input type="text"
+         [placeholder]="language.clickSelect"
+         [ngModel]="checkAlarmObject.name || filterValue.filterName"
+         (click)="showAlarmNameSelector()">
+</div>
+
+<!-- icon-l icon-search  -->
+<div
+  *ngIf="isShowAlarmObjectModal">
+  <nz-modal
+    [(nzVisible)]="isShowAlarmObjectModal"
+    [nzTitle]="title||language.alarmobject"
+    [nzContent]="modalContent"
+    [nzMaskClosable]="false"
+    [nzFooter]="modalFooter"
+    [nzWidth]="820"
+    [nzStyle]="{top: '70px'}"
+    (nzOnCancel)="closeAlarmObjSelector()">
+    <ng-template #modalContent>
+    <span class="selected-count">{{commonLanguage.selected}}
+      ：{{checkAlarmObjectBackups.ids.length}} {{commonLanguage.count}}</span>
+      <xc-table #deviceTableComponent
+                [dataSet]="alarmObjectListData"
+                [pageBean]="pageBeanObject"
+                [tableConfig]="tableConfigObject"
+                (pageChange)="pageObjectChange($event)">
+      </xc-table>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" class="link-button" (click)="handleConfirm()">{{language.okText}}</button>
+      <button nz-button nzType="danger" class="link-button"
+              (click)="closeAlarmObjSelector()">{{language.cancelText}}</button>
+      <button nz-button nzType="danger" class="link-button"
+              (click)="clearSelectData()">{{commonLanguage.cleanUp}}</button>
+    </ng-template>
+  </nz-modal>
+</div>
+
+<!-- 告警对象弹框 状态 -->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"
+    ></i>
+    <span class="status-text"
+          [title]="data.deviceStatus | translate : deviceStatusEnum">{{data.deviceStatus | translate : deviceStatusEnum}}</span>
+  </div>
+</ng-template>
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text"
+        [title]="data.deviceType | translate : deviceTypeEnum">{{data.deviceType | translate : deviceTypeEnum}}</span>
+</ng-template>
+
+
+<!--故障设施单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="checkAlarmObjectBackups.ids[0]" (ngModelChange)="selectedChange(data)">
+    <label nz-radio [nzValue]="data.deviceId"></label>
+  </nz-radio-group>
+</ng-template>
+

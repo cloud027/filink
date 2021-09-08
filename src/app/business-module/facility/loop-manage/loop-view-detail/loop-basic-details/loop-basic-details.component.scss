@@ -1,0 +1,90 @@
+@import "../../../../../style-module/config";
+
+// 基本信息外层
+.detail-container {
+  display: flex;
+  width: 100%;
+
+  .device-detail-info {
+    margin-right: 10px;
+    .loop-info-container{
+      margin: 20px 0;
+    }
+  }
+
+  .thumbnail-box {
+    padding-right: 10px;
+    height: 243px;
+  }
+}
+
+.info-img {
+  height: 200px;
+  display: inline-block;
+  width: 100%;
+}
+
+// 用户底边距离
+.user-bottom {
+  margin-bottom: 10px;
+  // 用户图标
+  .user-icon {
+    padding: 3px 5px 0 0;
+    color: $prompt-prompting;
+  }
+}
+
+// 创建时间行特殊样式
+.create-time-row {
+  color: $disabled-font-color;
+}
+
+// 基本信息行样式
+.facility-item {
+  display: flex;
+  padding: 0 10px;
+  // 首行回路名称 回路类型 回路编号特殊处理
+  .special-row {
+    margin-right: 10px;
+  }
+
+  // 回路名称宽度比例
+  .special-row-start {
+    max-width: 30%;
+    font-weight: bold;
+  }
+
+  // 回路类型单独样式
+  .special-row-type {
+    background-color: $prompt-prompting;
+    padding: 0 10px;
+    border-radius: 2px;
+  }
+
+  // 回路编号样式
+  .special-row-code {
+    background-color: $detail-title-color;
+    padding: 0 10px;
+    border-radius: 2px;
+  }
+
+  // 回路编号 回路类型字体白色
+  .special-color {
+    color: $bg-c;
+  }
+
+  //详情类别
+  .label {
+    width: 30%;
+    display: inline-block;
+    color: $disabled-font-color;
+    line-height: 34px
+  }
+
+  // 详情具体内容
+  .value {
+    max-width: 68%;
+    line-height: 34px;
+  }
+}
+

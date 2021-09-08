@@ -1,0 +1,56 @@
+<div class="alarm-warning-setting">
+  <div class="alarm-common-title">{{language.alarmWarningSetting}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+
+<!-- 启用状态 -->
+<ng-template #isNoStartTemp let-data="data">
+  <div class="switch-task">
+    <span *ngIf="data.isDisabled" class="switch-over"></span>
+    <nz-switch [ngModel]="data.status === isStatus.enable"
+               [nzLoading]="data.isDisabled"
+               [nzControl]="true"
+               [nzDisabled]="data.isDisabled"
+               (click)="clickSwitch(data)">
+    </nz-switch>
+    <span *ngIf="data.status === isStatus.enable" class="open-type" >{{language.enable}}</span>
+    <span *ngIf="data.status === isStatus.disable" class="open-type" >{{language.disable}}</span>
+  </div>
+</ng-template>
+
+<!-- 越限次数 -->
+<ng-template #crossCountTemp let-filterValue = "filterValue">
+    <span class="input-box">
+      <input type="text" class="width-style area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+</ng-template>
+
+<!-- 越限时长 -->
+<ng-template #crossDurationTemp let-filterValue = "filterValue">
+    <span class="input-box">
+      <input type="text" class="width-style area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+</ng-template>
+
+<!-- 告警名称 -->
+<ng-template #alarmWarmingTemp let-data="data" let-filterValue="filterValue">
+  <app-alarm-name [alarmNameConfig]='alarmNameSelectConfig' [filterCondition]=filterValue></app-alarm-name>
+</ng-template>
+
+<!--告警级别-->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="hidden" title="{{data.alarmWarningLevelName}}">
+    <span class="status-temp alarmLevel" [ngStyle]="data.levelStyle"> </span>
+    {{data.alarmWarningLevelName}}
+  </div>
+</ng-template>

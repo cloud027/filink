@@ -1,0 +1,358 @@
+<div class="work-order-detail">
+  <!--  title标题  -->
+  <div nz-row class="margin-bottom-row gutter-row">
+    <span class="work-order-detail-title fontsize-sixteen">{{ pageTitle }}</span>
+  </div>
+  <!--  拆除工单  -->
+  <div nz-row nzGutter="20" class="margin-bottom-row">
+    <!-- 拆除工单基本信息 -->
+    <div nz-col nzSpan="8">
+      <div
+        class="gutter-box block-pad work-order-block-pad"
+        [class.gutter-box-unfinished]="!isFinished"
+      >
+        <!--  历史拆除工单评价  -->
+        <div *ngIf="isFinished" class="image-box">
+          <div class="image-evaluate" [ngClass]="getEvaluatePicture()"></div>
+          <div>
+            <span class="time-comment alarm-count">{{
+              dismantleBarrierWorkOrderData.evaluateDetailInfo
+            }}</span>
+          </div>
+        </div>
+        <!--  未完成拆除工单剩余天数  -->
+        <div *ngIf="!isFinished" class="image-days">
+          <div class="image-position" [ngClass]="getRemainDaysPicture()">
+            <span class="remain-days-center fontsize-sixteen">{{
+              dismantleBarrierWorkOrderData.lastDays
+            }}</span>
+          </div>
+          <div class="image-days-text">{{ inspectionLanguage.daysRemaining }}</div>
+        </div>
+        <!--  拆除工单状态（待指派、已完成）  -->
+        <div>
+          <span
+            class="detail-row-top column-top comment-text-property"
+            [title]="dismantleBarrierWorkOrderData.title"
+            >{{ dismantleBarrierWorkOrderData.title }}</span
+          >
+          <span class="operate-text status" [ngClass]="dismantleBarrierWorkOrderData.status"
+            ><i class="status-color" [ngClass]="getWorkOrderStatus()"></i
+            >{{ inspectionLanguage[dismantleBarrierWorkOrderData.status] }}</span
+          >
+        </div>
+        <div>
+          <span class="alarm-font time-comment"
+            >{{ inspectionLanguage.creationTime }}：{{
+              dismantleBarrierWorkOrderData.createTime | date: "yyyy-MM-dd HH:mm:ss"
+            }}</span
+          >
+        </div>
+        <!-- 责任人 -->
+        <div class="name-margin" [class.name-margin-unfinished]="!isFinished">
+          <span class="fontsize-fourteen">
+            <i
+              nz-tooltip
+              [nzTitle]="inspectionLanguage.responsible"
+              class="iconfont fiLink-user-menu icon-span icon-span-color-01"
+            ></i
+            >{{ dismantleBarrierWorkOrderData.assignName }}
+          </span>
+        </div>
+        <!-- 责任单位 -->
+        <div>
+          <span class="fontsize-fourteen">
+            <i
+              nz-tooltip
+              [nzTitle]="inspectionLanguage.responsibleUnit"
+              class="iconfont fiLink-departments icon-span icon-span-color-03"
+            ></i
+            >{{ dismantleBarrierWorkOrderData.accountabilityDeptName }}
+          </span>
+        </div>
+      </div>
+      <!-- 设备资产编号： -->
+      <div class="assets-number">
+        <!-- 资产编号： -->
+        <div class="text-overflow-hidden">
+          <span class="assets-title">{{ workOrderLanguage.assetNumber }}:</span>
+          <!-- 选择设施 -->
+          <ng-template
+            [ngIf]="dismantleBarrierWorkOrderData.removeType === DismantleTypeEnum.device"
+          >
+            <span class="operate-text">
+              <i nz-tooltip class="iconfont icon-span"></i
+              >{{ dismantleBarrierWorkOrderData.deviceCode }}
+            </span>
+          </ng-template>
+          <!-- 选择设备 -->
+          <ng-template
+            [ngIf]="dismantleBarrierWorkOrderData.removeType === DismantleTypeEnum.equipment"
+          >
+            <span class="operate-text">
+              <i nz-tooltip class="iconfont icon-span"></i
+              >{{ dismantleBarrierWorkOrderData.equipmentCode }}
+            </span>
+          </ng-template>
+        </div>
+      </div>
+      <!-- 完工时间 -->
+      <div
+        class="box-half-height bottom-box-half block-pad work-order-block-pad end-time-box"
+        [class.box-half-height-unfinished-up]="!isFinished"
+      >
+        <!--  拆除工单开始时间  -->
+        <div nz-row class="comment-margin-bottom">
+          <div nz-col nzSpan="6" class="label-width">
+            <span class="comment-margin-bottom-text-color"
+              >{{ inspectionLanguage.startTime }}：</span
+            >
+          </div>
+          <div nz-col nzSpan="17" class="value-width">
+            <span
+              class="operate-text"
+              [title]="dismantleBarrierWorkOrderData.createTime | date: 'yyyy-MM-dd HH:mm:ss'"
+              ><i class="iconfont fiLink-time icon-span icon-span-color-03"></i
+              >{{ dismantleBarrierWorkOrderData.createTime | date: "yyyy-MM-dd HH:mm:ss" }}</span
+            >
+          </div>
+        </div>
+        <!--  拆除工单结束时间  -->
+        <div nz-row class="comment-margin-bottom">
+          <div nz-col nzSpan="6" class="label-width">
+            <span class="comment-margin-bottom-text-color"
+              >{{ inspectionLanguage.inspectionEndTime }}：</span
+            >
+          </div>
+          <div nz-col nzSpan="17" class="value-width">
+            <span
+              class="operate-text"
+              [title]="
+                dismantleBarrierWorkOrderData.expectedCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'
+              "
+              ><i class="iconfont fiLink-time icon-span icon-span-color-03"></i
+              >{{
+                dismantleBarrierWorkOrderData.expectedCompletedTime | date: "yyyy-MM-dd HH:mm:ss"
+              }}</span
+            >
+          </div>
+        </div>
+        <!--  未完成拆除工单实际时间  -->
+        <div *ngIf="isFinished" nz-row class="comment-margin-bottom">
+          <div nz-col nzSpan="6" class="label-width">
+            <span class="comment-margin-bottom-text-color"
+              >{{ inspectionLanguage.actualTime }}：</span
+            >
+          </div>
+          <div nz-col nzSpan="17" class="value-width">
+            <span
+              class="operate-text"
+              [title]="
+                dismantleBarrierWorkOrderData.realityCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'
+              "
+              ><i class="iconfont fiLink-time icon-span icon-span-color-03"></i
+              >{{
+                dismantleBarrierWorkOrderData.realityCompletedTime | date: "yyyy-MM-dd HH:mm:ss"
+              }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  中间区域 拆除工单设施/设备  -->
+    <div nz-col nzSpan="8" class="area-middle-box">
+      <!-- 拆除设施基本信息 -->
+      <div class="device-base-info-box">
+        <!-- 头部的 区域信息 -->
+        <div class="device-header-box">
+          <span
+            class="detail-row-top column-top1 comment-text-property"
+            [title]="dismantleBarrierWorkOrderData.deviceAreaName"
+            >{{ dismantleBarrierWorkOrderData.deviceAreaName }}</span
+          >
+          <span class="device-model-box">{{ dismantleBarrierWorkOrderData.deviceModel }}</span>
+        </div>
+        <div
+          class="comment-margin-bottom-ex"
+          [class.comment-margin-bottom-unfinished]="!isFinished"
+        >
+          <span>
+            <i
+              nz-tooltip
+              [nzTitle]="dismantleBarrierWorkOrderData.deviceObject.name"
+              class="iconfont icon-span"
+              [ngClass]="dismantleBarrierWorkOrderData.deviceObject.picture"
+            ></i
+            >{{ dismantleBarrierWorkOrderData.deviceObject.name }}&nbsp;&nbsp;&nbsp;{{
+              dismantleBarrierWorkOrderData.deviceName
+            }}
+          </span>
+        </div>
+        <!--  拆除工单设备名称  -->
+        <div nz-row class="comment-margin-bottom text-overflow-hidden equipment-name">
+          <div nz-col nzSpan="6">
+            <span class="comment-margin-bottom-text-color"
+              >{{ inspectionLanguage.equipmentName }}：</span
+            >
+          </div>
+          <div nz-col nzSpan="18" class="equipment-name-box">
+            <span
+              class="operate-text"
+              *ngFor="let equipment of dismantleBarrierWorkOrderData.equipmentList"
+            >
+              <i
+                nz-tooltip
+                [nzTitle]="equipment.typeName"
+                class="iconfont icon-span"
+                style="margin-right: 5px"
+                [class]="equipment.styleColor"
+              ></i
+              >{{ equipment.equipmentName }}
+            </span>
+          </div>
+        </div>
+        <!--  拆除工单车辆信息  -->
+        <div nz-row class="comment-margin-bottom">
+          <div nz-col nzSpan="6">
+            <span class="comment-margin-bottom-text-color">{{ inspectionLanguage.carInfo }}：</span>
+          </div>
+          <div nz-col nzSpan="18">
+            <span class="operate-text" [title]="dismantleBarrierWorkOrderData.carName">{{
+              dismantleBarrierWorkOrderData.carName
+            }}</span>
+          </div>
+        </div>
+        <!--  拆除工单物料信息  -->
+        <div nz-row class="comment-margin-bottom">
+          <div nz-col nzSpan="6">
+            <span class="comment-margin-bottom-text-color"
+              >{{ inspectionLanguage.materielInfo }}：</span
+            >
+          </div>
+          <div nz-col nzSpan="18">
+            <span class="operate-text" [title]="dismantleBarrierWorkOrderData.materielName">{{
+              dismantleBarrierWorkOrderData.materielName
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- 其他信息 -->
+      <div class="other-middle-box">
+        <!--  拆除工单原因  -->
+        <div
+          class="box-half-height block-pad work-order-block-pad block-pad"
+          [class.box-half-height-unfinished-down]="!isFinished"
+          [class.box-half-height-finished-down]="isFinished"
+        >
+          <!-- 任务描述 -->
+          <div nz-row class="task-destion-box comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color"
+                >{{ workOrderLanguage.taskDescription }}:</span
+              >
+            </div>
+            <div nz-col nzSpan="17" class="value-width">
+              <span class="operate-text line-limit-length">{{
+                dismantleBarrierWorkOrderData.taskDescribe
+              }}</span>
+            </div>
+          </div>
+          <!--  拆除工单费用信息/退单原因  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color"
+                >{{ getClearBarrierReasonText(1) }}：</span
+              >
+            </div>
+            <div nz-col nzSpan="17" class="value-width">
+              <span
+                class="operate-text line-limit-length"
+                [title]="getClearBarrierReasonContent(1)"
+                >{{ getClearBarrierReasonContent(1) }}</span
+              >
+            </div>
+          </div>
+          <!--  拆除工单退单原因/转派原因  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color"
+                >{{ getClearBarrierReasonText(2) }}：</span
+              >
+            </div>
+            <div nz-col nzSpan="17" class="value-width">
+              <span
+                class="operate-text line-limit-length"
+                [title]="getClearBarrierReasonContent(2)"
+                >{{ getClearBarrierReasonContent(2) }}</span
+              >
+            </div>
+          </div>
+          <!--  拆除工单备注  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color"
+                >{{ inspectionLanguage.remarks }}：</span
+              >
+            </div>
+            <div nz-col nzSpan="17" class="value-width">
+              <span
+                class="operate-text line-limit-length comment-text-property"
+                [title]="dismantleBarrierWorkOrderData.remark"
+                >{{ dismantleBarrierWorkOrderData.remark }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 拆除设施图片 -->
+    <div nz-col nzSpan="8">
+      <div
+        class="remove-barrier-device-point-img"
+        [class.remove-barrier-device-finished-img]="isFinished"
+      >
+        <img src="../../../../../assets/img/work-order/remove-barrier-device-point.png" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 拆除设施 -->
+  <div
+    class="remove-ponit-box"
+    *ngIf="dismantleBarrierWorkOrderData.removeType === DismantleTypeEnum.device"
+  >
+    <div class="remove-title">{{ workOrderLanguage.removeDevice }}</div>
+    <div class="remove-table">
+      <app-remove-device [filterDeviceId]="filterDeviceId" [pageType]="pageType"></app-remove-device>
+    </div>
+  </div>
+  <!-- 拆除设备 -->
+  <div
+    class="remove-ponit-box"
+    *ngIf="
+      filterEquipmentId || dismantleBarrierWorkOrderData.removeType === DismantleTypeEnum.device
+    "
+  >
+    <div class="remove-title">{{ workOrderLanguage.removeEquipment }}</div>
+    <div class="remove-table">
+      <app-remove-equipment [filterEquipmentId]="filterEquipmentId" [pageType]="pageType"></app-remove-equipment>
+    </div>
+  </div>
+  <ng-template #deviceEquipmentTemp let-data="data">
+    <!--设施类型图标-->
+    <div class="hidden" title="{{ data.deviceTypeName }}" *ngIf="data.type === 1">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{ data.deviceTypeName }}
+    </div>
+    <!--设备类型-->
+    <div class="tab-text-over" *ngIf="data.type === 2">
+      <span
+        *ngFor="let item of data.equipmentTypeList"
+        class="over-type"
+        title="{{ data.equipmentTypeName }}"
+      >
+        <span class="status-temp" [ngClass]="item.key"></span>{{ item.label }}
+      </span>
+    </div>
+  </ng-template>
+</div>

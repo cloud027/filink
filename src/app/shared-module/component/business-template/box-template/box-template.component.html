@@ -1,0 +1,69 @@
+<div class="box-template">
+  <div class="search-info">
+    <div class="parameter-config">
+      <div class="parameter-item">
+        <!--名称-->
+        <label>{{language.template.name}}</label>
+        <input type="text" nz-input maxlength="32" class="name-input" [(ngModel)]="boxInfo.name">
+      </div>
+      <div class="parameter-item ranks">
+        <!--行列数-->
+        <label>{{language.template.ranks}}</label>
+        <div style="display: flex">
+          <nz-input-number [nzPrecision]="0" [nzMin]="1" [nzMax]="12" [nzStep]="1"
+                           [(ngModel)]="boxInfo.row"></nz-input-number>
+          <span>*</span>
+          <nz-input-number [nzPrecision]="0" [nzMin]="1" [nzMax]="8" [nzStep]="1"
+                           [(ngModel)]="boxInfo.col"></nz-input-number>
+        </div>
+      </div>
+      <div class="parameter-item">
+        <!--单双面-->
+        <label>{{language.template.singleDoubleSide}}</label>
+        <nz-select [(ngModel)]="boxInfo.reversible">
+          <!--单面-->
+          <nz-option [nzValue]="1" nzLabel="{{language.single}}"></nz-option>
+          <!--双面-->
+          <nz-option [nzValue]="2" nzLabel="{{language.doubleSided}}"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div class="search-item">
+      <app-template-search #templateSearch
+                           (chooseTemplate)="selectTemplate($event)"
+                           [templateType]="templateType"></app-template-search>
+      <div>
+        <!--保存-->
+        <button class="link-button"
+                *ngIf="!this.modifyShow"
+                style="margin-right: 10px"
+                nz-button nzType="primary"
+                (click)="handleSave()"
+                [nzLoading]="loading"
+                [disabled]="!canPreview('save')">{{language.save}}
+        </button>
+        <!--修改-->
+        <button class="link-button"
+                *ngIf="this.modifyShow"
+                style="margin-right: 10px"
+                nz-button nzType="primary"
+                (click)="handleModify()"
+                [nzLoading]="loading"
+                [disabled]="!canPreview('save')">{{language.Modify}}
+        </button>
+        <!--预览-->
+        <button class="link-button"
+                nz-button nzType="danger"
+                (click)="preview()"
+                [disabled]="!canPreview('view')">{{language.preview}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="template-info" id="box-template">
+
+  </div>
+</div>
+<nz-modal [(nzVisible)]="saveShow" nzTitle="{{language.SaveTemplate}}" (nzOnCancel)="saveCancel()" (nzOnOk)="saveOk()">
+  <p>{{language.sureSaveTemplate}}</p>
+</nz-modal>

@@ -1,0 +1,9 @@
+<ul class="breadcrumbs">
+  <li>{{language.currentPosition}}：</li>
+  <li class="breadcrumbs-item" *ngFor="let breadcrumb of breadcrumbs;let index = index">
+
+    <span *ngIf="breadcrumb.url" [routerLink]="[breadcrumb.url]" [queryParamsHandling]="breadcrumb.queryParamsHandling" [class.active]="index===breadcrumbs.length-1">{{ breadcrumb.label }}</span>
+    <span *ngIf="!breadcrumb.url" [class.active]="index===breadcrumbs.length-1" style="cursor: default">{{ breadcrumb.label }}</span>
+    <span class="separator" *ngIf="index!==breadcrumbs.length-1">/</span>
+  </li>
+</ul>

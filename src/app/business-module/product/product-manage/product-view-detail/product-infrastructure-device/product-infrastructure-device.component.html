@@ -1,0 +1,140 @@
+<div class="product-info-container">
+  <div nz-col nzSpan="10">
+    <div class="info-card-item first-line-card">
+      <div class="import-info product-base">
+        <!--功能-->
+        <i [class]="productDetail | productIcon: productDetail.typeFlag"></i>
+        <!--类型名称-->
+        <span class="product-description"
+              nz-tooltip="{{productDetail.typeCode | productTypeTranslate: productDetail.typeFlag }}">
+          {{productDetail.typeCode | productTypeTranslate: productDetail.typeFlag }}
+        </span>
+        <!--计量单位-->
+        <span class="unit">{{productDetail.unit | translate: productUnit: language.product}}</span>
+        <!--规格型号-->
+        <span class="product-model" nz-tooltip="{{productDetail.productModel}}">{{productDetail.productModel}}</span>
+        <!--如果是智慧杆就显示预览按钮-->
+        <div class="wisdom-preview">
+          <button class="icon-fiLink-4"
+                  nz-button nzType="default"
+                  type="button"
+                  (click)="onClickPreview()"
+                  *ngIf="productDetail.typeFlag===productTypeEnum.facility && productDetail.typeCode === deviceTypeEnum.wisdom">
+            <i class="iconfont fiLink-preview"></i>
+            {{productLanguage.preview}}
+          </button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="product-creator">
+          <!--责任单位-->
+          <div class="install-info-item">
+            <i [nz-tooltip]="productLanguage.deptName" class="icon-fiLink-6 icon-item iconfont fiLink-departments"></i>
+            <span nz-tooltip="{{productDetail.deptName}}">{{productDetail.deptName}}</span>
+          </div>
+          <!--供应商-->
+          <div class="install-info-item ">
+            <i nz-tooltip="{{productLanguage.supplier}}"
+               class="icon-fiLink-9 icon-item  iconfont fiLink-supplier"></i>
+            <span nz-tooltip="{{productDetail.supplierName}}">{{productDetail.supplierName}}</span>
+          </div>
+          <!--产品功能-->
+          <div class="install-info-item">
+            <div nz-col nzSpan="7" class="label-name description-label">{{productLanguage.productFeatures}}：</div>
+            <div nz-col nzSpan="12" class="label-value">
+              <span nz-tooltip="{{productDetail.description}}">{{productDetail.description}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- 故障率-->
+        <div echarts class="break-chart" [options]="breakRateOption"></div>
+      </div>
+    </div>
+    <!--安装信息-->
+    <div class="info-card-item install-info">
+      <div class="install-info-container">
+        <!--报废年限-->
+        <div class="install-info-item">
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.scrapTime}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <span>{{productDetail.scrapTime}}</span>
+          </div>
+        </div>
+        <!--单价-->
+        <div class="install-info-item">
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.price}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <span>{{productDetail.price}}</span>
+          </div>
+        </div>
+        <!--平均运维成本-->
+        <div class="install-info-item">
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.avgCost}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <span></span>
+          </div>
+        </div>
+        <!--安装数量-->
+        <div class="install-info-item">
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.quantity}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <span>{{productDetail.quantity}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--创建信息-->
+    <div class="info-card-item install-info create-info">
+      <div class="install-info-container">
+        <!--创建人-->
+        <div class="install-info-item" nz-row>
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.createUser}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <span>{{productDetail.createUserName}}</span>
+          </div>
+        </div>
+        <!--创建时间-->
+        <div class="install-info-item" nz-row>
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.createTime}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <i class="icon-fiLink-6 iconfont fiLink-time sp-icon"></i>
+            <span>{{productDetail.createTime | dynamic: 'date' : null}}</span>
+          </div>
+        </div>
+        <!--更新时间-->
+        <div class="install-info-item" nz-row>
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.updateTime}}：</div>
+          <div nz-col nzSpan="12" class="label-value">
+            <i class="icon-fiLink-6 iconfont fiLink-time sp-icon"></i>
+            <span>{{productDetail.updateTime | dynamic: 'date' : null}}</span>
+          </div>
+        </div>
+        <!--备注-->
+        <div class="install-info-item" nz-row>
+          <div nz-col nzSpan="7" class="label-name">{{productLanguage.remarks}}：</div>
+          <div nz-col nzSpan="12" class="label-value" nz-tooltip="{{productDetail.remark}}">
+            <span>{{productDetail.remark}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="14" class="product-img-container">
+    <!--产品设施设备图片-->
+    <div class="info-card-item picture">
+      <img class="product-image" [src]="productImgUrl" alt="">
+    </div>
+  </div>
+</div>
+<!-- 端口列表或者是预览弹框-->
+<nz-modal *ngIf="showModal"
+          [(nzVisible)]="showModal"
+          [nzNoAnimation]="true"
+          [nzFooter]="modalFooter"
+          nzWidth="80%"
+          (nzOnCancel)="showModal=false"
+          [nzTitle]="productLanguage.preview">
+  <app-product-wisdom-preview [previewDataDetail]="previewDataDetail" [showBtn]="false"></app-product-wisdom-preview>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>

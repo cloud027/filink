@@ -1,0 +1,14 @@
+
+.form-width {
+  width: 300px;
+
+  .file-input {
+    display: none
+  }
+
+  .file-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,42 @@
+<!--我的关注设施设备列表-->
+<div class="facility-list-container">
+
+  <!--选择设施列表-->
+  <div class="left-panel-tabs">
+    <div class="click-area">
+      <div class="left-panel-tab" [ngClass]="{'tab-selected': defaultHandleTab}"
+           (click)="tabClick(facilityEquipmentList.facilitiesList)" [appTenantPermission]="'1-1-2-1'" >
+        <div class="text-content hidden" title="{{indexLanguage.facilitiesList}}">{{indexLanguage.facilitiesList}}</div>
+      </div>
+      <div class="segmentation"  [appTenantPermission]="'1-1-2-1'" *ngIf="polymerizationChange === '1'">|</div>
+      <!--选择设备列表-->
+      <div class="left-panel-tab" [ngClass]="{'tab-selected': !defaultHandleTab}"
+           (click)="tabClick(facilityEquipmentList.equipmentList)" [appTenantPermission]="'1-1-2-2'" *ngIf="polymerizationChange === '1'">
+        <div class="text-content hidden" title="{{indexLanguage.equipmentList}}">{{indexLanguage.equipmentList}}</div>
+      </div>
+    </div>
+    <div class="search-style" (click)="showSearch()" title="{{indexLanguage.filter}}" *ngIf="myCollectionOperating">
+      <span><i class="icon-l iconfont fiLink-filter index-icon-l"></i></span>
+    </div>
+
+  </div>
+
+  <!--设施列表表格-->
+  <div [hidden]="!defaultShowTable" class="facility-table" [appTenantPermission]="'1-1-2-1'">
+    <xc-table [dataSet]="facilityListDataSet"
+              [pageBean]="facilityListPageBean"
+              [tableConfig]="facilityListTableConfig"
+              (pageChange)="pageFacilityList($event)"
+    >
+    </xc-table>
+  </div>
+
+  <!--设备列表表格-->
+  <div [hidden]="defaultShowTable" class="facility-table" [appTenantPermission]="'1-1-2-2'">
+    <xc-table [dataSet]="equipmentListDataSet"
+              [pageBean]="equipmentListPageBean"
+              [tableConfig]="equipmentListTableConfig"
+              (pageChange)="pageEquipmentList($event)">
+    </xc-table>
+  </div>
+</div>

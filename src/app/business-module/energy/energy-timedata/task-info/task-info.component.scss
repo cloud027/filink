@@ -1,0 +1,224 @@
+@import '../../../../style-module/config';
+.nodes-details-box {
+    background-color: #f0f2f5;
+    .nodes-details-title {
+        font-size: 16px;
+        color: #333333;
+        font-weight: 900;
+        background-color: #fff;
+        padding: 10px 0 20px 16px;
+    }
+    .card-box {
+        margin-top: 10px;
+    }
+    > .title {
+        font-size: 16px;
+        color: #333;
+        font-weight: 900;
+        padding-left: 15px;
+        padding-bottom: 15px;
+        background-color: #fff;
+    }
+    .card-item {
+        height: 180px;
+        ::ng-deep .ant-card-body {
+            > .title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin: 10px 0;
+            }
+            .creationTime-box {
+                margin-bottom: 20px;
+                color: #626262;
+            }
+            .item {
+                margin: 10px 0;
+            }
+            .user-box {
+                margin: 10px 0;
+            }
+            .span-title {
+                color: #a6a6a6;
+            }
+            .create-user {
+                margin-right: 5px;
+                color: $left-top-color;
+            }
+
+            .clock-circle {
+                margin-right: 5px;
+                color: $communication-model-color;
+            }
+        }
+    }
+    .card-list-box {
+        display: flex;
+        flex-wrap: wrap;
+        .list-item {
+            width: 50%;
+            margin-bottom: 20px;
+            .title-icon {
+                color: #a6a6a6;
+                margin-right: 10px;
+            }
+        }
+        .device-type {
+            .title-icon {
+                background-color: #f39705;
+                color: #fff;
+                display: inline-block;
+                width: 60px;
+                font-size: 14px;
+                text-align: center;
+                padding: 2px;
+            }
+        }
+        .code-width {
+            .title-icon {
+                color: #fad707;
+                margin-right: 10px;
+            }
+        }
+    }
+    .right-container {
+        .span-title {
+            display: inline-block;
+            width: 120px;
+        }
+        .remarks-box {
+            margin-top: 20px;
+        }
+    }
+    .basic-operation-box {
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #fff;
+        .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        .operation-icon {
+            display: flex;
+            > div {
+                width: 200px;
+                height: 80px;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                &:hover {
+                    background: #36cfc9;
+                    color: #fff;
+                    .icon-fiLink {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.card-list {
+    margin-right: 5px;
+    padding-top: 20px;
+
+    .details-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .create-user {
+            margin-right: 5px;
+            color: $left-top-color;
+        }
+
+        .clock-circle {
+            margin-right: 5px;
+            color: $communication-model-color;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .status {
+            width: 62px;
+            height: 20px;
+            line-height: 20px;
+            color: $menu-font-color;
+            text-align: center;
+            border-radius: 3px;
+            margin-right: 10px;
+            background-color: $statistics-assigned;
+
+            .status-icon {
+                font-size: 15px;
+            }
+
+            .status-text {
+                vertical-align: top;
+            }
+        }
+        .disable-status {
+            background: #ccc;
+        }
+
+        .exec-status {
+            background: $handle-commit-color;
+        }
+        .exec-type {
+            width: 100px;
+            background: $sp-icon-color-2;
+        }
+        .exec {
+            width: 50px;
+            color: $menu-font-color;
+            text-align: center;
+            border-radius: 3px;
+            background: #35cfc9;
+        }
+
+        .info-title {
+            width: 100px;
+            color: $disabled-font-color;
+        }
+        .info-right {
+            margin-left: 20px;
+        }
+        .remark-text {
+            width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .create {
+        color: $disabled-font-color;
+
+        .create-time {
+            margin-right: 10px;
+        }
+    }
+}
+
+.node-con-box {
+    margin-top: 10px;
+    border: none;
+}
+.time-box {
+    display: flex;
+    justify-content: space-between;
+    .time-item{
+        width: 50%;
+    }
+}
+.createuser-item {
+    margin-top: 20px;
+}

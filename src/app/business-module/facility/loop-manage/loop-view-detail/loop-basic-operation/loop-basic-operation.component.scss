@@ -1,0 +1,52 @@
+@import "../../../../../style-module/config";
+
+.operate-btn {
+  width: 170px;
+  border: none;
+  outline: none;
+  margin-right: 12px;
+  padding: 0 10px;
+  cursor: pointer;
+  box-shadow: none;
+  text-align: left;
+  background: $bg-c-w;
+
+  .operate-icon {
+    margin-right: 12px;
+  }
+
+  .facility-edit {
+    vertical-align: middle;
+  }
+}
+
+// 回路基本操作按钮样式
+.operate-content {
+  display: flex;
+  flex-wrap: wrap;
+  height: 80px;
+  // 每个操作按钮的样式
+  .operate-item {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    width: 210px;
+    cursor: pointer;
+    border-radius: 4px;
+
+    .btn-name {
+      font-size: 13px;
+    }
+
+    // 鼠标悬停每个操作按钮样式
+    &:hover {
+      color: $bg-c-w;
+      background-color: $color;
+    }
+  }
+}
+
+
+

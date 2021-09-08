@@ -1,0 +1,59 @@
+<!--设施设备列表-->
+<div class="facility-list-container">
+
+  <!--选择设施列表-->
+  <div class="left-panel-tabs">
+    <div class="click-area">
+      <div class="left-panel-tab" [ngClass]="{'tab-selected': defaultShowTable}"
+           (click)="tabClick(facilityEquipmentList.facilitiesList)" [appTenantPermission]="'1-1-1-6'">
+        <div class="text-content hidden" title="{{indexLanguage.facilitiesList}}">{{indexLanguage.facilitiesList}}</div>
+      </div>
+      <div class="segmentation" [appTenantPermission]="'1-1-1-7'" *ngIf="polymerizationChange==='1'">|</div>
+      <!--选择设备列表-->
+      <div class="left-panel-tab" [ngClass]="{'tab-selected': !defaultShowTable}"
+           (click)="tabClick(facilityEquipmentList.equipmentList)" [appTenantPermission]="'1-1-1-7'"
+           *ngIf="polymerizationChange==='1'">
+        <div class="text-content hidden" title="{{indexLanguage.equipmentList}}">{{indexLanguage.equipmentList}}</div>
+      </div>
+    </div>
+
+    <!--批量操作按钮-->
+    <div class="facility-list-title" *ngIf="this.roleDeviceOperating">
+      <div class="batch-handle-button" title="{{indexLanguage.batchOperation}}" (click)="handleBatchOperation()">
+        <span><i class="index-icon-l icon-l iconfont fiLink-batch-operation iconfont-style"></i></span>
+      </div>
+      <div class="batch-handle-button" title="{{indexLanguage.filter}}" (click)="showSearch()">
+        <span><i class="index-icon-l icon-l iconfont fiLink-filter iconfont-style"></i></span>
+      </div>
+      <div class="facility-list-title-more" title="{{indexLanguage.more}}" (click)="goToFacilityList()">
+        <span><i class="index-icon-l icon-l iconfont fiLink-more iconfont-style"></i></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!--设施列表表格-->
+  <div [hidden]="!defaultShowTable" class="facility-table" [appTenantPermission]="'1-1-1-6'">
+    <xc-table
+      #facilityListTable
+      [dataSet]="facilityListDataSet"
+      [pageBean]="facilityListPageBean"
+      [tableConfig]="facilityListTableConfig"
+      (pageChange)="pageFacilityList($event)"
+    >
+    </xc-table>
+  </div>
+
+  <!--设备列表表格-->
+  <div [hidden]="defaultShowTable" class="facility-table" [appTenantPermission]="'1-1-1-7'">
+    <xc-table
+      #equipmentListTable
+      [dataSet]="equipmentListDataSet"
+      [pageBean]="equipmentListPageBean"
+      [tableConfig]="equipmentListTableConfig"
+      (pageChange)="pageEquipmentList($event)"
+    >
+    </xc-table>
+  </div>
+
+</div>

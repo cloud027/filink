@@ -1,0 +1,62 @@
+@import "../../../style-module/config.scss";
+.energy-statistic {
+  background-color: $bg-c;
+  .top-box {
+    .card-box {
+      text-align: center;
+      margin: 10px 0;
+      p {
+        font-size: 20px;
+      }
+      .data-text {
+        font-size: 24px;
+        font-weight: 500;
+      }
+      .day-color {
+        color: #78c446;
+      }
+      .month-color {
+        color: #5ed8a9;
+      }
+      .quarter-color {
+        color: #5ed7d8;
+      }
+      .year-color {
+        color: #e858ba;
+      }
+    }
+  }
+  .select-box {
+    padding: 16px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    .power-rate-button {
+      float: right;
+    }
+  }
+}
+::ng-deep .empty-container {
+  height: 280px;
+  padding-top: 80px;
+}
+
+::ng-deep .Echarts-box {
+  .echarts-item {
+    background-color: #fff;
+    .echarts-select-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #e8e8e8;
+      .echarts-title {
+        font-size: 14px;
+        color: #333;
+        font-weight: 900;
+      }
+      .time-picker-select {
+        display: inline-block;
+      }
+    }
+  }
+}

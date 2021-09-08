@@ -1,0 +1,34 @@
+<!--管理员新增/编辑-->
+<div class="admin-detail">
+  <div>
+    <!--页面标题-->
+    <span class="page-title">
+      {{this.pageTitle}}
+    </span>
+  </div>
+  <div>
+    <!--租户管理员表单-->
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="content-link">
+      <!--提交按钮-->
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isDisabled">{{language.okText}}
+      </button>
+      <!--取消按钮-->
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{this.language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 电话号码模板 -->
+<ng-template #telephoneTemp let-formGroup="formGroup" let-col="col">
+  <app-telephone-input #telephoneInput
+                       (phoneChange)="getPhone($event)"
+                       [hint]="null"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <!--电话号码重复提示-->
+  <span class="hint">{{this.phoneNumberMsg}}</span>
+</ng-template>

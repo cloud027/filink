@@ -1,0 +1,198 @@
+<div class="facility-detail-panel-container">
+  <!--设施/设备详情-->
+  <div class="detail bottom-distance" *ngIf="facilityInfo" [appTenantPermission]="'1-2-1-1'">
+    <div class="detail-top">
+      <div class="info">
+        <div class="title">
+          <!--设施/设备名称-->
+          <div class="facility-type-and-name hidden">{{facilityInfo.facilityName}}</div>
+        </div>
+        <div class="facility-status">
+          <!--设施/设备图标-->
+          <div class="facility-type-icon" [ngClass]="facilityInfo.facilityTypeClassName"></div>
+          <!--设施/设备类型-->
+          <div class="m-right">{{facilityInfo.facilityTypeName}}</div>
+          <!--设施/设备状态-->
+          <div class="facility-status-text"
+               title="{{facilityInfo.facilityName}}" [ngClass]="facilityInfo.bgColor">
+            {{facilityInfo.text}}
+          </div>
+          <!--智能门禁布防-->
+          <div class="deploy-status" *ngIf="facilityPowerCode.includes(powerCode.smartAccessControlDetail)">
+            <div class="icon" [ngClass]="deployInfo?.deployStatusIconClass"></div>
+            <span title="{{deployInfo?.deployStatusLabel}}">{{deployInfo?.deployStatusLabel}}</span>
+          </div>
+        </div>
+        <!--资产编号-->
+        <div class="facility-number" title="{{facilityInfo.facilityCode}}">
+          <div class="facility-number-title">{{indexLanguage.facilityNumber}}</div>
+          <div class="facility-number-code">{{facilityInfo.facilityCode}}</div>
+        </div>
+      </div>
+      <!--图片/关注按钮-->
+      <div class="pic">
+        <img class="info-img" *ngIf="devicePicUrl" [src]="devicePicUrl"
+             alt="">
+        <div [ngClass]="isCollected ? 'fiLink-collected' : 'fiLink-collect'"
+             (click)="collectionChange()"
+             class="iconfont icon-fiLink icon-collection-color collection">
+        </div>
+      </div>
+    </div>
+    <!--区域名称-->
+    <div class="detail-bottom">
+      <div class="detail-bottom-item">
+        <div class="detail-bottom-item-title">{{indexLanguage.area}}</div>
+        <div class="detail-bottom-item-value hidden" title="{{facilityInfo.areaName}}">
+          {{facilityInfo.areaName}}
+        </div>
+      </div>
+      <div class="detail-bottom-item" *ngIf="indexType===indexLayered.device">
+        <div class="detail-bottom-item-title">{{indexLanguage.affiliatedFacilities}}</div>
+        <div class="detail-bottom-item-value hidden" title="{{facilityInfo.deviceName}}">
+          {{facilityInfo.deviceName}}
+        </div>
+      </div>
+      <!--责任单位-->
+      <div class="detail-bottom-item">
+        <div class="detail-bottom-item-title">{{indexLanguage.responsibleUnit}}</div>
+        <div class="detail-bottom-item-value hidden" title="{{facilityInfo.accountabilityUnit}}">
+          {{facilityInfo.accountabilityUnit}}
+        </div>
+      </div>
+      <!--地址-->
+      <div class="detail-bottom-item">
+        <div class="detail-bottom-item-title">{{indexLanguage.address}}</div>
+        <div class="detail-bottom-item-value hidden" title="{{facilityInfo.address}}">
+          {{facilityInfo.address}}
+        </div>
+      </div>
+      <div class="detail-bottom-item" *ngIf="indexType===indexLayered.facility">
+        <!--业务状态-->
+        <div class="detail-bottom-item" *ngIf="!facilityPowerCode.includes(powerCode.smartAccessControlDetail)" >
+          <div class="detail-bottom-item-title" >{{indexLanguage.businessStatus}}</div>
+          <div class="detail-bottom-item-value hidden"  title="{{facilityInfo.businessStatus}}">
+            {{facilityInfo.businessStatus}}
+          </div>
+        </div>
+        <!--更多跳转-->
+        <div class="heartbeat-info-more" (click)="goToDeviceDetailById()">{{commonLanguage.more}}>></div>
+      </div>
+      <div class="detail-bottom-item" *ngIf="indexType===indexLayered.equipment">
+        <!--挂载点-->
+        <div class="detail-bottom-item-title">{{indexLanguage.mountPosition}}</div>
+        <div class="detail-bottom-item-value hidden" title="{{facilityInfo.mountPosition}}">
+          {{facilityInfo.mountPosition}}
+        </div>
+        <!--更多跳转-->
+        <div class="heartbeat-info-more" (click)="goToEquipmentDetailById()">{{commonLanguage.more}}>></div>
+      </div>
+    </div>
+  </div>
+
+  <!--监控信息-->
+  <div class="monitor-info bottom-distance" [appTenantPermission]="'1-2-1-2'"
+       *ngIf="indexType===indexLayered.facility  && facilityPowerCode.includes(powerCode.equipmentList) && !facilityPowerCode.includes(powerCode.smartAccessControlDetail)">
+    <div class="monitor-info-title">
+      <div class="monitor-info-name">{{indexLanguage.monitorInfo}}</div>
+      <div class="title-line">
+        <!--监控信息下拉选择-->
+        <nz-select *ngIf="isShowSelect"
+                   class="nz-select-style"
+                   [(ngModel)]="selectedControlId"
+                   (ngModelChange)="changeControl($event)"
+                   nzSize="small"
+                   nzAllowClear="false"
+                   [nzPlaceHolder]="indexLanguage.pleaseSelect">
+          <nz-option *ngFor="let control of controlOption" [nzValue]="control.equipmentId"
+                     [nzLabel]="control.equipmentName"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <!--监控信息内容-->
+    <div class="monitor-info-list">
+      <app-equipment-status-information
+        [equipmentId]="queryEquipmentId"
+        [equipmentType]="queryEquipmentType"
+        [containerWidth]="'100%'"
+        [containerHeight]="'20px'"
+        [containerMaxWidth]="'50%'"
+        [containerLineHeight]="'16px'">
+      </app-equipment-status-information>
+    </div>
+  </div>
+
+  <!--监控状态-->
+  <div class="monitor-info bottom-distance"
+       *ngIf="indexType===indexLayered.equipment && facilityPowerCode.includes(powerCode.sensor) && !facilityPowerCode.includes(powerCode.smartAccessControlDetail)">
+    <div class="monitor-info-title">
+      <div class="monitor-info-name">{{indexLanguage.monitorStatus}}</div>
+      <div class="title-line"></div>
+    </div>
+    <div class="monitor-info-list">
+      <app-equipment-status-information
+        [equipmentId]="queryEquipmentId"
+        [equipmentType]="queryEquipmentType"
+        [containerWidth]="'100%'"
+        [containerHeight]="'20px'"
+        [containerMaxWidth]="'50%'"
+        [containerLineHeight]="'16px'">
+      </app-equipment-status-information>
+    </div>
+  </div>
+
+
+  <!--设备信息-->
+  <div class="facility-info bottom-distance" [appTenantPermission]="'1-2-1-3'"
+       *ngIf="indexType===indexLayered.facility && facilityPowerCode.includes(powerCode.equipmentList) && !facilityPowerCode.includes(powerCode.smartAccessControlDetail)">
+    <div class="facility-info-title">
+      <div class="equipment-title">{{indexLanguage.equipmentInfo}}</div>
+      <div class="title-line">
+        <div class="line-tabs">
+          <div class="line-tab" [ngClass]="{'tab-selected': isHandleInstallNum}"
+               (click)="tabClick(installNumEnum.installNum)">
+            <div class="text-content hidden" title="{{indexLanguage.installNum}}">
+              {{indexLanguage.installNum}}
+            </div>
+          </div>
+          <div class="line-tab" [ngClass]="{'tab-selected': !isHandleInstallNum}"
+               (click)="tabClick(installNumEnum.freeNum)">
+            <div class="text-content hidden" title="{{indexLanguage.freeNum}}">
+              {{indexLanguage.freeNum}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="facility-info-list">
+      <div class="no-data" *ngIf="noFacilityInfoList" [hidden]="!isHandleInstallNum">{{indexLanguage.noData}}</div>
+      <div *ngFor="let item of facilityInfoList" [hidden]="!isHandleInstallNum">
+        <div class="facility-info-item">
+          <!--安装数量-->
+          <div class="facility-info-icon" [ngClass]="item.facilityType"></div>
+          <div class="facility-info-text">{{item.value}}</div>
+        </div>
+      </div>
+      <div class="no-data" *ngIf="noEquipmentInfoList" [hidden]="isHandleInstallNum">{{indexLanguage.noData}}</div>
+      <div *ngFor="let item of equipmentInfoList" [hidden]="isHandleInstallNum">
+        <div class="facility-info-item">
+          <!--空闲数量-->
+          <div class="facility-info-icon" [ngClass]="item.equipmentType"></div>
+          <div class="facility-info-text">{{item.value}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--设施详情卡设备状态-->
+  <ng-template #businessStatus let-facilityInfo="facilityInfo">
+    <!--释放-->
+    <div *ngIf="facilityInfo.businessStatus === this.businessStatus.freed">
+      {{indexLanguage.freed}}
+    </div>
+    <!--占用/锁定-->
+    <div *ngIf="facilityInfo.businessStatus === this.businessStatus.occupy">
+      {{indexLanguage.occupyLock}}
+    </div>
+  </ng-template>
+</div>

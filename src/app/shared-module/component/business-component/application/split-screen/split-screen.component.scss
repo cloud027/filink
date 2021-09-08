@@ -1,0 +1,203 @@
+// 屏幕
+.screen {
+  display: flex;
+
+  .passageway-list {
+    width: 12.5%;
+    min-width: 180px;
+
+    .search-icon {
+      color: #36cfc9;
+    }
+
+    /** 标题*/
+    .title {
+      text-align: left;
+      font-size: 14px;
+    }
+
+    /** 搜索框样式*/
+    .search-box {
+      height: 36px;
+      margin: 20px auto 10px;
+    }
+
+    /** 列表*/
+    .equipment-list {
+      border: 2px solid #f0f0f0;
+      margin-bottom: 24px;
+      border-radius: 4px;
+      min-height: 414px;
+
+      .equipment-list-text {
+        padding: 10px 0 10px 10px;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    /** 分页*/
+    .paging {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
+  .camera-wrap {
+    width: 87.5%;
+    padding: 0 10px 0 30px;
+    /** 分屏*/
+    .split-screen {
+      position: relative;
+      /** 配置按钮*/
+      .title-list {
+        margin-bottom: 10px;
+        /** 通道按钮*/
+        .passageway {
+          margin-right: 30px;
+        }
+      }
+
+      /** 摄像头*/
+      .monitor {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    // 分屏菜单
+    .split-menu {
+      display: flex;
+      float: right;
+      margin-top: 12px;
+      /** 分屏设置*/
+      .split-setting {
+        text-align: right;
+        line-height: 32px;
+        /** 间距*/
+        .spacing {
+          margin-left: 16px;
+          cursor: pointer;
+        }
+
+        /** 分页图标*/
+        .paging-icon {
+          display: inline-block;
+        }
+      }
+
+      .open-close {
+        /** 按钮样式*/
+        .confirm-cancel-btn {
+          display: inline-block;
+          color: #36cfc9;
+          width: 108px;
+          margin-left: 16px;
+        }
+        .confirm-cancel-btn-hover {
+          &:hover {
+            background: #36cfc9;
+            color: #fff;
+          }
+        }
+
+      }
+
+      .several {
+        color: #0985fd;
+      }
+
+    }
+  }
+}
+
+
+/**
+ *分屏1*1
+ */
+.one {
+  width: 100%;
+  height: 61vh;
+  border: 3px solid white;
+}
+
+/**
+ *分屏2*2
+ */
+.two {
+  width: 50%;
+  height: 30vh;
+  border: 3px solid white;
+}
+
+/**
+ *分屏3*3
+ */
+.three {
+  width: 33.33%;
+  height: 20vh;
+  border: 3px solid white;
+}
+
+/**
+ *分屏4*4
+ */
+.four {
+  width: 25%;
+  height: 15vh;
+  border: 3px solid white;
+}
+
+
+/**
+ * 被选中的设备列表
+ */
+.selected-equipment {
+  background: #EAF2F8;
+}
+
+
+/**
+ * 分页图标大小
+ */
+.pagingLogo {
+  font-size: 16px;
+  padding: 6px;
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  z-index: 1;
+  top: 48.5%;
+  background: #36cfc9;
+  border-radius: 50%;
+}
+
+/**
+ * 分页图标大小
+ */
+.pagingLogo-left {
+  left: 10px;
+}
+
+/**
+ * 分页图标大小
+ */
+.pagingLogo-right {
+  right: 10px;
+}
+
+// 被选中的播放器
+.selected-broadcast {
+  border: 3px solid #36cfc9;
+  border-radius: 8px;
+}
+
+/**
+ * 不可点击样式
+ */
+.no-clickable {
+  cursor: not-allowed;
+}
+

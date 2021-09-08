@@ -1,0 +1,117 @@
+<div class="camera-config">
+  <!--指令按钮-->
+  <div class="icon-row">
+    <!--西北-->
+    <div class="direction-box" (mousedown)="onCloudControl('UP_LEFT','START')"
+         (mouseup)="onCloudControl('UP_LEFT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon northwest"></i>
+    </div>
+    <!--北-->
+    <div class="direction-box" (mousedown)="onCloudControl('TILT_UP','START')"
+         (mouseup)="onCloudControl('TILT_UP','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon north"></i>
+    </div>
+    <!--东北-->
+    <div class="direction-box" (mousedown)="onCloudControl('UP_RIGHT','START')"
+         (mouseup)="onCloudControl('UP_RIGHT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon northeast"></i>
+    </div>
+    <!-- 焦点变小-->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.focusBecomesSmaller"
+         class="direction-box focus-icon" (mousedown)="onCloudControl('ZOOM_OUT','START')"
+         (mouseup)="onCloudControl('ZOOM_OUT','STOP')">
+      <i class="iconfont fiLink-filink-guangquan-icon camera-icon icon-size"></i>
+    </div>
+    <!-- 焦点变大-->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.focusBecomesLarger" class="direction-box last-div"
+         (mousedown)="onCloudControl('ZOOM_IN','START')"
+         (mouseup)="onCloudControl('ZOOM_IN','STOP')">
+      <i class="iconfont fiLink-filink-guangquanj-icon camera-icon icon-size"></i>
+    </div>
+  </div>
+  <div class="icon-row">
+    <!--向左，西-->
+    <div class="direction-box" (mousedown)="onCloudControl('PAN_LEFT','START')"
+         (mouseup)="onCloudControl('PAN_LEFT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon west"></i>
+    </div>
+    <!--向右，东-->
+    <div class="direction-box special-icon" (mousedown)="onCloudControl('PAN_RIGHT','START')"
+         (mouseup)="onCloudControl('PAN_RIGHT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon  east"></i>
+    </div>
+    <!--焦点前调 -->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.focusAdjustment" class="direction-box focus-icon"
+         [hidden]="params.cameraType === 'ONVIF'"
+         (mousedown)="onCloudControl('FOCUS_NEAR','START')"
+         (mouseup)="onCloudControl('FOCUS_NEAR','STOP')">
+      <i class="iconfont fiLink-filink-jiaodian-icon camera-icon icon-size"></i>
+    </div>
+    <!--焦点后调-->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.focusPostAdjustment" class="direction-box last-div"
+         [hidden]="params.cameraType === 'ONVIF'"
+         (mousedown)="onCloudControl('FOCUS_FAR','START')"
+         (mouseup)="onCloudControl('FOCUS_FAR','STOP')">
+      <i class="iconfont fiLink-filink-jiaodianj-icon camera-icon icon-size"></i>
+    </div>
+  </div>
+  <div class="icon-row">
+    <!--西南-->
+    <div class="direction-box" (mousedown)="onCloudControl('DOWN_LEFT','START')"
+         (mouseup)="onCloudControl('DOWN_LEFT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon southwest"></i>
+    </div>
+    <!--向下，南-->
+    <div class="direction-box" (mousedown)="onCloudControl('TILT_DOWN','START')"
+         (mouseup)="onCloudControl('TILT_DOWN','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon south"></i>
+    </div>
+    <!--东南-->
+    <div class="direction-box" (mousedown)="onCloudControl('DOWN_RIGHT','START')"
+         (mouseup)="onCloudControl('DOWN_RIGHT','STOP')">
+      <i class="iconfont fiLink-adjust-angle camera-icon southeast"></i>
+    </div>
+    <!--光圈缩小-->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.apertureReduction" class="direction-box focus-icon"
+         [hidden]="params.cameraType === 'ONVIF'"
+         (mousedown)="onCloudControl('IRIS_CLOSE','START')"
+         (mouseup)="onCloudControl('IRIS_CLOSE','STOP')">
+      <i class="iconfont fiLink-filink-guangyun-icon camera-icon icon-size"></i>
+    </div>
+    <!--光圈扩大-->
+    <div nz-tooltip [nzTitle]="language.frequentlyUsed.apertureAmplification" class="direction-box last-div"
+         [hidden]="params.cameraType === 'ONVIF'"
+         (mousedown)="onCloudControl('IRIS_OPEN','START')"
+         (mouseup)="onCloudControl('IRIS_OPEN','STOP')">
+      <i class="iconfont fiLink-filink-guangyunj-icon camera-icon icon-size"></i>
+    </div>
+  </div>
+
+  <!--预置位设置-->
+  <div class="camera-details">
+    <!-- 预置位设置-->
+    <p class="setting">{{language.securityWorkbench.presetBitSetting}}</p>
+    <div class="setting-box">
+      <div nz-row *ngFor="let preset of presetList, let index = index"
+           [ngClass]="{'details':true,'normal': preset.state}">
+        <p nz-col nzSpan="3">{{index + 1}}</p>
+        <!-- 预置点-->
+        <p nz-col nzSpan="12" [nzPush]="2">{{language.securityWorkbench.preset}}{{index + 1}}</p>
+        <i [appAccessPermission]="cameraCodeEnum.save"
+           nz-col nzSpan="3" [title]="commonLanguage.save" class="iconfont fiLink-filink-save-icon icon-setting"
+           (click)="onPresetOperation(controlInstructEnum.setPresetPosition,index,preset)"></i>
+        <i [appAccessPermission]="cameraCodeEnum.goToPresetPosition"
+           nz-col nzSpan="3" [title]="language.frequentlyUsed.goToPresetPosition"
+           class="iconfont fiLink-filink-yuzhidian-icon"
+           [ngClass]="{'icon-setting':preset.state }"
+           (click)="onPresetOperation(controlInstructEnum.goPresetPosition,index,preset,preset.state)"></i>
+        <i [appAccessPermission]="cameraCodeEnum.delete"
+           nz-col nzSpan="3" [title]="commonLanguage.deleteBtn" class="iconfont fiLink-delete"
+           [ngClass]="{'red-icon': preset.state }"
+           (click)="secondConfirmation(controlInstructEnum.delPresetPosition,index,preset,preset.state)"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+

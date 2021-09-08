@@ -1,0 +1,114 @@
+<div class="table-wrapper">
+  <div id="drag-box" (drop)="dropHandle($event)" (dragover)="dragoverHandle($event)">
+    <!-- 地图-->
+    <div id="drag-content" class="groupList">
+      <app-map-group-common #mainMap
+                            [mapConfig]="mapConfig"
+                            [viewIndex]="viewIndex"
+                            [data]="data"
+                            [iconSize]="iconSize"
+                            [centerPoint]="centerPoint"
+                            [areaData]="areaData"
+                            [deviceLocation]="null"
+                            [equipmentLocation]="null"
+                            [facilityInGroup]="facilityInGroup"
+                            (showProgressBar)="showProgressBar()"
+                            (hideProgressBar)="hideProgressBar()"
+                            (mapEvent)="mapEvent($event)">
+      </app-map-group-common>
+      <!-- 框选图标-->
+      <div class="zoom-control-item iconfont icon-fiLink-2 fiLink-map-selection"
+           title="{{assetLanguage.groupChange}}"
+           (click)="mapSelectData()">
+      </div>
+      <!--未分组-->
+      <div class="zoom-control-item none-group iconfont icon-fiLink-2 fiLink-query-group"
+           title="未分组"
+           (click)="noneGroupOperation()">
+      </div>
+      <!--地图分层-->
+      <app-facility-show (isShowCardEventEmitter)="facilityLayeredChange()" [otherMapFlag]="true"
+                         [viewIndex] = "maintenanceView.maintenanceView"
+                         [indexType] = "mapTypeEnum.equipment"
+                         [isGroupManage]="true"></app-facility-show>
+      <!--地图右下角移入移出按钮 -->
+      <div class="map-right-button" *ngIf="isShowButton">
+        <ul class="button-ul">
+          <li class="button-li" (click)="groupChange()" [appAccessPermission]="'03-10-7'">
+            <span class="button-icon-right"><i class="iconfont icon-fiLink fiLink-move-into"></i></span>
+            <span>{{assetLanguage.groupChange}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 拖拽触发处-->
+    <div *ngIf="isShowUpIcon" [draggable]="true" id="drag-start" (dragstart)="dragstartHandle($event)"></div>
+    <!-- 地图大小变化的触发图标按钮-->
+    <div class="map-icon-part">
+      <div *ngIf="isShowUpIcon">
+        <i nz-icon nzType="double-left" nzTheme="outline" class="up-icon" (click)="mapMinHeightChange()"></i>
+      </div>
+      <div *ngIf="isShowDownIcon">
+        <i nz-icon nzType="double-left" nzTheme="outline" class="down-icon" (click)="mapBigHeightChange()"></i>
+      </div>
+    </div>
+  </div>
+  <!-- 分组变更-->
+  <app-grouping-changes
+    *ngIf="isShowGroupChange"
+    [(xcVisible)]="isShowGroupChange"
+    [tableData]="groupChangeDataSet"
+    [groupFacilityType]="selectMapType"
+    (selectDataChange)=reloadGroup($event)>
+  </app-grouping-changes>
+  <!--进度条-->
+  <div class="progress-bar" *ngIf="isShowProgressBar">
+    <p>{{commonLanguage.loading}}...</p>
+    <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+  </div>
+
+  <!--设备列表-->
+  <div [ngClass]="isShowUpIcon?'table-top':'table-container'" *ngIf="isShowTable">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"></xc-table>
+  </div>
+</div>
+<!-- 分组详情-->
+<nz-modal *ngIf="showGroupViewDetail"
+          [(nzVisible)]="showGroupViewDetail"
+          nzTitle="{{language.groupDetail}}"
+          nzWidth="70%"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="showGroupViewDetail = false;">
+  <app-group-view-detail [groupModel]="currentGroup"></app-group-view-detail>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button"
+            nzType="primary"
+            (click)="showGroupViewDetail = false;">
+      {{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button"
+            nzType="danger"
+            (click)="showGroupViewDetail = false;">
+      {{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--分组控制-->
+<app-equipment-bulk-operations
+  *ngIf="showGroupControlView"
+  title="{{assetLanguage.groupControl}}"
+  [isHasBroadcast]="false"
+  [isHasLight]="true"
+  [isShowOver]="false"
+  (commonSwitchValue)="onCommonControl($event)"
+  (lightChangeValue)="onLightChangeValue($event)"
+  (screenLightChangeValue)="onSlideScreenLightChange($event)"
+  (screenVolumeChangeValue)="onScreenVolumeChangeValue($event)"
+  (screenPlay)="onScreenPlay($event)"
+  [equipmentTypeCodes]="equipmentTypes"
+     [commonDisableFlag]="commonDisableFlag"
+  [(xcVisible)]="showGroupControlView">
+</app-equipment-bulk-operations>

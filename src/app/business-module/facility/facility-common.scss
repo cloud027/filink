@@ -1,0 +1,17 @@
+@import "../../style-module/config";
+.input-box {
+  display: flex;
+  justify-content: space-between;
+}
+// 过滤框宽度
+.filter-num-width {
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  .scrap-time-select{
+    width: 110px;
+  }
+}
+

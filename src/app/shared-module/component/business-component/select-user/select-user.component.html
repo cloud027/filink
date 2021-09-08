@@ -1,0 +1,40 @@
+<!--工单下用户选择-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="1000"
+          [nzTitle]="workOrderLanguage.selectUser"
+          [nzContent]="transTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #transTemp>
+    <div class="trans-box">
+      <xc-table [dataSet]="tableDataSet"
+                [pageBean]="pageBean"
+                [selectedData]="selectUserList"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" (click)="selectData()">{{userLanguage.okText}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{userLanguage.cancelText}}</button>
+  </ng-template>
+  <!-- 列表 单选框 -->
+  <ng-template #radioTemp let-data="data">
+    <nz-radio-group [(ngModel)]="userId" (ngModelChange)="onUserChange($event, data)">
+      <label nz-radio [nzValue]="data.id"></label>
+    </nz-radio-group>
+  </ng-template>
+  <!--筛选部门-->
+  <ng-template #deptNameSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="departFilterValue.filterName || filterValue.filterName" />
+  </ng-template>
+  <!--列表中单位选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="unitIsVisible"
+    (selectDataChange)="selectDeptDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+</nz-modal>

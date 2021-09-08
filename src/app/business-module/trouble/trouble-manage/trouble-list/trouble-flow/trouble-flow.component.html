@@ -1,0 +1,18 @@
+<div class="trouble-flow">
+  <div class="trouble-view-title">{{title}}</div>
+  <div class="flow-warp">
+    <div class="view-item">
+      <div class="flow-content">
+        <nz-spin class="spins" [nzSpinning]="isSpinning" *ngIf="isSpinning"></nz-spin>
+        <!-- 流程图-->
+        <img class="flow-img" [src]="imgSrc" alt="">
+      </div>
+    </div>
+    <div class="view-item">
+      <nz-card nzTitle="{{language.historyProcessRecord}}" class="common-card no-checkbox-table">
+        <!--流程历史记录-->
+        <app-trouble-history-record [troubleId] = 'troubleId'></app-trouble-history-record>
+      </nz-card>
+    </div>
+  </div>
+</div>

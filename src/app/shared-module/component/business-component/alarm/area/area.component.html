@@ -1,0 +1,18 @@
+<!-- 当在表单提交时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.form" class="screen-render {{ useType }}">
+  <span class="area-name" [title]="checkedAreaList.name">{{checkedAreaList.name}}</span>
+  <button type="button" class="open-button" (click)="showAreaSelectorModal()">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i>
+  </button>
+</div>
+<!-- 当在列表 筛选时 使用 -->
+<div *ngIf="useType === alarmSelectorConfigTypeEnum.table && filterValue" class="screen-render {{ useType }}">
+  <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+         (click)="showAreaSelectorModal()" [(ngModel)]="filterValue.filterName || checkedAreaList.name" />
+</div>
+
+<xc-tree-selector #unitTreeSelector
+    [(xcVisible)]="areaSelectVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

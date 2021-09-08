@@ -1,0 +1,28 @@
+<!-- 表格查看弹出框 -->
+<nz-modal
+    [nzWidth]="'70%'"
+    *ngIf="tableSearchVisible"
+    [(nzVisible)]="tableSearchVisible"
+    [nzTitle]="tableCheckModalTitle"
+    [nzMaskClosable]="false"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="tableSearchVisible = false"
+>
+    <ng-template #modalContent>
+        <!-- <xc-table
+            #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)"
+        >
+        </xc-table> -->
+        1111
+    </ng-template>
+    <ng-template #modalFooter>
+        <button nz-button nzType="primary" class="link-button" (click)="tableSearchVisible = false">
+            {{ languageEnum.confirm }}
+        </button>
+    </ng-template>
+</nz-modal>

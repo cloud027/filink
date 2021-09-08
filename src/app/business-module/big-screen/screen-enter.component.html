@@ -1,0 +1,28 @@
+<div class="screen" id="screen">
+  <div>
+    <xc-breadcrumb></xc-breadcrumb>
+  </div>
+  <div class="screen-tree">
+    <div class="screen-item" *ngFor="let item of screenList">
+      <div class="item-img" style="cursor: pointer" (click)="showScreen()">
+        <img class="info-img" src="../../../assets/img/screen/enter-bj.png" alt="">
+      </div>
+      <div class="item-name">
+        <div class="edit">
+          <i class="icon-l iconfont fiLink-edit" (click)="editName(item)"></i>
+        </div>
+        <div class="name" *ngIf="isEditName">
+          <span>{{item.largeScreenName}}</span>
+        </div>
+        <div class="edit-name" *ngIf="!isEditName">
+          <input id="nameEdit" [(ngModel)]="item.largeScreenName" type="text" nz-input (blur)="changeName(item)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-show-screen #showViewScreen
+                 *ngIf="isVisible"
+                 [isVisible]="isVisible"
+                 (close)="isVisible=false"
+></app-show-screen>

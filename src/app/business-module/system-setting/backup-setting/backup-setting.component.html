@@ -1,0 +1,40 @@
+<app-detail-title [pageTitle]="pageTitle" ></app-detail-title>
+<div class="backup-setting">
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <ng-template #backupCycleTemplate>
+    <nz-input-group nzCompact>
+      <input type="text" nz-input class="backup-cycle-time"
+             [(ngModel)]="backupCycleTime"
+             [disabled]="backupCycleIsDisabled"
+             [placeholder]="backupCycleTimePlaceholder"
+             (ngModelChange)="triggerBackupCycleValid()">
+      <nz-select class="backup-cycle-unit" [(ngModel)]="backupCycleUnit" [disabled]="backupCycleIsDisabled" (ngModelChange)="backupCycleUnitChange($event)">
+        <nz-option [nzLabel]="language.systemSetting.hour" [nzValue]="backupCycleUnitEnum.hour"></nz-option>
+        <nz-option [nzLabel]="language.systemSetting.day" [nzValue]="backupCycleUnitEnum.day"></nz-option>
+        <nz-option [nzLabel]="language.systemSetting.week" [nzValue]="backupCycleUnitEnum.week"></nz-option>
+        <nz-option [nzLabel]="language.systemSetting.month" [nzValue]="backupCycleUnitEnum.month"></nz-option>
+      </nz-select>
+    </nz-input-group>
+  </ng-template>
+  <!-- 备份时间点 -->
+  <ng-template #backupTimePointTemplate let-formGroup="formGroup">
+    <form [formGroup]="formGroup">
+      <nz-time-picker formControlName="backupTime" [nzAllowEmpty]="false"></nz-time-picker>
+    </form>
+  </ng-template>
+  <!-- 备份数据存储地址-->
+  <ng-template #backupDataSaveAddressTemplate let-formGroup="formGroup">
+    <form [formGroup]="formGroup">
+      <input type="text" class="backup-data-address" #backupDataAddress nz-input formControlName="backupAddr">
+      <a *ngIf="backupDataAddress.value.trim()" (click)="addressTest()">{{language.systemSetting.addressTest}}</a>
+    </form>
+  </ng-template>
+  <div class="footer-btn">
+    <button nz-button nzType="primary"
+            class="link-button"
+            [nzLoading]="isLoading"
+            [disabled]="!isEnable"
+            (click)="handleSubmit()">{{language.common.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{language.common.cancel}}</button>
+  </div>
+</div>

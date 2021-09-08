@@ -1,0 +1,129 @@
+<div class="box" [appBarProgress]="ProgressShow">
+  <div class="top">
+    <!--区域选择-->
+    <div class="top-select-float" *ngIf="selectAreaShow">
+        <span class="select-area-statistical" [title]="areaName?areaName:wLanguage.selectArea"
+              [class.placeholder]="!areaName"
+              (click)="showAreaSelector()">{{areaName ? areaName : wLanguage.selectArea}}
+        </span>
+    </div>
+    <!--单位选择-->
+    <div class="top-select-float" *ngIf="selectUnitShow">
+        <span class="select-unit" [title]="selectUnitName?selectUnitName:wLanguage.selectUnit"
+              [class.placeholder]="!selectUnitName"
+              (click)="showUnitSelector()">{{selectUnitName?selectUnitName:wLanguage.selectUnit}}
+        </span>
+    </div>
+    <!--设施多选-->
+    <div  class="top-select-float" *ngIf="checkBoxSelectShow">
+      <check-select-input #deviceTemp
+                          [placeholder]="wLanguage.deviceType"
+                          [isAllChecked]="true"
+                          (checkChange)="selectDeviceOrEquip($event, true)"
+                          [(ngModel)]="deviceTypeList"
+                          [checkList]="selectInfo">
+      </check-select-input>
+    </div>
+    <!--设施单选-->
+    <div style="float: left;" *ngIf="radioSelectShow">
+      <xc-nz-select style="width: 175px;"
+                    nzPlaceHolder="{{wLanguage.deviceType}}"
+                    nzAllowClear
+                    [(ngModel)]="deviceTypeData"
+                    (ngModelChange)="selectRadio($event, true)">
+        <xc-nz-option *ngFor="let item of selectInfo"  [nzLabel]="item.label" [nzValue]="item.code"></xc-nz-option>
+      </xc-nz-select>
+    </div>
+    <!--设备选择-->
+    <div  class="top-select-float margin-left10" *ngIf="isNeedEquipment">
+      <check-select-input #equipTemp
+                          [placeholder]="wLanguage.equipmentType"
+                          [isAllChecked]="true"
+                          [isEquipment]="true"
+                          (checkChange)="selectDeviceOrEquip($event, false)"
+                          [(ngModel)]="equipmentTypeList"
+                          [checkList]="selectEquipment">
+      </check-select-input>
+    </div>
+    <!--设备单选-->
+    <div class="radio-equip" *ngIf="isNeedRadioEquip">
+      <xc-nz-select style="width: 175px;"
+                    nzAllowClear
+                    nzPlaceHolder="{{wLanguage.equipmentType}}"
+                    (ngModelChange)="selectRadio($event, false)"
+                    [(ngModel)]="equipTypeData">
+        <xc-nz-option *ngFor="let option of selectEquipment" [nzLabel]="option.label" [nzValue]="option.code"></xc-nz-option>
+      </xc-nz-select>
+    </div>
+    <!--日期选择-->
+    <div  class="top-select-float margin-left10 select-time" *ngIf="dateRangeShow">
+      <nz-range-picker [nzDisabledDate]="disabledEndDate" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"></nz-range-picker>
+    </div>
+    <!--查询按钮-->
+    <div  class="margin-left10 top-select-float">
+      <button type="button" class="link-button" nz-button nzType="primary"
+              [disabled]="isCanQuery"
+              (click)="statistical()">{{wLanguage.statistical}}</button>
+    </div>
+  </div>
+  <!-- tab栏 -->
+  <div class="device-select" *ngIf="!hide&&showTab">
+    <ul *ngIf="isShowDevice">
+      <li *ngFor="let item of selectDeviceTypeList"
+          [class.active]="item === deviceActive"
+          (click)="getDeviceType(item);deviceActive = item">
+        {{item.label}}
+      </li>
+    </ul>
+    <ul *ngIf="!isShowDevice">
+      <li *ngFor="let item of selectEquipmentTypeList"
+          [class.active]="item === equipmentActive"
+          (click)="getEquipmentType(item);equipmentActive = item">
+        {{item.label}}
+      </li>
+    </ul>
+  </div>
+  <!-- 统计区域 -->
+  <div *ngIf="!hide&&!lineChart">
+    <div nz-row nzGutter="10" class="chart-area">
+      <div nz-col class="gutter-row" nzSpan="12">
+        <app-echart-column (chartInstance)="getRingChartInstance($event)"></app-echart-column>
+      </div>
+      <div nz-col class="gutter-row" nzSpan="12">
+        <app-echart-column (chartInstance)="getBarChartInstance($event)"></app-echart-column>
+      </div>
+    </div>
+    <div nz-row>
+      <xc-table
+        [dataSet]="_dataSet"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+        (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+
+  <div *ngIf="!hide&&lineChart">
+    <div class="lineChart">
+      <app-echart-column
+        (chartInstance)="getLineChartInstance($event)">
+      </app-echart-column>
+    </div>
+    <br>
+  </div>
+
+</div>
+<div *ngIf="hide" class="select-height"></div>
+<!--区域选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isAreaVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!--责任单位选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isUnitVisible"
+  (selectDataChange)="selectUnitDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

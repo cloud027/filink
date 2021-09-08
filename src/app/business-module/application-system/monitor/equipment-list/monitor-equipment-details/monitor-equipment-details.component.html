@@ -1,0 +1,14 @@
+<app-equipment-view-detail
+    [isShow]="isShow"
+    [equipmentId]="equipmentId"
+    (operationNotify)="handleEquipmentOperation($event)"
+    [isShowApplication]="isShowApplication"
+    [isMonitorDeatilsFlag]="true"
+>
+    <div class="monitor-card">
+        <app-meteorological-info
+            [MonitorConvenientEntranceList]="MonitorConvenientEntranceList"
+            [workOrDetail]='WorkOrDetailEnum.detailPage'
+        ></app-meteorological-info>
+    </div>
+</app-equipment-view-detail>

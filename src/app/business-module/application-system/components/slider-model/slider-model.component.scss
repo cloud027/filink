@@ -1,0 +1,33 @@
+@import "../../../../style-module/config";
+
+.instruct-list {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  margin-top: 10px;
+
+  .instruct-title {
+    display: flex;
+    margin-right: 20px;
+
+    .light {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+      width: 24px;
+      background: $handle-processing-color;
+      margin-right: 10px;
+
+      .fiLink-light {
+        color: $bg-c-w;
+      }
+    }
+  }
+
+  .instruct-volume {
+    width: 290px;
+    margin-right: 10px;
+  }
+}
+

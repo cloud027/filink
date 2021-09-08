@@ -1,0 +1,54 @@
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showFacilitiesComponent"
+     [appTenantPermission]="'1-1-1-2'">
+  <div class="no-data" *ngIf="facilityNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" *ngIf="!facilityNoData" (click)="facilityTypeChange(!isFacilityTypeAllChecked, false)"
+       [ngClass]="{'device-border-active' : isFacilityTypeAllChecked}">{{indexLanguage.all}}{{indexLanguage.device}}</div>
+  <div class="device-border" (click)="facilityTypeChange(!item.checked, item.deviceType)"
+       [ngClass]="{'device-border-active' : item.checked}"
+       *ngFor="let item of setFacilityData">{{commonUtil.codeTranslate(deviceTypeEnum, $nzI18n, item.deviceType, languageEnum.index)}}</div>
+</div>
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showEquipmentComponent" [appTenantPermission]="'1-1-1-3'">
+  <div class="no-data" *ngIf="equipmentNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" *ngIf="!equipmentNoData" (click)="equipmentTypeChange(!isEquipmentTypeAllChecked, false)"
+       [ngClass]="{'device-border-active' : isEquipmentTypeAllChecked}">{{indexLanguage.all}}{{indexLanguage.equipment}}</div>
+  <div class="device-border" (click)="equipmentTypeChange(!item.checked, item.equipmentType)"
+       [ngClass]="{'device-border-active' : item.checked}"
+       *ngFor="let item of setEquipmentData">{{commonUtil.codeTranslate(equipmentTypeEnum, $nzI18n, item.equipmentType, languageEnum.facility)}}</div>
+</div>
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showWorkOrderStatusComponent"
+     [appTenantPermission]="'1-1-3-2'">
+  <div class="no-data" *ngIf="workOrderTypeNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" (click)="workOrderTypeChange(item.procType)"
+       [ngClass]="{'device-border-active' : item.procType === orderTypeRadioValue}"
+       *ngFor="let item of setWorkOrderData">{{item.orderName}}</div>
+</div>
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showWorkOrderTypeComponent"
+     [appTenantPermission]="'1-1-3-3'">
+  <div class="no-data" *ngIf="workOrderStatusNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" *ngIf="!workOrderStatusNoData"
+       (click)="workOrderStatusChange(!isWorkOrderStatusAllChecked, false)"
+       [ngClass]="{'device-border-active' : isWorkOrderStatusAllChecked}">{{indexLanguage.all}}{{indexLanguage.status}}</div>
+  <div class="device-border" (click)="workOrderStatusChange(!item.checked, item.status)"
+       [ngClass]="{'device-border-active' : item.checked}"
+       *ngFor="let item of setWorkOrderStatusData">{{indexLanguage[workOrderStatusEnum[item.status]]}}</div>
+</div>
+<!--智慧杆型号-->
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showSmartPoleModelComponent">
+  <div class="no-data" *ngIf="smartPoleModelNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" *ngIf="!smartPoleModelNoData"
+       (click)="smartPoleModelChange(!isSmartPoleModelAllChecked, false)"
+       [ngClass]="{'device-border-active' : isSmartPoleModelAllChecked}">{{indexLanguage.all}}</div>
+  <div class="device-border" (click)="smartPoleModelChange(!item.checked, item.status)"
+       [ngClass]="{'device-border-active' : item.checked}"
+       *ngFor="let item of setSmartPoleModelData">{{item.status}}</div>
+</div>
+<!--建设状态-->
+<div class="device-select" [hidden]="!facilityEquipmentConfig.showConstructionStatusComponent">
+  <div class="no-data" *ngIf="constructionStatusNoData">{{indexLanguage.noData}}</div>
+  <div class="device-border" *ngIf="!constructionStatusNoData"
+       (click)="constructionStatusChange(!isConstructionStatusAllChecked, false)"
+       [ngClass]="{'device-border-active' : isConstructionStatusAllChecked}">{{indexLanguage.all}}</div>
+  <div class="device-border" (click)="constructionStatusChange(!item.checked, item.status)"
+       [ngClass]="{'device-border-active' : item.checked}"
+       *ngFor="let item of setConstructionStatusData">{{statusObj[item.status]}}</div>
+</div>

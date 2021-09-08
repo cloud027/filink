@@ -1,0 +1,82 @@
+<nz-modal
+  *ngIf="isVisible"
+  [nzVisible]="isVisible"
+  [nzTitle]="language.multipleEditModel"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="modalFooter"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  (nzOnCancel)="handleCancel()"
+  nzWidth="70%"
+>
+  <ng-template #modalFooter>
+    <!--上一步-->
+    <button nz-button nzType="primary" *ngIf="stepIndex=== stepNum.one"
+            (click)="handleBack()">{{commonLanguage.back}}</button>
+    <!--下一步-->
+    <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.zero"
+            (click)="handleNext()">{{commonLanguage.nextStep}}</button>
+    <!--确定-->
+    <button nz-button nzType="primary" *ngIf="stepIndex===stepNum.one"
+            (click)="handleOk()" [nzLoading]="isLoading"
+            [disabled]="!this.selectedProductId && this.selectWisdom.length">{{commonLanguage.confirm}}</button>
+    <!--取消-->
+    <button nz-button nzType="default" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+<ng-template #modalContent>
+  <!--  弹窗主题内容-->
+  <div class="modal-step clearfix">
+    <!--步骤条-->
+    <div class="step-content">
+      <nz-steps [nzCurrent]="stepIndex" [nzStartIndex]="0" nzDirection="vertical">
+        <nz-step class="select-facility"
+                 nzTitle="{{language.selectFacility}}"></nz-step>
+        <nz-step nzTitle="{{language.editModel}}"></nz-step>
+      </nz-steps>
+    </div>
+
+    <!-- 第一步 选择设施 设施列表-->
+    <div class="facility-table" *ngIf="showWisdomTable">
+      <div class="facility-table-title">
+        <span>{{language.selectFacility}}</span>
+      </div>
+
+      <!--  智慧杆列表-->
+      <div class="facility-table-content">
+        <xc-table [dataSet]="dataSet"
+                  [pageBean]="pageBean"
+                  [tableConfig]="tableConfig"
+                  [isCheckAll]="true"
+                  (checkAllClickEvent)="checkAllClickEvent($event)"
+                  (pageChange)="pageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+
+    <!-- 第二步选择规格型号-->
+    <div *ngIf="!showWisdomTable" class="facility-table">
+      <div class="facility-table-title">
+        <span>{{language.editModel}}</span>
+      </div>
+
+      <!-- 规格型号选择列表-->
+      <div class="facility-table-content">
+        <xc-table
+          [dataSet]="productDataSet"
+          [pageBean]="productPageBean"
+          [tableConfig]="productTableConfig"
+          (pageChange)="productPageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<!--产品列表单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedProductId" (ngModelChange)="selectedProductChange($event, data)">
+    <label nz-radio [nzValue]="data.productId"></label>
+  </nz-radio-group>
+</ng-template>

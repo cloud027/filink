@@ -1,0 +1,48 @@
+<!--智能安防地图-->
+<app-map-list [isSecurity]="true" (showTableChange)="onShowEquipmentTable($event)"></app-map-list>
+<app-equipment
+  [isSecurity]="isSecurity"
+  [hidden]="!isShowTable">
+  <div class="security-button">
+    <!--开关按钮-->
+    <button
+      [appAccessPermission]="securityEnum.TURN_ON"
+      nz-button
+      class="disabled-btn"
+      [disabled]="true"
+      nzType="primary">
+      <i class="icon-fiLink fiLink-open iconfont"></i>
+      {{languageTable.equipmentTable.switch}}
+    </button>
+    <!--关闭按钮-->
+    <button
+      [appAccessPermission]="securityEnum.TURN_OFF"
+      nz-button
+      class="disabled-btn"
+      [disabled]="true"
+      nzType="primary">
+      <i class="icon-fiLink fiLink-shut-off iconfont"></i>
+      {{languageTable.equipmentTable.shut}}
+    </button>
+    <!--按钮组-->
+    <nz-dropdown>
+      <button [nzType]="'primary'" nz-button nz-dropdown>
+        <i class="iconfont fiLink-btn-more"></i>
+        {{languageTable.equipmentTable.moreOperate}}
+        <i class="iconfont fiLink-down-arrow more-button-down"></i>
+      </button>
+      <ul nz-menu>
+        <li nz-menu-item [nzDisabled]="true">
+          <div class="menu-text" [appAccessPermission]="securityEnum.POWER_ON">
+            <i class="icon-fiLink fiLink-up-electric iconfont"></i>
+            {{languageTable.equipmentTable.upElectric}}
+          </div>
+          <div class="menu-text" [appAccessPermission]="securityEnum.POWER_OFF">
+            <i class="icon-fiLink fiLink-down-electric iconfont"></i>
+            {{languageTable.equipmentTable.downElectric}}
+          </div>
+        </li>
+      </ul>
+    </nz-dropdown>
+  </div>
+</app-equipment>

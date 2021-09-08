@@ -1,0 +1,117 @@
+<div class="in-container">
+  <!-- 标题 -->
+  <div><span class="page-detail-title">{{pageTitle}}</span></div>
+  <!-- 表单 -->
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+  <!-- 底部按钮 -->
+  <div class="order-btn">
+    <button class="link-button" nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="!isFormDisabled"
+            (click)="saveInstallData()">{{inspectionLanguage.handleOk}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{inspectionLanguage.handleCancel}}</button>
+  </div>
+  <!--模板项-->
+  <div class="temps">
+    <!--期望完工时间-->
+    <ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col">
+      <form [formGroup]="formGroup">
+        <nz-date-picker [nzDisabledDate]="disabledEndDate"  nzShowTime formControlName="planCompletedTime"></nz-date-picker>
+      </form>
+    </ng-template>
+    <!--单位模板-->
+    <ng-template #departmentSelector let-formGroup="formGroup" let-col="col">
+      <div>
+        <input nz-input readonly="readonly" class="area-name" [disabled]="isSelectDept" [placeholder]="inspectionLanguage.pleaseChoose" [(ngModel)]="departmentName" />
+        <button type="button" class="open-button" [disabled]="isSelectDept" (click)="showDepartmentModal()">
+          <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+      </div>
+    </ng-template>
+    <!--选择单位-->
+    <xc-tree-area-selector
+      [(xcVisible)]="isUnitVisible"
+      (selectDataChange)="selectDataChange($event)"
+      [treeSelectorConfig]="treeSelectorConfig">
+    </xc-tree-area-selector>
+    <!-- 设备名称-->
+    <ng-template #equipmentTemp let-col="col">
+      <div class="custom-template" *ngIf="!isAddEquip">
+        <input nz-input readonly="readonly" class="area-name" [placeholder]="inspectionLanguage.pleaseChoose" [disabled]="isEquipName" [(ngModel)]="equipmentName" />
+        <button type="button" [disabled]="isEquipName" class="open-button" (click)="showEquipmentTemp()">
+          <i class="icon-fiLink fiLink-search-index iconfont"></i>
+        </button>
+      </div>
+      <div class="custom-template" *ngIf="isAddEquip">
+        <input nz-input class="area-name" [ngClass]="showCheckName ? 'error-ck' : ''" [placeholder]="inspectionLanguage.pleaseEnter"
+               [(ngModel)]="equipmentName" [disabled]="isNameInput" (input)="inputEquipName($event)" maxlength="32" />
+        <div *ngIf="showCheckName" class="error-ck">{{nameStr}}</div>
+        <ng-template #indicatorTemplate><i nz-icon type="loading"></i> </ng-template>
+        <nz-spin class="spin-ck" *ngIf="showSpin" nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+      </div>
+    </ng-template>
+    <!--设备名称选择器-->
+    <equipment-list-selector-component
+      *ngIf="equipmentVisible"
+       [(equipmentVisible)]="equipmentVisible"
+       [equipmentStatus]="false"
+       [filterConditions]="equipmentFilter"
+       [isFilterEquipmentType]="true"
+       [selectEquipments]="selectEquipmentList"
+       (selectDataChange)="onEquipmentDataChange($event)">
+    </equipment-list-selector-component>
+    <!--挂载点位-->
+    <ng-template #positionDevTemplate let-formGroup="formGroup">
+      <nz-select
+        *ngIf="showPointSelect"
+        [(ngModel)]="wisdomMountPosition"
+        class="mount-position-select"
+        [disabled]="isPoint"
+        (ngModelChange)="changePosition($event)"
+        nzPlaceHolder="{{inspectionLanguage.pleaseChoose}}">
+        <nz-option *ngFor="let item of pointList" [nzValue]="item" [nzLabel]="item"></nz-option>
+      </nz-select>
+      <input *ngIf="!showPointSelect" nz-input class="area-name" [(ngModel)]="pointValue" disabled />
+    </ng-template>
+    <!--自动派单-->
+    <ng-template #autoDispatch>
+      <nz-radio-group [(ngModel)]="dispatchValue" [nzDisabled]="isDispatch" name="autoDispatch" (ngModelChange)="selectDispatch($event)">
+        <label nz-radio [nzValue]="dispatchEnum.right">{{inspectionLanguage.right}}</label>
+        <label nz-radio [nzValue]="dispatchEnum.deny">{{inspectionLanguage.deny}}</label>
+      </nz-radio-group>
+    </ng-template>
+    <!--选择设施名称-->
+    <ng-template #selectDeviceTemp let-col="col">
+      <div class="custom-template">
+        <input nz-input readonly="readonly" class="area-name" [placeholder]="inspectionLanguage.pleaseChoose" [disabled]="isFacilityName" [(ngModel)]="deviceName" />
+        <button type="button" [disabled]="isFacilityName" class="open-button" (click)="isShowDeviceModel = true">
+          <i class="icon-fiLink fiLink-search-index iconfont"></i>
+        </button>
+      </div>
+    </ng-template>
+    <app-select-device-info
+      *ngIf="isShowDeviceModel"
+      [(xcVisible)]="isShowDeviceModel"
+      [multiple]="false"
+      [selectDataList]="selectDeviceList"
+      (selectDataChange)="selectDeviceInfoData($event)">
+    </app-select-device-info>
+    <!--选择设备型号-->
+    <ng-template #equipModelTemp let-formGroup="formGroup" let-col="col">
+      <div>
+        <input nz-input readonly="readonly" class="area-name" [placeholder]="inspectionLanguage.pleaseChoose" [disabled]="isEquipModel" [(ngModel)]="equipModel" />
+        <button type="button" class="open-button" [disabled]="isEquipModel" (click)="showSelectModel()">
+          <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+      </div>
+    </ng-template>
+    <!--设备型号-->
+    <app-select-product-model
+      *ngIf="isShowModel"
+      [(xcVisible)]="isShowModel"
+      [modelType]="modelsType"
+      [deviceOrEquipType]="deviceOrEquipType"
+      [selectModelData]="selectModelData"
+      (selectDataChange)="selectDeviceModelData($event)">
+    </app-select-product-model>
+  </div>
+</div>

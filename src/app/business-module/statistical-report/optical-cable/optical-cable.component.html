@@ -1,0 +1,48 @@
+<div class="odn-device-resources" [appBarProgress]="ProgressShow">
+  <span class="select-area" *ngIf="pageTitleType!== 'cable'" [title]="areaName?areaName:statisticalLanguage.selectArea"
+        [class.placeholder]="areaName?false:true"
+        (click)="showAreaSelector()">{{areaName ? areaName : statisticalLanguage.selectArea}}</span>
+  <span class="select-area" *ngIf="pageTitleType!== 'cable'"
+        [title]="cableName?cableName:statisticalLanguage.selectCableSegment"
+        [class.placeholder]="cableName?false:true"
+        (click)="showCableSelect()">{{cableName ? cableName : statisticalLanguage.selectCableSegment}}</span>
+  <button type="button"
+          *ngIf="pageTitleType!== 'cable'"
+          class="link-button" nz-button
+          [disabled]="!cableName || !areaName"
+          nzType="primary" (click)="statistical()">{{statisticalLanguage.statistical}}
+  </button>
+  <div *ngIf="hide">
+    <div class="barChart">
+      <app-echart-column style="flex: 1;background-color: #f7f7f7;padding: 10px; margin-right: 10px"
+                         (chartInstance)="getRingChartInstance($event)"></app-echart-column>
+      <app-echart-column style="flex: 1;background-color: #f7f7f7;padding: 10px;"
+                         (chartInstance)="getBarChartInstance($event)"></app-echart-column>
+    </div>
+    <br>
+    <xc-table
+      [dataSet]="__dataset"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!--选择光缆段-->
+<ng-template #sectionTemp>
+  <xc-table [dataSet]="section_dataSet"
+            [pageBean]="section_pageBean"
+            [tableConfig]="section_tableConfig"
+            (pageChange)="section_pageChange($event)"
+  >
+  </xc-table>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>

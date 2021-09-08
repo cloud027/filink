@@ -1,0 +1,50 @@
+@import "../../../style-module/config";
+
+// 页面title
+.table-common-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #333;
+  padding-bottom: 20px;
+  background-color: #fff;
+  position: relative;
+}
+
+
+// tab页
+.reception-config {
+  padding: 10px;
+
+  // tab页title
+  .index-tabs-title-box {
+    height: 40px;
+    position: relative;
+    content: '';
+    display: block;
+    clear: both;
+    border-bottom: 1px solid #e8e8e8;
+
+    .index-tabs-title {
+      display: inline-block;
+      padding: 0 20px 0 20px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  // tab页内容
+  .tabs-box {
+    position:relative;
+
+  }
+
+}
+
+// tab切换表样式
+.tab-left-selected {
+  color: $color;
+  border-bottom: 3px solid #36cfc9;
+}

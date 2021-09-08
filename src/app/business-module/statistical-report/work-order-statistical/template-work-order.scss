@@ -1,0 +1,85 @@
+@import '../../../style-module/config';
+.box {
+  padding: 10px 16px;
+
+  .top {
+    display: flex;
+    /*.top-select-float {
+      float: left;
+    }*/
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+      visibility: hidden;
+    }
+
+    .mr10{
+      margin-right: 10px;
+    }
+    .select-time{
+      width: 300px;
+    }
+  }
+  .select-unit {
+    width: 100px;
+    padding: 4.5px 20px;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    min-width: 170px;
+  }
+  .barChart{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .lineChart{
+    margin-top: 10px;
+  }
+}
+
+.device-select {
+  margin-top: 20px;
+  height: 50px;
+  ul {
+    font-size: 15px;
+    margin: 0 10px;
+    display: flex;
+  }
+  ul > li {
+    padding: 0 8px;
+    height: 30px;
+    text-align: center;
+    border-bottom: 2px solid $border-color;
+    cursor: pointer;
+    min-width: 90px;
+  }
+  ul > li.active {
+    border-bottom: 2px solid $menu-select-color;
+  }
+}
+
+.select-height{
+  min-height: 250px;
+  background-color: $bg-c;
+}
+
+.clear-device-type {
+  flex: 1;
+  background-color: $index-eChart-background-color;
+  padding: 10px;
+}
+
+.radio-equip{
+  float: left;
+  margin-left: 10px;
+}
+.chart-area{
+  margin-top: 10px;
+}

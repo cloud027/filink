@@ -1,0 +1,19 @@
+<div class="log-detail">
+  <div>
+    <span class="pageTitle">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="log-detail-btn-box">
+      <button class="link-button margin-right20" nz-button nzType="primary" (click)="submit()" [nzLoading]="isLoading" [disabled]="!formStatus.getValid()">{{language.confirm}}</button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.cancel}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 操作时间 -->
+<ng-template #optTimeTemp let-data="data">
+  <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
+</ng-template>

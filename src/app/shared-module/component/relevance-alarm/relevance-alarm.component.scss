@@ -1,0 +1,193 @@
+@import "../../../style-module/config";
+.alarm-box{
+  .alarm-box-item{
+    font-size: 14px;
+    position: relative;
+  }
+  /*第一列*/
+  .column-title{
+    .head{
+      height: 22px;
+      line-height: 22px;
+      .title-tag{
+        display: inline-block;
+        float: left;
+        border-radius: 2px;
+        margin-right: 6px;
+        color: $menu-font-color;
+        font-size: 12px;
+        &.title{
+          color: $title-color;
+          font-size: 16px;
+          max-width: calc(100% - 228px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        &.alarm-level{
+          padding: 0 5px;
+        }
+        &.alarm-clear{
+          padding: 0 5px;
+        }
+        &.alarm-confirm{
+          padding: 0 5px;
+        }
+      }
+    }
+    .happen-time{
+      color: $sp-icon-color-7;
+    }
+    .alarm-type{
+      margin-top: 15px;
+    }
+    .unit-box{
+      color: $title-color;
+      .icon-fiLink{
+        margin-right: 6px;
+        vertical-align: inherit;
+        &.fiLink-user-menu{
+          color: $sp-icon-color-5;
+        }
+        &.fiLink-departments{
+          color: $sp-icon-color-3;
+          vertical-align: top;
+        }
+      }
+    }
+    .dept-box{
+      margin-top: 3px;
+      .iconfont{
+        display: inline-block;
+      }
+      .dept{
+        display: inline-block;
+        width: 55%;
+      }
+    }
+    .frequency-box{
+      position: absolute;
+      top: 100px;
+      right: 15px;
+      text-align: center;
+      .frequency{
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+        border-radius: 50%;
+        border: 1px solid $sp-icon-color-8;
+        .frequency-c{
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          line-height: 58px;
+          background: $sp-icon-color-8;
+          color: #ffffff;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        .label-txt{
+          margin-top: 6px;
+        }
+      }
+      .label-txt{
+        margin-top: 5px;
+      }
+    }
+  }
+
+  /*第二列*/
+  .column-area{
+    .head-title{
+      font-size: 16px;
+      color: $title-color;
+      .detail-row-top{
+        display: inline-block;
+        margin-right: 6px;
+        max-width: 30%;
+        float: left;
+      }
+      .alarm-row{
+        display: inline-block;
+        float: left;
+        max-width: 30%;
+      }
+      &:before{
+        display: inline-block;
+        content: '';
+        clear: bottom;
+      }
+    }
+    .device-margin{
+      margin-top: 6px;
+    }
+    .cate-margin{
+      height: 40px;
+      line-height: 40px;
+      &.alarm-obj{
+        margin-top: 26px;
+      }
+      &.equip{
+        .obj-width{
+          float: left;
+        }
+        .equip-type{
+          float: left;
+        }
+        &:before{
+          display: inline-block;
+          content: '';
+          clear: both;
+        }
+      }
+      span{
+        display: inline-block;
+      }
+      .obj-width{
+        width: 125px;
+      }
+      .equip-type{
+        width: calc(100% - 126px);
+      }
+    }
+    .iconfont{
+      margin-right: 6px;
+    }
+  }
+  /*第三列*/
+  .column-time{
+    .row-time{
+      height: 40px;
+      line-height: 40px;
+      .label-txt{
+        display: inline-block;
+        width: 115px;
+      }
+      .value-txt{
+        display: inline-block;
+        width: calc(100% - 116px);
+        .iconfont{
+          color: $sp-icon-color-3;
+          margin-right: 5px;
+        }
+      }
+    }
+    .alarm-left{
+      span{
+        float: left;
+      }
+    }
+  }
+
+
+  .label-txt{
+    color: $sp-icon-color-7;
+  }
+  .value-txt{
+    color: $title-color;
+  }
+  .line-heights{
+    height: 40px;
+    line-height: 40px;
+  }
+}

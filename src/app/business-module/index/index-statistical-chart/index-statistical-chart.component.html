@@ -1,0 +1,175 @@
+<div class="index-statistics-container">
+  <div class="statistics-title" *ngIf="isShowTitle && isOneType === 'other'">
+    {{title}}
+  </div>
+  <div class="statistics-title" *ngIf="isShowTitle && isOneType === 'device'">
+    {{indexLanguage.equipmentStatistics}}
+    <div *ngIf="isShowSelect"  class="statistics-title-select">
+      <nz-select [(ngModel)]="selectEquipment" (ngModelChange)="equipmentChange($event)" class="statistics-title-select-component">
+        <nz-option [nzValue]="item.code" [nzLabel]="item.label" *ngFor="let item of equipmentType"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div class="statistics-title" *ngIf="isShowTitle && isOneType === 'workOrder' && procTypeList.length">
+    {{indexLanguage.workOrderType}}
+    <div *ngIf="isShowSelect"  class="statistics-title-select">
+      <nz-select [(ngModel)]="selectOrderType" (ngModelChange)="workOrderChange($event)" class="statistics-title-select-component">
+        <nz-option *ngFor="let item of procTypeList" [nzValue]="item.code" [nzLabel]="item.label"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <!--  设施总数-->
+  <div class="statistics-total-count" *ngIf="type === cardType.deviceCount" [appTenantPermission]="'1-3-1'">
+    <ul class="all-device">
+      <li class="statistics-total-item device-item" *ngFor="let item of statisticsNumber">
+        <div class="statistics-total-bottom">
+          <div class="statistics-total-center iconfont icon-fiLink-xl" [ngClass]="'fiLink-number-'+ item"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!--  不同类型的设施总数-->
+  <div class="statistics-total-count" *ngIf="type === cardType.typeCount && statisticsCount.length"
+       [appTenantPermission]="'1-3-2'">
+    <ul class="device-amount">
+      <li class="statistics-total-item" *ngFor="let item of statisticsCount">
+        <div class="statistics-total-name hidden">{{item.label}}</div>
+        <span class="icon-fiLink-l" [ngClass]="item.iconClass"></span>
+        <div class="statistics-total-number hidden" [ngClass]="item.textClass">{{item.sum}}</div>
+      </li>
+    </ul>
+  </div>
+  <div class="statistics-total-count" *ngIf="type === cardType.typeCount && !statisticsCount.length">
+    <span class="statistics-no-data">{{this.indexLanguage.noData}}</span>
+  </div>
+  <!--  设施状态-->
+  <div class="statistics-content" *ngIf="type === cardType.deviceStatus" [appTenantPermission]="'1-3-3'">
+    <div echarts [options]="deviceStatusChartOption" class="chart-style" *ngIf="!noDeviceStatusChart"></div>
+    <div class="padding-t" *ngIf="noDeviceStatusChart">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--  当前告警总数-->
+  <div class="statistics-content" *ngIf="type === cardType.alarmCount" [appTenantPermission]="'1-3-4'">
+    <div echarts [options]="alarmCurrentLevelGroupOption" class="chart-style" *ngIf="!noAlarmCurrentLevelGroup"></div>
+    <div class="padding-t" *ngIf="noAlarmCurrentLevelGroup">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--  告警增量-->
+  <div class="statistics-content" *ngIf="type === cardType.alarmIncrement" [appTenantPermission]="'1-3-5'">
+    <div echarts [options]="alarmDateStatisticsOption" class="chart-style" *ngIf="!noAlarmDateStatistics"></div>
+    <div class="padding-t" *ngIf="noAlarmDateStatistics">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--  工单增量-->
+  <div class="statistics-content" *ngIf="type === cardType.workIncrement" [appTenantPermission]="'1-3-6'">
+    <div echarts [options]="procAddListCountOption" class="chart-style" *ngIf="!noProcAddListCount"></div>
+    <div class="padding-t" *ngIf="noProcAddListCount">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--  繁忙设施TOP-->
+  <div class="statistics-content" *ngIf="type === cardType.busyTop" [appTenantPermission]="'1-3-7'">
+    <div echarts [options]="userUnlockingTopOption" class="chart-style" *ngIf="!noUserUnlockingTop"></div>
+    <div class="padding-t" *ngIf="noUserUnlockingTop">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--  告警设施TOP-->
+  <div class="statistics-content" *ngIf="type === cardType.alarmTop" [appTenantPermission]="'1-3-8'">
+    <div echarts [options]="screenDeviceIdsGroupOption" class="chart-style" *ngIf="!noScreenDeviceIdsGroup"></div>
+    <div class="padding-t" *ngIf="noScreenDeviceIdsGroup">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--设备在线率统计图 Build3-->
+  <div class="statistics-content" style="position: relative" *ngIf="type === cardType.equipmentOnlineRate">
+    <div class="echarts-padding-style">
+      {{title}}
+    </div>
+    <div style="position: absolute;top: 147px;left: 36%;width: 100px;height: 100px;text-align: center;font-weight: bold;font-size: 12px;">
+      <div *ngIf="!noEquipmentOnlineRate">
+        {{equipmentOnlineRateNum}}
+      </div>
+      <div *ngIf="!noEquipmentOnlineRate">
+        {{commonUtil.codeTranslate(equipmentTypeEnum, $nzI18n, selectEquipment, languageEnum.facility)}}
+      </div>
+    </div>
+    <div echarts [options]="equipmentOnlineRateOption" class="chart-style" *ngIf="!noEquipmentOnlineRate"></div>
+    <div class="padding-t" *ngIf="noEquipmentOnlineRate">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--故障类型统计图-->
+  <div class="statistics-content" style="position: relative" *ngIf="type === cardType.faultType">
+    <div class="echarts-padding-style">
+      {{title}}
+    </div>
+    <div style="position: absolute;top: 147px;left: 36%;width: 100px;height: 100px;text-align: center;font-weight: bold;font-size: 12px;">
+      <div *ngIf="!noFaultType">
+        {{faultTypeNum}}
+      </div>
+      <div *ngIf="!noFaultType">
+        {{commonUtil.codeTranslate(equipmentTypeEnum, $nzI18n, selectEquipment, languageEnum.facility)}}
+      </div>
+    </div>
+    <div echarts [options]="faultTypeOption" class="chart-style" *ngIf="!noFaultType"></div>
+    <div class="padding-t" *ngIf="noFaultType">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--设备总能耗统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.equipmentEnergyConsumption">
+    <div class="echarts-padding-style">
+      {{title}}
+    </div>
+    <div echarts [options]="equipmentEnergyConsumptionOption" class="chart-style" *ngIf="equipmentEnergyConsumptionOption"></div>
+    <div class="padding-t" *ngIf="!equipmentEnergyConsumptionOption">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--设备传输有效率统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.equipmentTransmissionEfficiency">
+    <div class="echarts-padding-style">
+      {{title}}
+    </div>
+    <div echarts [options]="equipmentTransmissionEfficiencyOption" class="chart-style" *ngIf="true"></div>
+    <div class="padding-t" *ngIf="false">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--故障率分析统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.failureRateAnalysis">
+    <div class="echarts-padding-style">
+      <span class="ec-hd">{{title}}</span>
+      <span class="ec-hd ec-icon iconfont icon-fiLink fiLink-more" title="{{indexLanguage.more}}" (click)="moreFailure()"></span>
+    </div>
+    <div echarts [options]="failureRateAnalysisOption" class="chart-style" *ngIf="!noFailureRateAnalysis"></div>
+    <div class="padding-t" *ngIf="noFailureRateAnalysis">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--规划数据统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.planning">
+    <div echarts [options]="planningOption" class="chart-style" *ngIf="true"></div>
+    <div class="padding-t" *ngIf="false">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--规划数据统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.project">
+    <div echarts [options]="projectOption" class="chart-style" *ngIf="true"></div>
+    <div class="padding-t" *ngIf="false">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+  <!--工单类型统计图-->
+  <div class="statistics-content" *ngIf="type === cardType.workOrder && procTypeList.length">
+    <div echarts [options]="workOrderOption" class="chart-style" *ngIf="true"></div>
+    <div class="padding-t" *ngIf="false">
+      <nz-empty class="empty"></nz-empty>
+    </div>
+  </div>
+</div>

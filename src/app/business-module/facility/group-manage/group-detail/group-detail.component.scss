@@ -1,0 +1,71 @@
+@import "../../../../style-module/config";
+// 标题样式
+.group-detail-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.button-container{
+  margin-top: 40px;
+}
+.group-detail {
+  padding: 10px;
+}
+// 设施选择器输入框
+.group-template-name {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px 11px;
+  width: 85%;
+  height: 32px;
+  overflow: hidden;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: 1px solid $sp-icon-color-4;
+  outline: none;
+  cursor: default;
+  &:hover{
+    border-color: $color;
+  }
+}
+// 打开选择分组类容按钮
+.open-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $sp-icon-color-4;
+}
+// 快速分组标签样式
+.quick-group-label{
+  margin-right: 10px;
+  width: 150px;
+}
+// 快速分组下拉选样式
+.select-type {
+  width: 250px;
+  margin-right: 10px
+}
+// 状态文字和图标之间的样式
+.status-text {
+  margin-left: 6px;
+}
+// 快速分组下拉选样式
+.equipment-num-select {
+  width: 110px;
+}
+// 自定义表单项样式
+.custom-template {
+  display: flex;
+  align-items: center;
+  .input-name{
+    width: 300px;
+  }
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

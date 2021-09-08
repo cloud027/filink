@@ -1,0 +1,500 @@
+@import "../../../../style-module/config";
+// 地图容器
+.loop-map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.filter-select-container {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 400px;
+  height: 32px;
+  align-items: center;
+  background-color: $bg-c-w;
+  .map-select {
+    padding-right: 5px;
+    width: 110px;
+    text-align: center;
+    border-right: 1px solid $border-color;
+
+    .map-select-name {
+      min-width: 50px;
+      color: $color;
+    }
+    .map-select-icon {
+      color: $color;
+    }
+  }
+  .map-search-container {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    input::-webkit-input-placeholder {
+      color: #bfbfbf;
+    }
+    input:-moz-placeholder {
+      color: #bfbfbf;
+    }
+    input::-moz-placeholder {
+      color: #bfbfbf;
+    }
+
+    input:-ms-input-placeholder {
+      color: #bfbfbf;
+    }
+
+    .map-search-name {
+      width: 100%;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      .map-search-input {
+        border: none;
+        color: $disabled-font-color;
+      }
+    }
+
+    .b-map-location-search {
+      position: absolute;
+      left: 10px;
+      top: 0;
+
+      .b-map-address {
+        margin-top: 5px;
+        .address-search {
+          padding-left: 11px;
+          width: 270px;
+          outline: none;
+          border: none;
+        }
+
+      }
+      .search-result-option{
+        display: none;
+        margin-top: 10px;
+        width: 150px;
+        height: auto;
+        border: 1px solid;
+      }
+    }
+    // 谷歌地图搜索样式
+    .g-map-location-search {
+      position: absolute;
+      margin-top: 5px;
+      left: 10px;
+      top: 0;
+      input {
+        border: none;
+        outline: none;
+        width: 270px;
+        padding-left: 11px;
+      }
+
+      .location-icon {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 10px;
+      }
+    }
+  }
+}
+
+.info-window-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  transform: translate(-50%, -100%);
+  margin-top: -10px;
+  white-space: nowrap;
+
+  .info-window-c {
+    display: flex;
+    max-width: 270px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: rgba(256, 256, 256, 0.8);
+    box-shadow: 5px 5px 5px #d0c9c9;
+
+    .info-window-item {
+      width: 120px;
+      height: 25px;
+      align-items: center;
+      font-size: 14px;
+      display: flex;
+
+      .info-window-item-icon {
+        margin-right: 5px;
+      }
+
+      .info-window-item-name {
+        flex: 1;
+      }
+
+      .info-window-item-count {
+        color: #b3b3b3;
+      }
+    }
+  }
+
+  .info-window-m {
+    position: relative;
+    font-size: 12px;
+    padding: 10px 15px 15px 15px;
+    border-radius: 5px;
+    background-color: rgba(256, 256, 256, 0.8);
+    box-shadow: 5px 5px 5px #d0c9c9;
+
+
+    .info-window-m-name {
+      display: flex;
+      height: 20px;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 14px;
+
+      .info-window-m-name-bottom {
+        margin-bottom: 16px;
+      }
+      .info-window-m-icon {
+        width: 20px;
+        height: 20px;
+        margin: 5px 20px 0px 0px;
+        border-radius: 2px;
+        text-align: center;
+        color: #fff;
+      }
+      .info-data-w-title {
+        font-size: 14px;
+        color: #333333;
+      }
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 0;
+      height: 0;
+      margin-left: -4px;
+      border-left: 4px solid transparent;
+      border-top: 6px solid;
+      border-right: 4px solid transparent;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 0;
+      height: 0;
+      margin-left: -3px;
+      border-left: 3px solid transparent;
+      border-top: 5px solid #fff;
+      border-right: 5px solid transparent;
+    }
+  }
+
+  .info-window-r {
+    position: relative;
+    font-size: 12px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: rgba(256, 256, 256, 0.8);
+    box-shadow: 5px 5px 5px #d0c9c9;
+    cursor: pointer;
+  }
+}
+.loop-name-container{
+  max-width: 150px;
+  word-wrap:break-word;
+  word-break:normal;
+  .loop-name{
+    width: 100%;
+    word-break:normal;
+    display:block;
+    white-space:pre-wrap;
+    word-wrap: break-word ;
+    overflow: hidden ;
+  }
+}
+.info-window-a {
+  position: relative;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgba(256, 256, 256, 0.8);
+  box-shadow: 5px 5px 5px #d0c9c9;
+  padding: 10px 15px 14px 15px;
+  .info-frame {
+    margin-bottom: 10px
+  }
+
+  .info-window-a-title {
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .info-window-a-name {
+    display: flex;
+    // height: 25px;
+    align-items: center;
+
+
+    .info-window-a-area-name {
+      margin-left: 15px;
+      font-size: 12px;
+    }
+
+    .info-window-a-count {
+      margin-left: 15px;
+      color: #36cfc9;
+    }
+
+    .info-window-a-prompt {
+      text-align: center;
+      color: #626262;
+      font-size: 13px;
+    }
+  }
+
+
+  .info-window-a-device {
+    margin-top: 5px;
+    color: #626262;
+    font-size: 13px;
+    display: inline-block;
+  }
+
+  .info-window-a-icon {
+    background: #1ec5ff no-repeat center;
+    text-align: center;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    margin-right: 22px;
+    border-radius: 2px;
+    background-size: 100% 100%;
+    line-height: 20px;
+  }
+
+  .info-window-a-device-count {
+    width: 20px;
+    font-size: 12px;
+    text-align: center;
+    color: #a6a6a6;
+  }
+
+  .info-window-a-alarm {
+    display: flex;
+    margin-top: 4px;
+
+    .info-window-a-alarm-critical {
+      background-color: #e61017;
+    }
+
+    .info-window-a-alarm-urgent {
+      margin-right: 60px;
+      color: #959595;
+      line-height: 25px;
+    }
+
+    .info-window-a-alarm-main {
+      background-color: #ff6600;
+    }
+
+    .info-window-a-alarm-mains {
+      color: #959595;
+      line-height: 25px;
+    }
+
+
+  }
+
+  .info-window-a-bottom-alarm {
+    display: flex;
+    margin-top: 0;
+
+    .info-window-a-alarm-secondary {
+      background-color: #f1c620;
+    }
+
+    .info-window-a-alarm-secondarys {
+      margin-right: 60px;
+      color: #959595;
+      line-height: 25px;
+    }
+
+    .info-window-a-alarm-prompt {
+      background-color: #58c1f0;
+    }
+
+    .info-window-a-alarm-prompts {
+      color: #959595;
+      line-height: 25px;
+    }
+
+  }
+
+  .info-window-a-alarm-name {
+    text-align: center;
+    height: 20px;
+    width: 40px;
+    color: #FFFFFF;
+    margin-right: 5px;
+    margin-top: 4px;
+  }
+
+}
+
+.info-data-w {
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 10px;
+  color: #fff;
+}
+
+.info-window-m-font {
+  font-family: 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  color: #626262;
+}
+
+.search {
+  position: absolute;
+  width: 100px;
+  left: 70px;
+  top: 15px;
+  height: 30px;
+  background-color: #36cfc9;
+  border-radius: 15px;
+  display: flex;
+  padding: 1px;
+  align-items: center;
+
+  input {
+    outline: none;
+    border: 1px solid #37d0cb;
+    border-radius: 15px;
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    padding: 5px 30px 5px 10px;
+  }
+
+  .location-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+}
+
+.width-items {
+  width: 270px;
+}
+
+// 地图类型切换选择器
+.map-type-control {
+  bottom: 10px;
+  right: 10px;
+  top: auto;
+  left: auto;
+  white-space: nowrap;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  text-size-adjust: none;
+  display: flex;
+  // 地图类型选中样式
+  .map-type-title {
+    box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(139, 164, 220);
+    background: rgb(255, 255, 255);
+    padding: 2px 6px;
+    font-style: normal;
+    font-variant: normal;
+    font-stretch: normal;
+    font-size: 12px;
+    line-height: 1.3em;
+    font-family: arial, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 0px 3px 3px 0px;
+    color: rgb(0, 0, 0);
+  }
+
+  // 地图类型默认样式
+  .map-type-title-s {
+    box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 3px;
+    border-left: 1px solid rgb(139, 164, 220);
+    border-top: 1px solid rgb(139, 164, 220);
+    border-bottom: 1px solid rgb(139, 164, 220);
+    background: rgb(142, 168, 224);
+    padding: 2px 6px;
+    font: bold 12px/1.3em arial, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 3px 0px 0px 3px;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.zoom-control {
+  bottom: 40px;
+  right: 10px;
+  top: auto;
+  left: auto;
+  white-space: nowrap;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  $size: 32px;
+
+  .zoom-control-item {
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 20px;
+    background-color: white;
+
+    &:hover {
+      border: 1px solid #dbf6f5;
+      box-shadow: 0 0 3px #36cfc9;
+    }
+  }
+
+  .zoom-control-item-out {
+    margin-top: 6px;
+  }
+}
+
+.coincide-table-table {
+  position: absolute;
+  z-index: 100;
+  left: calc(50% + 20px);
+  top: calc(50% - 15px);
+}
+
+.equipment-list-container {
+  background-color: white;
+
+  .equipment-table {
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #d0c9c9;
+  }
+}

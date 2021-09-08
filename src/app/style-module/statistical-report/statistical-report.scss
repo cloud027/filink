@@ -1,0 +1,43 @@
+xc-table.alarm-statistical > div.xc-table {
+  margin: 0 20px 20px;
+}
+
+.alarm-filtration .ant-modal-wrap > .ant-modal {
+  width: 780px !important;
+}
+
+.add-alarm-template .ant-modal-wrap > .ant-modal {
+  width: 650px !important;
+}
+
+nz-modal.alarm-filtration .ant-modal-body {
+  padding:20px 25px 40px 25px;
+}
+
+nz-modal.alarm-filtration .table-top-button {
+  padding: 8px 0 5px;
+}
+
+nz-modal.alarm-filtration .ant-table-pagination.ant-pagination {
+  float: none;
+  text-align: center;
+  margin: 0;
+}
+
+nz-range-picker.template-list span.ant-calendar-picker {
+  width: 300px !important;
+}
+
+check-select-input.alarm-statistical > div.check-select {
+  width: 170px;
+}
+.statistic-form {
+  .form-row .xc-item .form-item-project .form-item-select{
+    width: 300px !important;
+  }
+}
+.table-chart-top{
+  .ant-table-body {
+    max-height: 335px !important;
+  }
+}

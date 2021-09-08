@@ -1,0 +1,83 @@
+<div class="history-alarm-box">
+  <div class="alarm-common-title">{{language.historyAlarm}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+        (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+<!--告警级别-->
+<ng-template #alarmFixedLevelTemp let-data="data">
+  <div class="alarm-flex">
+    <div class="box-icon" [ngStyle]="data.style"></div>
+    <span class="alarm-left">{{ data.alarmFixedLevel | translate : alarmLevelEnum : languageEnum.alarm}} </span>
+  </div>
+</ng-template>
+<!--设备类型-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i [ngClass]="data['equipmentIcon']" class="equipment-type-icon"></i>
+  <span class="status-text" [title]="data.alarmSourceType">
+    {{data.alarmSourceType}}
+  </span>
+</ng-template>
+<!--表格清理状态-->
+<ng-template #alarmCleanStatusTemp let-data="data">
+  <div>{{ data.alarmCleanStatus | translate : alarmCleanStatusEnum}}</div>
+</ng-template>
+<!--表格确认状态-->
+<ng-template #alarmConfirmStatusTemp let-data="data">
+  <div>{{ data.alarmConfirmStatus | translate : alarmConfirmStatusEnum }}</div>
+</ng-template>
+
+<!-- 告警名称 -->
+<ng-template #alarmName let-filterValue = "filterValue">
+  <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue"></app-alarm-name>
+</ng-template>
+
+<!-- 区域 -->
+<ng-template #areaSelector let-data="data" let-filterValue = "filterValue">
+  <app-area [areaConfig]='areaConfig' [filterValue]="filterValue"></app-area>
+</ng-template>
+<!-- 设施名称 -->
+<ng-template #deviceNameTemp let-filterValue="filterValue">
+  <app-alarm-object [alarmObjectConfig]="alarmObjectConfig" [filterValue]="filterValue" [title]="deviceTitle"></app-alarm-object>
+</ng-template>
+
+<!--设施类型-->
+<ng-template #alarmSourceTypeTemp let-data="data">
+  <i [ngClass]="data['deviceTypeIcon']" class="equipment-type-icon"></i>
+  <span class="status-text" [title]="data.alarmDeviceTypeId | translate : deviceTypeEnum">
+    {{data.alarmDeviceTypeId | translate : deviceTypeEnum}}
+  </span>
+</ng-template>
+<div class="box-warp" *ngIf="historyAlarmTemplateTable">
+  <app-template-table (resultAndClose)="templateTable($event)" [isHistoryAlarmTemplateTable]="true"></app-template-table>
+</div>
+<!-- 告警对象 -->
+<ng-template #departmentTemp let-filterValue = "filterValue">
+  <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+         (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkEquipmentObject.name" />
+</ng-template>
+<!--设施选择-->
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>
+<!-- 频次 -->
+<ng-template #frequencyTemp let-filterValue = "filterValue">
+    <span class="input-box">
+      <input type="text" class="width-style area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+</ng-template>
+

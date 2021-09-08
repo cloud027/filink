@@ -1,0 +1,103 @@
+<div class="table-wrapper">
+    <!--设备列表和分组列表地图-->
+    <app-map-list *ngIf="hasEquipmentMapAuth" (showTableChange)="onShowTable($event)">
+    </app-map-list>
+    <!--列表部分-->
+    <div [ngClass]="isShowUpIcon ? 'table-top' : 'table-container'" *ngIf="isShowTable">
+        <xc-table
+            #tableComponent
+            *ngIf="isShowTable"
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)"
+        >
+        </xc-table>
+    </div>
+</div>
+
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+    <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+    <span
+        class="status-text"
+        title=" {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+    >
+        {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+    </span>
+</ng-template>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+    <div class="area-level">
+        <i
+            [class]="'icon-fiLink-l iconfont ' + data.statusIconClass + ' ' + data.statusColorClass"
+        ></i>
+        <span
+            class="status-text"
+            title="{{
+                data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility
+            }}"
+        >
+            {{ data.equipmentStatus | translate: equipmentStatusEnum:languageEnum.facility }}
+        </span>
+    </div>
+</ng-template>
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+    <input
+        nz-input
+        type="text"
+        [placeholder]="equipmentLanguage.picInfo.pleaseChoose"
+        [(ngModel)]="filterDeviceName"
+        (click)="onShowFacility(filterValue)"
+    />
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component
+    *ngIf="facilityVisible"
+    [(facilityVisible)]="facilityVisible"
+    [multiple]="true"
+    [selectFacilityIds]="selectFacility"
+    title="{{ equipmentLanguage.facilityList }}"
+    (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>
+<!-- 业务状态 -->
+<ng-template #equipmentBusinessTemp let-data="data">
+    <div class="area-level">
+        <span
+            class="status-text"
+            [ngStyle]="data.rowStyle"
+            title="{{ data.businessStatus | translate: businessStatusEnum:languageEnum.facility }}"
+        >
+            {{ data.businessStatus | translate: businessStatusEnum:languageEnum.facility }}
+        </span>
+    </div>
+</ng-template>
+<!--备注换行处理-->
+<ng-template #remarkTable let-data="data">
+    <div class="transfer-reason" [title]="data['remarks']">
+        {{ data['remarks'] }}
+    </div>
+</ng-template>
+
+<!-- 分组变更 -->
+<!-- <app-map-group-change
+    *ngIf="isShowGroupChange"
+    [(xcVisible)]="isShowGroupChange"
+    [tableData]="groupChangeDataSet"
+    [groupFacilityType]="selectMapType"
+>
+</app-map-group-change> -->
+
+<!--批量添加关注-->
+<!-- <app-map-multiple-follow-equipment
+    *ngIf="isShowAddAttention"
+    [(xcVisible)]="isShowAddAttention"
+    [facilityOrEquipment]="facilityOrEquipment"
+    [tableData]="groupChangeDataSet"
+    (addAttentionChange)="onAddAttention($event)"
+>
+</app-map-multiple-follow-equipment> -->

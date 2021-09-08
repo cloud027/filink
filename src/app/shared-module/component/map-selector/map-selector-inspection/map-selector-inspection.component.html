@@ -1,0 +1,190 @@
+<!--为了减少性能消耗采用手写弹框-->
+<div class="map-selector-modal-area" [hidden]="!xcVisible">
+  <div class="map-selector-modal">
+    <!--弹窗标题-->
+    <div class="map-selector-title">
+      <span class="title-left">{{mapSelectorConfig.title}}</span>
+      <span class="title-right" (click)="handleCancel()">
+        <i class="close-icon" nz-icon type="close" theme="outline"></i>
+      </span>
+    </div>
+    <!--弹窗body-->
+    <div class="map-body-area" #mapSelectorDom>
+      <!--左侧地图-->
+      <div class="body-map-all">
+        <!--地图标题及搜索-->
+        <div class="body-title" [hidden]="mapBoxSelect">
+          <i [class.background]="drawType==='arrow'" class="map-util icon-fiLink-l iconfont fiLink-arrow-select"
+             (click)="chooseUtil('arrow')"></i>
+          <i [class.background]="drawType==='rectangle'" class="map-util icon-fiLink-l iconfont fiLink-box-select"
+             (click)="chooseUtil('rectangle')"></i>
+        </div>
+        <!--地图主体-->
+        <nz-card class="body-card" [ngStyle]="{'margin-top':mapBoxSelect? '40px' : '0px' }">
+          <div id="_mapContainer"></div>
+          <!--左上角选择框-->
+          <div class="select-container">
+            <div class="map-select">
+              <nz-dropdown>
+                <a nz-dropdown><span class="select-title">{{orderSearchTypeName}}</span><i nz-icon type="down"></i></a>
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item (click)="searchFacilityName()"><a>{{deviceOrEquipName}}</a></li>
+                  <li nz-menu-item (click)="searchAddress()"><a>{{indexLanguage.searchAddress}}</a></li>
+                </ul>
+              </nz-dropdown>
+            </div>
+            <div class="map-search">
+              <!--设施名称搜索-->
+              <div class="map-search-name" [ngStyle]="{'zIndex': IndexObj.facilityNameIndex}">
+                <input
+                  placeholder="{{indexLanguage.enterFacilityName}}"
+                  nz-input
+                  [(ngModel)]="inputValue"
+                  (input)="onInput($event.target?.value)"
+                  [nzAutocomplete]="auto"
+                  (keydown)="keyDownEvent($event)"/>
+                <nz-autocomplete nzBackfill #auto>
+                  <nz-auto-option *ngFor="let option of options"
+                                  (mousedown)="optionChange($event,option)"
+                                  [nzValue]="option.selectId"
+                                  [nzLabel]="option.selectName">
+                    {{option.selectName}}
+                  </nz-auto-option>
+                </nz-autocomplete>
+              </div>
+              <!--百度地图地址搜索-->
+              <div class="b-map-location-search" [ngStyle]="{'zIndex': IndexObj.bMapLocationSearch}">
+                <div id="r-result">
+                  <input type="text" placeholder="{{indexLanguage.enterPlace}}" class="map-input" id="_suggestId"
+                         size="20" value=""/>
+                </div>
+                <div id="_searchResultPanel"></div>
+              </div>
+              <!--谷歌地图地址搜索-->
+              <div class="g-map-location-search" [ngStyle]="{'zIndex': IndexObj.gMapLocationSearch}">
+                <input #input [(ngModel)]="searchKey" class="map-input" placeholder="{{indexLanguage.enterPlace}}"
+                       (keyup.enter)="location()"/>
+                <div class="iconfont icon-fiLink fiLink-search location-icon" (click)="location()"></div>
+              </div>
+            </div>
+          </div>
+
+          <!--提示框-->
+          <div *ngIf="isShowInfoWindow" class="info-window-container"
+               [ngStyle]="{left: infoWindowLeft, top: infoWindowTop}">
+            <div *ngIf="infoData.type === 'c'" class="info-window-c"
+                 [ngClass]="{'width-items': infoData.collectionInfoData.length > 1}">
+              <div class="info-window-item" *ngFor="let data of infoData.collectionInfoData">
+                <div class="info-window-item-icon" [ngClass]="data.className"></div>
+                <div class="info-window-item-name">{{data.deviceTypeName}}</div>
+                <div class="info-window-item-count">{{data.count}}</div>
+              </div>
+            </div>
+            <div *ngIf="infoData.type === 'm'" class="info-window-m">
+              <div class="info-window-m-name">
+                <div>
+                  <span class="info-data-w"
+                        [ngStyle]="{'background-color': infoData.markerInfoData.deviceStatusColor,'color':'#fff'}">{{infoData.markerInfoData.deviceStatusName}}</span>
+                  <span>{{infoData.markerInfoData.deviceName}}</span>
+                </div>
+              </div>
+              <div>
+                <span class="info-data-w"
+                      [ngStyle]="{'background-color': infoData.markerInfoData.areaLevelColor,'color':'#fff'}">{{infoData.markerInfoData.areaLevelName}}{{typeLg === 'US' ? '' : InspectionLanguage.area}}</span>
+                <span>{{infoData.markerInfoData.areaName}}</span>
+              </div>
+              <div>
+                <span class="iconfont icon-fiLink-s fiLink-filink-location-icon disabled-red-icon"></span>
+                <span>{{infoData.markerInfoData.address}}</span>
+              </div>
+            </div>
+          </div>
+          <!--放大缩小-->
+          <div class="zoom-control">
+            <div *ngIf="this.selectMapType === 'equipment'"
+                 class="zoom-control-item iconfont icon-fiLink fiLink-map-layering facility-show-color"
+                 (click)="selectEquipmentType()" title="{{indexLanguage.equipmentTypeTitle}}"></div>
+            <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-in" (click)="zoomIn()"
+                 title="{{indexLanguage.magnify}}"></div>
+            <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-out" (click)="zoomOut()"
+                 title="{{indexLanguage.narrow}}"></div>
+          </div>
+
+          <div class="progress-bar" *ngIf="isShowProgressBar">
+            <p>{{language.loading}}...</p>
+            <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+          </div>
+          <!--设备部分-->
+          <div class="card-body" *ngIf="selectEquipmentShow">
+            <nz-radio-group [(ngModel)]="equipmentRadioValue"
+                            (ngModelChange)="equipmentCheckChange($event)">
+              <div class="equipment-radio-child" *ngFor="let item of equipmentTypeList">
+                <label nz-radio nzValue="{{item.code}}">
+                  <span class="icon">  </span>
+                  {{commonUtil.codeTranslate(indexEquipmentTypeEnum, $i18n, item.code, languageEnum.facility)}}
+                </label>
+              </div>
+            </nz-radio-group>
+          </div>
+        </nz-card>
+      </div>
+      <!--右侧表格-->
+      <div class="table-right">
+        <div class="table-title">
+          <span>{{language.selected}}：{{selectData.length}}/{{treeNodeSum}}{{language.count}}</span>
+        </div>
+        <div class="table-content">
+          <div class="table-body">
+            <nz-card class="table-card">
+              <xc-table [dataSet]="selectPageData" class="order-selector-table"
+                        [pageBean]="selectPageBean"
+                        [tableConfig]="selectorConfig"
+                        (pageChange)="selectPageChange($event)">
+              </xc-table>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--底部按钮-->
+    <div class="map-selector-footer">
+      <button (click)="handleOk()" [hidden]="selectHiddenButton" [nzLoading]="isLoading" class="link-button" nz-button
+              nzType="primary">{{language.confirm}}</button>
+      <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">{{language.cancel}}</button>
+      <button (click)="restMapTable()" [hidden]="isHiddenButton" class="link-button" nz-button
+              nzType="danger">{{language.reset}}</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #handleTemp let-data="data">
+  <span *ngIf="!mapBoxSelect" class="handle-icon" nz-tooltip [nzTitle]="language.unSelect" (click)="handleDelete(data)">
+    <i nz-icon type="minus-square" theme="outline"></i>
+  </span>
+</ng-template>
+<!--设施类型-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div title="{{data.deviceTypeName}}" class=" hidden">
+    <span class="status-temp" [ngClass]="data.deviceIcon"></span>
+    {{data.deviceTypeName}}
+  </div>
+</ng-template>
+<!--设备类型-->
+<ng-template #equipTemp let-data="data">
+  <div title="{{data.equipmentTypeName}}" class=" hidden">
+    <span class="status-temp" [ngClass]="data.equipIcon"></span>
+    {{data.equipmentTypeName}}
+  </div>
+</ng-template>
+
+<!--重合设备点列表弹框-->
+<div *ngIf="isShowTableWindow" class="coincide-table-table">
+  <div class="equipment-list-container">
+    <div class="equipment-table">
+      <xc-table [dataSet]="setData"
+                [pageBean]="equipmentTableConfig"
+                [tableConfig]="equipmentTableConfig">
+      </xc-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="map-container" #map id="mapContainer">
+</div>
+<!--提示框-->
+<div *ngIf="showDelete" class="info-window-container" [ngStyle]="{left: infoX, top: infoY}">
+  <button nz-button (click)="deleteLine(currentLine)" class="line-btn">{{language.deleteBtn}}</button>
+</div>
+<div *ngIf="showDeviceInfo" class="info-window-device" [ngStyle]="{left: infoTitleX, top: infoTitleY}">
+  <div class="info-frame space">
+      <div class="info-window-d-title">{{language.deviceName}}:</div>
+      <div class="info-window-d-name">{{currentDevice?.deviceName}}</div>
+  </div>
+  <div class="info-frame">
+      <div class="info-window-d-title">{{language.detailedAddress}}:</div>
+      <div class="info-window-d-count">{{currentDevice?.address}}</div>
+  </div>
+</div>

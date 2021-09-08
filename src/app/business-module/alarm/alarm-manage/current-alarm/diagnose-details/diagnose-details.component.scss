@@ -1,0 +1,28 @@
+@import "../../../../../style-module/config";
+
+.view-item {
+  margin-top: 15px;
+}
+
+.detail-height {
+  background: $bg-c;
+  overflow: hidden;
+  min-height: calc(100vh - 64px);
+}
+
+.alarm-detail-title {
+
+  font-size: 16px;
+  font-weight: 900;
+  color: $title-color;
+  padding-left: 16px;
+  padding-bottom: 20px;
+  background-color: $bg-c-w;
+}
+
+.loading{
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  z-index: 999;
+}

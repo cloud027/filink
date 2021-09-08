@@ -1,0 +1,27 @@
+@import "../../../../style-module/config";
+.device-select{
+  padding: 10px;
+  font-size: 12px;
+  //暂无数据样式
+  .no-data {
+    text-align: center;
+    margin-top: 40%;
+  }
+  .device-border{
+    border: 1px dashed $border-color;
+    display: inline-block;
+    padding: 2px 4px;
+    margin:  0 10px 10px 0;
+    cursor: pointer;
+    color: $index-left-unselected;
+    &:hover{
+      border-color: $index-left-menu;
+      color: $index-left-menu;
+    }
+  }
+
+  .device-border-active {
+    border-color: $index-left-menu;
+    color: $index-left-menu;
+  }
+}

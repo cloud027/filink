@@ -1,0 +1,132 @@
+<div class="history-alarm-confirm">
+  <!--标题-->
+  <div class="table-common-title"><span>{{workOrderLanguage.historyAlarmConfirm}}</span></div>
+  <!--统计图-->
+  <div class="order-chart" nz-row nzGutter="10">
+    <!--设备类型统计-->
+    <div nz-col class="gutter-row" nzSpan="9">
+      <div class="gutter-box">
+        <div class="chart-title">{{workOrderLanguage.equipStatistic}}</div>
+        <div *ngIf="equipmentTypeChartType === chartType.chart" echarts [options]="barChartOption" class="chart-box"></div>
+        <div *ngIf="equipmentTypeChartType === chartType.text" class="no-data">{{inspectionLanguage.noData}}</div>
+      </div>
+    </div>
+    <!--告警类别统计-->
+    <div nz-col class="gutter-row" nzSpan="9">
+      <div class="gutter-box">
+        <div class="chart-title">{{workOrderLanguage.alarmType}}</div>
+        <div *ngIf="alarmChartType === chartType.chart" echarts [options]="ringChartOption" class="chart-box"></div>
+        <div *ngIf="alarmChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+      </div>
+    </div>
+    <!--工单状态统计-->
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <div class="chart-title">{{workOrderLanguage.status}}</div>
+        <div class="circle-container" *ngIf="statusStatisticsChartType === chartType.chart">
+          <div echarts [options]="completedChartOption" class="ring-chart"></div>
+          <div echarts [options]="singleBackChartOption" class="ring-chart"></div>
+          <div class="over-box"></div>
+        </div>
+        <div *ngIf="statusStatisticsChartType === chartType.text" class="no-data">{{workOrderLanguage.noData}}</div>
+      </div>
+    </div>
+  </div>
+  <!--列表-->
+  <div class="order-table">
+      <xc-table
+        [dataSet]="tableDataSet"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+        (pageChange)="pageChange($event)">
+      </xc-table>
+  </div>
+  <!--状态模板-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}">
+      <span class="status-temp" [ngClass]="data.statusClass"> </span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--设施类型图标-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="hidden" title="{{data.deviceTypeName}}">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设施名称弹框-->
+  <ng-template #DeviceNameSearch let-filterValue="filterValue">
+    <app-alarm-object class="pic-selector"
+                      [placeholder]="workOrderLanguage.pleaseSelect"
+                      [alarmObjectConfig]="deviceObjectConfig"
+                      [filterValue]="filterValue" [title]="workOrderLanguage.selectDevice">
+    </app-alarm-object>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!-- 设备名称 -->
+  <ng-template #equipmentSearch let-filterValue = "filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkEquipmentObject.name" />
+  </ng-template>
+  <equipment-list-selector-component
+    *ngIf="equipmentVisible"
+    [(equipmentVisible)]="equipmentVisible"
+    [multiple]="true"
+    [showSelectedCount]="true"
+    [showCleanBtn]="true"
+    [selectEquipments]="selectEquipments"
+    (selectDataChange)="onSelectEquipment($event)">
+  </equipment-list-selector-component>
+  <!--设施区域弹框-->
+  <ng-template #AreaSearch let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName" />
+  </ng-template>
+  <!--区域选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [pageType]="inspectionLanguage.area"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)">
+  </xc-tree-area-selector>
+  <!--关联告警-->
+  <ng-template #refAlarmTemp let-data="data">
+    <div (click)="showRefAlarmModal(data)" class="hidden ref-color" [title]="data.refAlarmName">{{data.refAlarmName}}</div>
+  </ng-template>
+  <!--关联告警-->
+  <app-relevance-alarm *ngIf="isShowRefAlarm"
+                       [(xcVisible)]="isShowRefAlarm"
+                       [modalData]="alarmData"
+                       (selectDataChange)="closeRefAlarm()">
+  </app-relevance-alarm>
+  <!--筛选部门-->
+  <ng-template #unitNameSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{inspectionLanguage.pleaseChoose}}" readonly
+           (click)="showDeptModal(filterValue)" [(ngModel)]="departFilterValue.filterName || filterValue.filterName" />
+  </ng-template>
+  <!--列表中单位选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="responsibleUnitIsVisible"
+    (selectDataChange)="departmentSelectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+  <!--用户列表-->
+  <ng-template #userSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowUserTemp"
+    [(xcVisible)]="isShowUserTemp"
+    [selectUserList]="selectUserList"
+    (selectDataChange)="onSelectUser($event)">
+  </app-select-user>
+</div>

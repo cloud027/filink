@@ -1,0 +1,24 @@
+.options-body {
+  width: 100%;
+  margin-top: 20px;
+
+  .footer-content {
+    display: inline-block;
+    border-radius: 4px;
+    height: 32px;
+    margin-right: 20px;
+  }
+
+  .footer-operate {
+
+    .icon-right {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    .special-icon-right {
+      margin-right: 15px;
+      cursor: not-allowed;
+    }
+  }
+}

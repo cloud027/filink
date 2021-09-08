@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzTitle]="modalTitle"
+          [nzWidth]="640"
+          [nzContent]="modalContent"
+          [nzMaskClosable]="false"
+          [nzFooter]="null"
+          (nzOnCancel)="setHandleCancel()">
+  <ng-template #modalTitle>
+    {{language.viewCondition}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table #viewRuleTable [dataSet]="resultTableData"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </ng-template>
+</nz-modal>

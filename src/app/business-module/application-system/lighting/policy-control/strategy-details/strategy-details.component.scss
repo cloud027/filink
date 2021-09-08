@@ -1,0 +1,213 @@
+@import "../../../share/style/common-style";
+@import "../../../../../style-module/config";
+
+.context-list {
+  width: 607px;
+  margin: 0 20px 20px 20px;
+}
+
+/*新增详情*/
+.strategy-content {
+  padding: 20px;
+  border-radius: 3px;
+  border: 1px dashed $border-color;
+  margin: 0 20px 10px 20px;
+  width: 600px;
+  /*关闭操作*/
+  .strategy-close {
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: $color;
+    font-size: 16px;
+    .button-save {
+      margin-right: 10px;
+    }
+  }
+
+  .strategy-condition {
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  // 动作
+  .action {
+    margin-bottom: 20px;
+  }
+
+  /*事件源*/
+  .strategy-form {
+    margin-bottom: 20px;
+    display: flex;
+
+    .label-left {
+      width: 140px;
+    }
+
+    .interval-time {
+      /deep/ .ant-calendar-picker {
+        width: 300px !important;
+      }
+      .timer-select{
+        width: 300px;
+      }
+    }
+
+    .strength-input {
+      .light-intensity {
+        margin-top: 20px;
+        width: 300px
+      }
+
+      .light-input {
+        width: 79%;
+        margin-right: 2px;
+      }
+
+      .light-select {
+        width: 20%;
+      }
+
+      .interval {
+        text-align: left;
+      }
+
+      .strength {
+        text-align: left;
+      }
+    }
+
+    .source {
+      text-align: left;
+    }
+  }
+
+  /*动作*/
+  .lighting {
+    .icon-wrap {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50%;
+      color: $bg-c-w;
+      margin-right: 7px;
+    }
+
+    .switch-light {
+      display: flex;
+
+      .switch-left {
+        width: 140px;
+
+        .open-wrap {
+          background-color: $index-facility-selected;
+        }
+      }
+
+      .switch-right-close {
+        color: $color;
+        cursor: pointer;
+      }
+    }
+
+    .movement {
+      display: flex;
+
+      .dimming {
+        width: 140px;
+        display: flex;
+        height: 36px;
+        margin-top: 10px;
+        align-items: center;
+
+        .open-wrap {
+          background-color: $statistics-jointClosure;
+        }
+      }
+
+      .light {
+        margin-top: 10px;
+        display: flex;
+
+        .light-slider {
+          width: 300px;
+        }
+
+        .light-tip {
+          line-height: 36px;
+          width: 25px;
+        }
+
+        .light-tip-close {
+          color: $color;
+          line-height: 36px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+/*添加策略详情*/
+.strategy-add {
+  padding: 10px 20px;
+  width: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+
+  .left {
+    color: $color;
+    cursor: pointer;
+    i{
+      font-size: 16px;
+      vertical-align: sub;
+    }
+    .text{
+      font-size: 14px;
+      vertical-align: middle;
+      padding-left: 10px;
+    }
+  }
+
+  .right {
+    color: #ccc;
+
+    .required-info {
+      color: $error-color;
+    }
+  }
+}
+
+/*按钮样式*/
+.facilities {
+  width: 352px;
+
+  .area-name {
+    @include input-style;
+  }
+
+  .open-button {
+    @include button-style;
+  }
+}
+
+.alarm {
+  display: flex;
+
+  .box-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    align-self: center;
+  }
+
+  .alarm-text {
+    margin-left: 5px
+  }
+}

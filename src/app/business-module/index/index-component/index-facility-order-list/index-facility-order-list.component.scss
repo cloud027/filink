@@ -1,0 +1,67 @@
+@import "~src/app/style-module/config";
+//工单列表样式
+.facility-list-container {
+  background-color: $bg-c-w;
+  $text-margin: 0 5px;
+  //工单类别头部样式
+  .order-select-title {
+    display: flex;
+
+    .select {
+      flex: 1;
+      margin-bottom: 3px;
+
+    }
+
+    .select-option {
+      font-size: 12px;
+    }
+
+    .order-select-title-more {
+      cursor: pointer;
+      margin-top: 3px;
+      color: $index-alarm-title;
+      font-size: 12px;
+    }
+  }
+
+  .facility-list-ul {
+    padding: 5px 0;
+
+    .facility-list-ul-li {
+      padding-left: 30px;
+      height: 30px;
+      line-height: 30px;
+
+      &:hover {
+        background-color: $index-order-hover;
+      }
+    }
+  }
+
+  .facility-table {
+    padding: 5px 10px 10px 10px;
+  }
+
+  .facility-table-card {
+    padding: 0;
+  }
+
+  // 默认颜色
+  .select-default-tab {
+    color: $index-operational-background-color;
+  }
+
+  // 选中后的颜色
+  .select-tab-color {
+    flex: 1;
+    color: $index-order-select;
+  }
+
+  // 更多按钮样式
+  .facility-list-title-more {
+    margin-right: 5px;
+    cursor: pointer;
+    color: $index-alarm-title;
+  }
+}

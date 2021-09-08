@@ -1,0 +1,148 @@
+<div class="release-strategy">
+  <div class="play-date">
+    <h4 class="play-left">
+      <span class="title-required">*</span>
+      <span>{{languageTable.strategyList.timeSlot}}</span>
+    </h4>
+    <!--播放时段-->
+    <div class="time-list">
+      <div *ngIf="stepsFirstParams.strategyPlayPeriodRefList && stepsFirstParams.strategyPlayPeriodRefList.length">
+        <div class="play-time" *ngFor="let item of stepsFirstParams.strategyPlayPeriodRefList;let idx = index">
+          <div class="picker" *ngIf="!item.showTimePicker" (click)="item.showTimePicker = true">
+            {{item.playStartTime | date: 'HH:mm'}} ~ {{item.playEndTime | date: 'HH:mm'}}
+          </div>
+          <app-time-picker-range  *ngIf="item.showTimePicker"
+                                  [timeRange]="[item.playStartTime, item.playEndTime]"
+                                  [format]="'HH:mm'"
+                                  (confirmTimeRange)="editTimeRange($event, item, idx)"
+          ></app-time-picker-range>
+          <span>
+            <i class="icon-fiLink fiLink-pic-to-big iconfont" *ngIf="idx === 0" (click)="handleAddPlay()"></i>
+          </span>
+          <span><i class="icon-fiLink fiLink-pic-to-small iconfont" (click)="handleDeletePlay(idx)"></i></span>
+        </div>
+      </div>
+      <div class="play-time" *ngIf="!stepsFirstParams.strategyPlayPeriodRefList.length || isShowPattern">
+        <div class="picker">
+          <app-time-picker-range  [format]="'HH:mm'"
+                                  (confirmTimeRange)="installSelectDate($event)"
+          ></app-time-picker-range>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--节目选择-->
+  <div class="release-program">
+    <h4 class="play-left">
+      <span class="title-required">*</span>
+      <span>{{languageTable.strategyList.programSelection}}</span>
+    </h4>
+    <div class="program-select">
+      <div class="program-add" (click)="handleAddProgram()">
+        <span><i class="icon-fiLink fiLink-pic-to-big iconfont"></i></span>
+        <span class="title">{{languageTable.contentList.programAdd}}</span>
+      </div>
+      <div class="program-border" *ngIf="isAddProgram">
+        <div class="strategy-close">
+          <i nz-icon nzType="save" nzTheme="outline" class="button-save" [title]="commonLanguage.save" (click)="handleSave()"></i>
+          <i nz-icon nzType="close" nzTheme="outline" class="button-close" (click)="isAddProgram = false"></i>
+        </div>
+        <!--节目列表-->
+        <div class="program-list">
+          <div class="program-title">
+            <div class="program-left">{{languageTable.contentList.selectProgram}}</div>
+            <div class="program-right">
+              <span class="area-name" [title]="selectedProgram.name">{{selectedProgram.name}}</span>
+              <span>
+              <span class="open-button">
+                <i class="icon-l icon-search" (click)="isShowProgram = true"></i>
+              </span>
+            </span>
+            </div>
+          </div>
+        </div>
+        <!--广播发布不展示节目时长-->
+        <!--<div class="program-list">-->
+          <!--<div class="program-title">-->
+            <!--<div class="program-left">{{languageTable.contentList.displayDuration}}</div>-->
+            <!--<div class="program-right">-->
+              <!--<nz-input-number [nzMin]="1" class="program-picker-time" [(ngModel)]="showTime"></nz-input-number>-->
+              <!--<span>{{commonLanguage.second}}</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+      <div class="program-table">
+        <div class="program-tip">{{languageTable.strategyList.dragToSort}}</div>
+        <!-- 此处需要拖拽排序功能，公共的表格不能拖拽  -->
+        <nz-table [nzScroll]="{x: '494px', y: '200px'}" [nzData]="stepsFirstParams.strategyProgRelationList" [nzFrontPagination]="false" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th [nzWidth]="'62px'">{{language.serialNumber}}</th>
+              <th>{{languageTable.contentList.selectProgram}}</th>
+              <!--<th>{{languageTable.contentList.displayDuration}}({{commonLanguage.second}})</th>-->
+              <th [nzWidth]="'62px'">{{language.operate}}</th>
+            </tr>
+          </thead>
+          <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr *ngFor="let data of stepsFirstParams.strategyProgRelationList; let i = index" cdkDrag>
+              <td>{{ i + 1 }}</td>
+              <td>{{ data.programName }}</td>
+              <!--<td>{{ data.playTime}}</td>-->
+              <td>
+                <div nz-tooltip [nzTitle]="languageTable.strategyList.strategyDelete">
+                  <i class="icon-fiLink iconfont fiLink-delete red-icon operate-btn" (click)="confirmDelProgram(data)"></i>
+                </div>
+              </td>
+            </tr>
+            <!--表格无数据的情况-->
+            <tr *ngIf="stepsFirstParams.strategyProgRelationList.length===0" class="xc-no-data-tr">
+              <td  colspan="4">
+                <div class="xc-no-data">{{commonLanguage.noData}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+  <!--循环模式-->
+  <div class="play-date">
+    <h4 class="play-left">
+      <span class="title-required">*</span>
+      <span>{{languageTable.strategyList.cycleMode}}</span>
+    </h4>
+    <div class="time-list">
+      <nz-radio-group [(ngModel)]="stepsFirstParams.instructBroadcast.playType">
+        <label nz-radio [nzValue]="execStatus.implement">{{languageTable.strategyList.loop}}</label>
+        <label nz-radio [nzValue]="execStatus.free">{{languageTable.strategyList.noLoop}}</label>
+      </nz-radio-group>
+    </div>
+  </div>
+  <!--音量-->
+  <div class="play-date volume">
+    <h4 class="play-left">
+      <!--暂时去掉必填-->
+      <!--<span class="title-required">*</span>-->
+      <span class="icon-wrap volume-wrap"><i class="iconfont fiLink-filink-yinliang-icon"></i></span>
+      <span>{{languageTable.strategyList.volume}}</span>
+    </h4>
+    <div class="slider-list">
+      <div class="slider">
+        <nz-slider
+          [nzMin]="sliderValue.min"
+          [nzMax]="sliderValue.volumeMax"
+          [(ngModel)]="stepsFirstParams.instructBroadcast.volume"
+          (ngModelChange)="strategyDetailValid()"></nz-slider>
+      </div>
+      <div class="text">
+        {{stepsFirstParams.instructBroadcast.volume}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--选择节目-->
+<app-broadcast-select-program *ngIf="isShowProgram" [(isVisible)]="isShowProgram"
+                    [selectedProgram]="selectedProgram"
+                    (selectChange)="handleProgramOk($event)"></app-broadcast-select-program>

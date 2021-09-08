@@ -1,0 +1,20 @@
+<!--顶部标题-->
+<div class="page-top-title">{{productLanguage.productDetailTitle}}</div>
+<div class="product-detail-container">
+  <div class="product-detail-item">
+    <!--产品基础信息设施-->
+    <app-product-infrastructure-device *ngIf="productDetail.typeFlag===productTypeEnum.facility"
+                                       [productDetail]="productDetail"
+                                       [productId]="productId"></app-product-infrastructure-device>
+    <!--产品基础信息设备-->
+    <app-product-infrastructure-equipment [productId]="productId"
+                                          [productDetail]="productDetail"
+                                          *ngIf="productDetail.typeFlag === productTypeEnum.equipment || productDetail.typeFlag === productTypeEnum.other"></app-product-infrastructure-equipment>
+  </div>
+  <div class="product-detail-item" *ngIf="productDetail.typeFlag===productTypeEnum.equipment&&productDetail.typeCode !== equipmentTypeEnum.intelligentEntranceGuardLock">
+    <!--设备信息-->
+    <nz-card nzTitle="{{productLanguage.equipmentDetail}}">
+      <app-product-equipment-info [productDetail]="productDetail"></app-product-equipment-info>
+    </nz-card>
+  </div>
+</div>

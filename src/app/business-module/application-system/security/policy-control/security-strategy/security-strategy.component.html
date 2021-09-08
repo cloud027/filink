@@ -1,0 +1,59 @@
+<div class="in-container">
+  <xc-form [column]="formColumn"
+           (formInstance)="formInstance($event)">
+  </xc-form>
+</div>
+
+<ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col" class="start-end-time">
+  <form [formGroup]="formGroup">
+    <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime formControlName="ecTime"></nz-date-picker>
+    -
+  </form>
+  <form [formGroup]="formGroup">
+    <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime formControlName="ecTime"></nz-date-picker>
+  </form>
+</ng-template>
+<!-- 部门选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div style="width: 300px">
+    <span class="area-name" [title]="selectUnitName">{{selectUnitName}}</span>
+    <button class="open-button" (click)="showModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+<ng-template #startEndTime let-formGroup="formGroup" let-col="col">
+  <div class="start-end">
+    <span><nz-date-picker [nzSize]="size"></nz-date-picker></span>
+    <span class="border-time"></span>
+    <span><nz-date-picker [nzSize]="size"></nz-date-picker></span>
+  </div>
+</ng-template>
+
+<ng-template #enableStatus let-formGroup="formGroup" let-col="col">
+  <label nz-checkbox [(ngModel)]="checked">立即启用</label>
+</ng-template>
+
+<nz-modal
+  *ngIf="isVisible"
+  [(nzVisible)]="isVisible"
+  nzTitle="事件源"
+  nzWidth="70%"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <nz-tabset>
+    <nz-tab nzTitle="告警列表">
+      <xc-table [dataSet]="_dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </nz-tab>
+    <nz-tab nzTitle="事件列表">
+      <xc-table [dataSet]="_dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </nz-tab>
+  </nz-tabset>
+</nz-modal>

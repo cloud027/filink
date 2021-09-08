@@ -1,0 +1,10 @@
+<div class="details-map" [ngStyle]="heightStyle">
+  <div class="img-container" id="equipment-for-map"></div>
+  <!--重合设备点列表弹框-->
+  <div *ngIf="isShowTableWindow" class="clusterer-table-table">
+    <xc-table [dataSet]="equipmentData"
+              [tableConfig]="equipmentTableConfig">
+    </xc-table>
+  </div>
+</div>
+

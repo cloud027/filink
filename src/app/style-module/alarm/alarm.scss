@@ -1,0 +1,33 @@
+@import "../config";
+
+/******************************清除状态******************************/
+// 已清除
+.isClean{
+  background-color: $input-hover-color;
+}
+// 设备清除
+.deviceClean{
+  background-color: $switch-bg-color;
+}
+// 未清除
+.noClean{
+  background-color: $form-error-color;
+}
+
+/******************************确认状态******************************/
+// 已确认
+.isConfirm{
+  background-color: $handle-uncommit-color;
+}
+// 未确认
+.noConfirm{
+  background-color: $handle-undone-color;
+}
+.alarm-disabled-icon {
+  color: #a8a9a8;
+  cursor: not-allowed;
+}
+// 启用状态
+.no-start-temp {
+  margin-left: 15px;
+}

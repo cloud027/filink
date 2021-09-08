@@ -1,0 +1,80 @@
+<!--执行动作-----------设备选择-->
+<nz-modal
+  *ngIf="isVisible && selectType !== 'noModal'"
+  [nzVisible]="isVisible"
+  (nzVisibleChange)="nzVisibleChange($event)"
+  (nzOnOk)="handleTableOk()"
+  [nzFooter]="modalFooter"
+  [nzNoAnimation]="true"
+  [nzTitle]="languageTable.strategyList.selectEquipment"
+  nzWidth="70%"
+  (nzOnCancel)="handleCancel()">
+  <xc-table #equipment
+    [dataSet]="dataSet"
+    [selectedData]="selectedData"
+    [pageBean]="pageBean"
+    [tableConfig]="equipmentTable"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleTableOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+    <button *ngIf="selectType==='checkbox'" nz-button nzType="danger" class="link-button"
+            (click)="cleanUpEquipment()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+<xc-table  *ngIf="selectType === 'noModal'"
+          [dataSet]="dataSet"
+          [selectedData]="selectedData"
+          #equipment
+          [pageBean]="pageBean"
+          [tableConfig]="equipmentTable"
+          (pageChange)="pageChange($event)">
+</xc-table>
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i  class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text" title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+
+<!--触发条件---------设备列表单选-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group
+    [(ngModel)]="selectEquipment.equipmentId"
+    (ngModelChange)="selectedEquipmentChange($event, data)">
+    <label nz-radio [nzValue]="data.equipmentId"></label>
+  </nz-radio-group>
+</ng-template>
+
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="equipmentLanguage.picInfo.pleaseChoose"
+         [(ngModel)]="filterDeviceName"
+         (click)="onShowFacility(filterValue)">
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component
+  *ngIf="facilityVisible"
+  [(facilityVisible)]="facilityVisible"
+  [multiple]="true"
+  [selectFacilityIds]="selectFacility"
+  title="{{equipmentLanguage.facilityList}}"
+  (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>

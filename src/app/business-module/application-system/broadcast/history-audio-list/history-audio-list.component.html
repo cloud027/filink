@@ -1,0 +1,106 @@
+<!--  内容列表-->
+<div class="box-title">
+  {{language.historyAudioList.historyAudioList}}
+</div>
+
+<!--列表-->
+<div class="table-wrapper">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--节目文件-->
+<ng-template #programFiles let-data="data">
+  <div (click)="downloadFile(data)" [title]="data.programFileName" class="program-files">{{data.programFileName}}</div>
+</ng-template>
+
+<!--备注换行处理-->
+<ng-template #remarksTable let-data="data">
+  <div class="program-files"
+       [title]="data.remark">
+    {{data.remark}}
+  </div>
+</ng-template>
+
+<!--预览框-->
+<nz-modal *ngIf="isPreview" [(nzVisible)]="isPreview" [nzTitle]="language.contentList.preview"
+          (nzOnCancel)="onPreviewCancel()" (nzOnOk)="onPreviewOk()">
+  <app-audio-preview [src]="filePath"></app-audio-preview>
+</nz-modal>
+<!--广播设备弹框-->
+<nz-modal *ngIf="showDeviceModal" [(nzVisible)]="showDeviceModal" [nzTitle]="language.historyAudioList.recordDevice"
+          [nzWidth]="'70%'"
+          (nzOnCancel)="deviceCancel()" (nzOnOk)="deviceOk()">
+  <xc-table [dataSet]="deviceList"
+            [pageBean]="_pageBean"
+            [tableConfig]="deviceTableConfig"
+            (pageChange)="_pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="danger" (click)="deviceCancel">
+      {{language.handleCancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!--录音设备-->
+<ng-template #equipmentRef let-data="data">
+  <a href="javascript:void (0);" (click)="viewDevice(data)" class="table-text-td">
+    <span [title]="language.historyAudioList.viewDevice">{{language.historyAudioList.viewDevice}}</span>
+  </a>
+</ng-template>
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title=" {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="equipmentLanguage.picInfo.pleaseChoose"
+         [(ngModel)]="filterDeviceName"
+         (click)="onShowFacility(filterValue)">
+</ng-template>
+<!--设施过滤选择器-->
+<facility-list-selector-component
+  *ngIf="facilityVisible"
+  [(facilityVisible)]="facilityVisible"
+  [multiple]="true"
+  [selectFacilityIds]="selectFacility"
+  title="{{equipmentLanguage.facilityList}}"
+  (selectDataChange)="onFacilityChange($event)"
+>
+</facility-list-selector-component>
+
+<ng-template #equipmentBusinessTemp let-data="data">
+  <div class="area-level">
+    <span class="status-text"
+          [ngStyle]="data.rowStyle"
+          title="{{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}">
+          {{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+
+<!--设备中的设施类型模板 -->
+<ng-template #equipmentDeviceTypeTemp let-data="data">
+  <i [ngClass]="data['deviceIconClass']"></i>
+  <span [ngStyle]="data.rowStyle" class="status-text" [title]="data['deviceType']">{{
+        data['deviceType'] | translate: deviceTypeCode
+    }}</span>
+</ng-template>

@@ -1,0 +1,106 @@
+<!--系统租户列表-->
+<div class="template-warp">
+  <div class="table-common-title"><span>{{language.systemTenants}}</span></div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="tenantPageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+
+<!--租户状态-->
+<ng-template #TenantStatusTemp let-data="data">
+  <nz-switch [ngModel]="data.status==='1'"
+             [nzLoading]="data.clicked"
+             [nzControl]="true"
+             [nzDisabled]="data.isDisabled"
+             (click)="clickSwitch(data)">
+  </nz-switch>
+  <span *ngIf="data.status === '1'" class="mr-l-15">{{this.language.enable}}</span>
+  <span *ngIf="data.status === '0'" class="mr-l-15">{{this.language.disable}}</span>
+</ng-template>
+
+
+<!--查看租户下用户-->
+<nz-modal [(nzVisible)]="userListVisible"
+          [nzMaskClosable]="false"
+          [nzWidth]="1200"
+          [nzTitle]="this.language.userList"
+          (nzOnCancel)="closeModal()"
+          [nzFooter]="null">
+
+
+  <!--租户下用户列表-->
+  <xc-table #tableComponent
+            [dataSet]="usersDataSet"
+            [pageBean]="usersPageBean"
+            [tableConfig]="usersTableConfig"
+            (pageChange)="usersPageChange($event)">
+  </xc-table>
+
+
+  <!--弹框底部按钮-->
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="closeModal()">{{language.okText}}</button>
+    <button class="link-button" nz-button nzType="danger" (click)="closeModal()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+
+<!--用户状态-->
+<ng-template #userStatusTemp let-data="data">
+  <span *ngIf="data.userStatus === userStatusEnum.disable" class="mr-l-15">{{language.disable}}</span>
+  <span *ngIf="data.userStatus === userStatusEnum.enable" class="mr-l-15">{{language.enable}}</span>
+</ng-template>
+
+
+<!--用户角色-->
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.role?.roleName}}">{{data.role?.roleName}}</span>
+</ng-template>
+
+
+<!--推送方式模板-->
+<ng-template #pushTypeTemp let-data="data">
+  <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.mail)"
+        class="margin-right10">{{language.mail}}</span>
+  <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.note)"
+        class="margin-right10">{{language.note}}</span>
+  <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.app)"
+        class="margin-right10">app</span>
+  <span *ngIf="data.pushType && data.pushType.includes(pushTypeEnum.web)">web</span>
+</ng-template>
+
+
+<!--用户模式-->
+<ng-template #loginTypeTemp let-data="data">
+  <span *ngIf="data.loginType === loginTypeEnum.singleUser">{{language.singleUser}}</span>
+  <span *ngIf="data.loginType === loginTypeEnum.multiUser">{{language.multiUser}}</span>
+</ng-template>
+
+
+<!--用户部门选择-->
+<ng-template #departmentTemp let-data="data">
+  <span class="width-style" title="{{data.department?.deptName}}">{{data.department?.deptName}}</span>
+</ng-template>
+
+
+<!--用户责任单位选择-->
+<ng-template #unitNameSearch let-filterValue="filterValue">
+<span class="unit-name hidden" (click)="showModal(filterValue)"
+      [class.placeholder]="!selectUnitName&&!filterValue.filterValue"
+      [title]="selectUnitName">{{ (selectUnitName || filterValue.filterValue) || commonLanguage.clickSelect}}</span>
+</ng-template>
+
+
+<!-- 单位选择器 -->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+

@@ -1,0 +1,10 @@
+// 告警详情卡样式
+.facility-alarm-panel-container {
+  overflow: auto;
+  max-height: calc(100vh - 175px);
+  font-size: 12px;
+  padding: 0 16px 10px 15px;
+  .margin-top40 {
+    margin-top: 40px;
+  }
+}

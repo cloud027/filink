@@ -1,0 +1,14 @@
+<div class="options-body">
+  <div class="options-button" *ngFor="let item of buttonList">
+    <button
+      nz-button
+      [disabled]="item.disable"
+      [nzType]="'primary'"
+      class="link-button button-right"
+      (click)="operate(item.id)">
+      <span class="common-detail">
+                <i class="iconfont common-button-icon {{item.icon}}"></i>{{item.name}}
+              </span>
+    </button>
+  </div>
+</div>

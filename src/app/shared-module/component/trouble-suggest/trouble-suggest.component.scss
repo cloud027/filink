@@ -1,0 +1,58 @@
+@import "../../../style-module/config";
+
+.maintenance-box{
+  display: flex;
+  padding: 0 16px 20px 16px;
+  .reason-warp{
+    width: 60%;
+    display: flex;
+    height: 250px;
+    .suggest-left{
+      width: 200px;
+      border-right: none;
+      text-align: center;
+      .fault-title{
+        line-height: 43px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+    .caption{
+      background: $bg-c-w;
+      height: calc( 100% - 66px);
+      margin-top: 20px;
+      border-right: 1px solid $bg-c-w;
+      p {
+        line-height: 90px;
+      }
+    }
+  }
+  .reason-list{
+    width: calc(100% - 200px);
+    .maintenance-advice,.resource-advice{
+      height: 92px;
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      background: $suggest-bg;
+
+    }
+    .resource-advice{
+      border-top: 1px solid $bg-c-w;
+    }
+  }
+  .total-echart {
+    width: 38%;
+  }
+  .pie-chart {
+    width: 100%;
+    height: 248px;
+  }
+}
+.diagnose-title{
+  font-weight: bold;
+  padding: 20px 16px 0 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+}
+

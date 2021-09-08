@@ -1,0 +1,74 @@
+<!-- Echarts 日能耗 月能耗 年能耗 -->
+<nz-spin [nzSpinning]="btnLoading">
+  <div class="Echarts-box">
+    <!-- Ecahrts 图表 日能耗 -->
+    <div class="echarts-item">
+      <div class="echarts-select-box">
+        <p class="echarts-title">{{ language.dailyEnergy }}</p>
+        <!-- 请选择日 -->
+        <div class="date-picker time-picker-select">
+          <app-date-picker
+            #datePickerTemp
+            (selectedTimeValue)="selectedTimeValue($event, timeSelectType.day)"
+            [pickType]="timeSelectType.day"
+            [needDefaultTimeType]="timeSelectType.day"
+            [datePickDisabled]="DatePickerDisabledNumberEnum.week"
+          ></app-date-picker>
+        </div>
+      </div>
+      <energy-echart-column
+        (chartInstance)="getDayChartInstance($event)"
+        *ngIf="dayEchartsFlag"
+      ></energy-echart-column>
+      <div *ngIf="!dayEchartsFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+    <!-- Ecahrts 图表 月能耗 -->
+    <div class="echarts-item">
+      <div class="echarts-select-box">
+        <p class="echarts-title">{{ language.monthEnergy }}</p>
+        <!-- 请选择月 -->
+        <div class="time-picker-select picker-box">
+          <app-date-picker
+            #monthDatePickerTemp
+            (selectedTimeValue)="selectedTimeValue($event, timeSelectType.month)"
+            [pickType]="timeSelectType.month"
+            [needDefaultTimeType]="timeSelectType.month"
+            [datePickDisabled]="DatePickerDisabledNumberEnum.week"
+          ></app-date-picker>
+        </div>
+      </div>
+      <energy-echart-column
+        (chartInstance)="getMonthChartInstance($event)"
+        *ngIf="monthEchartsFlag"
+      ></energy-echart-column>
+      <div *ngIf="!monthEchartsFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+    <!-- Ecahrts 图表 年能耗 -->
+    <div class="echarts-item">
+      <div class="echarts-select-box">
+        <p class="echarts-title">{{ language.yearEnergy }}</p>
+        <!-- 请选择年 -->
+        <div class="picker-box time-picker-select">
+          <app-date-picker
+            #yearDatePickerTemp
+            (selectedTimeValue)="selectedTimeValue($event, timeSelectType.year)"
+            [pickType]="timeSelectType.year"
+            [needDefaultTimeType]="timeSelectType.year"
+            [datePickDisabled]="DatePickerDisabledNumberEnum.week"
+          ></app-date-picker>
+        </div>
+      </div>
+      <energy-echart-column
+        (chartInstance)="getYearChartInstance($event)"
+        *ngIf="yearEchartsFlag"
+      ></energy-echart-column>
+      <div *ngIf="!yearEchartsFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+</nz-spin>

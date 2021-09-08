@@ -1,0 +1,78 @@
+@import "../../../../style-module/config";
+@mixin handle-icon {
+  position: relative;
+  font-size: 18px;
+  top: -8px;
+  left: -4px;
+  margin: 0;
+}
+
+.photo-view {
+  margin-left: 20px;
+
+  .photo-view-handle {
+    display: flex;
+    justify-content: space-between;
+    .handle-left {
+     .download {
+       margin: 0 10px;
+       i {
+         color: $menu-font-color;
+         @include handle-icon
+       }
+     }
+
+      .delete {
+        color: $error-color;
+        i {
+          color: $error-color;
+          @include handle-icon
+        }
+      }
+
+      i {
+        font-size: 20px;
+        position: relative;
+        top: -15px;
+        margin-right: 10px;
+      }
+    }
+
+    .handle-right {
+      margin-right: 20px;
+    }
+  }
+
+  .photo-view-img {
+    height: 740px;
+    overflow: auto;
+
+    .load-more {
+      width: 100%;
+      display: flex;
+      justify-content: center
+    }
+    .no-data {
+      p {
+        text-align: center;
+      }
+    }
+  }
+  .w80 {
+    width: 80%;
+  }
+
+  .w95 {
+    width: calc(100% - 10px);
+  }
+
+  .img-info {
+    margin-left: 20px;
+    width: 240px;
+    box-shadow: rgba(231, 220, 220, 0.65) 0px 1px 1px 1px;//边框内阴影
+  }
+  .img-list-container{
+    display: flex;
+    margin-top: 20px;
+  }
+}

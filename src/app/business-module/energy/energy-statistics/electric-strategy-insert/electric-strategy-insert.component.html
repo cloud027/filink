@@ -1,0 +1,47 @@
+<div class="insert-box">
+    <div class="title">{{ language.insertTariffStrategy }}</div>
+    <div class="container-box">
+        <div class="step">
+            <app-energy-xc-steps
+                (notify)="changeSteps($event)"
+                [isActiveStepsCount]="isActiveSteps"
+                [setData]="setData"
+            >
+            </app-energy-xc-steps>
+        </div>
+        <div class="right-container">
+            <div class="components-box">
+                <!-- 第一步 基本信息 -->
+                <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+                    <app-basic-info
+                        #basicInfo
+                        [setpsComponentInfo]="setpsComponentInfo"
+                        [basicInfo]="applicationFinal.RELEASE"
+                        (formValid)="infoValid($event, finalValueEnum.STEPS_FIRST)"
+                    ></app-basic-info>
+                </div>
+                <!-- 第二步策略详情 -->
+                <div *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+                    <app-strategy-details
+                        [setpsComponentInfo]="setpsComponentInfo"
+                        (strategyDetailValidChange)="infoValid($event, finalValueEnum.STEPS_SECOND)"
+                    ></app-strategy-details>
+                </div>
+                <!-- 第三步完成 -->
+                <div *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD" class="finish-details">
+                    <app-done [setpsComponentInfo]="setpsComponentInfo"></app-done>
+                </div>
+            </div>
+            <div class="button-box">
+                <app-button
+                    [isLoading]="isSaveLoading"
+                    [isDisabled]="nextButtonDisable"
+                    [isActiveSteps]="isActiveSteps"
+                    (changeSteps)="changeSteps($event)"
+                    (submitNotify)="handStepsSubmit()"
+                    (cancelNotify)="handCancelSteps()"
+                ></app-button>
+            </div>
+        </div>
+    </div>
+</div>

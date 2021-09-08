@@ -1,0 +1,86 @@
+<!--form表单-->
+<div class="asset-growth-rate-condition">
+  <div class="asset-growth-rate-form">
+    <xc-form [column]="formColumn"
+             (formInstance)="formInstance($event)">
+    </xc-form>
+  </div>
+  <div class="asset-growth-rate-button">
+    <button nz-button nzType="primary" class="operation-button-size" [disabled]="isClick" (click)="assetGrowthRateAnalysis()">{{language.assetAnalysis.analysis}}</button>
+    <button nz-button nzType="danger"  class="operation-button" (click)="reset()">{{language.assetAnalysis.reset}}</button>
+  </div>
+</div>
+
+<!-- 资产类别选择模板 -->
+<ng-template #selectAssetType let-formGroup="formGroup">
+    <nz-select
+            [nzMaxTagCount]="0"
+            [nzShowSearch]="false"
+            class="form-search"
+            nzMode="multiple"
+            [nzMaxTagPlaceholder]="tagContent"
+            nzPlaceHolder="{{language.assetAnalysis.pleaseChoose}}"
+            [nzAllowClear]="true"
+            (ngModelChange)="onChangeAssetType($event)"
+            [(ngModel)]="assetTypeSelectData">
+        <nz-option *ngFor="let option of assetTypeData" [nzLabel]="option.label"
+                   [nzValue]="option.code"></nz-option>
+    </nz-select>
+  <ng-template #tagContent let-selectedList>
+        <span [title]="selectedList | selectValue : {selectInfo: assetTypeData, value: 'code'}">
+          {{selectedList | selectValue : {selectInfo: assetTypeData, value: 'code'} }}
+        </span>
+  </ng-template>
+</ng-template>
+
+<!--区域选择器模板-->
+<ng-template #AreaSelectRef let-formGroup="formGroup" let-col="col">
+    <input nz-input type="text" class="area-box" readonly [(ngModel)]="areaName" [title]="areaName">
+    <button type="button" class="search" (click)="showAreaSelect()"><i class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--项目选择器点击按钮-->
+<ng-template #ProjectSelectRef let-formGroup="formGroup" let-col="col">
+        <input nz-input type="text" class="area-box" readonly [(ngModel)]="projectName" [title]="projectName">
+        <button type="button" class="search" (click)="showProjectSelect()"><i
+                class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--月增长率时间选择模板-->
+<ng-template #SelectTime>
+    <div>
+        <nz-month-picker [(ngModel)]="date[0]"
+                         (ngModelChange)="onChange($event)"
+                         [nzDisabledDate]="disabledEndDate">
+        </nz-month-picker>
+        <span class="time-space">~</span>
+        <nz-month-picker [(ngModel)]="date[1]"
+                         (ngModelChange)="onChange($event)"
+                         [nzDisabledDate]="disabledEndDate">
+        </nz-month-picker>
+    </div>
+</ng-template>
+
+<!--年增长率时间选择模板-->
+<ng-template #yearSelectTime>
+    <div>
+        <nz-year-picker [(ngModel)]="date[0]"
+                        (ngModelChange)="onChange($event)"
+                        [nzDisabledDate]="disabledEndDate"></nz-year-picker>
+        <span class="time-space">~</span>
+        <nz-year-picker [(ngModel)]="date[1]"
+                        (ngModelChange)="onChange($event)"
+                        [nzDisabledDate]="disabledEndDate"></nz-year-picker>
+    </div>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-selector
+        [(xcVisible)]="isVisible"
+        (selectDataChange)="selectDataChange($event)"
+        [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<app-select-project *ngIf="isShow" [multiple]="true" [selectList]="selectData"
+                    [(isVisible)]="isShow"
+                    (selectDataChange)="projectSelectChange($event)"></app-select-project>

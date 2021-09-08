@@ -1,0 +1,19 @@
+<!--表单-->
+<nz-spin class="plan-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="!isDisabled"
+              (click)="savePlan()">{{commonLanguage.confirm}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancel}}</button>
+    </div>
+  </div>
+</nz-spin>

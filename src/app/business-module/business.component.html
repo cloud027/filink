@@ -1,0 +1,186 @@
+<nz-layout id="fiLink" class="index-layout">
+  <!--左侧导航栏-->
+  <nz-sider [(nzCollapsed)]="isCollapsed"
+            nzWidth="180"
+            nzCollapsedWidth="50">
+    <div (click)="goIndex()" class="go-index" [ngClass]="isCollapsed?'logo-1':'logo'">
+      <img [src]="logoUrl" alt="logo"
+           class="logo-img">
+      <i *ngIf="!isCollapsed" class="icon-fiLink fiLink-FiLink iconfont fold"></i>
+    </div>
+    <app-menu
+      [menuList]="menuList"
+      [isCollapsed]="isCollapsed"
+    ></app-menu>
+  </nz-sider>
+
+  <!--右侧-->
+  <nz-layout class="right-warp">
+    <!--头部用户信息-->
+    <nz-header class="header-layout">
+      <div class="top-title">
+        <span class="menu-trigger" (click)="triggerMenu()">
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i></span>
+        <span class="cTitle">{{systemTitle}}</span>
+      </div>
+      <div class="top-menu">
+        <div class="top-menu-operate">
+          <div class="top-menu-search">
+            <input type="text" nz-input [(ngModel)]="searchValue" #searchInput (focus)="searchChange()"
+                   (ngModelChange)="searchChange()" placeholder="{{indexLanguage.menuSearch}}">
+            <i class="iconfont icon fiLink-search" (click)="searchChange()"></i>
+          </div>
+          <!--存在权限，且在线-->
+          <i *ngIf="sipRole && isRegist" class="iconfont icon fiLink-filink-sip-icon"></i>
+          <!--存在权限，不在线-->
+          <i *ngIf="sipRole && !isRegist" class="iconfont fiLink-filink-sip-icon sip-unregist-icon" (click)="regist()"
+             title="{{indexLanguage.registSip}}"></i>
+          <!-- 指令下发通知-->
+          <div id="notice-container">
+            <div class="notice-container" *ngIf="this.canSeeInstruction">
+              <a nz-dropdown (click)="showNotice()">
+                <span class="badge-share notice-count" *ngIf="noticeCount && (noticeCount <= 99)">
+                  {{noticeCount}}
+                </span>
+                <span class="badge-share notice-count instruct-more" *ngIf="noticeCount && (noticeCount > 99)">
+                  99+
+                </span>
+                <i class="icon iconfont fiLink-notice mar-t-minus-30" title="{{indexLanguage.notice}}"></i>
+              </a>
+              <nz-card *ngIf="isShowNoticeCard" nzTitle="{{indexLanguage.instructionMessage}}"
+                       [nzActions]="[emptyNoticeTemp, showMoreTemp]">
+                <div nz-card-grid class="card-item"
+                     *ngFor="let item of instructionData ;let i = index"
+                     (click)="readOneMessage($event, item.id)"
+                     [ngClass]="item.isRead ? 'has-read' : ''">
+                  <div class="card-item-content">
+                    <div class="message-icon"><i class="icon iconfont fiLink-instruction-message icon-fiLink-s"></i>
+                    </div>
+                    <span class="notice-content">{{item.notice}}</span>
+                    <span class="notice-time">{{item.replyTime}}</span>
+                  </div>
+                </div>
+                <nz-empty *ngIf="!instructionData.length"></nz-empty>
+              </nz-card>
+              <ng-template #emptyNoticeTemp>
+                <span (click)="EmptyNotice()" class="cursor-pointer">{{indexLanguage.emptyMessage}}</span>
+              </ng-template>
+              <ng-template #showMoreTemp>
+                <span (click)="showMoreNotice()" class="cursor-pointer">{{indexLanguage.showMore}}</span>
+              </ng-template>
+            </div>
+          </div>
+          <!--角色切换-->
+          <div class="switch-roles">
+            <nz-dropdown *ngIf="roleId === 'superAdmin'" [nzPlacement]="'bottom'">
+              <a nz-dropdown>
+                <i class="icon fiLink-switchRoles iconfont user-icon mar-t-minus-30"
+                   title="{{indexLanguage.switchRoles}}"></i>
+              </a>
+              <ul nz-menu>
+                <li nz-menu-item [nzDisabled]="switchToAdminDisabled"
+                    (click)="switchToAdminDebounced()">{{indexLanguage.admin}}</li>
+                <li nz-menu-item (click)="isShowTenantList()">{{indexLanguage.tenant}}</li>
+              </ul>
+            </nz-dropdown>
+          </div>
+          <!--导出管理-->
+          <i class="iconfont icon fiLink-export" title="{{indexLanguage.exportManagement}}"
+             (click)="linkTo('/business/download')"></i>
+          <!--关于-->
+          <i class="iconfont icon fiLink-about mr-16" title="{{indexLanguage.about}}"
+             (click)="linkTo('/business/system/about')"></i>
+        </div>
+        <!--告警级别数量-->
+        <ul class="top-menu-ul">
+          <li *ngFor="let item of panelData">
+            <div class="warning-red" [ngStyle]="{backgroundColor: item.color ? item.color : ''}"></div>
+            <span>{{ item.sum }}</span>
+          </li>
+        </ul>
+        <!--用户操作-->
+        <div class="user-info">
+            <span class="user-warp">
+              <i class="icon fiLink-user-menu iconfont user-icon"></i>
+              <nz-dropdown [nzPlacement]="'bottomRight'">
+            <a nz-dropdown class="user-nickname" nz-tooltip [nzTitle]="userName" [nzPlacement]="'left'">{{userName}}
+              <span class="badge badge-share" *ngIf="count">{{count}}</span>
+              <i nz-icon type="down" class="user-name"></i> </a>
+            <ul nz-menu>
+              <!--消息通知-->
+              <li nz-menu-item (click)="linkTo('/business/message-notification')">
+                  {{indexLanguage.messageNotification}}
+                <span class="message-badge badge-share" *ngIf="count">{{count}}</span>
+              </li>
+              <li nz-menu-item (click)="updatePassword()">{{indexLanguage.changePassword}}</li>
+              <li nz-submenu>
+                <span title class="change-language">{{indexLanguage.changeLanguage}}</span>
+                <ul>
+                  <li nz-menu-item *ngFor="let option of languageAll" (click)="languageCheck(option)">
+                  <a>{{option.label}}</a>
+                  </li>
+                  </ul>
+              </li>
+              <li nz-menu-item (click)="logout()">{{indexLanguage.logOff}}</li>
+            </ul>
+          </nz-dropdown>
+            </span>
+        </div>
+      </div>
+    </nz-header>
+
+
+    <div class="nz-layout-content" #content>
+      <!--中间主页面-->
+      <nz-content>
+        <router-outlet></router-outlet>
+        <div class="footer"></div>
+      </nz-content>
+
+    </div>
+
+  </nz-layout>
+</nz-layout>
+
+<!--角色切换租户列表弹窗-->
+<app-tenant-list *ngIf="showTenantList"
+                 (isShowTenantListEmit)="isShowTenantListEmit($event)"
+                 (clickCancelEmit)="clickCancelEmit($event)"
+></app-tenant-list>
+
+<!-- 密码修改-->
+<app-update-password *ngIf="isUpdatePassword"
+                     [(isVisible)]="isUpdatePassword"
+                     [isForceChangePwd]="isForceChangePwd"
+                     [tips]="tips"
+></app-update-password>
+
+<!--首页收索-->
+<ng-template #searchTemplate>
+  <nz-list [nzDataSource]="indexSearchList"
+           nzBordered nzSize="small"
+           [nzRenderItem]="item">
+    <ng-template #item let-item>
+      <div class="search-list" (click)="clickSearchItem(item.menuHref, item.menuName)">
+        <nz-list-item [nzContent]="item.menuName"></nz-list-item>
+      </div>
+    </ng-template>
+  </nz-list>
+</ng-template>
+
+<!-- 一键呼叫最小化 -->
+<div class="minimize" [ngClass]="{'packUp': shrinkage}" *ngIf="minimize">
+  <a class="shrinkage" (click)="shrinkage = !shrinkage">
+    <i nz-icon nzType="caret-left" nzTheme="outline" *ngIf="shrinkage;else packUp"></i>
+    <ng-template #packUp>
+      <i nz-icon nzType="caret-right" nzTheme="outline"></i>
+    </ng-template>
+  </a>
+  <div class="device-name">{{equipmentName}}</div>
+  <div>{{callTime}}</div>
+  <div class="stop-call" (click)="stopCall()">{{calltype}}</div>
+</div>
+<!-- 广播最小化 -->
+<app-equipment-radio-minimize></app-equipment-radio-minimize>
+
+

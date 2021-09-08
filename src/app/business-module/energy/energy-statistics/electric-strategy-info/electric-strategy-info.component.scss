@@ -1,0 +1,118 @@
+@import '../../../../style-module/config';
+.strategy-info-box {
+    background-color: #f0f2f5;
+    .card-box {
+        margin-top: 10px;
+    }
+    > .title {
+        font-size: 16px;
+        color: #333;
+        font-weight: 900;
+        padding-left: 15px;
+        padding-bottom: 15px;
+        background-color: #fff;
+    }
+    .card-item {
+        height: 180px;
+        ::ng-deep .ant-card-body {
+            > .title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin: 10px 0;
+            }
+            .creationTime-box {
+                margin-bottom: 20px;
+                color: #626262;
+            }
+            .user-box {
+                margin: 10px 0;
+            }
+            .span-title {
+                color: #a6a6a6;
+            }
+            .create-user {
+                margin-right: 5px;
+                color: $left-top-color;
+            }
+
+            .clock-circle {
+                margin-right: 5px;
+                color: $communication-model-color;
+            }
+        }
+    }
+    .right-container {
+        .span-title {
+            display: inline-block;
+            width: 120px;
+        }
+        .remarks-box {
+            margin-top: 20px;
+        }
+    }
+    .basic-operation-box {
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #fff;
+        .title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #333;
+        }
+        .operation-icon {
+            display: flex;
+            > div {
+                width: 200px;
+                height: 80px;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                &:hover {
+                    background: #36cfc9;
+                    color: #fff;
+                    .icon-fiLink {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    .table-box {
+        margin-top: 15px;
+        padding: 0 15px;
+        background-color: #fff;
+    }
+    .strategy-details-box {
+        margin-top: 15px;
+        padding: 0 15px;
+        background-color: #fff;
+        > .title {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 15px 0;
+            color: #333;
+        }
+        .details {
+            display: flex;
+            .details-item {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .item {
+                    margin: 10px 0;
+                    .span-title {
+                        display: inline-block;
+                        width: 150px;
+                        color: #a6a6a6;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+@import "../../../../style-module/config";
+
+.user-detail {
+  padding: 10px;
+
+  .page-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: $primary-title-size;
+    font-weight: 900;
+  }
+
+  .footer {
+    padding-left: 20px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+
+    .submit-btn {
+      margin-right: 20px
+    }
+  }
+}
+
+
+.button-style {
+  color: $color;
+  padding: 0 10px;
+
+  span {
+    vertical-align: middle;
+    margin-left: 5px
+  }
+
+  &:hover {
+    border-color: $color;
+  }
+}

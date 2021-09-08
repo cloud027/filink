@@ -1,0 +1,33 @@
+<!--挂载设备列表-->
+<nz-card nzTitle="{{language.mountEquipment}}">
+  <div class="box-warp">
+    <xc-table #tableComponent
+              [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</nz-card>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="equip-info-ref">
+    <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          [ngStyle]="data.rowStyle"
+          title="{{data.equipmentStatus | translate: equipStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <div class="equip-info-ref">
+    <i [ngClass]="data.iconClass"></i>
+      <span class="status-text" [ngStyle]="data.rowStyle"
+            title="{{data.equipmentType | translate: equipTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipTypeEnum: languageEnum.facility}}
+  </span>
+  </div>
+</ng-template>

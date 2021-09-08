@@ -1,0 +1,23 @@
+@import "../../../style-module/config";
+.breadcrumbs {
+  display: flex;
+  list-style: none;
+  margin: 16px;
+  padding: 0;
+  color: $disabled-font-color;
+  .breadcrumbs-item {
+    span {
+      outline: none;
+      cursor: pointer;
+      white-space: pre;
+    }
+  }
+  .separator {
+    margin: 0 8px;
+  }
+  .active {
+    color: $title-color;
+    font-weight: 900;
+  }
+}
+

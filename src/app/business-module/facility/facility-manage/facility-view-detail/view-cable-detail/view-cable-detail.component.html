@@ -1,0 +1,17 @@
+<!--新增 编辑光缆详情页-->
+<nz-spin class="area-detail-content" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div style="padding-bottom: 60px;">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div style="padding-left: 20px">
+      <button class="link-button" nz-button nzType="primary" [nzLoading]="isLoading"
+              style="margin-right: 20px" (click)="cableDetail()" [disabled]="!formStatus.getValid()">{{language.handleOk}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+    </div>
+  </div>
+</nz-spin>

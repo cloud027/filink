@@ -1,0 +1,36 @@
+@import "../../../../../style-module/config";
+
+/** 按钮样式*/
+.btn {
+  margin-left: 25px;
+  margin-bottom: 20px;
+  /** 按钮间隔 */
+  .btn-space {
+    margin-right: 10px;
+  }
+}
+
+// 选择设备魔板
+.equipment {
+  width: 374px;
+
+  .area-name {
+    width: 300px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid $border-color;
+    height: 32px;
+    margin-right: 10px;
+    overflow: hidden;
+    padding: 4px 11px;
+    border-radius: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    background: $bg-c-w;
+  }
+}

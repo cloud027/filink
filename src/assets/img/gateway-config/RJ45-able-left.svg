@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="59px" viewBox="0 0 53 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>RJ45不亮</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="网关" transform="translate(-588.000000, -650.000000)" fill="#050601">
+            <g id="RJ45" transform="translate(587.000000, 568.000000)">
+                <g id="编组备份" transform="translate(1.000000, 77.000000)">
+                    <g id="RJ45不亮" transform="translate(0.000000, 5.000000)">
+                        <path d="M52,0 C52.5522847,0 53,0.44771525 53,1 L53,58 C53,58.5522847 52.5522847,59 52,59 L16,59 C15.4477153,59 15,58.5522847 15,58 L15,46 C15,45.4477153 14.5522847,45 14,45 L8,45 C7.44771525,45 7,44.5522847 7,44 L7,40 C7,39.4477153 6.55228475,39 6,39 L1,39 C0.44771525,39 6.76353751e-17,38.5522847 0,38 L0,21 C-6.76353751e-17,20.4477153 0.44771525,20 1,20 L6,20 C6.55228475,20 7,19.5522847 7,19 L7,15 C7,14.4477153 7.44771525,14 8,14 L14,14 C14.5522847,14 15,13.5522847 15,13 L15,1 L15,1 C15,0.44771525 15.4477153,0 16,0 L52,0 Z" id="路径"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

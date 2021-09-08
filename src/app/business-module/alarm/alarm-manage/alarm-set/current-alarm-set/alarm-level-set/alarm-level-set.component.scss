@@ -1,0 +1,40 @@
+@import "../../../../../../style-module/config";
+
+.box-icon {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  align-self: center;
+}
+
+.alarm-level-set{
+  background: $bg-c;
+  .box-wrap{
+    position: relative;
+    background: $bg-c-w;
+    overflow: hidden;
+  }
+}
+.alarm-flex{
+  display: flex;
+  .alarm-align {
+    align-self: center;
+  }
+  .plus-left {
+    margin-left: 6px;
+  }
+  .minus-left {
+    margin-left: 10px;
+  }
+  .music-left {
+    margin-left: 8px;
+  }
+}
+.alarm-left {
+  margin-left: 5px;
+}
+.select-color {
+  display: inline-block;
+  margin-right: 5px;
+}

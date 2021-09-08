@@ -1,0 +1,28 @@
+<!--访问控制-->
+<div class="table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!-- 是否开启-->
+<ng-template  #templateStatus let-data="data">
+  <nz-switch [ngModel]="data.rangeStatus === statusEnum.enable"
+             (click)="changeStatue(data)"
+             [nzLoading]="data.clicked"
+             [nzControl]="true"
+             appAccessPermission="04-4-1-4"
+             ></nz-switch>
+  <span *ngIf="data.rangeStatus ===  statusEnum.enable" class="space-l">{{commonLanguage.enable}}</span>
+  <span *ngIf="data.rangeStatus ===  statusEnum.disable" class="space-l">{{commonLanguage.disable}}</span>
+</ng-template>
+
+<app-access-control-detial
+  *ngIf="isVisible"
+  [isVisible]="isVisible"
+  [ipInfo]="curIpInfo"
+  [title]="title"
+  (cancel)="detailCancel($event)"
+></app-access-control-detial>

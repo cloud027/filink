@@ -1,0 +1,41 @@
+@import "../../../../../../style-module/config";
+
+.page-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.user-detail{
+  padding: 0 16px;
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $bg-c-w;
+  padding: 0 6px;
+}
+
+.status-text {
+  margin-left: 5px;
+}
+.loading{
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  z-index: 999;
+}
+
+.remote-box-btn {
+  padding: 0 0 20px 20px ;
+  .ok-btn {
+    margin-right: 20px;
+  }
+}
+.select-width {
+  width: 100%;
+}

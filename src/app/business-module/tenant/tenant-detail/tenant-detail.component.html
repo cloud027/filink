@@ -1,0 +1,31 @@
+<!--租户新增/编辑-->
+<div class="tenant-detail">
+  <div>
+    <span class="page-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <!--表单-->
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="content-link">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isDisabled">{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 电话号码 -->
+<ng-template #telephoneTemp let-formGroup="formGroup" let-col="col">
+  <app-telephone-input #telephoneInput
+                       (phoneChange)="getPhone($event)"
+                       [hint]="null"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <span class="hint">{{phoneNumberMsg}}</span>
+</ng-template>
+

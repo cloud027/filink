@@ -1,0 +1,181 @@
+@import "../../../style-module/config";
+//共用样式
+.filter-top-filter {
+  display: inline-table;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 0 0 5px #626262;
+}
+
+//icon颜色
+.facility-show-color {
+  color: $color;
+
+}
+
+//设施展示按钮
+.facility-show {
+  position: absolute;
+  text-align: center;
+  width: 34px;
+  height: 34px;
+  right: 10px;
+  bottom: 162px;
+  line-height: 35px;
+  background: white;
+  border: 1px solid $operational-button-frame-color;
+
+  // 无项目聚合按钮的样式
+  &.show-no-polymerization {
+    bottom: 120px;
+  }
+  &:hover {
+    border: 1px solid #dbf6f5;
+    box-shadow: 0 0 3px $color;
+  }
+}
+
+//縮放級別按钮
+.zoom-show {
+  @extend .filter-top-filter;
+  position: absolute;
+  text-align: center;
+  width: 33px;
+  height: 35px;
+  right: 10px;
+  bottom: 210px;
+  font-size: 22px;
+}
+
+//缩放级别拖拽条
+.zoom-slider {
+  @extend .filter-top-filter;
+  position: absolute;
+  padding: 10px;
+  width: 200px;
+  height: 34px;
+  right: 50px;
+  bottom: 200px;
+}
+
+//设施设备选择卡片
+.facility-equipment-card {
+  @extend .filter-top-filter;
+  position: absolute;
+  width: 300px;
+  right: 64px;
+  bottom: 60px;
+
+  &:hover {
+    z-index: 101;
+  }
+
+  //卡片头部切换
+  .facility-equipment-radio {
+    text-align: center;
+    height: 31px;
+    border-bottom: 1px solid #e8e8e8;
+
+    .radio-group {
+      width: 100%;
+      height: 100%;
+
+      .radio-group-div {
+        display: inline-block;
+        padding-left: 20px;
+        width: 50%;
+        height: 100%;
+        font-size: 13px;
+      }
+
+      //设施切换边框
+      .facility-radio {
+        min-width: 100px;
+        line-height: 31px;
+        border-bottom: 3px solid $color;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      //设备切换边框
+      .equipment-radio {
+        min-width: 100px;
+        line-height: 31px;
+        border-bottom: 3px solid $color;
+        font-weight: bold;
+      }
+    }
+  }
+
+  //切换内容
+  .card-body {
+    margin: 16px 0 16px 10px;
+    min-width: 308px;
+    max-height: 205px;
+    overflow: auto;
+    word-break: break-all;
+    word-wrap: break-word;
+    //&:hover {
+    //  border: 1px solid #dbf6f5;
+    //  box-shadow: 0 0 3px #36cfc9;
+    //}
+
+
+    //单个设施
+    .facility-card {
+      display: inline-block;
+      min-width: 150px;
+      margin: 0 0 16px 0;
+
+      .facility-card-span {
+        margin-right: 4px;
+        color: $page-font-color;
+      }
+    }
+
+    //单个设备
+    .equipment-radio-child {
+      display: inline-block;
+      min-width: 150px;
+      margin: 0 0 16px 0;
+
+      .icon {
+        margin-right: 4px
+      }
+
+      .ant-radio-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100px;
+      }
+    }
+
+    //Icon图标样式
+    .iconfont {
+      display: inline-block;
+      text-align: center;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      background-color: #1ec5ff;
+      border-radius: 15%;
+      color: white;
+    }
+
+    //文字大小
+    .ant-checkbox-wrapper {
+      font-size: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      color: $page-font-color;
+    }
+  }
+}
+.facility-equipment-card-bigger {
+  width: 450px;
+  right: 47px;
+  .equipment-radio-child-bigger {
+    width: 220px;
+  }
+}

@@ -1,0 +1,110 @@
+<div class="topology-title">
+  <div class="title">
+    <div class="name">
+      <div style="float: left">{{language.LogicalTopology}}</div>
+      <div style="float: left; line-height: 21px">
+        <span title="{{language.amplification}}" class="icon-fiLink iconfont fiLink-zoom-in" style="padding-left: 10px; cursor: pointer; color: #777!important; font-size: 20px" (click)="toZoomIn()"></span>
+        <span title="{{language.zoomOut}}" class="icon-fiLink iconfont fiLink-zoom-out" style="padding-left: 10px;cursor: pointer; color: #777!important; font-size: 20px" (click)="toZoomOut()"></span>
+        <span title="1:1" class="icon-fiLink iconfont fiLink-origin-size" style="padding-left: 10px;cursor: pointer; color: #777!important; font-size: 20px" (click)="oneByOne()"></span>
+        <span title="{{language.export}}" class="icon-fiLink iconfont fiLink-export-topology" style="padding-left: 10px;cursor: pointer; color: #777!important;font-size: 20px " (click)="exportImage()"></span>
+      </div>
+    </div>
+    <div class="back">
+      <span  style="cursor: pointer" (click)="goBack()">{{language.goBack}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="topology-content">
+  <div class="topology-detail">
+    <div class="name">
+      <span style="padding-right: 20px">{{language.cableName}}:</span>
+      <span>{{topologyList.opticCableName}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.cableLevel}}:</span>
+      <span>{{topologyList.opticCableLevel}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.localNetworkCode}}:</span>
+      <span>{{topologyList.localCode}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.cableTopology}}:</span>
+      <span>{{topologyList.topology}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.wiringType}}:</span>
+      <span>{{topologyList.wiringType}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.cableCore}}:</span>
+      <span>{{topologyList.coreNum}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.length}}:</span>
+      <span>{{topologyList.length}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.businessInformation}}:</span>
+      <span>{{topologyList.bizId}}</span>
+    </div>
+    <div class="name">
+      <span style="padding-right: 20px">{{language.remarks}}:</span>
+      <span>{{topologyList.remark}}</span>
+    </div>
+  </div>
+  <div id="smart-canvas" class="smart-canvas">
+    <ul [hidden]="!showRightMenu" id="right-menu" class="right-menu">
+      <li (click)="checkTopology()"><a>{{language.viewCable}}</a></li>
+      <li (click)="postion()"><a>{{language.InstantPositioning}}</a></li>
+    </ul>
+    <div [hidden]="!isShowInfoWindow" class="info-window-container" id="deveice">
+      <div class="info-window-m">
+        <div class="info-window-m-name">
+          <div>
+            <span class="info-window-item-icon" [ngClass]="className"></span>
+            <span>{{deviceName}}</span>
+          </div>
+        </div>
+        <div>
+        </div>
+        <div>
+          <span class="iconfont icon-fiLink-s fiLink-filink-location-icon disabled-red-icon"></span>
+          <span>{{address}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<nz-modal [(nzVisible)]="isVisible"
+          [nzMaskClosable]="false"
+          [nzFooter]="tplFooter"
+          [nzTitle]="title"
+          [nzWidth]=1200
+          (nzOnCancel)="modalCancel()">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="section_pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</nz-modal>
+<ng-template #tplFooter>
+  <button class="link-button" nz-button nzType="primary" (click)="modelOk()">{{language.handleOk}}
+  </button>
+  <button class="link-button" nz-button nzType="danger" (click)="modalCancel()">{{language.handleCancel}}</button>
+</ng-template>
+
+
+<!--拓扑单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange($event, data)">
+    <label nz-radio [nzValue]="data.opticCableId"></label>
+  </nz-radio-group>
+</ng-template>
+<div class="map-container" #map></div>
+
+
+

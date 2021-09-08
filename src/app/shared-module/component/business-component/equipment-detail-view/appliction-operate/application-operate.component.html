@@ -1,0 +1,38 @@
+<div class="application-operate">
+  <h4 class="title">{{title}}</h4>
+  <div class="application-list">
+    <div *ngIf="operationList && operationList.length" class="button-groups">
+      <div *ngFor="let item of operationList">
+        <button
+          *ngIf="item.type === 'button'"
+          class="btn"
+          [ngClass]="{'btn-hover':!item.disable}"
+          [disabled]="item.disable"
+          (click)="handleEquipmentOperation(item.id,item.code)"
+          nz-button nzType="default">
+          <i class="icon-fiLink iconfont" [ngClass]="item.icon"></i>
+          {{item.name}}
+        </button>
+        <div *ngIf="item.type === 'slider'" class="instruct-slider">
+          <div class="instruct-title">
+            <span class="light">
+              <i class="icon-fiLink fiLink-light iconfont"></i>
+            </span>
+            <span>
+              {{languageTable.equipmentTable.light}}
+            </span>
+          </div>
+          <div class="instruct-volume">
+            <nz-slider
+              [nzMin]="item.min"
+              [nzMax]="item.max"
+              (nzOnAfterChange)="handleConvenientChange($event,item)"
+              [(ngModel)]="item.value">
+            </nz-slider>
+          </div>
+          <div>{{item.value}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="table-wrapper">
+  <xc-table
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+<!--线缆编号模版-->
+<ng-template #cableNumTemp let-data="data">
+    <nz-select [(ngModel)]="data.cableNum">
+      <nz-option *ngFor="let _item of data.equipmentCableOption" [nzValue]="_item" [nzLabel]="_item"></nz-option>
+    </nz-select>
+</ng-template>
+<!--档案编号模版-->
+<ng-template #fileNoTemp let-data="data">
+  <input nz-input [ngClass]="data['numStatus']" type="text" [(ngModel)]="data.equipmentDocNum"
+         oninput="value=value.replace(/\D/g,'')" (ngModelChange)="onChangeDocNum(data)">
+  <p class="error-warp" *ngIf="data['docErrorMsg']">{{data['docErrorMsg']}}</p>
+</ng-template>
+<!--分组编号-->
+<ng-template #groupNoTemp let-data="data">
+  <input nz-input [ngClass]="data['groupNumStatus']" type="text" [(ngModel)]="data.equipmentGroupNum"
+         oninput="value=value.replace(/\D/g,'')" (ngModelChange)="onChangeGroupNum(data)">
+  <p class="error-warp" *ngIf="data['errorMsg']">{{data['errorMsg']}}</p>
+</ng-template>

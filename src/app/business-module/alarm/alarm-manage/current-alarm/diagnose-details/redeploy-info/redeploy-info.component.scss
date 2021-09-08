@@ -1,0 +1,75 @@
+@import "../../../../../../style-module/config";
+.allocation-warp{
+  background-color: $bg-c-w;
+  border: 1px solid $border-color;
+  box-sizing: border-box;
+  .allocation-title{
+    font-weight: bold;
+    padding: 16px 0 0 16px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.box-icon {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  align-self: center;
+}
+
+.alarm-flex {
+  display: flex;
+}
+
+.alarm-left{
+  margin-left: 5px;
+}
+
+.status-display {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.status-text{
+  margin-left: 5px;
+}
+
+.one-text {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: top;
+  text-overflow:ellipsis;
+}
+.equipment-name-box{
+  margin-right: 6px;
+}
+
+.uncommit-color {
+  color: $handle-uncommit-color;
+}
+
+.commit-color {
+  color: $handle-commit-color;
+}
+
+.processing-color {
+  color: $handle-processing-color;
+}
+
+.done-color {
+  color: $handle-done-color;
+}
+
+.undone-color {
+  color: $handle-undone-color;
+}
+
+.equipment-name-box:not(:last-child) > .status-text:after {
+  content: ',';
+}

@@ -1,0 +1,20 @@
+<nz-modal nzVisible="true"
+          [nzTitle]="modalTitle"
+          [nzMaskClosable]="false"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="handleCancel()"
+          [nzWidth]=modelWith>
+</nz-modal>
+<ng-template #modalTitle>
+  {{language.opticalCableSectionCoordinates}}
+</ng-template>
+<ng-template #modalContent>
+  <div id="map" style="width: 100%; height: 300px"></div>
+</ng-template>
+<ng-template #modalFooter>
+  <button class="link-button" nz-button nzType="primary"
+          (click)="handleOk()">{{language.okText}}</button>
+  <button class="link-button" nz-button nzType="default"
+          (click)="handleCancel()">{{language.cancelText}}</button>
+</ng-template>

@@ -1,0 +1,38 @@
+<!--表单-->
+<nz-spin class="plan-wisdom-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="!isDisabled"
+              (click)="save()">{{commonLanguage.confirm}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancel}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+
+<!--区域选择器点击按钮-->
+<ng-template #areaSelector let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly  [(ngModel)]="pointInfo.areaName">
+    <button type="button" class="open-button" (click)="showAreaSelector()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>

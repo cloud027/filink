@@ -1,0 +1,32 @@
+<nz-modal nzTitle="{{language.selectTemplate}}"
+          [nzFooter]="modalFooter"
+          nzWidth="1000px"
+          (nzOnCancel)="close()"
+          nzMaskClosable="false"
+          [nzVisible]="isVisible">
+  <nz-tabset [nzTabBarStyle]="{width: '410px'}">
+    <!--箱架模板-->
+    <nz-tab nzTitle="{{language.boxTemplate}}" (nzClick)="boxSearch()" [nzForceRender]="true">
+      <app-box-template #boxTemplate [TemplateReqDto]="TemplateReqDto" [modifyTemplate]="modifyTemplate"
+                        [modifyShow]="modifyShow">
+
+      </app-box-template>
+    </nz-tab>
+    <!--框模板-->
+    <nz-tab nzTitle="{{language.frameTemplate}}" (nzClick)="frameSearch()" [nzForceRender]="true">
+      <app-frame-template #frameTemplate [TemplateReqDto]="TemplateReqDto">
+
+      </app-frame-template>
+    </nz-tab>
+    <!--盘模板-->
+    <nz-tab nzTitle="{{language.diskTemplate}}" [nzForceRender]="true">
+      <app-board-template #boardTemplate [TemplateReqDto]="TemplateReqDto">
+
+      </app-board-template>
+    </nz-tab>
+  </nz-tabset>
+</nz-modal>
+
+<ng-template #modalFooter>
+</ng-template>
+

@@ -1,0 +1,15 @@
+<!--账号安全策略-->
+<app-detail-title [pageTitle]="pageTitle" ></app-detail-title>
+<div class="security-policy-form">
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <div class="button-group">
+    <button class="link-button space-r"
+            [disabled]="!isSystemDisabled"
+            [nzLoading]="submitLoading"
+            nz-button nzType="primary"
+            [appAccessPermission]="code"
+            (click)="formHandleOk()">{{language.table.okText}}</button>
+    <button  class="link-button space-r" nz-button nzType="danger"(click)="formHandleCancel()">{{language.table.cancelText}}</button>
+    <button class="link-button" nz-button nzType="danger"(click)="formHandleReset()" >{{language.form.reset}}</button>
+  </div>
+</div>

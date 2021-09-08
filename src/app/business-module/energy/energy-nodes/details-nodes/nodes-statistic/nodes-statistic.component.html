@@ -1,0 +1,56 @@
+<nz-spin [nzSpinning]="btnLoading">
+  <div class="Echarts-box">
+    <div class="echarts-top-box">
+      <p class="echarts-title">{{ language.energyStatistics }}</p>
+      <!-- Ecahrts 图表 能耗统计 -->
+      <div class="echarts-select-box">
+        <div class="time-picker-select-box">
+          <!-- 时间范围 -->
+          <nz-select
+            style="width: 80px; margin-right: 10px"
+            [(ngModel)]="frequency"
+            [nzPlaceHolder]="language.picInfo.pleaseChooseTimeStatis"
+            (ngModelChange)="selectTimeChange($event)"
+          >
+            <nz-option
+              *ngFor="let option of statisticsSelectTimeList"
+              [nzLabel]="option.label"
+              [nzValue]="option.code"
+            ></nz-option>
+          </nz-select>
+          <div class="time-picker-select">
+            <nz-date-picker
+              *ngIf="frequency === energyStatisticsTime.statisticsHour"
+              [(ngModel)]="selectTimeValue"
+              [nzAllowClear]="false"
+              (ngModelChange)="timeSelectChange($event, energyStatisticsTime.statisticsHour)"
+            ></nz-date-picker>
+            <nz-month-picker
+              *ngIf="frequency === energyStatisticsTime.statisticsDay"
+              [nzPlaceHolder]="language.picInfo.chooseMonth"
+              [(ngModel)]="selectTimeValue"
+              [nzAllowClear]="false"
+              (ngModelChange)="timeSelectChange($event, energyStatisticsTime.statisticsDay)"
+            ></nz-month-picker>
+            <nz-year-picker
+              *ngIf="frequency === energyStatisticsTime.statisticsMonth"
+              [nzPlaceHolder]="language.picInfo.chooseYear"
+              [(ngModel)]="selectTimeValue"
+              [nzAllowClear]="false"
+              (ngModelChange)="timeSelectChange($event, energyStatisticsTime.statisticsMonth)"
+            ></nz-year-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="echarts">
+      <energy-echart-column
+        (chartInstance)="getTimeSlotChartInstance($event)"
+        *ngIf="statisticFlag"
+      ></energy-echart-column>
+      <div *ngIf="!statisticFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+</nz-spin>

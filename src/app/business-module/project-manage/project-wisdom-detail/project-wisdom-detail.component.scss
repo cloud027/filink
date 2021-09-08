@@ -1,0 +1,27 @@
+@import "../../../style-module/config";
+.project-wisdom-detail {
+  padding: 0 16px;
+  .page-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}
+.wisdom-input {
+  width: 100%;
+  .open-button {
+    border: none;
+    outline: none;
+    width: 30px;
+    height: 32px;
+    cursor: pointer;
+    background: #fff;
+    position: absolute;
+    right: -30px;
+  }
+}
+.basic-info-content {
+  margin-left: 10px;
+}

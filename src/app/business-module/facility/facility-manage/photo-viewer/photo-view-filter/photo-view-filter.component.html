@@ -1,0 +1,39 @@
+<div class="photo-view-filter" (keydown)="keydown($event)">
+  <input type="text" class="select-input"  nz-input placeholder="{{language.picInfo.name}}" [(ngModel)]="filterObj.picName">
+  <!--设施-->
+  <app-alarm-object [title]="language.select+language.device"
+                    class="pic-device-selector"
+                    [placeholder]="language.picInfo.pleaseChooseFacility"
+                    [filterValue]="filterValue"
+                    [alarmObjectConfig]="deviceObjectConfig" ></app-alarm-object>
+
+  <input type="text" class="select-input" nz-input placeholder="{{language.picInfo.pleaseChooseEquipment}}"
+         (click)="openEquipmentSelector()"
+         [(ngModel)]="filterObj.equipmentName">
+  <input type="text" nz-input class="select-input"  placeholder="{{language.picInfo.pleaseChooseArea}}" (click)="openAreaSelector()" [(ngModel)]="filterObj.areaName">
+  <!--  来源 -->
+  <xc-nz-select class="area-select"  nzAllowClear nzPlaceHolder="{{language.picInfo.pleaseChooseSource}}" [(ngModel)]="filterObj.resource">
+    <xc-nz-option *ngFor="let option of resourceList" [nzValue]="option.value" [nzLabel]="option.label"></xc-nz-option>
+  </xc-nz-select>
+  <i class="iconfont icon fiLink-search btn-item" (click)="handleSearch()"></i>
+  <i class="iconfont icon fiLink-reset btn-item" (click)="handleReset()"></i>
+</div>
+ <!--  区域选择 -->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [pageType]="language.picInfo.area"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)">
+</xc-tree-area-selector>
+
+<!--设备列表选择器-->
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>

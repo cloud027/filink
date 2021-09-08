@@ -1,0 +1,39 @@
+<div class="supplier-wrap">
+  <div class="table-common-title">
+    <span>{{supplierLanguage.supplierManage}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="supplierData"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+  <!--供应商资质-->
+  <ng-template #supplierAptitudesTemp let-data="data">
+    <span title="{{data.supplierAptitudes | translate: supplierAptitudesEnum : languageEnum.supplier}}">{{data.supplierAptitudes | translate: supplierAptitudesEnum : languageEnum.supplier}}</span>
+  </ng-template>
+  <!--创建人列表-->
+  <ng-template #userSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue, true)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowUserTemp"
+    [(xcVisible)]="isShowUserTemp"
+    [selectUserList]="selectUserList"
+    (selectDataChange)="onSelectUser($event)">
+  </app-select-user>
+  <!--更新人员列表-->
+  <ng-template #updateUserSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue, false)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowUpdateUserTemp"
+    [(xcVisible)]="isShowUpdateUserTemp"
+    [selectUserList]="selectUpdateUserList"
+    (selectDataChange)="onSelectUser($event)">
+  </app-select-user>
+</div>

@@ -1,0 +1,55 @@
+@import "../../../../style-module/config";
+
+.tenant-menu {
+  margin-top: 20px;
+  margin-left: 20px;
+
+  .menu-title-box {
+    background-color: #EAEDF1;
+    height: 40px;
+    font-weight: bold;
+
+    .menu-title {
+      padding-top: 10px;
+      padding-left: 10px;
+    }
+  }
+
+  .menu-tree {
+    height: 380px;
+    overflow: auto;
+
+    nz-tree {
+      .custom-node {
+        .folder-name {
+          font-size: 12px;
+        }
+      }
+
+      .operate {
+        float: right;
+        position: relative;
+        top: -3px;
+
+        i {
+          margin: 0 5px;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+.modal-box {
+  width: 400px;
+
+  .modal-box-title {
+    width: 100px;
+    display: inline-block
+  }
+
+  .modal-box-input {
+    width: 300px;
+    display: inline-block
+  }
+}

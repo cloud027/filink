@@ -1,0 +1,88 @@
+<!--列表-->
+<div class="policy-warp">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--通道状态-->
+<ng-template #channelStatus  let-data="data">
+  <nz-switch [(ngModel)]="data.state" (ngModelChange)="changeChannelStatus($event, data)"></nz-switch>
+  <span>{{data.status | translate:channelStatusEnum:'application.frequentlyUsed'}}</span>
+</ng-template>
+
+<!--是否启用ONVIF探测-->
+<ng-template #onvifStatus  let-data="data">
+  <div>{{data.onvifStatus | translate:enableOnvifStatusEnum:'application.frequentlyUsed'}}</div>
+</ng-template>
+
+<!--其他设置-->
+<ng-template #otherSetting  let-data="data">
+  <div>{{data.audioSwitch | translate:otherSettingsEnum:'application.frequentlyUsed'}}</div>
+</ng-template>
+
+<!--通道详情模态框-->
+<nz-modal *ngIf="isPassagewayDetail"
+          [(nzVisible)]="isPassagewayDetail"
+          [nzTitle]="language.securityWorkbench.accessDetails" nzWidth="40%"
+          (nzOnCancel)="isPassagewayDetail = false"
+          [nzFooter]="modalFooter">
+  <div class="passagewayDetail">
+    <p><span class="way-title">{{passagewayDetail.channelName}}</span><span
+      class="onvif-label">{{passagewayDetail.cameraType}}</span></p>
+    <nz-row>
+      <nz-col nzSpan="8"><i
+        class="iconfont fiLink-filink-tongdaohao-icon way-icon icon-port"></i><span>{{passagewayDetail.channelId}}</span>
+      </nz-col>
+      <nz-col nzSpan="8"><i
+        class="iconfont fiLink-filink-yonghuming-icon way-icon user-icon"></i><span>{{passagewayDetail.cameraAccount}}</span>
+      </nz-col>
+      <nz-col nzSpan="8"><i
+        class="iconfont fiLink-filink-mima-icon way-icon password-icon"></i><span>{{passagewayDetail.cameraPassword}}</span>
+      </nz-col>
+    </nz-row>
+    <!--摄像机接入RTSP地址-->
+    <nz-row>
+      <nz-col nzSpan="8" class="label">{{language.securityWorkbench.rtspAddr}}：</nz-col>
+      <nz-col nzSpan="16">{{passagewayDetail.rtspAddr}}</nz-col>
+    </nz-row>
+    <!--摄像机接入ONVIF地址-->
+    <nz-row>
+      <nz-col nzSpan="8" class="label">{{language.securityWorkbench.onvifAddr}}：</nz-col>
+      <nz-col nzSpan="16">{{passagewayDetail.onvifAddr}}</nz-col>
+    </nz-row>
+    <!--录像保留天数-->
+    <nz-row>
+      <nz-col nzSpan="8" class="label">{{language.securityWorkbench.videoRetentionDays}}：</nz-col>
+      <nz-col nzSpan="16">{{passagewayDetail.videoRetentionDays}}</nz-col>
+    </nz-row>
+    <!--其他设置-->
+    <nz-row>
+      <nz-col nzSpan="8" class="label">{{language.securityWorkbench.audioSwitch}}：</nz-col>
+      <nz-col nzSpan="16">{{passagewayDetail.audioSwitch | translate:otherSettingsEnum:'application.frequentlyUsed'}}</nz-col>
+    </nz-row>
+    <!--启用ONVIF探测-->
+    <ng-container *ngIf="passagewayDetail.cameraType === 'ONVIF'">
+      <p><span class="way-title"> {{language.securityWorkbench.enableOnvifProbe}}</span><span
+        class="onvif-label">{{passagewayDetail.onvifStatus | translate:enableOnvifStatusEnum:'application.frequentlyUsed'}}</span></p>
+      <nz-row>
+        <nz-col nzSpan="8"><i
+          class="iconfont fiLink-filink-ip-icon way-icon icon-port"></i><span>{{passagewayDetail.onvifIp}}</span>
+        </nz-col>
+        <nz-col nzSpan="8"><i
+          class="iconfont fiLink-filink-yonghuming-icon way-icon user-icon"></i><span>{{passagewayDetail.onvifAccount}}</span>
+        </nz-col>
+        <nz-col nzSpan="8"><i
+          class="iconfont fiLink-filink-mima-icon way-icon password-icon"></i><span>{{passagewayDetail.onvifPassword}}</span>
+        </nz-col>
+      </nz-row>
+    </ng-container>
+  </div>
+
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button
+            (click)="isPassagewayDetail = false">{{language.equipmentTable.close}}</button>
+  </ng-template>
+</nz-modal>

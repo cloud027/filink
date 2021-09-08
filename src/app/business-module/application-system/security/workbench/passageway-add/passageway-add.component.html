@@ -1,0 +1,92 @@
+<!--  表单-->
+<xc-form [column]="formColumn"
+         (formInstance)="formInstance($event)">
+</xc-form>
+
+<!-- 选择设备 -->
+<ng-template #selectEquipment let-formGroup="formGroup" let-col="col">
+  <div class="equipment">
+    <span class="area-name"
+          [title]="equipmentName || ''">{{equipmentName}}</span>
+    <span class="open-button" (click)="showModal()"><i
+      class="icon-l icon-search"></i></span>
+  </div>
+</ng-template>
+
+<!--按钮-->
+<div class="btn">
+  <button class="link-button btn-space" nz-button nzType="primary"
+          [nzLoading]="isLoading"
+          [disabled]="!isDisabled"
+          (click)="onConfirm()">{{language.frequentlyUsed.confirm}}
+  </button>
+  <button class="link-button btn-space" nz-button nzType="primary" [disabled]="onvifBtnStatus"
+          [nzLoading]="discoveryLoading"
+          (click)="discovery()">{{language.frequentlyUsed.autoDiscovery}}</button>
+  <button class="link-button" nz-button
+          (click)="onCancel()">{{language.frequentlyUsed.cancel}}</button>
+</div>
+
+<!--设备模态框-->
+<nz-modal *ngIf="isVisible"
+          [(nzVisible)]="isVisible"
+          [nzTitle]="language.strategyList.selectEquipment"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          [nzKeyboard]="false"
+          (nzOnCancel)="isVisible = false"
+          nzWidth="65%">
+  <!--设备列表-->
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button class="link-button btn-space" nz-button nzType="primary"
+            (click)="onHandleTableOk()">{{language.frequentlyUsed.confirm}}
+    </button>
+    <button class="link-button" nz-button
+            (click)="onHandleTableCancel()">{{language.frequentlyUsed.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="equipmentId" (ngModelChange)="onEquipmentChange($event, data)">
+    <label nz-radio [nzValue]="data.equipmentId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component *ngIf="facilityVisible"
+                                  [(facilityVisible)]="facilityVisible"
+                                  [multiple]="true"
+                                  [selectFacilityIds]="selectFacility"
+                                  title="{{language.frequentlyUsed.facilityList}}"
+                                  (selectDataChange)="onFacilityChange($event)">
+</facility-list-selector-component>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="language.frequentlyUsed.pleaseChoose"
+         [(ngModel)]="filterDeviceName"
+         (click)="onShowFacility(filterValue)">
+</ng-template>
+
+
+
+

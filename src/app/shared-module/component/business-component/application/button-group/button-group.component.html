@@ -1,0 +1,29 @@
+<div class="strategy-btn">
+  <!--上一步-->
+  <button nz-button nzType="primary" class="link-button prev-step"
+          (click)="handPrevSteps(isActiveSteps)"
+          *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+    {{commonLanguage.back}}
+  </button>
+  <!--下一步-->
+  <button nz-button nzType="primary" class="link-button next-step"
+          (click)="handNextSteps(isActiveSteps)"
+          [disabled]="isDisabled"
+          *ngIf="isActiveSteps !== finalValueEnum.STEPS_THIRD">
+    {{commonLanguage.nextStep}}
+  </button>
+  <!--确定-->
+  <button nz-button nzType="primary" class="link-button next-step"
+          [nzLoading]="isLoading"
+          (click)="handStepsSubmit()"
+          [disabled]="isDisabled"
+          *ngIf="isActiveSteps === finalValueEnum.STEPS_THIRD">
+    {{commonLanguage.okText}}
+  </button>
+  <!--取消-->
+  <button class="link-button cancel-step"
+          (click)="handCancelSteps()"
+          nz-button nzType="danger">
+    {{commonLanguage.cancel}}
+  </button>
+</div>

@@ -1,0 +1,150 @@
+<nz-spin [nzSpinning]="pageLoading">
+  <div class="area-detail-title">
+    <span >
+      {{migrationType ? facilityLanguage.facilityMigration : facilityLanguage.Migration}}
+    </span>
+  </div>
+  <div class="facility-migration">
+    <div class="step-content">
+      <nz-steps [nzCurrent]="stepIndex" [nzStartIndex]="0" nzDirection="vertical">
+        <nz-step class="select-facility"
+                 nzTitle="{{migrationType ? facilityLanguage.selectFacility: facilityLanguage.selectEquipment}}"></nz-step>
+        <nz-step nzTitle="{{facilityLanguage.migrationMsg}}"></nz-step>
+      </nz-steps>
+    </div>
+    <!--第一步显示表格-->
+    <div class="facility-table" [hidden]="showContent">
+      <!--设施/设备列表-->
+      <xc-table #facilityTemp [dataSet]="migrationDataSet"
+                [pageBean]="migrationPageBean"
+                [tableConfig]="migrationTableConfig"
+                (pageChange)="migrationPageChange($event)">
+      </xc-table>
+      <div class="margin-top20">
+        <button class="link-button margin-right20" nz-button nzType="primary"
+                (click)="nextStep()" [disabled]="nextIsDisable">{{indexLanguage.nextStep}}</button>
+        <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{facilityLanguage.handleCancel}}</button>
+      </div>
+    </div>
+    <!--第二步操作内容-->
+    <div class="addGroup" [hidden]="!showContent">
+      <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+      <div class="margin-top20">
+
+        <button class="link-button margin-right20" nz-button nzType="primary"
+                (click)="lastStep()">{{indexLanguage.lastStep}}</button>
+        <button class="link-button margin-right20" nz-button nzType="primary"
+                [disabled]="!isDisabled" (click)="save()">{{indexLanguage.confirm}}</button>
+        <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{facilityLanguage.handleCancel}}</button>
+      </div>
+    </div>
+  </div>
+</nz-spin>
+
+
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}">
+      {{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}">
+      {{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}
+    </span>
+  </div>
+</ng-template>
+
+<!-- 部门选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly [(ngModel)]="selectUnitName" [title]="selectUnitName">
+    <button type="button"  class="open-button" (click)="showDeptSelectorModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+<!--责任单位选择器-->
+<xc-tree-selector #unitTreeSelector
+                  [(xcVisible)]="unitSelectVisible"
+                  (selectDataChange)="unitSelectChange($event)"
+                  [treeSelectorConfig]="unitSelectorConfig">
+</xc-tree-selector>
+<!-- 部门选择 -->
+<ng-template #areaSelect let-formGroup="formGroup" let-col="col">
+  <div>
+    <nz-radio-group class="form-item-radio"
+                    (ngModelChange)="modelChange($event)"
+                    [(ngModel)]="radioValue"
+                    >
+      <ng-container *ngFor="let radio of radioInfo">
+        <label nz-radio [nzValue]="radio.key" [nzDisabled]="radio.disabled"
+               >
+          {{radio.value}}
+        </label>
+      </ng-container>
+    </nz-radio-group>
+    <div [hidden]="radioValue!==1">
+      <div>
+        <xc-search-input
+          [selectInfo]="selectInfo"
+          [searchValue] = "searchValue"
+          (modelChange)="modelSelectChange($event)"
+          (inputChange)="inputChange($event)"
+        ></xc-search-input>
+      </div>
+      <nz-card class="select-area-card">
+        <div *ngIf="newAreaNodes.length===0">{{facilityLanguage.noData}}</div>
+        <div>
+          <ul [id]="treeId" class="ztree link-tree selector-table-tree"></ul>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</ng-template>
+
+<!--区域选择模板-->
+<ng-template #areaSelector>
+  <div>
+    <input nz-input type="text" readonly [(ngModel)]="areaName" [title]="areaName">
+    <button type="button"  class="open-button" (click)="showAreaSelectorModal()"><i
+      class="icon-l icon-search" nz-tooltip="{{facilityLanguage.selectArea}}"></i></button>
+  </div>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorModalConfig"
+  [canClear]="false"
+  (selectDataChange)="areaSelectChange($event)">
+</xc-tree-area-selector>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: 'facility'}}"
+          [ngStyle]="data.rowStyle">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: 'facility'}}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i  class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" [ngStyle]="data.rowStyle"
+        title="{{data.equipmentType | translate: equipmentTypeEnum: 'facility.config'}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: 'facility.config'}}
+  </span>
+</ng-template>

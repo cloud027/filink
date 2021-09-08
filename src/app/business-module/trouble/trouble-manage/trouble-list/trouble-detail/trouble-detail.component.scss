@@ -1,0 +1,28 @@
+@import "../../../../../style-module/config";
+
+.trouble-details{
+  .trouble-view-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: $title-color;
+    padding-left: 16px;
+    padding-bottom: 20px;
+  }
+
+  .view-item {
+    margin-top: 15px;
+  }
+
+  .detail-height {
+    background: $bg-c;
+    overflow: hidden;
+    min-height: calc(100vh - 159px);
+  }
+}
+
+.loading{
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  z-index: 999;
+}

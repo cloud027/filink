@@ -1,0 +1,88 @@
+@import '../../../style-module/config';
+.odn-device-resources {
+  padding: 0 10px 10px 10px;
+  margin-top: -15px;
+
+  .width-170{
+    width: 170px;
+  }
+  .check-select-all{
+    display: inline-block;
+  }
+  .mt10{
+    margin-top: 10px;
+  }
+  .width-286{
+    width: 286px;
+  }
+  .top-statistical-num{
+    width: 150px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .width-70{
+    width: 70px;
+  }
+
+  .statistical-number {
+    width: 100px;
+  }
+
+  //.statisticalNumberError {
+  //  border-color: #fb7257;
+  //}
+}
+.device-name-select:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.barChart {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.select-height{
+  min-height: 250px;
+  background-color: $bg-c;
+}
+
+.chart-top-box{
+  padding: 0 10px;
+  .switch-lock{
+    margin-left: 15px;
+  }
+  .chart-top-left{
+    background-color: $index-eChart-background-color;
+    padding: 10px;
+    margin-right: 10px;
+    flex: 1;
+    width: 50%
+  }
+
+  .table-chart-top{
+    flex: 1;
+    width: 50%
+  }
+  .no-data{
+    text-align: center;
+    padding-top: 50px;
+  }
+}
+.select-area {
+  height: 32px;
+  display: inline-block;
+  width: 170px;
+  padding: 3.5px 11px;
+  border: 1px solid $button-danger-hover-color;
+  border-radius: 3px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  top: 10px;
+  .place-holder {
+    color: $border-color;
+  }
+}

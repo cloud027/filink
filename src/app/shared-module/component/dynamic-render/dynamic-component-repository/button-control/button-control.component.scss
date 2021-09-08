@@ -1,0 +1,24 @@
+.options-body {
+  width: 420px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  .options-button {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 14px;
+    border-color: #36cfc9;
+    width: 80px;
+
+    .common-each-button {
+
+      color: #36cfc9;
+      border-color: #36cfc9;
+
+      &:hover {
+        color: white;
+        background-color: #36cfc9;
+      }
+    }
+  }
+}

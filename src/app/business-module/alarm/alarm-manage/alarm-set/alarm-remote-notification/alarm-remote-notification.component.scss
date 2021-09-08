@@ -1,0 +1,66 @@
+@import "../../../../../style-module/config";
+
+.alarm-remote-box {
+  background: $bg-c;
+  .box-icon {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+    align-self: center;
+  }
+
+  .status-text {
+    margin: 0 6px;
+  }
+  // 给多个设施或设备加‘，’隔开
+  .one-text > .device-type:not(:last-child) > .status-text:after {
+    position: relative;
+    content: ',';
+    left: 3px;
+  }
+
+  // 多选 告警级别
+  .alarm-levels {
+    float: left;
+    width: 48px;
+
+    .level-flex {
+      display: flex;
+    }
+
+    .level-margin-left {
+      margin-left: 5px;
+    }
+  }
+
+  .box-wrap {
+    background: $bg-c-w;
+    overflow: hidden;
+  }
+
+  .one-text {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+  }
+
+  .equipment-name {
+    .title {
+      color: $equipment-status-lost;
+    }
+
+    &:hover {
+      border-color: $color;
+    }
+  }
+
+  .area-name {
+    width: 100%;
+    height: 22px;
+    line-height: 15px;
+  }
+}

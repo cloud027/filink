@@ -1,0 +1,27 @@
+<div class="shift-add">
+  <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="footer">
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="submit()">
+        {{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+</div>
+<!--班次时段-->
+<ng-template #shiftTimeTemp  let-formGroup="formGroup" let-col="col">
+  <div class="time-range-wrap">
+    <form [formGroup]="formGroup">
+      <nz-time-picker [nzFormat]="format" [nzDefaultOpenValue]="defaultOpenValue" formControlName="startTime"></nz-time-picker>
+      <span class="time-space">~</span>
+      <nz-time-picker [nzFormat]="format" [nzDefaultOpenValue]="defaultOpenValue" formControlName="endTime"></nz-time-picker>
+    </form>
+  </div>
+</ng-template>

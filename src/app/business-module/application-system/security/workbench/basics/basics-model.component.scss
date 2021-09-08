@@ -1,0 +1,36 @@
+@import "../../../../../style-module/config";
+
+.body-style {
+  background-color: rgba(0, 0, 0, 0.025);
+  // 标题
+  .title {
+    background: white;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0 20px 24px;
+  }
+
+  // 表单盒子
+  .form-box {
+    padding: 10px 16px;
+    background: $bg-c-w;
+    // 表单标题
+    .form-title {
+      border-bottom: 1px solid $equipment-status-lost;
+      line-height: 40px;
+      font-size: 16px;
+      font-weight: 900;
+    }
+  }
+
+  /** 按钮样式*/
+  .btn {
+    background: $bg-c-w;
+    padding: 0 0 60px 60px;
+    /** 按钮间隔 */
+    .btn-space {
+      margin-right: 10px;
+    }
+  }
+}

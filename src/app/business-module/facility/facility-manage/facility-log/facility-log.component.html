@@ -1,0 +1,22 @@
+<div class="table-wrapper">
+    <xc-table [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+</div>
+<!--设施名称模版-->
+<ng-template #deviceName let-data="data">
+  <span class="navigate table-text-td" [title]="data['deviceName']" (click)="navigateToDetail(data)">
+    {{data['deviceName']}}</span>
+</ng-template>
+<!--资产编码-->
+<ng-template #deviceCode let-data="data">
+  <span class="navigate table-text-td" [title]="data['deviceCode']" (click)="navigateToDetail(data)">
+    {{data['deviceCode']}}</span>
+</ng-template>
+<!--设施类型-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text" [title]="data.deviceType|translate: deviceType">{{data.deviceType|translate: deviceType}}</span>
+</ng-template>

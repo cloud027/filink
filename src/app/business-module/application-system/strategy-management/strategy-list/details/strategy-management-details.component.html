@@ -1,0 +1,246 @@
+<div class="strategy">
+  <!--触发条件-->
+  <h3 class="title">{{languageTable.strategyList.trigger}}</h3>
+  <!--触发条件事件源选择-->
+  <div class="application">
+    <span class="application-title">{{languageTable.strategyList.sourceType}}</span>
+    <nz-radio-group [(ngModel)]="stepsFirstParams.linkageStrategyInfo.conditionType"
+                    (ngModelChange)="conditionChange($event)">
+      <!-- 事件类型枚举 -->
+      <label nz-radio [nzValue]="conditionTypeEnum.alarm">{{languageTable.conditionType.alarm}}</label>
+      <label nz-radio [nzValue]="conditionTypeEnum.event">{{languageTable.conditionType.event}}</label>
+      <label nz-radio [nzValue]="conditionTypeEnum.trigger">{{languageTable.conditionType.trigger}}</label>
+    </nz-radio-group>
+  </div>
+  <!--根据触发-->
+  <ng-container
+    *ngIf="stepsFirstParams.linkageStrategyInfo.conditionType !== conditionTypeEnum.trigger;else gatewayTemplate">
+    <!--设备列表-->
+    <div class="application">
+      <span class="application-title">{{languageTable.strategyList.selectEquipment}}</span>
+      <span class="area-name" [title]="stepsFirstParams.linkageStrategyInfo.equipmentName">
+        {{stepsFirstParams.linkageStrategyInfo.equipmentName}}
+      </span>
+      <span>
+        <button class="open-button" (click)="handleEquipment()">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </span>
+    </div>
+    <!--告警-->
+    <div class="application" *ngIf="linkageStrategyInfo.conditionType === conditionTypeEnum.alarm">
+      <span class="application-title">{{languageTable.equipmentStatus.alarm}}</span>
+      <span class="area-name" [title]="stepsFirstParams.linkageStrategyInfo.conditionName">
+        {{stepsFirstParams.linkageStrategyInfo.conditionName}}
+      </span>
+      <span>
+        <button class="open-button" (click)="handleReport()">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </span>
+    </div>
+    <!--事件-->
+    <div class="application" *ngIf="linkageStrategyInfo.conditionType === conditionTypeEnum.event">
+      <span class="application-title">{{languageTable.equipmentStatus.event}}</span>
+      <span class="area-name" [title]="stepsFirstParams.linkageStrategyInfo.conditionName">
+        {{stepsFirstParams.linkageStrategyInfo.conditionName}}
+      </span>
+      <span>
+        <button class="open-button" (click)="handleReportEvent()">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </span>
+    </div>
+    <!--执行动作-->
+    <div class="perform-action">
+      <h3 class="perform-title">{{languageTable.strategyList.performAction}}</h3>
+      <div class="action"></div>
+      <!--设备列表-->
+      <div class="action-list">
+        <button nz-button nzType="primary" class="link-button add-button"
+                (click)="isMultiEquipment = true;">
+          <i [class]="'iconfont fiLink-add-no-circle'"></i>
+          {{languageTable.strategyList.add}}
+        </button>
+        <app-view-equipment [inputDataSet]="multiEquipmentData" [isShowDelete]="true"
+                            (deleteEquipment)="deleteEquipmentChange($event)"></app-view-equipment>
+      </div>
+    </div>
+    <!--设置指令-->
+    <h3 class="instructions-title" *ngIf="linkageStrategyInfo.targetType">{{languageTable.strategyList.setCommand}}</h3>
+    <!--灯-->
+    <div class="screen" *ngIf="linkageStrategyInfo.targetType&&(linkageStrategyInfo.targetType.includes(targetTypeEnum.singleControl)
+  ||linkageStrategyInfo.targetType.includes(targetTypeEnum.multiControl)) ">
+      <div class="information-screen lamp">{{languageTable.strategyList.lamp}}</div>
+      <div class="instruct-list">
+        <div class="instruct-title">
+        <span class="icon-wrap open-wrap">
+          <i class="iconfont fiLink-open"></i>
+        </span>
+          <span>{{languageTable.strategyList.switch}}</span>
+        </div>
+        <span class="instruct-volume">
+                  <nz-radio-group [(ngModel)]="linkageStrategyInfo.instructLightBase.switchLight"
+                                  (ngModelChange)="switchLightChange($event)">
+                    <label nz-radio [nzValue]="ExecStatusEnum.implement">{{languageTable.equipmentTable.switch}}</label>
+                    <label nz-radio [nzValue]="ExecStatusEnum.free">{{languageTable.equipmentTable.shut}}</label>
+                  </nz-radio-group>
+                  <span class="switch-right-close"><i nz-icon nzType="close-circle" nzTheme="outline"
+                                                      (click)="handleSwitchLightClear()"></i></span>
+      </span>
+      </div>
+      <div class="instruct-list">
+        <div class="instruct-title">
+        <span class="icon-wrap light-wrap">
+          <i class="iconfont fiLink-light"></i>
+        </span>
+          <span>{{languageTable.equipmentTable.light}}</span>
+        </div>
+        <div class="instruct-volume">
+          <nz-slider
+            [nzMin]="min" [nzMax]="max"
+            [nzDisabled]="linkageStrategyInfo.instructLightBase.switchLight === ExecStatusEnum.free"
+            [(ngModel)]="linkageStrategyInfo.instructLightBase.light"></nz-slider>
+        </div>
+        <div>{{linkageStrategyInfo.instructLightBase.light}}</div>
+      </div>
+    </div>
+    <!--信息屏-->
+    <div class="screen" *ngIf="linkageStrategyInfo.targetType&&linkageStrategyInfo.targetType.includes(targetTypeEnum.informationScreen)">
+      <div class="information-screen">{{languageTable.strategyList.screen}}</div>
+      <div class="instruct-list">
+        <span class="instruct-title">{{languageTable.strategyList.programName}}</span>
+        <span class="area-name" [title]="stepsFirstParams.linkageStrategyInfo?.instructInfoBase?.programName">
+        {{stepsFirstParams.linkageStrategyInfo.instructInfoBase.programName}}
+      </span>
+        <span>
+        <button class="open-button" (click)="handleProgram()">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </span>
+      </div>
+      <div class="instruct-list">
+        <div class="instruct-title">
+          <span class="icon-wrap volume-wrap"><i class="iconfont fiLink-filink-yinliang-icon"></i></span>
+          <span>{{languageTable.strategyList.volume}}</span>
+        </div>
+        <div class="instruct-volume">
+          <nz-slider
+            [nzMin]="sliderValue.min"
+            [nzMax]="sliderValue.volumeMax"
+            [(ngModel)]="instructInfoBase.volume"></nz-slider>
+        </div>
+        <div>{{instructInfoBase.volume}}</div>
+      </div>
+      <div class="instruct-list">
+        <div class="instruct-title">
+          <span class="icon-wrap light-wrap"><i class="iconfont fiLink-light"></i></span>
+          <span>{{languageTable.equipmentTable.light}}</span>
+        </div>
+        <div class="instruct-volume">
+          <nz-slider
+            [nzMin]="sliderValue.min"
+            [nzMax]="sliderValue.max"
+            [(ngModel)]="instructInfoBase.light"></nz-slider>
+        </div>
+        <div>{{instructInfoBase.light}}</div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #gatewayTemplate>
+    <app-gateway-strategy [stepsFirstParams]="stepsFirstParams"
+                          (gatewayStrategyValidChange)="strategyDetailValidChange.emit($event)"></app-gateway-strategy>
+  </ng-template>
+</div>
+
+<!--触发条件---------设备选择弹窗--->
+<app-select-equipment
+  *ngIf="isStrategy"
+  [selectType]="'radio'"
+  [(isVisible)]="isStrategy"
+  [selectEquipment]="selectEquipment"
+  (selectChange)="handleEquipmentOk($event)"></app-select-equipment>
+
+
+<!--触发条件---------告警选择弹窗-->
+<nz-modal
+  *ngIf="isSource"
+  [(nzVisible)]="isSource"
+  nzWidth="70%"
+  [nzFooter]="modalFooter"
+  [nzTitle]="languageTable.strategyList.alarmList"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleReportOk()">
+  <xc-table [dataSet]="reportData"
+            [pageBean]="reportPageBean"
+            (pageChange)="reportPageChange($event)"
+            [tableConfig]="tableConfigReport">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            (click)="handleReportOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+<!--触发条件---------事件选择弹窗-->
+<nz-modal
+  *ngIf="isSourceEvent"
+  [(nzVisible)]="isSourceEvent"
+  nzWidth="70%"
+  [nzFooter]="modalFooter"
+  [nzTitle]="languageTable.strategyList.eventList"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleReportEventOk()">
+  <xc-table [dataSet]="eventList"
+            [pageBean]="reportPageBean"
+            (pageChange)="reportPageChange($event)"
+            [tableConfig]="eventTableConfig">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            (click)="handleReportEventOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--触发条件-----告警级别模板-->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="alarm">
+    <div class="box-icon" [ngStyle]="data.styleColor"></div>
+    <span class="alarm-text">{{data.languageName}}</span>
+  </div>
+</ng-template>
+<ng-template #alarmDefaultLevelTemp let-data="data">
+  <div class="alarm">
+    <div class="box-icon" [ngStyle]="data.defaultStyle"></div>
+    <span class="alarm-text">{{data.defaultName}}</span>
+  </div>
+</ng-template>
+<!--触发条件-----告警确认-->
+<ng-template #alarmConfirmTemp let-data="data">
+  <div *ngIf="data.alarmAutomaticConfirmation ==='1'">{{alarmLanguage.yes}}</div>
+  <div *ngIf="data.alarmAutomaticConfirmation ==='0'">{{alarmLanguage.no}}</div>
+</ng-template>
+
+
+<!--触发条件---------事件源单选框-->
+<ng-template #radioReportTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectReport.alarmCode" (ngModelChange)="selectedReportChange($event, data)">
+    <label nz-radio [nzValue]="data.alarmCode"></label>
+  </nz-radio-group>
+</ng-template>
+
+
+<app-select-program *ngIf="isShowProgram" [(isVisible)]="isShowProgram" [selectedProgram]="selectedProgram"
+                    (selectChange)="handleProgramOk($event)"></app-select-program>
+<!--执行动作 添加设备组件-->
+<app-select-equipment *ngIf="isMultiEquipment" [(isVisible)]="isMultiEquipment"
+                      [targetType]="linkageStrategyInfo.targetType"
+                      [isDisplay]="isDisplay"
+                      [selectedData]="multiEquipmentData"
+                      (selectChange)="handleTableOk($event)"></app-select-equipment>
+
+<!--  告警类别  -->
+<ng-template #alarmTypeTemp let-data="data">
+  <div>{{ typeStatus[data.alarmClassification] }}</div>
+</ng-template>

@@ -1,0 +1,20 @@
+.tree-select-role-box {
+  position: relative;
+  display: flex;
+
+  .tree-select-role-card {
+    height: 400px;
+    flex: 1;
+    margin-right: 10px;
+
+    .tree-box {
+      height: 350px;
+      padding: 10px;
+      overflow: auto
+    }
+  }
+
+  .tree-select-role-card-left{
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,143 @@
+@import "../../../share/style/common-style";
+@import "../../../../../style-module/config";
+
+.strategy {
+  padding: 20px;
+  width: 100%;
+
+  .title {
+    font-weight: bold;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 35px;
+      left: 0px;
+      width: 100%;
+      border-bottom: 1px solid $button-danger-hover-color;
+    }
+  }
+
+  .application {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+
+    .application-title {
+      width: 140px;
+      position: relative;
+
+      &:after {
+        content: '*';
+        color: red;
+        position: absolute;
+        top: -2px;
+        left: -5px;
+      }
+    }
+  }
+
+  .facilities {
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  /*动作*/
+  .perform-action {
+    .perform-title {
+      margin-top: 20px;
+      font-weight: bold;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 35px;
+        left: 0px;
+        width: 100%;
+        border-bottom: 1px solid $button-danger-hover-color;
+      }
+    }
+
+    .action {
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+
+      .equipment-add {
+        color: $color;
+      }
+
+      .action-add {
+        cursor: pointer;
+      }
+    }
+  }
+
+  /*下划线*/
+  .instructions-title {
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 20px;
+  }
+
+  .instructions {
+    margin-top: 10px;
+
+    .switch-btn {
+      .switch-opera {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  /*信息屏*/
+  .screen {
+    @include screen-style;
+  }
+}
+
+.area-name {
+  @include input-style;
+}
+
+.open-button {
+  @include button-style;
+}
+
+.select-target {
+  margin-left: 20px;
+  width: 300px;
+}
+
+.add-button {
+  margin-bottom: 10px;
+}
+
+/deep/ .ant-slider-handle {
+  position: absolute;
+  width: 6px;
+  height: 18px;
+  margin-top: -7px;
+  margin-left: -7px;
+  background-color: $bg-c-w;
+  border: solid 3px $color;
+  border-radius: 0;
+}
+
+.alarm {
+  display: flex;
+
+  .box-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    align-self: center;
+  }
+
+  .alarm-text {
+    margin-left: 5px
+  }
+}

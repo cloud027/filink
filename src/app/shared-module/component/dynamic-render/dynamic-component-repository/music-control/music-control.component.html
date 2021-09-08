@@ -1,0 +1,16 @@
+<div class="options-body">
+  <div class="options-icon">
+    <i class="iconfont content-left-special-icon fiLink-filink-yinliang-icon"></i>
+  </div>
+  <div nz-col nzSpan="4" class="options-name">
+    音量
+  </div>
+  <div class="options-slider">
+    <nz-slider
+      [nzMin]="1"
+      [nzMax]="100"
+      [(ngModel)]="value"
+      (nzOnAfterChange)="change($event)"></nz-slider>
+  </div>
+  <div class="options-num">{{value}}</div>
+</div>

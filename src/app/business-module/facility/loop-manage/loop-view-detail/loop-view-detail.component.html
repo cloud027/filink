@@ -1,0 +1,19 @@
+<div class="facility-view-title">{{language.loopDetail}}</div>
+<div class="detail-height">
+  <div class="view-item">
+    <!--回路详情-->
+    <app-loop-basic-details [loopId]="loopId" #thumbnailDetail></app-loop-basic-details>
+  </div>
+  <div *ngIf="equipmentId"  class="view-item">
+    <!--回路操作-->
+    <app-loop-basic-operation [loopCode]="loopCode" [equipmentId]="equipmentId"></app-loop-basic-operation>
+  </div>
+
+  <div class="view-item">
+    <!--关联设施概览列表-->
+    <app-loop-link-device [loopId]="loopId" (hasMoveOut)="onMoveOut($event)"></app-loop-link-device>
+  </div>
+</div>
+
+
+

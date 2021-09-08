@@ -1,0 +1,13 @@
+<!--顶部标题-->
+<div class="template-warp">
+  <div class="table-common-title"><span>{{language.planList}}</span></div>
+  <!--产品列表-->
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="planList"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>

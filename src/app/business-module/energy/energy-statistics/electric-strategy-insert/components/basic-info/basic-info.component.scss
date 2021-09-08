@@ -1,0 +1,12 @@
+// 自定义样式
+.custom-template {
+    display: flex;
+    align-items: center;
+    .input-name {
+        width: 300px;
+    }
+    .icon-template {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,28 @@
+@import "../../../../style-module/config";
+.page-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.user-detail {
+  padding: 10px;
+}
+.content-link {
+  padding-left: 20px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+
+.mr-r-20 {
+  margin-right: 20px
+}
+
+.open-button {
+  position: absolute;
+  top: 3px;
+  border: none;
+  outline: none;
+  background: $menu-font-color;
+}

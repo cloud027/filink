@@ -1,0 +1,26 @@
+@import "../../../../../../style-module/config";
+
+.alarm-detail{
+  padding: 0 16px 20px 16px;
+  .page-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}
+.correlation-warp{
+  display: flex;
+  border-top: 1px solid #e8e8e8;
+  /*步骤组件样式*/
+  .xc-steps {
+    padding-top: 80px;
+    width: 200px;
+    border-right: 1px solid $border-color;
+  }
+}
+.step-content {
+  width: calc(100% - 210px);
+}
+

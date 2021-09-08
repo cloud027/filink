@@ -1,0 +1,34 @@
+<div class="business-template">
+  <div class="config-info">
+    <!--模板-->
+    <p>{{language.theTemplate}}</p>
+    <app-template-search #templateSearch
+                         [templateType]="templateType"
+                         (chooseTemplate)="selectTemplate($event)"
+                         [modifyShow]="modifyShow"
+    ></app-template-search>
+    <div class="handle-button">
+      <!--新增模板-->
+      <button nz-button nzType="primary"
+              class="link-button add"
+              (click)="addTemplate()">{{language.newTemplate}}
+      </button>
+      <!--确认模板-->
+      <button nz-button nzType="danger"
+              class="link-button"
+              (click)="handleOk()"
+              [disabled]="!templateInfo.name">{{language.ConfirmTemplate}}
+      </button>
+    </div>
+  </div>
+
+  <div class="detail-info">
+    <p>{{templateInfo.name}}</p>
+    <div class="template-info" id="template-info-canvas">
+    </div>
+  </div>
+</div>
+<app-add-template [isVisible]="isVisible"
+                  [TemplateReqDto]="TemplateReqDto"
+                  (handleClose)="handleClose()">
+</app-add-template>

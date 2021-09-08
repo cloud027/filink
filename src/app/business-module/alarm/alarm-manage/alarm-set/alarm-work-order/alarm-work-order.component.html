@@ -1,0 +1,70 @@
+<div class="alarm-work-order-box">
+  <div class="alarm-common-title">{{language.alarmWorkOrder}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        (pageChange)="pageChange($event)"
+        [tableConfig]="tableConfig">
+      </xc-table>
+    </div>
+  </div>
+  <!-- 启用状态 -->
+  <ng-template #isNoStartTemp let-data="data">
+    <nz-switch [ngModel]="data.status===isStatus.enable" [appAccessPermission]="data.appAccessPermission"
+               [nzControl]="true"
+               (click)="clickSwitch(data)">
+    </nz-switch>
+    <span class="no-start-temp">
+      {{data.status | translate: isStatus: languageEnum.alarm }}
+    </span>
+  </ng-template>
+
+  <!-- 设施类型 -->
+  <ng-template #deviceTypeTemp let-data="data">
+    <div  class="one-text" [title]="data.deviceTypeNames">
+      <span *ngFor="let type of data.deviceTypeArr" class="device-type">
+        <i [ngClass]="type.picture"></i>
+        <span class="status-text">{{type.typeName}}</span>
+    </span>
+    </div>
+  </ng-template>
+  <!-- 设备类型 -->
+  <ng-template #equipmentTypeTemp let-data="data">
+    <div class="one-text" [title]="data.equipmentTypeNames">
+      <span *ngFor="let type of data.equipmentTypeArr" class="device-type">
+          <i [ngClass]="type.picture"></i>
+          <span class="status-text">{{type.typeName}}</span>
+      </span>
+    </div>
+  </ng-template>
+  <!-- 区域 -->
+  <ng-template #areaSelector  let-filterValue = "filterValue" >
+    <app-area [areaConfig]='areaConfig'  [filterValue]="filterValue" ></app-area>
+  </ng-template>
+
+  <!-- 告警名称 -->
+  <ng-template #alarmName let-filterValue = "filterValue">
+    <app-alarm-name [isFilter]="true" [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue" ></app-alarm-name>
+  </ng-template>
+  <!--责任单位-->
+  <ng-template #unitNameSearch let-filterValue = "filterValue">
+    <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="filterValue.filterName || selectUnitName" />
+  </ng-template>
+
+  <xc-tree-selector
+    [(xcVisible)]="responsibleUnitIsVisible"
+    (selectDataChange)="departmentSelectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-selector>
+</div>
+<!-- 期待完工时长 -->
+<ng-template #expectTimeTemp let-filterValue = "filterValue">
+    <span class="input-box">
+      <input type="text" class="width-style area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)" [placeholder]="language.pleaseEnter"
+             [(ngModel)]="filterValue.filterValue">
+    </span>
+</ng-template>
+

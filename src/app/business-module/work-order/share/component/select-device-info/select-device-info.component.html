@@ -1,0 +1,46 @@
+<!--选择设施-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="900"
+          [nzTitle]="inspectionLanguage.selected + inspectionLanguage.devicesName"
+          [nzContent]="deviceModelTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #deviceModelTemp>
+    <div class="trans-box">
+      <xc-table [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" [disabled]="isFormDisabled" (click)="commitDeviceData()">{{inspectionLanguage.handleOk}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{inspectionLanguage.handleCancel}}</button>
+  </ng-template>
+  <!--设施类型图标模板-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="area-level">
+      <i [ngClass]="data.iconClass"></i>
+      <span class="status-text" title="{{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}">
+      {{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}
+    </span>
+    </div>
+  </ng-template>
+  <!--设施状态模板-->
+  <ng-template #deviceStatusTemp let-data="data">
+    <div class="area-level">
+      <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"></i>
+      <span class="status-text" title="{{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}">
+      {{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}
+    </span>
+    </div>
+  </ng-template>
+  <!-- 列表 单选框 -->
+  <ng-template #radioTemp let-data="data">
+    <nz-radio-group [(ngModel)]="deviceId" (ngModelChange)="onDataChange($event, data)">
+      <label nz-radio [nzValue]="data.deviceId"></label>
+    </nz-radio-group>
+  </ng-template>
+</nz-modal>

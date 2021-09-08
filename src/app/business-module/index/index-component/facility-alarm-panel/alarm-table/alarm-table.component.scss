@@ -1,0 +1,21 @@
+@import "~src/app/style-module/config";
+
+// 告警列表样式
+.alarm-list {
+
+  .alarm-title {
+    display: flex;
+    align-items: center;
+    height: 30px;
+
+    .alarm-title-text {
+      flex: 1;
+    }
+
+    .alarm-title-more {
+      margin-right: 5px;
+      cursor: pointer;
+      color: $index-alarm-title;
+    }
+  }
+}

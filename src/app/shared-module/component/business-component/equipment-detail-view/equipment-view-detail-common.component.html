@@ -1,0 +1,94 @@
+<div class="detail-height">
+  <!--设备详情-->
+  <div class="view-item">
+    <app-equipment-infrastructure
+      [isMonitorDeatilsFlag]='isMonitorDeatilsFlag'
+      [equipmentId]="equipmentId">
+    </app-equipment-infrastructure>
+  </div>
+  <!--设备操作按钮-->
+  <div *ngIf="detailCodeShow.basicOperation"
+       class="view-item">
+    <app-equipment-basic-operation
+      [equipmentId]="equipmentId"
+      [equipmentName]="equipmentName"
+      [equipmentStatus]="equipmentStatus"
+      [equipmentModel]="equipmentModel"
+      [isPassiveLock]="isPassiveLock"
+      [equipmentType]="equipmentType">
+    </app-equipment-basic-operation>
+  </div>
+  <!--应用系统设备操作按钮-->
+  <div *ngIf="isShowApplication && !isShow"
+       class="view-item">
+    <app-application-operate
+      [operationList]="operationList"
+      (operationNotify)="handleEquipmentOperation($event)">
+    </app-application-operate>
+  </div>
+  <!--父组件传来的组件-->
+  <div *ngIf="isShow"
+       class="view-item" [ngClass]="securityClass ? 'security-equipment': ''">
+    <ng-content></ng-content>
+  </div>
+  <!--传感器列表-->
+  <div *ngIf="detailCodeShow.sensorList">
+    <app-equipment-sensor-list [gatewayId]="equipmentId"></app-equipment-sensor-list>
+  </div>
+  <!--上报状态信息-->
+  <div *ngIf="detailCodeShow.reportStatus"
+       class="view-item">
+    <nz-card nzTitle="{{language.reportStatusInformation}}">
+      <app-equipment-status-information
+        *ngIf='!isMonitorDeatilsFlag'
+        (equipmentDetails)="handleEquipmentDetails($event)"
+        [containerWidth]="'60%'"
+        [equipmentId]="equipmentId"
+        [equipmentType]="equipmentType">
+      </app-equipment-status-information>
+      <!-- 环境监测 父组件传递的 状态信息 -->
+      <div *ngIf='isMonitorDeatilsFlag'>
+        <ng-content select='.monitor-card'></ng-content>
+      </div>
+    </nz-card>
+  </div>
+  <div class="view-item" *ngIf="detailCodeShow.intelligentEntranceGuard">
+    <!--智能门禁详情-->
+    <app-intelligent-entrance-guard [deviceId]="deviceId" [equipmentId]="equipmentId" [serialNum]="'serialNum'" [isEquipment]="true"
+                                    [deviceType]="'deviceType'"></app-intelligent-entrance-guard>
+  </div>
+  <!--告警-->
+  <div *ngIf="detailCodeShow.alarm"
+       class="view-item">
+    <app-equipment-alarm
+      [equipmentId]="equipmentId"
+      [equipmentType]="equipmentType">
+    </app-equipment-alarm>
+  </div>
+  <!--工单-->
+  <div *ngIf="detailCodeShow.equipmentOrder"
+       class="view-item">
+    <app-equipment-work-order
+      [equipmentId]="equipmentId">
+    </app-equipment-work-order>
+  </div>
+  <!--设备日志-->
+  <div *ngIf="detailCodeShow.equipmentLog"
+       class="view-item">
+    <app-equipment-log-detail [equipmentId]="equipmentId">
+    </app-equipment-log-detail>
+  </div>
+  <!--操作日志-->
+  <div *ngIf="detailCodeShow.operateLog"
+       class="view-item">
+    <app-equipment-operate-log [equipmentId]="equipmentId"></app-equipment-operate-log>
+  </div>
+  <!--图片-->
+  <div *ngIf="detailCodeShow.equipmentImg"
+       class="view-item">
+    <app-equipment-img-view [equipmentId]="equipmentId"></app-equipment-img-view>
+  </div>
+</div>
+
+
+

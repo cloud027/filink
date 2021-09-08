@@ -1,0 +1,59 @@
+<nz-modal
+  *ngIf="rule"
+  [(nzVisible)]="rule"
+  [nzTitle]="language.alarmFiltrationRule"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  [nzWidth]="820"
+  [nzStyle]="{top: '70px'}"
+  (nzOnCancel)="closeTable()">
+  <ng-template #modalTitle>
+    {{language.alarmFiltrationRule}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="okText();closeTable()">{{language.okText}}</button>
+    <button nz-button nzType="default" (click)="closeTable()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange( data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!-- 启用状态 -->
+<ng-template #isNoStartTemp let-data="data">
+  <nz-switch [ngModel]="data.status === isStatus.enable"
+             [nzControl]="true"
+             (click)="data.status"
+  >
+  </nz-switch>
+  <span *ngIf="data.status === isStatus.disable" class="no-start-temp"> {{language.disable}}</span>
+  <span *ngIf="data.status === isStatus.enable" class="no-start-temp">{{language.enable}}</span>
+</ng-template>
+<!-- 是否存库 -->
+<ng-template #isNoStorageTemp let-data="data">
+  <nz-radio-group class="remote-table" [ngModel]="data.storeDatabase ? data.storeDatabase.toString() : ''">
+    <label nz-radio [nzValue]="isInventory.yes" [nzDisabled]="true">{{language.yes}}</label>
+    <label nz-radio [nzValue]="isInventory.no" [nzDisabled]="true">{{language.no}}</label>
+  </nz-radio-group>
+</ng-template>
+<!-- 过滤条件 -->
+<ng-template #filtrationConditionTemp let-data="data">
+  <span class="filtration-condition" [title]="data.alarmName">{{data.alarmName}}</span>
+</ng-template>
+
+<!-- 告警名称 -->
+<ng-template #alarmName let-filterValue="filterValue">
+  <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue"></app-alarm-name>
+</ng-template>

@@ -1,0 +1,311 @@
+@import "../../../../style-module/config";
+
+.create-wisdom-data-container {
+  padding: 20px;
+  position: relative;
+
+  .area-detail-title {
+    border-left: 2px solid $sp-icon-color-3;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: $primary-title-size;
+    font-weight: 900;
+  }
+
+  .map-container {
+    border: 1px solid $border-color;
+    margin: 18px;
+    padding: 10px;
+    position: relative;
+
+    #createWisdomDataMap {
+      height: calc(100vh - 259px);
+    }
+  }
+
+  .edit-box {
+    position: absolute;
+    border-radius: 3px;
+    height: 84px;
+    padding-left: 10px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 16px;
+    background-color: #e1e3e6bd;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    .box-icon {
+      width: 66px;
+      height: 66px;
+      margin-right: 10px;
+      padding-top: 10px;
+      border-radius: 4px;
+      background-color: white;
+      border: none;
+
+      .add-box-title {
+        font-size: 12px;
+        color: $title-color;
+      }
+    }
+
+    .box-icon:hover {
+      border: 1px solid $index-operational-background-color;
+
+      .add-box-title {
+        font-size: 12px;
+        color: $color;
+      }
+    }
+
+    .box-icon:focus {
+      outline: none;
+    }
+
+    .box-icon[disabled] {
+      cursor: not-allowed;
+      background-color: #f5f5f5;
+      color: $button-disable-bg-color !important;
+      border: none;
+
+      .add-box-title {
+        color: $button-disable-bg-color;
+      }
+    }
+  }
+
+  .show-current-plan {
+    height: 38px;
+    position: absolute;
+    background: $bg-c-w;
+    top: 80px;
+    left: 34px;
+    line-height: 38px;
+    padding-left: 17px;
+    z-index: 6;
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+  }
+
+  .point-list {
+    position: absolute;
+    right: 65px;
+    top: 20px;
+    background: $bg-c-w;
+    width: 600px;
+    padding: 10px 16px 16px;
+
+    .point-list-title {
+      display: block;
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+    }
+  }
+
+  .point-status {
+    position: absolute;
+    right: 65px;
+    top: 64px;
+    background: #ffff;
+    padding: 7px 12px;
+  }
+
+  // 地图上操作按钮
+  .map-button-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 99;
+
+    .map-button {
+      width: 34px;
+      height: 34px;
+      text-align: center;
+      background: $bg-c-w;
+      font-size: 16px;
+      line-height: 34px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      box-sizing: border-box;
+      box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+
+      &:hover {
+        border: 1px solid $operational-button-background-color;
+        box-shadow: 0 0 3px $color;
+      }
+    }
+  }
+
+  // 地图上的浮窗
+  .info-window-container {
+    position: absolute;
+    z-index: 100;
+    transform: translate(-50%, -100%);
+    margin-top: -10px;
+    white-space: nowrap;
+  }
+}
+
+// 弹框主体内容
+.plan-modal-step {
+  height: fit-content;
+  min-height: 260px;
+  display: flex;
+  // 步骤条
+  .step-content {
+    display: inline-block;
+    width: 166px;
+    border-right: 1px solid #e0dfdf;
+    position: relative;
+
+    .step-container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    // 步骤条标题
+    .select-facility {
+      height: 150px;
+    }
+  }
+
+  //第一步显示表格 #13C2C2
+  .first-step-form {
+    display: inline-block;
+    width: 500px;
+    margin-left: 40px;
+
+    .facility-table-title {
+      height: 25px;
+      margin: 10px 0 20px -18px;
+      padding-left: 16px;
+      border-left: 2px solid #56a9f5;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  //第二步操作内容
+  .addGroup {
+    display: inline-block;
+    float: left;
+    margin-left: 30px;
+    width: 700px;
+
+    .addGroup-title {
+      height: 25px;
+      margin: 10px 0 20px -18px;
+      padding-left: 16px;
+      border-left: 2px solid #56a9f5;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    //单选切换
+    .addGroup-radio {
+      width: 400px;
+      height: 50px;
+
+      .addGroup-radio-title {
+        margin: 0 60px 0 10px;
+      }
+
+    }
+
+    //下拉选择分组
+    .addGroup-select {
+      width: 450px;
+      height: 50px;
+
+      .addGroup-select-option {
+        width: 300px
+      }
+
+      .addGroup-select-title {
+        margin: 0 70px 0 10px;
+      }
+    }
+
+  }
+}
+
+.open-button {
+  position: absolute;
+  top: 3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $button-danger-color;
+}
+
+#planPointArea {
+  height: 150px;
+  overflow: auto;
+  border: 1px solid $border-color;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.rename-model {
+  display: block;
+  overflow: hidden;
+  color: rgba(0, 0, 0, .85);
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-left: -30px;
+
+  .rename-icon {
+    color: #faad14;
+    margin-right: 10px;
+    font-size: 22px;
+  }
+
+  .text {
+    vertical-align: middle;
+    font-weight: bold;
+  }
+}
+
+.no-highlighting {
+  color: $button-danger-font-color !important;
+}
+
+// 步骤条样式覆盖
+::ng-deep .plan-modal-step {
+  .ant-steps-vertical .ant-steps-item-icon {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: bold;
+  }
+
+  .ant-steps-item-wait .ant-steps-item-icon {
+    background-color: #e8e8e8;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+}

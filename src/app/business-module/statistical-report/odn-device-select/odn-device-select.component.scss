@@ -1,0 +1,16 @@
+.searchItem{
+  background-color: #e5e5e5;
+}
+.select-area {
+  width: 100px;
+  padding: 4.5px 20px;
+  border: 1px solid #bfbfbf;
+  border-radius: 3px;
+  margin-right: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+  min-width: 170px;
+}

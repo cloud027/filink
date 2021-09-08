@@ -1,0 +1,226 @@
+@import '../../../../../style-module/config.scss';
+.tempTop{
+  height: 80px;
+  .spins{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .tempLeft{
+    float: left;
+    width: 230px;
+    height: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    .temp-ul{
+      height: 100%;
+    }
+    .liItem{
+      padding: 9px 16px;
+      border-bottom: 1px solid $table-border-color;
+      &.first{
+        font-weight: 600;
+        background: $inspect-template-bg;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+      [nz-radio] {
+        display: block;
+      }
+    }
+    .item-ul{
+      height: calc(100% - 40px);
+      overflow-y: auto;
+    }
+    .ant-radio-group{
+      width: 100%;
+    }
+  }
+
+  .tempRight{
+    float: left;
+    width: 490px;
+    height: 100%;
+    margin-left: 29px;
+    position: relative;
+
+    .li-warp{
+      height: 100%;
+      position: relative;
+      border-radius: 4px;
+
+      .temp-li{
+        padding: 9px 16px;
+        border-bottom: 1px solid $table-border-color;
+
+        .names{
+          display: inline-block;
+          width: 44%;
+          height: 18px;
+          margin-left: 8px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: pre;
+          &.ml8{
+            margin-left: 15px;
+            margin-right: 5px;
+          }
+        }
+
+        .remark{
+          display: inline-block;
+          height: 18px;
+          width: 44%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: pre;
+        }
+        &.first{
+          font-weight: 600;
+          background: $inspect-template-bg;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+        }
+
+        .temp-input{
+          width: 95%;
+        }
+      }
+
+      .item-box{
+        height: calc(100% - 40px);
+        overflow-y: auto;
+      }
+    }
+
+  }
+  &:before{
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+  .temp-nodata{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    height: 38px;
+    line-height: 38px;
+    border-bottom: 1px solid $table-border-color;
+    &:hover {
+      background: $table-border-color;
+    }
+  }
+}
+
+.tempBottom{
+  min-height: 127px;
+  margin-top: 15px;
+  border: 1px solid $button-danger-hover-color;
+  border-radius: 4px;
+
+  .last-edit{
+    height: 38px;
+    line-height: 38px;
+    font-weight: 600;
+    padding: 0 16px;
+    background: $inspect-template-bg;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .temp-bot{
+    padding: 8px 16px 15px;
+
+    .item-inspect{
+      padding-left: 6px;
+      padding-right: 22px;
+      margin-top: 8px;
+      margin-right: 5px;
+      display: inline-block;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      background: $suggest-bg;
+      position: relative;
+      .iconfont{
+        color: $upload-color;
+        font-size: 12px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 3px;
+        &:hover{
+          color: $equipment-status-lost;
+        }
+      }
+    }
+  }
+}
+
+.temp-add{
+  .add-btn{
+    height: 34px;
+    line-height: 34px;
+    .iconfont{
+      position: relative;
+      top: -2px;
+    }
+
+    .temp-btn-add{
+      color: $color;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      &:disabled{
+        background: $menu-font-color;
+      }
+    }
+  }
+  .add-form {
+    padding: 15px 10px;
+    border: 1px $border-color dashed;
+    border-radius: 4px;
+    position: relative;
+
+    .mt15{
+      margin-top: 15px;
+    }
+
+    .input-label{
+      display: inline-block;
+      width: 70px;
+      height: 26px;
+      line-height: 26px;
+      vertical-align: top;
+    }
+
+    .input-val{
+      display: inline-block;
+      width: 55%;
+      height: 26px;
+      line-height: 26px;
+    }
+
+    .input-text{
+      display: inline-block;
+      width: 55%;
+    }
+
+    .temp-add-btn {
+      position: absolute;
+      top: 8px;
+      right: 15px;
+
+      .iconfont{
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: 15px;
+      }
+    }
+  }
+}

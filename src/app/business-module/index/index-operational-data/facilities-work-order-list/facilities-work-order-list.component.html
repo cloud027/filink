@@ -1,0 +1,40 @@
+<!--工单列表-->
+<div class="work-order-list-panel">
+  <!--选择区域-->
+  <div class="app-logic-area">
+    <div class="logic-left">
+      <app-index-left-tab [tabList]="orderTabList" [active]="orderActive"
+                          (tabChange)="tabChange($event)" [AreaType]="'workOrderArea'"></app-index-left-tab>
+    </div>
+    <div class="logic-right">
+      <app-logical-area [appTenantPermission]="'1-1-3-1'" [hidden]="orderActive !== deviceTabListEnum.tabArea" (areaDataEvent)="areaDataChange($event)"
+                        [treeName]="'orderZTree'"></app-logical-area>
+      <app-tab-device
+        [firstClick]="firstClick"
+        [facilityEquipmentConfig]="orderTypeComponent"
+        [selectWorkOrderType] = "selectedWorkOrderType"
+        [setWorkOrderData]="workOrderTypeList"
+        [isRefresh]="true"
+        (workOrderTypeData)="workOrderTypeChange($event)"
+        [setWorkOrderStatusData]="workOrderStateList"
+        (workOrderStatusData)="workOrderStatusChange($event)"
+        [hidden]="orderActive === deviceTabListEnum.tabArea"></app-tab-device>
+    </div>
+
+  </div>
+  <app-index-order-table  *ngIf="showTable"
+                          [areaData]="areaData"
+                         [orderTypeData]="orderTypeRadioValue"
+                         [orderStateData]="orderStateCheckValue"
+                         [titleName]="titleName"
+                         [selectedWorkOrderType] ="selectedWorkOrderType"
+                         [defaultShowTable]="isShowTable"
+                         (selectWorkOrderTypeChange)="selectWorkOrderTypeChange($event)"></app-index-order-table>
+  <!--工单状态装换模板-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}">
+      <span [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+</div>

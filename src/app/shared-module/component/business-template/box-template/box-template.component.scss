@@ -1,0 +1,51 @@
+.box-template {
+  width: 900px;
+  height: 600px;
+  display: flex;
+  .search-info {
+    height: 100%;
+
+    .parameter-config {
+        label {
+          width: 60px;
+          line-height: 32px;
+        }
+        .parameter-item {
+          display: flex;
+          margin-bottom: 10px;
+        }
+
+        nz-select {
+          width: 145px;
+        }
+
+        nz-input-number {
+          width: 60px;
+        }
+        .name-input {
+          width: 145px;
+        }
+
+    }
+
+    .ranks {
+      span {
+        padding: 5px;
+      }
+    }
+
+    .search-item {
+      height: 257px;
+
+      button {
+        margin: 10px 0 0 0;
+      }
+    }
+  }
+
+  .template-info {
+    margin-left: 40px;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+}

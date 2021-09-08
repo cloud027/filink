@@ -1,0 +1,55 @@
+<div class="facility-view-title">{{language.facilityDetail}}</div>
+<div class="detail-height" >
+  <div class="view-item" [appTenantPermission]="'8-1'">
+    <!--基础设施详情-->
+    <app-infrastructure-details
+      [deviceId]="deviceId"
+      [deviceType]="deviceType"
+    ></app-infrastructure-details>
+  </div>
+  <div class="view-item" *ngIf="detailCodeShow.basicOperation" [appTenantPermission]="'8-2'">
+    <!--基本设施操作-->
+    <app-basic-operation [deviceId]="deviceId"
+                         [deviceType]="deviceType"
+                         [deviceName]="deviceName"
+                         [positionBase]="positionBase"
+                         [hasGuard]="detailCodeShow.hasGuard"
+                         [intelligentLabelDetail]="detailCodeShow.intelligentLabelDetail"
+                         [serialNum]="serialNum"></app-basic-operation>
+  </div>
+  <div class="view-item" *ngIf="detailCodeShow.mountEquipment" [appTenantPermission]="'8-3'">
+   <!--挂载设备详情-->
+    <app-mount-equipment [deviceId]="deviceId" [deviceType]="deviceType" [deviceStatus]= 'deviceStatus'></app-mount-equipment>
+  </div>
+  <div class="view-item" *ngIf="detailCodeShow.hasGuard">
+    <!--智能门禁详情-->
+    <app-intelligent-entrance-guard [deviceId]="deviceId" [serialNum]="serialNum"
+                                    [deviceType]="deviceType"></app-intelligent-entrance-guard>
+  </div>
+  <div class="view-item" *ngIf="detailCodeShow.intelligentLabelDetail">
+    <!--智能标签详情-->
+    <app-intelligent-label-detail [deviceId]="deviceId" [deviceType]="deviceType"></app-intelligent-label-detail>
+  </div>
+
+
+  <!--设施告警-->
+  <div class="view-item"  *ngIf="detailCodeShow.facilityAlarm" [appTenantPermission]="'8-4'">
+    <app-facility-alarm [deviceId]="deviceId"></app-facility-alarm>
+  </div>
+
+  <!--设施工单-->
+  <div class="view-item" *ngIf="detailCodeShow.facilityWorkOrder" [appTenantPermission]="'8-5'">
+    <app-facility-work-order [deviceId]="deviceId"></app-facility-work-order>
+  </div>
+
+  <!--设施的日志-->
+  <div class="view-item">
+    <app-facility-view-detail-log [showEquipmentLog]="detailCodeShow.equipmentLog" [showOperateLog]="detailCodeShow.operationLog" [deviceId]="deviceId"></app-facility-view-detail-log>
+  </div>
+
+
+  <!--设施图片-->
+  <div class="view-item" *ngIf="detailCodeShow.facilityImgView " [appTenantPermission]="'8-8'">
+    <app-facility-img-view [deviceId]="deviceId"></app-facility-img-view>
+  </div>
+</div>

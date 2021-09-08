@@ -1,0 +1,72 @@
+<!--一键呼叫计时器-->
+<nz-row class="call-operate-box" id="canvasBox">
+  <nz-row class="top">
+    <nz-col *ngIf="calltype" nzSpan="6" class="left">
+      <span style="margin-left: 20px">{{calltype}}</span>
+    </nz-col>
+    <!--呼叫才显示时间-->
+    <nz-col
+      *ngIf="calltype === this.language.callWorkbench.calltype1 || calltype === this.language.callWorkbench.calltype3"
+      nzSpan="18" class="right">
+      <i class="iconfont fiLink-time call-icon"></i>
+      <span>{{dateContent}}</span>
+    </nz-col>
+  </nz-row>
+  <nz-row class="canvas-box">
+    <canvas #micaudio width="500" height="200" id="micaudio"></canvas>
+  </nz-row>
+  <nz-row class="bottom">
+    <!-- 呼叫 -->
+    <span class="icon-box">
+            <i class="iconfont fiLink-filink-hujiao-icon $color"
+               nz-tooltip [nzTitle]="this.language.callWorkbench.calltype1"
+               nzPlacement="topLeft" (click)="onCallOperate(callOperateTypeEnum.CALL, callTableEnum.primaryCallKey)"
+               [appAccessPermission]="callTableEnum.primaryCallKey"></i>
+        </span>
+    <!-- 监听 -->
+    <span class="icon-box" *ngIf="equipmentModelType === callTypeEnum.interphone && showCancelListen !== true">
+            <i class="iconfont fiLink-filink-jianting-icon $color" nz-tooltip
+               [appAccessPermission]="callTableEnum.primaryListenKey"
+               [nzTitle]="this.language.callWorkbench.calltype2"
+               (click)="onCallOperate(callOperateTypeEnum.LISTEN, callTableEnum.primaryListenKey)"></i>
+        </span>
+    <!-- 取消监听 -->
+    <span class="icon-box" *ngIf="equipmentModelType === callTypeEnum.interphone && showCancelListen === true">
+              <i class="iconfont fiLink-filink-jieshujianting-icon error"
+                 nz-tooltip [nzTitle]="this.language.callWorkbench.calltype5"
+                 [appAccessPermission]="callTableEnum.primaryListenKey"
+                 (click)="onCallOperate(callOperateTypeEnum.STOP_LISTEN, callTableEnum.primaryListenKey)"></i>
+          </span>
+    <!-- 对讲 -->
+    <!--<span class="icon-box"  *ngIf="calltype === language.callWorkbench.callIncoming">
+            <i class="iconfont fiLink-filink-duijiang-icon $color" nz-tooltip
+               [nzTitle]="this.language.callWorkbench.calltype3"
+               [appAccessPermission]="callTableEnum.primaryCallKey"
+               (click)="onCallOperate(callOperateTypeEnum.ACCEPT_CALL,callTableEnum.primaryCallKey)"></i>
+        </span>-->
+    <!-- 强插 -->
+    <!-- <span class="icon-box">
+        <i class="iconfont fiLink-filink-qiangcha-icon $color" (click)="onCallOperate('qiangcha')"></i>
+    </span> -->
+    <!-- 拆讲 -->
+    <!-- <span class="icon-box">
+        <i class="iconfont fiLink-filink-chaijiang-icon $color" (click)="onCallOperate('chaijiang')"></i>
+    </span> -->
+    <!-- 密语 -->
+    <!-- <span class="icon-box">
+        <i class="iconfont fiLink-filink-miyu-icon $color" (click)="onCallOperate('miyu')"></i>
+    </span> -->
+    <!-- 转接 -->
+    <!-- <span class="icon-box">
+        <i class="iconfont fiLink-filink-zhuangjie-icon $color" (click)="onCallOperate('zhuangjie')"></i>
+    </span> -->
+    <!-- 挂断 -->
+    <span class="icon-box">
+            <i class="iconfont fiLink-filink-guaduan-icon $error-color"
+               nz-tooltip [nzTitle]="this.language.callWorkbench.calltype4"
+               [appAccessPermission]="callTableEnum.primaryHangUpKey"
+               (click)="onCallOperate(callOperateTypeEnum.STOP_CALL, callTableEnum.primaryHangUpKey)"></i>
+        </span>
+  </nz-row>
+</nz-row>
+

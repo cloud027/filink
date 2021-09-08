@@ -1,0 +1,55 @@
+@import "~src/app/style-module/config";
+
+.select-polymerization {
+  display: inline-table;
+  border: 1px $operational-button-frame-color solid;
+  border-radius: 3px;
+  cursor: pointer;
+
+  //icon颜色
+  .select-polymerization-show-color {
+    color: #36cfc9;
+  }
+
+  //聚合方式按钮
+  .select-polymerization-show {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    right: 10px;
+    bottom: 120px;
+    line-height: 35px;
+    background: white;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid $operational-button-frame-color;
+
+    &:hover {
+      border: 1px solid $operational-button-background-color;
+      box-shadow: 0 0 3px #36cfc9;
+    }
+  }
+
+  // 选择聚合方式
+  .polymerization-show {
+    display: flex;
+    flex-direction: row;
+    right: 54px;
+    bottom: 120px;
+    width: 255px;
+    height: 34px;
+    background: white;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+
+    &:hover {
+      z-index: 101;
+    }
+
+    .polymerization-show-left {
+      margin-left: 5px;
+    }
+  }
+
+}

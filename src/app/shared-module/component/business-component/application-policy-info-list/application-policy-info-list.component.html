@@ -1,0 +1,45 @@
+<!--分组列表-->
+<nz-modal nzWidth="80%"
+          [(nzVisible)]="policyVisible"
+          nzTitle="{{language.policyInfo}}"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="policyVisible=false">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="policyVisible=false">{{language.handleOk}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="policyVisible=false">
+      {{commonLanguage.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!--策略状态模版-->
+<ng-template #policyStatusTemp let-data="data">
+  <span>
+    {{data.strategyStatus | translate: policyStatusEnum: 'application.strategyStatus'}}
+  </span>
+</ng-template>
+<!--策略类型模版-->
+<ng-template #policyTypeTemp let-data="data">
+  <span>
+    {{data.strategyType | translate: policyTypeEnum: 'application.policyControl'}}
+  </span>
+</ng-template>
+<!--策略执行状态-->
+<ng-template #execStatusTemp let-data="data">
+  <span>
+    {{data.execStatus | translate: execStatusEnum: 'application.execStatus'}}
+  </span>
+</ng-template>
+<!--执行周期-->
+<ng-template #execTimeTemp let-data="data">
+  <span>
+    {{data.execType | translate: execTypeEnum: 'application.executionCycleType'}}
+  </span>
+</ng-template>

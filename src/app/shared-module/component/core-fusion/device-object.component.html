@@ -1,0 +1,64 @@
+<!-- 当在表单提交时 使用 -->
+<div *ngIf="_type === 'form'" class="screenRender {{ _type }}">
+  <span class="area-name" [title]="checkAlarmObject.name">{{checkAlarmObject.name}}</span>
+  <button [disabled]="disabled" class="open-button" (click)="refreshObjectData(this.queryConditionObj);display.objTable=true;">
+    <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+</div>
+<!-- 当在列表 筛选时 使用 -->
+<div *ngIf="_type === 'table'" class="screenRender {{ _type }}">
+  <span class="area-name" [title]="checkAlarmObject.name"
+        (click)="display.objTable=true;refreshObjectData();">
+  <span class="title" *ngIf="!checkAlarmObject.name">{{language.clickSelect}}</span>
+    {{checkAlarmObject.name}}</span>
+</div>
+
+<!-- icon-l icon-search  -->
+<nz-modal
+  class="alarm-filtration"
+  [(nzVisible)]="display.objTable"
+  [nzTitle]="title"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  [nzWidth]="820"
+  [nzStyle]="{top: '70px'}"
+  (nzOnCancel)="closeObj()">
+  <ng-template #modalTitle>
+    {{language.alarmobject}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table #xCTableComp
+              [dataSet]="_dataSetObject"
+              [pageBean]="pageBeanObject"
+              [tableConfig]="tableConfigObject"
+              (pageChange)="pageObjectChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="objConfirm()">{{language.okText}}</button>
+    <button nz-button nzType="default" (click)="closeObj()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+<!-- 设施弹框 状态 -->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i class="icon-fiLink-l iconfont"
+       [class.fiLink-normal]="data._deviceStatus==='2'"
+       [class.facility-normal-c]="data._deviceStatus==='2'"
+       [class.fiLink-alarm]="data._deviceStatus==='3'"
+       [class.facility-alarm-c]="data._deviceStatus==='3'"
+       [class.fiLink-unknown]="data._deviceStatus==='1'"
+       [class.facility-unknown-c]="data._deviceStatus==='1'"
+       [class.fiLink-serious]="data._deviceStatus==='4'"
+       [class.facility-lost-c]="data._deviceStatus==='4'"
+       [class.fiLink-lost]="data._deviceStatus==='5'"
+       [class.facility-offline-c]="data._deviceStatus==='5'"
+    ></i>
+    <span class="status-text" [title]="data['deviceStatus']">{{data['deviceStatus']}}</span>
+  </div>
+</ng-template>
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text" [title]="data['deviceType']">{{data['deviceType']}}</span>
+</ng-template>

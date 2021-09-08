@@ -1,0 +1,158 @@
+@import "../../../../style-module/config";
+
+$left-panel-width: 410px;
+//地图部分最外层
+#equipment-map-box {
+  width: 100%;
+  height: 300px;
+  position: relative;
+
+  .button-box {
+    position: absolute;
+    bottom: 120px;
+    right: 10px;
+    .zoom-control-item {
+      //position: absolute;
+      //top:0;
+      //right: 0;
+      position: relative;
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      text-align: center;
+      line-height: 34px;
+      background-color: $bg-c-w;
+
+      &:hover {
+        border: 1px solid $operational-button-background-color;
+        box-shadow: 0 0 3px $index-operational-background-color rgba(0, 0, 0, 0.1);
+      }
+
+      .map-right-button {
+        position: absolute;
+        top:0;
+        right: 40px;
+        z-index: 10;
+        cursor: pointer;
+        background-color: $bg-c-w;
+
+        .button-ul {
+          text-align: center;
+          width: 102px;
+          font-size: 14px;
+          line-height: 1.5;
+          .button-li {
+            padding: 5px 10px;
+            height: 34px;
+            color: $page-font-color ;
+          }
+
+          .button-li:hover {
+            cursor: pointer;
+          }
+
+          .button-icon-right {
+            margin-right: 10px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .map-icon-container {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    bottom: 32px;
+    left: 50%;
+
+    .up-icon {
+      transform: translateX(-50%) rotate(90deg);
+      cursor: pointer;
+    }
+
+    .down-icon {
+      transform: translateX(-50%) rotate(270deg);
+      cursor: pointer;
+    }
+  }
+
+
+  // 地图外层样式
+  #equipment-map-content {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 10px);
+  }
+  // 拖拽触发处
+  #drag-start {
+    bottom: 0;
+    width: 100%;
+    height: 10px;
+    cursor: row-resize;
+  }
+  // 左侧我的关注样式
+  .left-panel {
+    position: absolute;
+    left: 10px;
+    top: 46px;
+    font-size: 12px;
+    //z-index: 999;
+
+    // 运维数据tap
+    .left-panel-tabs {
+      width: $left-panel-width;
+      background-color: white;
+      border-radius: 4px;
+      padding-left: 10px;
+
+      .left-panel-tab {
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        text-align: center;
+        line-height: 22px;
+        height: 30px;
+
+        .icon-type {
+          width: 22px;
+          height: 22px;
+          float: left;
+          margin: 4px 5px 0 5px;
+          color: #ffffff;
+          border-radius: 50%;
+          background-color: $index-operational-background-color;
+        }
+
+        .text-content {
+          float: left;
+          color: $index-window-color;
+          margin-top: 4px;
+          line-height: 22px;
+        }
+      }
+
+      .tab-selected {
+        .text-content {
+          color: $index-operational-background-color;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+.mar-t-6{
+  margin-top: 6px;
+}
+.progress-bar {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  top: 49%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 5px 15px 5px 10px;
+}

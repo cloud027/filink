@@ -1,0 +1,27 @@
+<nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+  <div class="xc-swiper-container" [class.swiper-hidden]="!slideShow" [class.swiper-show]="slideShow">
+    <i nz-icon nzType="double-left" nzTheme="outline" (click)="toggleSlide()"></i>
+    <div class="swiper-container slider-container" (mouseenter)="mouseover()"
+         (mouseleave)="mouseout()"
+    >
+      <div class="swiper-wrapper" [hidden]="pageLoading">
+        <div class="swiper-slide slide-item" *ngFor="let slide of sliderConfig" (click)="clickSlide(slide)">
+          <div class="item-container">
+            <div class="icon-c" [ngStyle]="{color: slide.color ? slide.color : ''}"><i class="iconfont facility-icon " [ngClass]="slide.iconClass"></i></div>
+            <div class="text-c">
+              <p class="number" [ngClass]="slide.textClass" [ngStyle]="{color: slide.color ? slide.color : ''}">{{slide.sum}}</p>
+              <p class="text text-wrap" [title]="slide.label" >{{slide.label}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-prev" style="background: none" [hidden]="isHidden||sliderConfig.length===0">
+        <i class="iconfont fiLink-pic-view-last" style="color: #36cfc9;font-size: 26px"></i>
+      </div>
+      <div class="swiper-button-next" style="background: none" [hidden]="isHidden||sliderConfig.length===0">
+        <i class="iconfont fiLink-pic-view-next" style="color: #36cfc9;font-size: 26px"></i>
+      </div>
+    </div>
+  </div>
+</nz-spin>
+

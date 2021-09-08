@@ -1,0 +1,45 @@
+@import "../../../../style-module/config";
+.product-equipment-template {
+  // 标题样式
+  .template-title {
+    margin-left: 10px;
+    padding-left: 18px;
+    font-size: 16px;
+    font-weight: 900;
+    color: $title-color;
+    border-left: 2px solid $detail-title-color;
+  }
+  .template-tabSet{
+    margin: 16px;
+  }
+  .no-config {
+    height: 100px;
+    line-height: 80px;
+    padding-left: 20px;
+  }
+}
+.config-s {
+  position: relative;
+  .config-item-container {
+    margin: 20px 20px;
+    border-bottom: 1px solid $separation-color;
+
+    .form-item-title {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}
+
+.config-item-title {
+  display: inline-block;
+  padding: 0 3px;
+  height: 22px;
+  font-size: 16px;
+  font-weight: bold;
+  color: $bg-c-w;
+  background: $color;
+}
+.btn-box{
+  margin-left: 20px;
+}

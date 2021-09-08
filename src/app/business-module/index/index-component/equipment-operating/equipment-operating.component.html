@@ -1,0 +1,60 @@
+<div class="operating-body">
+  <div class="information-screen" *ngIf="isShowScreen">
+    <!--信息屏-->
+    <screen-program-broadcast
+      [operatePermissionEnum]="indexInformationScreenOperatePermission"
+      [equipmentId]="isData.equipmentId"
+      [equipmentModel]="isData.equipmentModel"
+      [lightValue]="lightValue"
+      [volumeValue]="volumeValue"
+    ></screen-program-broadcast>
+  </div>
+  <div *ngIf="isShowCamera">
+    <div class="camera">
+      <!--摄像头-->
+      <app-split-screen
+        #splitScreen
+        [equipmentId]="isData.equipmentId"
+        [whereUsed]="'homePage'"
+        [isWorkbench]="false">
+      </app-split-screen>
+    </div>
+    <div class="camera-operating">
+      <!--摄像头操作-->
+      <app-camera-settings
+        [isWorkbench]="false"
+        [equipmentId]="isData.equipmentId"
+        [channelId]="splitScreen.channelId"
+        [params]="splitScreen.params"
+        [lRealHandle]="splitScreen.lRealHandle"></app-camera-settings>
+    </div>
+  </div>
+  <div *ngIf="isShowCall">
+    <app-call-time-meter
+      [equipmentId]="isData.equipmentId"
+      [sequenceId]="equipmentData.sequenceId"
+      [equipmentModelType]="equipmentData.equipmentModelType"
+      [boxWidth]="boxWidth"
+    ></app-call-time-meter>
+  </div>
+  <div *ngIf = 'isShowBroadcast'>
+    <app-broadcast-operating
+      [equipmentId]="isData.equipmentId"
+      [equipmentName]="isData.name"
+      [sequenceId]="equipmentData.sequenceId"
+    ></app-broadcast-operating>
+  </div>
+  <!--基础操作-->
+  <div class="basicOperation">
+    <ng-container #elseTemplate *ngFor="let item of operationData">
+      <xc-dynamic-render [componentName]="item.componentName"
+                         [componentInputs]="item.data">
+      </xc-dynamic-render>
+    </ng-container>
+  </div>
+
+  <div *ngIf="this.noData" class="no-data">
+    {{indexLanguage.noOperation}}
+  </div>
+
+</div>

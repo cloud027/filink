@@ -1,0 +1,424 @@
+<div class="alarm-confirm-detail">
+  <!--  title标题  -->
+  <div class="table-common-title"><span>{{pageTitle}}</span></div>
+  <!--基础信息-->
+  <div class="order-main" nz-row nzGutter="10">
+    <div [class]="isFinished ? 'basic-warp-finished' : 'basic-warp-unfinished'">
+      <!-- 第一列-->
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box" [ngClass]="{'gutter-box': true, 'is-finish': isFinished}">
+          <div class="order-text">
+            <span class="order-title hidden" [title]="alarmOrderData.title">{{alarmOrderData.title}}</span>
+            <span class="status" [ngClass]="alarmOrderData.status" >
+              <i class="status-color" [ngClass]="alarmOrderData.statusClass"></i>
+              {{inspectionLanguage[alarmOrderData.status]}}
+            </span>
+            <span *ngIf="alarmOrderData.autoDispatch === '1'" class="auto-dis">{{inspectionLanguage.autoDispatchStr}}</span>
+          </div>
+          <!--创建时间-->
+          <div>
+             <span class="alarm-font time-comment">
+              {{inspectionLanguage.creationTime}}：{{alarmOrderData.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+            </span>
+          </div>
+          <!--责任人-->
+          <div class="responsible-box">
+            <span class="fontsize-fourteen">
+              <i nz-tooltip  [nzTitle]="inspectionLanguage.responsible"
+                 class="iconfont fiLink-user-menu icon-span icon-span-color-01"></i>{{alarmOrderData.assignName}}
+            </span>
+          </div>
+          <!--责任单位-->
+          <div>
+            <span class="comment-text-property fontsize-fourteen" [title]="alarmOrderData.accountabilityDeptName">
+              <i nz-tooltip  [nzTitle]="inspectionLanguage.responsibleUnit"
+                 class="iconfont fiLink-departments icon-span icon-span-color-03"></i>{{alarmOrderData.accountabilityDeptName}}
+            </span>
+          </div>
+          <!--工单评价-->
+          <div *ngIf="isFinished" class="image-box">
+            <div class="image-evaluate" [ngClass]="alarmOrderData.starClass"></div>
+            <div>
+              <span class="time-comment alarm-count comment-text-property" [title]="alarmOrderData.evaluateDetailInfo">
+                {{alarmOrderData.evaluateDetailInfo}}
+              </span>
+            </div>
+          </div>
+          <!--剩余天数-->
+          <div *ngIf="!isFinished" class="image-days">
+            <div class="image-position" [ngClass]="alarmOrderData.lastDayClass">
+              <span class="remain-days-center fontsize-sixteen">{{alarmOrderData.lastDays}}</span>
+            </div>
+            <div class="image-days-text">{{inspectionLanguage.daysRemaining}}</div>
+          </div>
+        </div>
+        <div *ngIf="isFinished" class="reason-order">
+          <div class="line"></div>
+          <!-- 待确定原因  -->
+          <div class="finish-reason">
+            <div class="label-width">{{inspectionLanguage.confirmReason}}：</div>
+            <div class="operate-text value-width hidden"
+                 [title]= "alarmOrderData.uncertainReason">{{alarmOrderData.uncertainReason}}
+            </div>
+          </div>
+          <!-- 实际告警原因  -->
+          <div class="finish-reason">
+            <div class="label-width">{{inspectionLanguage.realAlarmReason}}：</div>
+            <div class="operate-text value-width hidden"
+                 [title]= "alarmOrderData.realityAlarmReason">{{alarmOrderData.realityAlarmReason}}
+            </div>
+          </div>
+          <!-- 处理建议  -->
+          <div class="finish-reason">
+            <div class="label-width">{{workOrderLanguage.handleSuggestion}}：</div>
+            <div class="operate-text value-width hidden"
+                 [title]= "alarmOrderData.maintenanceAdvice">{{alarmOrderData.maintenanceAdvice}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 第二列-->
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">
+          <!--设施区域-->
+          <div>
+            <span class="detail-row-top column-top1 comment-text-property" [title] = "alarmOrderData.deviceAreaName">
+              {{alarmOrderData.deviceAreaName}}
+            </span>
+            <span class="alarm-row" >{{workOrderLanguage.relevancyAlarm}}:</span>
+            <span class="alarm-row alarm-name" >{{alarmOrderData.refAlarmName}}</span>
+          </div>
+          <!--设施名称-->
+          <div class="device-box">
+            <span>
+              <i nz-tooltip [nzTitle]="alarmOrderData.typeName"
+                 class="iconfont icon-span" [ngClass]="alarmOrderData.picture"></i>
+              {{alarmOrderData.typeName}}&nbsp;&nbsp;&nbsp;{{alarmOrderData.deviceName}}
+            </span>
+          </div>
+          <!-- 设备名称  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width"><span class="comment-margin-bottom-text-color">{{inspectionLanguage.equipmentName}}：</span></div>
+            <div nz-col nzSpan="18" class="hidden value-width">
+              <span *ngFor="let equipment of alarmOrderData.equipmentList">
+                <i nz-tooltip  [nzTitle]="equipment.typeName" class="iconfont icon-span" [ngClass]="equipment.picture"></i>{{equipment.name}}
+              </span>
+            </div>
+          </div>
+          <!-- 车辆信息-->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{workOrderLanguage.carInfo}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="hidden value-width">
+              <span class="comment-text-property" [title]="alarmOrderData.carName">{{alarmOrderData.carName}}</span>
+            </div>
+          </div>
+          <!-- 物料信息-->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.materielInfo}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="hidden value-width">
+              <span class="comment-text-property" [title]="alarmOrderData.materielName">{{alarmOrderData.materielName}}</span>
+            </div>
+          </div>
+          <!-- 费用信息-->
+          <div nz-row class="comment-margin-bottom" *ngIf="isFinished">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{workOrderLanguage.costInformation}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="hidden value-width">
+              <span class="comment-text-property" [title]="alarmOrderData.costInformation">{{alarmOrderData.cost}}</span>
+            </div>
+          </div>
+          <!-- 备注-->
+          <div nz-row class="comment-margin-bottom" *ngIf="!isFinished">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{workOrderLanguage.remark}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="hidden value-width">
+              <span [title]="alarmOrderData.remark">{{alarmOrderData.remark}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 第三列-->
+      <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box subjoin" [ngClass]="{'gutter-box subjoin': true, 'finishRow': isFinished, 'unFinishRow': !isFinished}">
+        <div class="time-box">
+          <!--创建时间-->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width"><span class="comment-margin-bottom-text-color">{{inspectionLanguage.startTime}}：</span></div>
+            <div nz-col nzSpan="18" class="value-width">
+              <span class="operate-text" [title]="alarmOrderData.createTime | date: 'yyyy-MM-dd HH:mm:ss'">
+                <i class="iconfont fiLink-time icon-span icon-span-color-03">
+                </i>{{alarmOrderData.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+              </span>
+            </div>
+          </div>
+          <!-- 期望完工时间-->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color" >{{workOrderLanguage.expectedCompleteTime}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width">
+              <span class="operate-text" [title]="alarmOrderData.expectedCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'">
+                <i class="iconfont fiLink-time icon-span icon-span-color-03">
+                </i>{{alarmOrderData.expectedCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+              </span>
+            </div>
+          </div>
+          <!--完工时间-->
+          <div nz-row *ngIf="isFinished" class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color" >{{workOrderLanguage.realCompleteTime}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width">
+              <span class="operate-text" [title]="alarmOrderData.realityCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'">
+                <i class="iconfont fiLink-time icon-span icon-span-color-03">
+                </i>{{alarmOrderData.realityCompletedTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="reason-box">
+          <!-- 退单原因  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.retreatSingleReason}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width hidden">
+              <span class="operate-text line-limit-length comment-text-property"
+                    [title]= "alarmOrderData.concatSingleBackReason">{{alarmOrderData.concatSingleBackReason}}</span>
+            </div>
+          </div>
+          <!-- 转派原因 -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.reasonsForTransfer}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width hidden">
+              <span class="operate-text line-limit-length comment-text-property"
+                    [title]= "alarmOrderData.turnReason">{{alarmOrderData.turnReason}}</span>
+            </div>
+          </div>
+          <!-- 待确定原因  -->
+          <div nz-row class="comment-margin-bottom" *ngIf="!isFinished">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.confirmReason}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width hidden">
+              <span class="operate-text line-limit-length comment-text-property"
+                    [title]= "alarmOrderData.uncertainReason">{{alarmOrderData.uncertainReason}}</span>
+            </div>
+          </div>
+          <!-- 实际告警原因  -->
+          <div nz-row class="comment-margin-bottom" *ngIf="!isFinished">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.realAlarmReason}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width hidden">
+              <span class="operate-text line-limit-length comment-text-property"
+                    [title]= "alarmOrderData.realityAlarmReason">{{alarmOrderData.realityAlarmReason}}</span>
+            </div>
+          </div>
+          <!-- 备注-->
+          <div nz-row class="comment-margin-bottom" *ngIf="isFinished">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{workOrderLanguage.remark}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width hidden">
+              <span class="operate-text line-limit-length comment-text-property"
+                    [title]="alarmOrderData.remark">{{alarmOrderData.remark}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <!--  关联告警  -->
+  <div nz-row class="margin-bottom-row">
+    <div class="gutter-box1 block-pad">
+      <!--  关联告警title  -->
+      <div>
+        <span class="detail-row-top column-top">{{workOrderLanguage.refAlarm}}</span>
+        <div class="link-top"></div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <!--  关联告警状态  -->
+          <div class="alarm-box">
+            <span class="alarm-font">{{resultAlarmData.alarmName}}</span>
+            <span class="alarm-span" [ngClass]="alarmLevelColor">{{alarmLevelStatus}}</span>
+            <span class="alarm-span" [ngClass]="alarmCleanColor" >{{alarmCleanStatus}}</span>
+            <span class="alarm-span" [ngClass]="alarmConfirmColor" >{{alarmConfirmStatus}}</span>
+          </div>
+          <!--  关联告警频次  -->
+          <div class="circle">
+            <div class="circle-child" [title]="resultAlarmData.alarmHappenCount">
+              <span [ngStyle]="{fontSize: resultAlarmData.fontSize + 'px'}">{{resultAlarmData.alarmHappenCount}}</span>
+            </div>
+            <div>
+              <span class="time-comment alarm-count none-idea">{{alarmLanguage.alarmHappenCount}}</span>
+            </div>
+          </div>
+          <div>
+            <span class="alarm-font time-comment">{{alarmLanguage.alarmBeginTime}}:{{resultAlarmData.alarmBeginTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+          </div>
+          <!--  关联告警类别  -->
+          <div nz-row class = "cate-margin comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{alarmLanguage.AlarmType}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width"><span class="operate-text none-idea">{{resultAlarmData.alarmClassificationName}}</span></div>
+          </div>
+          <!--  关联告警持续时间  -->
+          <div nz-row class = "comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmContinousTime}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width"><span class="operate-text ">{{resultAlarmData.alarmContinuedTimeString}}</span></div>
+          </div>
+          <!--  关联告警单位  -->
+          <div class = "cate-margin">
+            <span class="operate-text comment-text-property" [title]="resultAlarmData.responsibleDepartment">
+              <i nz-tooltip  [nzTitle]="inspectionLanguage.responsibleUnit"
+                 class="iconfont fiLink-departments icon-span icon-span-color-03"></i>{{resultAlarmData.responsibleDepartment}}
+            </span>
+          </div>
+        </div>
+        <!--  关联告警设施/设备  -->
+        <div nz-col nzSpan="8" class="block-pad">
+          <div>
+            <span class="detail-row-top column-top1 comment-text-property"
+                  [title] = "resultAlarmData.areaName">{{resultAlarmData.areaName}}</span>
+            <span class="alarm-row">{{resultAlarmData.alarmDeviceName}}</span>
+            <span class="alarm-row icon-span">
+              <i nz-tooltip [nzTitle]="resultAlarmData.deviceTypeName" class="iconfont icon-span"
+                 [ngClass]="resultAlarmData.deviceTypeIcon"></i>
+              <span class="text">{{resultAlarmData.deviceTypeName}}</span>
+            </span>
+          </div>
+          <!--  关联告警设施/设备的地址  -->
+          <div class="device-margin">
+            <span class="font-color-content">
+              <i nz-tooltip [nzTitle]="inspectionLanguage.address"
+                 class="iconfont icon-fiLink fiLink-filink-location-icon icon-span icon-span-color-04"></i>{{resultAlarmData.address}}
+            </span>
+          </div>
+          <!--  关联告警对象  -->
+          <div class="cate-margin cate-margin-bottom">
+            <span>{{alarmLanguage.alarmobject}}: {{resultAlarmData.alarmObject}}</span>
+          </div>
+          <!--  关联告警设备  -->
+          <div nz-row class="comment-margin-bottom none-idea">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{inspectionLanguage.equipmentType}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width">
+              <span class="operate-text" *ngFor="let equipment of refEquipmentList">
+                <i nz-tooltip [nzTitle]="equipment.typeName" class="iconfont icon-span" [ngClass]="equipment.picture"></i>{{equipment.name}}
+              </span>
+            </div>
+          </div>
+          <!--  关联告警设施/设备的确认用户  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmConfirmPeopleNickname}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width"><span class="operate-text none-idea">{{resultAlarmData.alarmConfirmPeopleNickname}}</span></div>
+          </div>
+          <!--  关联告警设施/设备的清除用户  -->
+          <div nz-row class="comment-margin-bottom">
+            <div nz-col nzSpan="6" class="label-width">
+              <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmCleanPeopleNickname}}：</span>
+            </div>
+            <div nz-col nzSpan="18" class="value-width"><span class="none-idea">{{resultAlarmData.alarmCleanPeopleNickname}}</span></div>
+          </div>
+        </div>
+        <!--时间和附件信息-->
+        <div nz-col nzSpan="8" class="block-pad">
+          <div class="equal-height">
+            <!--  关联告警最近发生时间  -->
+            <div nz-row class="comment-margin-bottom">
+              <div nz-col nzSpan="6" class="label-width"><span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmNearTime}}：</span></div>
+              <div nz-col nzSpan="17" class="value-width">
+                <span class="operate-text ">
+                  <i class="iconfont fiLink-time icon-span icon-span-color-03">
+                  </i>{{resultAlarmData.alarmNearTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </span>
+              </div>
+            </div>
+            <!--  关联告警最近确认时间  -->
+            <div nz-row class="comment-margin-bottom">
+              <div nz-col nzSpan="6" class="label-width">
+                <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmConfirmTime}}：</span>
+              </div>
+              <div nz-col nzSpan="17" class="value-width">
+                <span class="operate-text">
+                  <i class="iconfont fiLink-time icon-span icon-span-color-03"></i>{{resultAlarmData.alarmConfirmTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </span>
+              </div>
+            </div>
+            <!--  关联告警最近清除时间  -->
+            <div nz-row class="comment-margin-bottom">
+              <div nz-col nzSpan="6" class="label-width">
+                <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmCleanTime}}：</span>
+              </div>
+              <div nz-col nzSpan="17" class="value-width">
+                <span class="operate-text ">
+                  <i class="iconfont fiLink-time icon-span icon-span-color-03"></i>{{resultAlarmData.alarmCleanTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="equal-height pad-top">
+            <!--  关联告警附加信息  -->
+            <div nz-row class="comment-margin-bottom none-idea">
+              <div nz-col nzSpan="6" class="label-width">
+                <span class="comment-margin-bottom-text-color">{{alarmLanguage.alarmAdditionalInformation}}：</span>
+              </div>
+              <div nz-col nzSpan="17" class="value-width">
+                <span class="operate-text line-limit-length comment-text-property"
+                      [title]="resultAlarmData.extraMsg">{{resultAlarmData.extraMsg}}</span>
+              </div>
+            </div>
+            <!--  关联告警处理建议  -->
+            <div nz-row class="comment-margin-bottom">
+              <div nz-col nzSpan="6" class="label-width">
+                <span class="comment-margin-bottom-text-color none-idea">{{alarmLanguage.alarmTreatmentRecommendations}}：</span>
+              </div>
+              <div nz-col nzSpan="17" class="value-width">
+                <span class="operate-text line-limit-length comment-text-property"
+                      [title]="resultAlarmData.alarmProcessing">{{resultAlarmData.alarmProcessing}}</span>
+              </div>
+            </div>
+            <!--  关联告警备注  -->
+            <div nz-row class="comment-margin-bottom">
+              <div nz-col nzSpan="6" class="label-width">
+                <span class="comment-margin-bottom-text-color">{{alarmLanguage.remark}}：</span>
+              </div>
+              <div nz-col nzSpan="17" class="value-width none-idea">
+                <span class="operate-text line-limit-length comment-text-property remark" [title]="resultAlarmData.remark">{{resultAlarmData.remark}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  运维建议  -->
+  <div nz-row class="margin-bottom-row">
+    <div class="gutter-box2 block-pad">
+      <div>
+        <span class="detail-row-top column-top">{{workOrderLanguage.suggest}}</span>
+        <div class="link-top"></div>
+      </div>
+      <div class="detail-suggest">
+        <app-trouble-suggest></app-trouble-suggest>
+      </div>
+    </div>
+  </div>
+</div>

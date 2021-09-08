@@ -1,0 +1,91 @@
+@import "../../../../../style-module/config";
+.workforce-detaile-wrap {
+  .schedule-add {
+    display: flex;
+    margin-top: 20px;
+    border-top: 1px solid $border-color;
+    .xc-steps {
+      padding-top: 80px;
+      width: 186px;
+      border-right: 1px solid $border-color;
+    }
+
+    .form-wrap {
+      width: calc(100% - 186px);
+      .basic-info-wrap {
+        padding-left: 20px;
+      }
+      .input-selector {
+        width: 300px;
+      }
+      .open-button {
+        position: absolute;
+        top: 3px;
+        border: none;
+        outline: none;
+        background: $menu-font-color;
+      }
+
+      .schedule-basic-info-wrap {
+        padding: 40px;
+        .schedule-title {
+          font-size: 14px;
+          color: $title-color;
+          font-weight: bold;
+          margin-bottom: 16px;
+        }
+        .schedule-basic-info-content {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          .content-box {
+            width: 32%;
+            padding: 30px 16px;
+            font-size: 14px;
+            border: 1px solid $border-color;
+            .item-container {
+              margin-bottom: 20px;
+              .item-label {
+                color: $detail-text-color;
+                margin-right: 20px;
+              }
+              .item-content {
+                display: inline-block;
+                width: 62%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: pre;
+                vertical-align: middle;
+                color: $title-color;
+                .clock-circle {
+                  color: $communication-model-color;
+                  margin-right: 5px;
+                  font-size: 14px;
+                  vertical-align: middle;
+                }
+                .item-content-text {
+                  vertical-align: middle;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .schedule-person-title {
+        padding-left: 40px;
+        font-size: 14px;
+        color: $title-color;
+        font-weight: bold;
+      }
+
+      .footer-btn {
+        padding-left: 30px;
+        padding-bottom: 20px;
+        .link-button {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="project-detail">
+    <span class="page-title">
+      {{ pageTitle }}
+    </span>
+</div>
+<!--项目编辑基本信息表单-->
+<div class="basic-info-content">
+  <xc-form [column]="formColumn"
+           (formInstance)="formInstance($event)">
+  </xc-form>
+</div>
+
+<!--表单按钮-->
+<div class="button-container">
+  <button class="link-button margin-right20" nz-button nzType="primary"
+          [nzLoading]="isSaveLoading"
+          [disabled]="!isDisabled"
+          (click)="onSaveBasicInfo()">
+    {{commonLanguage.confirm}}
+  </button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{commonLanguage.cancel}}</button>
+</div>
+

@@ -1,0 +1,458 @@
+@import '../../share/style/common-picture.scss';
+
+.alarm-confirm-detail {
+  background-color: $bg-c;
+  .order-main{
+    margin-top: 5px;
+  }
+  .label-width{
+    width: 125px;
+  }
+  .value-width{
+    height: 32px;
+    width: calc(100% - 126px);
+  }
+  .alarm-confirm-title {
+    font-weight: 900;
+    color: $title-color;
+    padding-left: 16px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    background-color: $bg-c-w;
+  }
+  .basic-warp-unfinished {
+    .gutter-row{
+      height: 250px;
+      .task-pro {
+        margin-top: 10px;
+      }
+      .device-box{
+        margin: 10px 0 30px 0;
+      }
+      .time-box{
+        height: 85px;
+      }
+    }
+  }
+  .basic-warp-finished {
+    .gutter-row{
+      height: 340px;
+      .device-box{
+        margin: 10px 0 122px 0;
+      }
+      .time-box{
+        height: 125px;
+      }
+      .responsible-box{
+        margin: 58px 0 10px 0;
+      }
+      .is-finish{
+        height: 210px;
+      }
+      .reason-order{
+        height: 130px;
+        background: $bg-c-w;
+        .line{
+          height: 10px;
+          background: $bg-c;
+          margin-bottom: 13px;
+        }
+        .finish-reason{
+          display: flex;
+          height: 32px;
+          line-height: 32px;
+          padding: 0 16px;
+          .label-width{
+            width: 110px;
+            color: $detail-text-color;
+          }
+          .operate-text{
+            height: 32px;
+            width: calc(100% - 110px);
+          }
+        }
+      }
+    }
+  }
+  .gutter-row {
+    .gutter-box {
+      background: $menu-font-color;
+      padding: 20px 16px;
+      height: 100%;
+      position: relative;
+      .order-text{
+        display: flex;
+        .order-title {
+          display: inline-block;
+          max-width: calc(100% - 160px);
+          font-size: 16px;
+          font-weight: 600;
+          margin-right: 16px;
+        }
+        .status {
+          display: inline-block;
+          height: 20px;
+          line-height: 20px;
+          color: $menu-font-color;
+          padding: 0 5px;
+          border-radius: 2px;
+          font-size: 12px;
+          position: relative;
+          top: 2px;
+          &.turnProcess{
+            background: $statistics-completed;
+          }
+          .status-color {
+            color: $menu-font-color;
+            font-weight: bold;
+            position: relative;
+            top: -1px;
+          }
+        }
+        .auto-dis{
+          display: inline-block;
+          height: 20px;
+          line-height: 20px;
+          color: $menu-font-color;
+          background: $dispatch;
+          margin-left: 10px;
+          padding: 0 5px;
+          border-radius: 2px;
+          position: relative;
+          top: 2px;
+          font-size: 12px;
+        }
+      }
+      &.subjoin{
+        background: transparent;
+        padding: 0;
+
+        .time-box{
+          background: $menu-font-color;
+          padding: 15px 16px;
+        }
+
+        .reason-box{
+          margin-top: 10px;
+          background: $menu-font-color;
+          padding: 20px 16px;
+          height: 155px;
+        }
+      }
+      &.finishRow{
+        .time-box, .reason-box{
+          height: 165px;
+        }
+      }
+      &.unFinishRow{
+        .time-box{
+          padding: 11px 16px;
+        }
+        .reason-box{
+          padding: 15px 16px;
+        }
+      }
+    }
+    .responsible-box{
+      margin: 97px 0 10px 0;
+    }
+    .car-warp{
+      margin-top: 10px;
+    }
+  }
+  .alarm-font{
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .detail-row-top{
+    display: inline-block;
+    color: #333;
+    font-size: $primary-title-size;
+    max-width: 150px;
+    vertical-align: top;
+    &.column-top{
+      font-weight: 900;
+    }
+    &.column-top1{
+      font-weight: 400;
+    }
+  }
+  .alarm-row {
+    padding-left: 15px;
+    color: $title-color;
+    line-height: 24px;
+    font-size: $page-font-size;
+    font-weight: 400;
+    &.alarm-name {
+      color: $color;
+    }
+  }
+
+  .comment-margin-bottom{
+    height: 32px;
+    line-height: 32px;
+    .comment-margin-bottom-text-color{
+      color: $sp-icon-color-7;
+    }
+    .hidden{
+      height: 32px;
+    }
+  }
+  .block-pad{
+    padding: 15px 0 0 16px;
+    position: relative;
+  }
+  .link-top {
+    width: 100%;
+    height: 2px;
+    border-top: solid $bg-c 2px;
+    margin-top: 15px;
+  }
+  .cate-margin{
+    margin-top: 38px;
+    &.cate-margin-bottom{
+      margin-bottom: 10px;
+    }
+  }
+  .device-margin{
+    margin-top: 10px;
+    height: 32px;
+  }
+  .equal-height{
+    height: 110px;
+    &.pad-top{
+      padding: 27px 0 0 0;
+    }
+  }
+  .row-progress{
+    display: inline-block;
+    width: 65%;
+    color: $sp-icon-color-7;
+  }
+  .pro-label{
+    color: $sp-icon-color-7;
+  }
+  // 时间样式
+  .time-comment{
+    padding: 5px 0;
+    display: inline-block;
+    color: $sp-icon-color-7;
+    font-size: 14px;
+    &.time-comment-width{
+      width: 120px;
+    }
+    &.alarm-count{
+      width: 100%;
+      margin-top: 15px;
+      text-align: center;
+    }
+  }
+  // 设施/设备icon
+  .icon-span{
+    margin-right: 5px;
+    font-weight: bold;
+    &.icon-span-color-01{
+      color: $sp-icon-color-5;
+    }
+    &.icon-span-color-02{
+      color: $frequency-color;
+    }
+    &.icon-span-color-03{
+      color: $sp-icon-color-3;
+    }
+    &.icon-span-color-04{
+      .iconfont {
+        color: $color;
+      }
+    }
+    &.icon-span-color-05{
+      color: $color;
+    }
+    .text{
+      font-weight: normal;
+    }
+  }
+  // 文字过长处理
+  .comment-text-property{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-spacing: normal;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;
+  }
+  .fontsize-fourteen{
+    display: inline-block;
+    width: 67%;
+    font-size: $page-font-size;
+  }
+  // 剩余天数
+  .image-days{
+    position: absolute;
+    width: 130px;
+    height: 170px;
+    right: 10px;
+    top: 26px;
+    color: $sp-icon-color-7;
+    text-align: center;
+    padding-top: 56px;
+    .image-position{
+      margin: 0 auto;
+      width: 76px;
+      height: 76px;
+      .remain-days-center{
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        line-height: 106px;
+        text-align: center;
+        color: $menu-font-color;
+      }
+      // 剩余天数小于1的状态
+      &.lessThanOneDays {
+        background: url($progress2) no-repeat;
+      }
+      // 剩余天数小于1～3的状态
+      &.lessThanThreeDays {
+        background: url($progress3) no-repeat;
+      }
+      // 剩余天数大于3的状态
+      &.moreThreeDays {
+        background: url($progress1) no-repeat;}
+    }
+    .image-days-text{
+      margin-top: 15px;
+      font-size: $page-font-size;
+    }
+    .image-days-progress{
+      margin-top: 30px;
+      .image-days-progress-block{
+        display: inline-block;
+        &.image-days-progress-block-width{
+          width: 30%;
+        }
+        &.image-days-progress-block-width1{
+          width: 70%;
+        }
+      }
+    }
+  }
+  // 评价/故障节点
+  .image-box{
+    position: absolute;
+    width: 107px;
+    height: 76px;
+    right: 30px;
+    bottom: 70px;
+    &.image-box-position{
+      width: 76px;
+      height: 82px;
+      right: 110px;
+      bottom: 60px;
+    }
+    .image-evaluate{
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      height: 100%;
+      .text-position{
+        color: $statistics-assigned;
+        font-size: $primary-title-size;
+        display: block;
+        font-weight: 300;
+        line-height: 82px;
+        text-align: center;
+      }
+      // 0星评价
+      &.zeroStar {
+        background: url($star0) no-repeat;}
+      // 1星评价
+      &.oneStar {
+        background: url($star1) no-repeat;
+      }
+      // 2星评价
+      &.twoStar {
+        background: url($star2) no-repeat;
+      }
+      // 3星评价
+      &.threeStar {
+        background: url($star3) no-repeat;
+      }
+      // 4星评价
+      &.fourStar {
+        background: url($star4) no-repeat;
+      }
+      // 5星评价
+      &.fiveStar{
+        background: url($star5) no-repeat;
+      }
+      // 关联故障
+      &.trouble-node {
+        background: url($circles) no-repeat;
+      }
+    }
+    .image-node{
+      width: 100px;
+      margin-left: -12px;
+    }
+    .image-text{
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .gutter-box1{
+    background-color: $bg-c-w;
+    height: 310px;
+    &.trouble-box-height{
+      height: 280px;
+    }
+    .alarm-box{
+      margin-top: 20px;
+      .alarm-span{
+        margin-right: 10px;
+        padding: 3px 5px;
+        font-size: 12px;
+        border-radius: 2px;
+        color: $menu-font-color;
+      }
+    }
+    // 频次展示
+    .circle{
+      width: 80px;
+      height: 80px;
+      border: 1px solid $sp-icon-color-8;
+      box-sizing: border-box;
+      border-radius: 50%;
+      padding: 10px;
+      position: absolute;
+      right: 73px;
+      bottom: 40px;
+      .circle-child{
+        width: 100%;
+        height: 100%;
+        line-height: 60px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $sp-icon-color-8;
+        font-weight: 700;
+        color: $menu-font-color;
+      }
+    }
+  }
+  .gutter-box2 {
+    background-color: $bg-c-w;
+    height: 345px;
+    .detail-suggest{
+      margin-left: -14px;
+      margin-top: 10px;
+    }
+  }
+  .margin-bottom-row {
+    margin-top: 10px;
+  }
+}
+
+
+

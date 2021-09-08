@@ -1,0 +1,18 @@
+<!--盘AB面选择-->
+<nz-radio-group [(ngModel)]="frameSide" *ngIf="frameShow" style="margin:10px" (ngModelChange)="frameChange()">
+  <label nz-radio [nzValue]="0">{{language.disc_A_surface}}</label>
+  <label nz-radio [nzValue]="1">{{language.disc_B_surface}}</label>
+</nz-radio-group>
+<div class="business-frame-canvas" id="business-frame-canvas">
+  <!--右键端口上下架弹框-->
+  <nz-modal
+    nzTitle="{{language.TrayRackSelection}}"
+    [(nzVisible)]="rightShow"
+    (nzOnCancel)="handleCancelMiddle()"
+    (nzOnOk)="handleOkMiddle()"
+  >
+    <p *ngIf="framelock">{{language.WhetherDiscShelves}}</p>
+    <p *ngIf="!framelock">{{language.WhetherPlateUnderFrame}}</p>
+  </nz-modal>
+
+</div>

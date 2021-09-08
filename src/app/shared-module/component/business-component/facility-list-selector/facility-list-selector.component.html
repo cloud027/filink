@@ -1,0 +1,75 @@
+<!--设施列表组件-->
+<nz-modal nzWidth="70%"
+          [(nzVisible)]="facilityVisible"
+          [nzTitle]="title"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="facilityVisible=false">
+  <xc-table #tableComponent *ngIf="showTable"
+            [dataSet]="_dataSet"
+            [pageBean]="_pageBean"
+            [tableConfig]="_tableConfig"
+            [selectedData]="selectFacilityIds"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <div class="draw-device-line" *ngIf="!showTable">
+    <app-device-draw-map [devices]="_selectedFacilityData" [associatedLine]="associatedLine" (completeDraw)="onCompleteDraw($event)">
+    </app-device-draw-map>
+  </div>
+  <ng-template #modalFooter>
+    <button nz-button
+            [disabled]="!saveBtn"
+            *ngIf="isSaveBtn || (!isSaveBtn && !showTable)"
+            class="link-button"
+            nzType="primary"
+            (click)="handleOk()">
+      {{_commonLanguage.confirm}}
+    </button>
+    <button nz-button
+            *ngIf="showNext && !showTable"
+            class="link-button"
+            nzType="danger"
+            (click)="showTable=true">
+      {{_commonLanguage.back}}
+    </button>
+    <button nz-button
+            *ngIf="showNext && showTable"
+            class="link-button"
+            nzType="danger"
+            (click)="nextStep()">
+      {{_commonLanguage.nextStep}}
+    </button>
+    <button nz-button
+            class="link-button"
+            nzType="danger"
+            (click)="facilityVisible=false;">
+      {{_commonLanguage.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.deviceStatusIconClass+' '+data.deviceStatusColorClass"></i>
+    <span class="status-text" title="{{data.deviceStatus | translate: _deviceStatusEnum: languageEnum.facility}}">
+      {{data.deviceStatus | translate: _deviceStatusEnum}}
+    </span>
+  </div>
+</ng-template>
+
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: _deviceTypeEnum}}">
+    {{data.deviceType | translate: _deviceTypeEnum}}
+  </span>
+</ng-template>
+
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectFacilityId" (ngModelChange)="onFacilityChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId">
+    </label>
+  </nz-radio-group>
+</ng-template>

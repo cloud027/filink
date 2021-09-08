@@ -1,0 +1,45 @@
+<div class="body-style">
+  <!-- 基础配置-->
+  <div class="box-title">{{language.securityWorkbench.basicConfiguration}}</div>
+  <div class="form-box">
+    <!-- 证书配置-->
+    <h4 class="form-title">{{language.securityWorkbench.certificateConfiguration}}</h4>
+    <!--证书表单-->
+    <xc-form [column]="certificateFormColumn"
+             (formInstance)="certificateFormInstance($event)">
+    </xc-form>
+    <!--  文件上传模板-->
+    <ng-template #certUpload>
+      <xc-upload-file [fileList]="certificateFileList"
+                      [uploadBtnDisabled]="certificateUploadBtnDisabled"
+                      [fileInfo]="certificateFileInfo"
+                      (removeFileChange)="removeFileChange($event,'certificate')"
+                      (uploadChange)="uploadFile($event,'certificate')"></xc-upload-file>
+    </ng-template>
+    <!--  文件上传模板-->
+    <ng-template #keyUpload>
+      <xc-upload-file [fileList]="certificateFileList"
+                      [uploadBtnDisabled]="certificateUploadBtnDisabled"
+                      [fileInfo]="certificateFileInfo"
+                      (removeFileChange)="removeFileChange($event,'secretKey')"
+                      (uploadChange)="uploadFile($event,'secretKey')"></xc-upload-file>
+    </ng-template>
+    <!--  第三方接入平台-->
+    <h4 class="form-title">{{language.securityWorkbench.accessPlatform}}</h4>
+    <!--接入平台表单-->
+    <xc-form [column]="platformFormColumn"
+             (formInstance)="platformFormInstance($event)">
+    </xc-form>
+  </div>
+  <!--按钮-->
+  <div class="btn">
+    <button class="link-button btn-space" nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="!(certificateIsValid && platformIsValid)"
+            (click)="onConfirm()">{{language.frequentlyUsed.confirm}}
+    </button>
+    <button class="link-button" nz-button
+            (click)="onCancel()">{{language.frequentlyUsed.cancel}}</button>
+  </div>
+</div>
+

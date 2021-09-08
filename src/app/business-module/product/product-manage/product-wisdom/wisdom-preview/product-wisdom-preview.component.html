@@ -1,0 +1,49 @@
+<!--预览杆型图-->
+<div [class]="showBtn?'no-upload-container': 'no-upload-container-no'">
+  <div class="tip-container">
+    <!--按钮-->
+    <div class="btn-container" *ngIf="showBtn">
+      <!-- 点位配置-->
+      <button class="link-button position-config wisdom-operate" nz-button type="button"
+              (click)="onClickPositionConfig()">
+        <i class="iconfont fiLink-filink-location-icon"></i>
+        {{productLanguage.positionConfig}}
+      </button>
+    </div>
+    <div class="position-info">
+      <!--导出qunee图片-->
+      <div class="no-model" id="wisdom-position">
+        <div class="export-qunee"><i
+          class="iconfont icon-l  fiLink-export" (click)="onExportImg()"
+          nz-tooltip="{{productLanguage.exportImage}}"></i></div>
+      </div>
+      <div class="no-position">
+        <!--点位配置信息-->
+        <div class="position-container" *ngFor="let v of previewDataDetail.pointConfigList">
+          <div class="container">
+            <div [ngClass]="'left '+ 'left-'+v.pointType">
+              <div class="content">{{v.pointType | translate: positionTypeEnum: languageEnum.product}}</div>
+            </div>
+            <div [ngClass]="'right ' + 'right-' + v.pointType">
+              <div class="line-top"></div>
+              <div class="line-bottom"></div>
+            </div>
+          </div>
+          <!--点位号-->
+          <span class="position-num">{{v.configSort}}{{productLanguage.positionNo}}</span>
+          <!--设备类型下拉选-->
+          <div>
+            <nz-select [nzSize]="'large'"
+                       [(ngModel)]="v.viewType"
+                       (ngModelChange)="onChangeViewType(v)"
+                       [nzPlaceHolder]="productLanguage.pleaseSelect" class="equipment-select">
+              <nz-option *ngFor="let item of v.selectEquipment" [nzValue]="item"
+                         nzLabel="{{item |translate:  equipmentTypeEnum: languageEnum.facility  }}">
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

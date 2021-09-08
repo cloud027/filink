@@ -1,0 +1,22 @@
+<!--工作台-->
+<div class="box-title">
+  {{language.securityWorkbench.workbench}}
+</div>
+<div class="security-workbench">
+  <!--分屏设置-->
+  <div class="screen-setting">
+    <app-split-screen #splitScreen></app-split-screen>
+  </div>
+  <!-- 调整摄像头设置-->
+  <div class="camera-settings">
+    <app-camera-settings
+      [equipmentId]="splitScreen.equipmentId"
+      [lRealHandle]="splitScreen.lRealHandle"
+      [channelId]="splitScreen.channelId"
+      [params]="splitScreen.params"
+      ></app-camera-settings>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,50 @@
+@import "../../../../../../style-module/config";
+
+.common-card {
+  .trouble-btn-warp {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .operate-btn {
+    width: 15.8%;
+    height: 80px;
+    border: none;
+    outline: none;
+    margin-right: 12px;
+    padding: 10px 10px;
+    cursor: pointer;
+    box-shadow: none;
+    background: $button-danger-color;
+    text-align: center;
+    color: $page-font-color;
+    border-radius: 4px;
+
+    &:hover {
+      background: $menu-hover-color;
+      color: $button-danger-color;
+      .icon-fiLink-l {
+        color: $button-danger-color;
+      }
+    }
+
+    .icon-fiLink-l {
+      color: $button-danger-font-color;
+      font-size: 20px;
+    }
+
+    .operate-text {
+      vertical-align: middle;
+    }
+  }
+  .operate-btn[disabled] {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: $button-delete-disable-color;
+    border-color: $button-danger-hover-color;
+    text-shadow: none;
+    box-shadow: none;
+    .icon-fiLink-l {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+}

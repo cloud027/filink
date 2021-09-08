@@ -1,0 +1,90 @@
+@import "../../../../../style-module/config";
+
+.details-active {
+  background: $bg-c;
+
+  .lighting-active {
+    padding: 10px;
+    background: $bg-c-w;
+  }
+}
+
+.lighting-details {
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+    background: $bg-c-w;
+  }
+
+  .policy-details {
+    margin-top: 10px;
+  }
+
+  .policy-basic {
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .details {
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding: 10px;
+
+    .title {
+      font-weight: bold;
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+
+  .finish-details {
+    padding: 0;
+    position: relative;
+    &:after{
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid $equipment-status-lost;
+    }
+    .finish-title {
+      padding: 0;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.lighting-container {
+  margin-top: 10px;
+
+  .details {
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding: 10px;
+
+    .details-title {
+      font-weight: bold;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .details-content {
+      .program-list {
+        display: flex;
+        margin-bottom: 10px;
+
+        .content-left {
+          width: 100px;
+          color: $disabled-font-color;
+        }
+      }
+
+      .title {
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+}

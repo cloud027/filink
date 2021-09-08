@@ -1,0 +1,429 @@
+<div  class="overall-background">
+  <!--  一键呼叫工作台-->
+  <div>
+    <div class="box-title">
+      {{language.callWorkbench.workbench}}
+
+      <div class="box-right">
+          <nz-row class="device-number">
+              <!-- 一键呼叫数量 -->
+             <nz-col nzSpan="10" class="device-number-box left">
+                 <div class="top">{{calls}}</div>
+                 <div class="bottom">{{language.callWorkbench.calls}}</div>
+             </nz-col>
+             <nz-col nzSpan="1" class="device-number-box middle"></nz-col>
+             <!-- 智慧杆数量 -->
+             <nz-col nzSpan="11" class="device-number-box right">
+                 <div class="top">{{wisdomPoles}}</div>
+                 <div class="bottom">{{language.callWorkbench.wisdomPoles}}</div>
+             </nz-col>
+          </nz-row>
+      </div>
+    </div>
+    <!--存在一键呼叫设备-->
+    <div  class="strategy"  *ngIf="calls > 0">
+      <!--一键呼叫列表-->
+      <div class="use-strategies">
+        <!--标题  按钮-->
+        <nz-row class="line">
+          <!-- 一键呼叫信息 -->
+          <nz-col nzSpan="21" class="strategies-title">
+            <div class="title">{{language.callWorkbench.callInformation}}</div>
+            <!-- 当前第几页-->
+            <div class="title-paging" *ngIf='showPage'>{{language.frequentlyUsed.currentNo}}<span
+              class="paging-num">{{paging.pageIndex}}</span>{{language.frequentlyUsed.page}},
+            </div>
+            <!-- 共多少页-->
+            <div class="title-paging" *ngIf='showPage'>{{language.frequentlyUsed.common}}<span
+              class="paging-num">{{paging.totalPage}}</span>{{language.frequentlyUsed.page}},
+            </div>
+            <!-- 共计多少条-->
+            <div class="title-paging" *ngIf='showPage'>{{language.frequentlyUsed.total}}<span
+              class="paging-num">{{paging.Total}}</span>{{language.frequentlyUsed.strip}}</div>
+
+            <div *ngIf='showSearch' class="search-box">
+              <div class="call-name-search" [ngStyle]="{'zIndex': 1}">
+                <!--<input #deviceNameSearch-->
+                <input
+                       class="map-search-input"
+                       placeholder="{{language.callWorkbench.equipmentSearch}}"
+                       nz-input
+                       (keyup)="keyUpEvent($event)"
+                       [(ngModel)]="inputValue"
+                       (input)="onInput($event.target?.value)"
+                       (focus)="onInput($event.target?.value)"
+                       [nzAutocomplete]="auto"
+                />
+                <nz-autocomplete nzBackfill #auto>
+                  <nz-auto-option *ngFor="let option of options"
+                                  (mousedown)="optionChange($event,option)"
+                                  [nzValue]="option.equipmentId"
+                                  [nzLabel]="option.equipmentName">
+                    {{ option.equipmentName}}
+                  </nz-auto-option>
+                </nz-autocomplete>
+              </div>
+              <!-- 呼叫 -->
+              <button [appAccessPermission]="releasePolicyEnum.primaryAddKey"
+                      class="call" nz-button nzType="primary" (click)="call()">
+                <i class="iconfont fiLink-filink-hujiao-icon"></i>
+                {{language.callWorkbench.call}}
+              </button>
+            </div>
+          </nz-col>
+          <nz-col nzSpan="3" class="right-btn">
+              <!-- 全部设备 -->
+            <span [appAccessPermission]="releasePolicyEnum.primaryKey"
+                  class="all-strategy" (click)="onGoEquipmentList()">{{language.callWorkbench.allEquipment}}</span>
+          </nz-col>
+        </nz-row>
+        <nz-tabset class="device-card" [nzSelectedIndex] = "selectIndex"
+                   (nzSelectedIndexChange)="selectedIndexChange($event)">
+          <nz-tab [nzTitle] = "'所有设备'">
+            <!--列表内容-->
+            <div class="list-content">
+              <nz-row class="content-card">
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-last icon-left"
+                   [ngClass]="{'not-allowed':paging.pageIndex <= 1}"
+                   (click)="onPagingChange('left')" *ngIf="listData.length>0"></i>
+                <nz-col nzSpan="12" class="content-space" *ngFor="let data of listData, let i = index"
+                        (click)="handShowConvenient($event, data)">
+                  <div [ngClass]="{'card-content':true,'be-selected':data.state}">
+                    <div class="top-title">
+                      <i class="iconfont fiLink-alarm-fast title-icon"></i>
+                      <div class="top-content">
+                        <div class="titles">
+                          <p [appAccessPermission]="releasePolicyEnum.primaryDetailsKey" [title]="data.equipmentName"
+                             class="strategy-title no-wrap" (click)="callDetails(data)">{{data.equipmentName}}</p>
+                        </div>
+                        <p class="equipment-type content-strategyType">
+                          <span>{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}</span>
+                          <span style="float: right;text-align: right;min-width: 136px;display: inline-block">
+                            <span>
+                                  <i class="iconfont fiLink-filink-danwei-icon supplier-icon"></i>
+                                  <span [title]="data.supplier">{{ data.supplier }}</span>
+                            </span>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- 所属区域 -->
+                    <nz-row class="execType">
+                      <nz-col nzSpan="6" class="content-strategyType">
+                        {{ language.callWorkbench.region }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-view-area execType-icon"></i>
+                        <span [title]="data.address">{{ data.address}}</span>
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <span class=" content-line-height">{{data.callStatus| translate: callStatusEnum: languageEnum.application}}</span>
+                      </nz-col>
+                    </nz-row>
+                    <!-- 所属设施 -->
+                    <nz-row class="effectivePeriodTime">
+                      <nz-col nzSpan="6" class="content-strategyType content-line-height">{{ language.callWorkbench.facilities }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-time effectivePeriodTime-icon"></i>
+                        <span [title]="data.deviceName" class="content-line-height">{{ data.deviceName }}</span>
+                        <!-- fiLink-wisdom -->
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+                        <span class="status-text supplier content-line-height"
+                              title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+                              {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+                        </span>
+                      </nz-col>
+                    </nz-row>
+
+                  </div>
+                </nz-col>
+                <!--没有更多信息-->
+                <nz-col nzSpan="12" class="content-space" *ngIf="listData.length>0 && listData.length<6">
+                  <div class="card-content">
+                    <div class="available-img">
+                      <img src="../../../../../assets/img/application-system/defect.png" />
+                    </div>
+                    <div class="available-text">
+                      {{language.callWorkbench.information}}
+                    </div>
+                  </div>
+                </nz-col>
+
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-next icon-right"
+                   [ngClass]="{'not-allowed':paging.pageIndex >= paging.totalPage}"
+                   (click)="onPagingChange('right')"></i>
+              </nz-row>
+
+            </div>
+          </nz-tab>
+          <nz-tab [nzTitle] = "'呼叫中'">
+            <!--列表内容-->
+            <div class="list-content">
+              <nz-row class="content-card">
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-last icon-left"
+                   [ngClass]="{'not-allowed':paging.pageIndex <= 1}"
+                   (click)="onPagingChange('left')"
+                   *ngIf="listData.length>0"></i>
+                <nz-col nzSpan="12" class="content-space" *ngFor="let data of listData, let i = index"
+                        (click)="handShowConvenient($event, data)">
+                  <div [ngClass]="{'card-content':true,'be-selected':data.state}">
+                    <div class="top-title">
+                      <i class="iconfont fiLink-alarm-fast title-icon"></i>
+                      <div class="top-content">
+                        <div class="titles">
+                          <p [appAccessPermission]="releasePolicyEnum.primaryDetailsKey" [title]="data.equipmentName"
+                             class="strategy-title no-wrap" (click)="callDetails(data)">{{data.equipmentName}}</p>
+                        </div>
+                        <p class="equipment-type content-strategyType">
+                          <span>{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}</span>
+                          <span style="float: right;text-align: right;min-width: 136px;display: inline-block">
+                            <span>
+                                  <i class="iconfont fiLink-filink-danwei-icon supplier-icon"></i>
+                                  <span [title]="data.supplier">{{ data.supplier }}</span>
+                            </span>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- 所属区域 -->
+                    <nz-row class="execType">
+                      <nz-col nzSpan="6" class="content-strategyType">
+                        {{ language.callWorkbench.region }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-view-area execType-icon"></i>
+                        <span [title]="data.address">{{ data.address}}</span>
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <span class=" content-line-height">{{data.callStatus| translate: callStatusEnum: languageEnum.application}}</span>
+                      </nz-col>
+                    </nz-row>
+                    <!-- 所属设施 -->
+                    <nz-row class="effectivePeriodTime">
+                      <nz-col nzSpan="6" class="content-strategyType content-line-height">{{ language.callWorkbench.facilities }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-time effectivePeriodTime-icon"></i>
+                        <span [title]="data.deviceName" class="content-line-height">{{ data.deviceName }}</span>
+                        <!-- fiLink-wisdom -->
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+                        <span class="status-text supplier content-line-height"
+                              title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+                              {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+                        </span>
+                      </nz-col>
+                    </nz-row>
+
+                  </div>
+                </nz-col>
+                <!--没有更多信息-->
+                <nz-col nzSpan="12" class="content-space" *ngIf="listData.length>=0 && listData.length<6">
+                  <div class="card-content">
+                    <div class="available-img">
+                      <img src="../../../../../assets/img/application-system/defect.png" />
+                    </div>
+                    <div class="available-text">
+                      {{language.callWorkbench.information}}
+                    </div>
+                  </div>
+                </nz-col>
+
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-next icon-right"
+                   [ngClass]="{'not-allowed':paging.pageIndex >= paging.totalPage}"
+                   (click)="onPagingChange('right')"
+                   *ngIf="listData.length>0"></i>
+              </nz-row>
+
+            </div>
+          </nz-tab>
+          <nz-tab [nzTitle] = "'监听中'">
+            <!--列表内容-->
+            <div class="list-content">
+              <nz-row class="content-card">
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-last icon-left"
+                   [ngClass]="{'not-allowed':paging.pageIndex <= 1}"
+                   (click)="onPagingChange('left')"
+                   *ngIf="listData.length>0"></i>
+                <nz-col nzSpan="12" class="content-space" *ngFor="let data of listData, let i = index"
+                        (click)="handShowConvenient($event, data)">
+                  <div [ngClass]="{'card-content':true,'be-selected':data.state}">
+                    <div class="top-title">
+                      <i class="iconfont fiLink-alarm-fast title-icon"></i>
+                      <div class="top-content">
+                        <div class="titles">
+                          <p [appAccessPermission]="releasePolicyEnum.primaryDetailsKey" [title]="data.equipmentName"
+                             class="strategy-title no-wrap" (click)="callDetails(data)">{{data.equipmentName}}</p>
+                        </div>
+                        <p class="equipment-type content-strategyType">
+                          <span>{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}</span>
+                          <span style="float: right;text-align: right;min-width: 136px;display: inline-block">
+                            <span>
+                                  <i class="iconfont fiLink-filink-danwei-icon supplier-icon"></i>
+                                  <span [title]="data.supplier">{{ data.supplier }}</span>
+                            </span>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- 所属区域 -->
+                    <nz-row class="execType">
+                      <nz-col nzSpan="6" class="content-strategyType">
+                        {{ language.callWorkbench.region }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-view-area execType-icon"></i>
+                        <span [title]="data.address">{{ data.address}}</span>
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <span class=" content-line-height">{{data.callStatus| translate: callStatusEnum: languageEnum.application}}</span>
+                      </nz-col>
+                    </nz-row>
+                    <!-- 所属设施 -->
+                    <nz-row class="effectivePeriodTime">
+                      <nz-col nzSpan="6" class="content-strategyType content-line-height">{{ language.callWorkbench.facilities }}:</nz-col>
+                      <nz-col nzSpan="12" class="no-wrap content-line-height">
+                        <i class="iconfont fiLink-time effectivePeriodTime-icon"></i>
+                        <span [title]="data.deviceName" class="content-line-height">{{ data.deviceName }}</span>
+                        <!-- fiLink-wisdom -->
+                      </nz-col>
+                      <nz-col nzSpan="6" class="supplier">
+                        <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+                        <span class="status-text supplier content-line-height"
+                              title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+                              {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+                        </span>
+                      </nz-col>
+                    </nz-row>
+
+                  </div>
+                </nz-col>
+                <!--没有更多信息-->
+                <nz-col nzSpan="12" class="content-space" *ngIf="listData.length>=0 && listData.length<6">
+                  <div class="card-content">
+                    <div class="available-img">
+                      <img src="../../../../../assets/img/application-system/defect.png" />
+                    </div>
+                    <div class="available-text">
+                      {{language.callWorkbench.information}}
+                    </div>
+                  </div>
+                </nz-col>
+
+                <i class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-next icon-right"
+                   [ngClass]="{'not-allowed':paging.pageIndex >= paging.totalPage}"
+                   (click)="onPagingChange('right')"
+                   *ngIf="listData.length>0"></i>
+              </nz-row>
+
+            </div>
+          </nz-tab>
+        </nz-tabset>
+
+      </div>
+      <!--便捷入口-->
+      <div class="convenient-entrance" id="entranceBox">
+        <!--标题 便捷入口-->
+        <div class="title line">{{language.frequentlyUsed.convenientEntrance}}</div>
+        <div *ngIf="convenientEntranceSwitch" class="convenient">
+        <!-- <div class="convenient"> -->
+          <div class="bottom-time">
+            <div>
+              <div class="title-label">
+                <span class="strategy-title">{{detailData.equipmentName}}</span>
+                <p class="equipment-status">
+                  <i [class]="'icon-fiLink-l iconfont '+detailData.statusIconClass+' '+detailData.statusColorClass"></i>
+                    <span class="status-text supplier content-line-height"
+                          title="{{detailData.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+                          {{detailData.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+                    </span>
+                </p>
+              </div>
+              <div style="margin: 14px 0;">
+                  <nz-row class="execType">
+                      <nz-col nzSpan="6" class="content-strategyType">
+                          {{ language.callWorkbench.geographicalPosition }}:</nz-col>
+                      <nz-col nzSpan="18" class="content-line-height">{{ detailData.address }}</nz-col>
+                  </nz-row>
+              </div>
+
+            </div>
+          </div>
+
+          <app-call-time-meter #callTimeMeter
+          [equipmentId]="selectEquipmentId"
+          [equipmentName]="selectEquipmentName"
+          [sequenceId]="selectSequenceId"
+          [equipmentModelType]="selectEquipmentModelType"
+          [boxWidth]="boxWidth"
+          [callData]="callData"
+          ></app-call-time-meter>
+        </div>
+        <div *ngIf="!convenientEntranceSwitch" class="convenient unchecked">
+          <!-- 暂未选中设备-->
+          <p>{{language.callWorkbench.noEquipmentSelected}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 还没有一键呼叫，缺省页-->
+    <div class="default-page" *ngIf="calls === 0" >
+      <img src="../../../../../assets/img/application-system/available.png">
+      <p class="default-p">{{language.callWorkbench.createIt}}~</p>
+    </div>
+  </div>
+  <div class="statistical">
+    <div class="statistical-left">
+      <div class="line-chart equipmentStatusData" *ngIf="isWorkOrderRole">
+        <div class="bottom-line">
+          <h4 class="statistics-title" [title]="language.callWorkbench.workOrder">{{language.callWorkbench.workOrder}}</h4>
+          <div class="select-time">
+              <span class="work-title"
+                    (click)="handleChangeWorkOrder(item.id)"
+                    *ngFor="let item of workOrderList"
+                    [ngClass]="workOrderQueryType === item.id ? 'active' : ''">
+                {{item.name}}
+              </span>
+          </div>
+        </div>
+        <div *ngIf="!isWorkOrder" echarts [options]="workOrderData" class="chart"></div>
+        <div class="empty-container" *ngIf="isWorkOrder">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+
+      <!--设备状态统计-->
+      <div class="line-chart equipmentStatusData programLaunchQuantity">
+        <div nz-row class="bottom-line">
+          <nz-col nzSpan="8">
+            <div class="statistics-title"
+                 [title]="language.callWorkbench.equipmentStatus">{{language.callWorkbench.equipmentStatus}}</div>
+          </nz-col>
+        </div>
+        <div *ngIf="isShowEquipmentStatus" echarts [options]="equipmentStatusData" class="chart"></div>
+        <div *ngIf="!isShowEquipmentStatus" class="empty-container">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+    </div>
+
+    <!--告警分类数量统计-->
+    <div class="line-chart duration">
+      <div nz-row class="bottom-line">
+        <div class="statistics-title"
+             [title]="language.callWorkbench.quantityStatistics">{{language.callWorkbench.quantityStatistics}}</div>
+        <div [appAccessPermission]="informationWorkBenchEnum.currentAlarm"
+             class="statistics-title-detail all-strategy"
+             (click)="goToAlarm()">{{language.frequentlyUsed.viewDetails}}</div>
+        <nz-range-picker class="select-time" [(ngModel)]="alarmClassificationTime.startAndEndTime"
+                         [nzAllowClear]="false"
+                         (ngModelChange)="statisticsAlarmLevelType()"></nz-range-picker>
+      </div>
+      <div *ngIf="isShowAlarmClassification" echarts [options]="alarmClassification" class="chart"></div>
+      <div *ngIf="!isShowAlarmClassification" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

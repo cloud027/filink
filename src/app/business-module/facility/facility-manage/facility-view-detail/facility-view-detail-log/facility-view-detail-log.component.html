@@ -1,0 +1,31 @@
+<!-- 设施日志-->
+  <nz-card *ngIf="checkHasRole('04-2-1') && showEquipmentLog"  class="card" nzTitle="{{language.equipmentLog}}" [nzExtra]="facilityLogMore" [appTenantPermission]="'8-6'">
+    <xc-table [dataSet]="facilityLogSet"
+              [tableConfig]="facilityLogTableConfig">
+    </xc-table>
+  </nz-card>
+<!--操作日志-->
+  <nz-card *ngIf="checkHasRole('04-2-1') && showOperateLog"  class="card-right"  nzTitle="{{language.operateLog}}" [nzExtra]="more" [appTenantPermission]="'8-7'">
+    <xc-table [dataSet]="operationLogSet"
+              [tableConfig]="operationLogTableConfig">
+    </xc-table>
+  </nz-card>
+<!--操作结果-->
+<ng-template #optResult let-data="data">
+  <div *ngIf="data.optResult === optResultEnum.failure" class="result-container">
+    <i class="icon-fiLink fiLink-fail iconfont "></i>
+    <span>{{logLanguage.failure}}</span>
+  </div>
+  <div *ngIf="data.optResult === optResultEnum.success" class="result-container">
+    <i class="icon-fiLink fiLink-success iconfont "></i>
+    <span>{{logLanguage.success}}</span>
+  </div>
+</ng-template>
+
+<ng-template #facilityLogMore>
+  <a class="more" (click)="navigatorTo('business/facility/facility-log')"><span>{{commonLanguage.more}} >></span></a>
+</ng-template>
+
+<ng-template #more>
+  <a class="more" (click)="navigatorTo('business/system/log')"><span>{{commonLanguage.more}} >></span></a>
+</ng-template>

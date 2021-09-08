@@ -1,0 +1,32 @@
+@import "../../../../../style-module/config";
+
+.trouble-flow{
+  .trouble-view-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: $title-color;
+    padding-left: 12px;
+    padding-bottom: 20px;
+  }
+
+  .flow-warp{
+    background: $bg-c;
+    overflow: hidden;
+    min-height: calc(100vh - 159px);
+  }
+
+  .view-item {
+    margin-top: 15px;
+  }
+
+  .flow-content{
+    padding: 20px;
+    background-color: $bg-c-w;
+    display: flex;
+    justify-content: center;
+
+    .flow-img{
+      height: 80%;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import "../../../../style-module/config";
+
+.plan-wisdom-detail {
+  padding: 10px;
+
+  .area-detail-title {
+    border-left: 2px solid $sp-icon-color-3;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: $primary-title-size;
+    font-weight: 900;
+  }
+}
+
+::ng-deep .plan-wisdom-detail {
+  .ant-calendar-picker {
+    width: 100% !important;
+  }
+}
+.open-button {
+  position: absolute;
+  top: 3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $button-danger-color;
+}

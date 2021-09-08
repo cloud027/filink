@@ -1,0 +1,55 @@
+<!--规划点/项目点-->
+<div class="info-window-a">
+  <!--规划名称-->
+  <div class="info-frame">
+    <div class="info-window-a-name">
+      <div class="info-window-a-title" *ngIf="viewIndex === planView">{{indexLanguage.planningPointName}}</div>
+      <div class="info-window-a-title" *ngIf="viewIndex === projectView">{{indexLanguage.projectPointName}}</div>
+      <div class="info-window-a-arae-name">{{infoData.data.name}}</div>
+    </div>
+  </div>
+  <!--智慧杆总数-->
+  <div class="info-frame">
+    <div class="info-window-a-name">
+      <div class="info-window-a-title">{{indexLanguage.poleNum}}</div>
+      <div class="info-window-a-count">{{infoData.data.count}}</div>
+    </div>
+  </div>
+  <!--智慧杆型号-->
+  <div class="info-frame">
+    <div class="info-window-a-name">
+      <div class="info-window-a-title">{{indexLanguage.smartPoleModel}}</div>
+    </div>
+    <!--智慧杆型号-->
+    <div *ngIf="infoData.data.poleModelMap.length">
+      <div class="info-window-a-plan">
+        <div class="info-window-a-model" *ngFor="let equipment of infoData.data.poleModelMap">
+          <div class="info-window-a-model-name">{{equipment.model}}</div>
+          <div class="info-window-a-model-count">{{equipment.modelCount}}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!infoData.data.poleModelMap.length">
+      <div class="info-window-a-prompt">{{indexLanguage.noData}}</div>
+    </div>
+  </div>
+  <!--建设状态-->
+  <div class="info-frame">
+    <div class="info-window-a-name">
+      <div class="info-window-a-title">{{indexLanguage.constructionStatus}}</div>
+    </div>
+    <!--智慧杆型号-->
+    <div>
+      <div class="info-window-a-alarm">
+        <span class="info-window-a-alarm-name info-window-a-running">{{indexLanguage.toBeBuilt}}</span>
+        <span class="info-window-a-alarm-urgent">{{infoData.data.poleStatusMap.runnable}}</span>
+        <span class="info-window-a-alarm-name info-window-a-runnable">{{indexLanguage.underConstruction}}</span>
+        <span class="info-window-a-alarm-mains">{{infoData.data.poleStatusMap.running}}</span>
+      </div>
+      <div class="info-window-a-bottom-alarm" *ngIf="viewIndex === planView">
+        <span class="info-window-a-alarm-name info-window-a-end">{{indexLanguage.hasBeenBuilt}}</span>
+        <span class="info-window-a-alarm-secondarys">{{infoData.data.poleStatusMap.end}}</span>
+      </div>
+    </div>
+  </div>
+</div>

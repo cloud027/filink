@@ -1,0 +1,123 @@
+<nz-card nzTitle="{{language.smartLabelDetail}}" [nzExtra]="extraTemplate">
+  <div class="label-container">
+    <div class="label-info-container">
+      <p>{{language.smartLabelInfo}}</p>
+      <ul>
+        <li class="facility-item">
+          <!--设备ID-->
+          <span class="label">{{language.tagID}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.boxLabel">{{smartLabelInfo.boxLabel}}</span>
+        </li>
+        <li class="facility-item">
+          <!--标签类型-->
+          <span class="label">{{language.labelType}}：</span>
+          <span class="value hidden" [title]="">{{smartLabelInfo.labelType}}</span>
+        </li>
+        <li class="facility-item">
+          <!--标签状态-->
+          <span class="label">{{language.labelState}}：</span>
+          <span class="value hidden" [title]="">{{smartLabelInfo.labelState}}</span>
+        </li>
+        <li class="facility-item">
+          <!--制造商-->
+          <span class="label">{{language.manufacturer}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.producer">{{smartLabelInfo.producer}}</span>
+        </li>
+      </ul>
+
+      <!--配线架专属业务字段-->
+      <ul *ngIf="deviceType === DeviceTypeCode.Distribution_Frame">
+        <li class="facility-item">
+          <!--设备形态-->
+          <span class="label">{{language.deviceForm}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.deviceForm">{{smartLabelInfo.deviceForm}}</span>
+        </li>
+        <li class="facility-item">
+          <!--机架行号-->
+          <span class="label">{{language.rackLineNumber}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.columnNum">{{smartLabelInfo.lineNum}}</span>
+        </li>
+        <li class="facility-item">
+          <!--机架列号-->
+          <span class="label">{{language.rackColumnNumber}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.lineNum">{{smartLabelInfo.columnNum}}</span>
+        </li>
+        <li class="facility-item">
+          <!--备注-->
+          <span class="label">{{language.remarks}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.memo">{{smartLabelInfo.memo}}</span>
+        </li>
+      </ul>
+
+      <!--光交箱专属业务字段-->
+      <ul *ngIf="deviceType === DeviceTypeCode.Optical_Box">
+        <li class="facility-item">
+          <!--备注-->
+          <span class="label">{{language.remarks}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.memo">{{smartLabelInfo.memo}}</span>
+        </li>
+      </ul>
+
+      <!--接头盒专属业务字段-->
+      <ul *ngIf="deviceType === DeviceTypeCode.Junction_Box">
+        <li class="facility-item">
+          <!--最大纤芯数-->
+          <span class="label">{{language.fiberCoreNum}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.maxFiberNum">{{smartLabelInfo.maxFiberNum}}</span>
+        </li>
+        <li class="facility-item">
+          <!--密封方式-->
+          <span class="label">{{language.sealMode}}：</span>
+          <span class="value hidden" [title]="">{{smartLabelInfo.sealMode}}</span>
+        </li>
+        <li class="facility-item">
+          <!--敷设方式-->
+          <span class="label">{{language.layMode}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.layMode">{{smartLabelInfo.layMode}}</span>
+        </li>
+        <li class="facility-item">
+          <!--规格说明-->
+          <span class="label">{{language.standard}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.standard">{{smartLabelInfo.standard}}</span>
+        </li>
+        <li class="facility-item">
+          <!--接续信息-->
+          <span class="label">{{language.follow}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.follow">{{smartLabelInfo.follow}}</span>
+        </li>
+        <li class="facility-item">
+          <!--备注-->
+          <span class="label">{{language.remarks}}：</span>
+          <span class="value hidden" [title]="smartLabelInfo.memo">{{smartLabelInfo.memo}}</span>
+        </li>
+      </ul>
+    </div>
+    <!--光交箱配线架才有实景图-->
+    <div class="device-pic-container" [hidden]="deviceType === DeviceTypeCode.Junction_Box">
+      <p>{{language.facilityBlockDiagram}}</p>
+      <div class="label-img-container">
+        <app-business-picture class="app-business-picture-Width" [deviceID]="deviceId"></app-business-picture>
+      </div>
+      <span class="more"
+            (click)="navigatorTo('/business/facility/view-facility-picture')">{{commonLanguage.more}} >></span>
+    </div>
+    <!-- 光交箱配线架才有端口-->
+    <div class="ports-container" [hidden]="deviceType === DeviceTypeCode.Junction_Box">
+      <p>{{language.portStatistics}}</p>
+      <div class="ports-chart-container">
+        <div>
+          <p>{{language.numberOfPorts}}</p>
+          <div echarts [options]="barChartOption"></div>
+        </div>
+        <div>
+          <p>{{language.proportionOfQuantity}}</p>
+          <div echarts [options]="pieChartOption"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nz-card>
+<ng-template #extraTemplate>
+  <span class="update-time">{{language.updateTime}}： {{smartLabelInfo.lastUpdateTime | dynamic: 'date' : null}}</span>
+</ng-template>

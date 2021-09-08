@@ -1,0 +1,37 @@
+<div class="detail-height" *ngIf="isFinish">
+  <div class="alarm-detail-title">{{ language.alarmDiagnose}}</div>
+  <div class="view-item">
+    <app-alarm-basic-info [alarmInfo] = "alarmInfo"></app-alarm-basic-info>
+  </div>
+  <!--  告警分析-->
+  <div class="view-item">
+    <app-alarm-analysis [alarmCode] = "alarmCode"></app-alarm-analysis>
+  </div>
+  <div class="view-item">
+    <!--基本告警操作-->
+    <app-alarm-operation
+      [pageType]="pageType"
+      [alarmInfo] = "alarmInfo"
+      (processStatus)="queryCurrentAlarm()"
+    ></app-alarm-operation>
+  </div>
+  <div class="view-item">
+  <!--转派信息-->
+    <app-redeploy-info [alarmId] = "alarmId" [deviceType] = "alarmInfo.alarmDeviceTypeId" ></app-redeploy-info>
+  </div>
+  <div class="view-item">
+    <!--相关性告警-->
+    <app-correlation-alarm [alarmId] = "alarmId"></app-correlation-alarm>
+  </div>
+  <div class="view-item">
+    <!--告警照片-->
+    <app-alarm-img-view [alarmDeviceId] = "alarmDeviceId"></app-alarm-img-view>
+  </div>
+  </div>
+<!--加载-->
+<nz-spin [nzSimple]="true"
+         *ngIf="ifSpin"
+         class="loading"
+         [nzSpinning]="true"
+></nz-spin>
+

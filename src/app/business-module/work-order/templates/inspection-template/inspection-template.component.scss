@@ -1,0 +1,33 @@
+@import "../../../../style-module/config";
+
+.template-warp{
+  .numberInputs {
+    display: inline-block;
+    border: 1px solid $equipment-status-lost;
+    height: 22px;
+    padding: 4px 11px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    outline: none;
+    cursor: default;
+    width: 100%;
+    &:hover{
+      border-color: $color;
+    }
+    &:disabled{
+      cursor: no-drop;
+      background-color: $bg-c;
+      color: rgba(0,0,0,0.25);
+    }
+  }
+  .inputBox {
+    display: flex;
+    justify-content: space-between;
+    .device-num{
+      width: 80px;
+    }
+  }
+}

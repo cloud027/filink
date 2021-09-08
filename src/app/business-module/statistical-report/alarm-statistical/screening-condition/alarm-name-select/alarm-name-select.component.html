@@ -1,0 +1,51 @@
+<!--告警名称选择器-->
+<nz-modal nzWidth="70%"
+          *ngIf="alarmNameSelectVisible"
+          [(nzVisible)]="alarmNameSelectVisible"
+          [nzTitle]="tableTitle"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="alarmNameSelectVisible=false">
+  <span *ngIf="showSelectedCount" class="selected-count">{{commonLanguage.selected}}：{{selectedAlarmData.length? selectedAlarmData.length:0}} {{commonLanguage.count}}<span *ngIf="showSelectedMaxCount">  / <span [class]="selectedAlarmData.length > 20? 'selected-max-count':''" >{{commonLanguage.maxCount}}</span></span></span>
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [selectedData]="selectAlarms"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" [disabled]="showSelectedMaxCount && selectedAlarmData.length> 20"
+            nzType="primary"
+            (click)="handleOk()">
+      {{commonLanguage.confirm}}
+    </button>
+    <button nz-button
+            class="link-button"
+            nzType="danger"
+            (click)="alarmNameSelectVisible=false">
+      {{commonLanguage.cancel}}
+    </button>
+    <button *ngIf="showCleanBtn" nz-button nzType="danger" class="link-button" (click)="onClickCleanUp()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+
+</nz-modal>
+<!--   表格告警级别过滤模板-->
+<ng-template #alarmDefaultLevelTemp let-data="data">
+  <div class="level-flex">
+    <div class="box-icon" [ngStyle]="data.defaultStyle"></div>
+    <span class="level-margin-left">{{data.alarmDefaultLevel | translate: alarmLevelEnum: languageEnum.alarm}}</span>
+  </div>
+</ng-template>
+<!--  表格定制级别过滤模板 -->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="level-flex">
+    <div class="box-icon" [ngStyle]="data.style"></div>
+    <span class="level-margin-left">{{data.alarmLevel | translate: alarmLevelEnum: languageEnum.alarm}}</span>
+  </div>
+</ng-template>
+<!--  表格确认状态过滤模板 -->
+<ng-template #alarmConfirmTemp let-data="data">
+  <div>{{data.alarmAutomaticConfirmation | translate: alarmIsConfirmEnum: languageEnum.alarm}}</div>
+</ng-template>

@@ -1,0 +1,48 @@
+@import "../../../../../shared-module/component/business-component/equipment-detail-view/appliction-operate/style/operation";
+@import "../../../../../style-module/config";
+
+.equipment-list-wrap {
+  background: $bg-c-w;
+  display: flex;
+  padding-bottom: 20px;
+
+  .screen-setting {
+    width: 80%;
+  }
+}
+
+.application-operate {
+  padding: 10px;
+  background: $bg-c-w;
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .application-list {
+
+    .button-groups {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        width: 80px;
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.btn-hover {
+  color: $color;
+
+  &:hover {
+    background: $color;
+    color: $bg-c-w;
+
+    i {
+      color: $bg-c-w;
+    }
+  }
+}

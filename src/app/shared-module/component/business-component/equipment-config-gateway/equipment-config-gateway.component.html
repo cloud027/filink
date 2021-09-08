@@ -1,0 +1,29 @@
+<!--设备配置动态表单-->
+<nz-tabset [nzSelectedIndex]="0">
+  <nz-tab  nzTitle="{{configurationsList.name}} {{configurationsList.equipmentName}}">
+<div class="config" *ngFor="let item of configurationsList.configurationList;let index = index">
+  <!--配置标题-->
+  <div class="config-item-container" *ngIf="item.name">
+    <span class="config-item-title">{{item.name}}</span>
+  </div>
+  <!--配置表单-->
+  <xc-form  [column]="item.formColumn" (formInstance)="formInstance($event,item,index)"></xc-form>
+  <!--配置按钮-->
+  <div class="content-link" *ngIf="item.commandId && !configurationsList.commandId">
+    <button class="link-button margin-right20" nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="item.saveBtnDisabled"
+            (click)="submit(item,1)">{{ language.configuration }}
+    </button>
+  </div>
+</div>
+    <!--配置按钮-->
+    <div class="content-link" *ngIf="configurationsList.commandId">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="checkDisabled(configurationsList.configurationList)"
+              (click)="submit(configurationsList,2)">{{ language.configuration }}
+      </button>
+    </div>
+  </nz-tab>
+</nz-tabset>

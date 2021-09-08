@@ -1,0 +1,108 @@
+<div class="history-table">
+  <!-- 表格 -->
+  <div class="table-wrapper">
+    <xc-table [dataSet]="historyTableData"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+  <!-- 状态模板 -->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}">
+      <span [ngClass]="data.statusClass" class="status-temp"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--设施类型图标-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="hidden" title="{{data.deviceTypeName}}">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipmentTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!-- 单位模板 -->
+  <ng-template #unitNameSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="filterValue.filterName || departFilterValue.filterName" />
+  </ng-template>
+  <!-- 单位 树选择 -->
+  <xc-tree-area-selector
+    [(xcVisible)]="isVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+
+  <!--关联告警模板-->
+  <ng-template #refAlarmTemp let-data="data">
+    <div (click)="showRefAlarmModal(data)" class="hidden cursor-pointer ref-color">{{data.dataResourceName}}</div>
+  </ng-template>
+
+  <!--设施名称弹框-->
+  <ng-template #DeviceNameSearch let-filterValue="filterValue">
+    <app-alarm-object class="pic-device-selector"
+                      [placeholder]="workOrderLanguage.pleaseSelect"
+                      [alarmObjectConfig]="deviceObjectConfig"
+                      [filterValue]="filterValue"></app-alarm-object>
+  </ng-template>
+  <!--设施区域弹框-->
+  <ng-template #AreaSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly
+           (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName">
+  </ng-template>
+  <!-- 区域树选择 -->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [pageType]="inspectionLanguage.area"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)">
+  </xc-tree-area-selector>
+</div>
+
+<!-- 设备名称 -->
+<ng-template #equipmentSearch let-filterValue = "filterValue">
+  <input type="text" class="cursor-pointer" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly
+         (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkEquipmentObject.name" />
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>
+
+<!--关联告警-->
+<app-relevance-alarm *ngIf="isShowRefAlarm"
+                     [(xcVisible)]="isShowRefAlarm"
+                     [modalData]="alarmData"
+                     (selectDataChange)="closeRefAlarm()">
+</app-relevance-alarm>
+
+<!--关联故障-->
+<app-relevance-fault *ngIf="isShowRefFault"
+                     [faultId]="faultData"
+                     (selectDataChange)="closeRefFault()">
+</app-relevance-fault>
+
+<!--用户列表-->
+<ng-template #userSearchTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+         (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+</ng-template>
+<app-select-user
+  *ngIf="isShowUserTemp"
+  [(xcVisible)]="isShowUserTemp"
+  [selectUserList]="selectUserList"
+  (selectDataChange)="onSelectUser($event)">
+</app-select-user>

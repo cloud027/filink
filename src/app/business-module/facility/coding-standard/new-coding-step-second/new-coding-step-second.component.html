@@ -1,0 +1,19 @@
+<div class="new-coding-step-second">
+  <xc-form [column]="formColumn"
+           (formInstance)="newCodingFormInstance($event)">
+  </xc-form>
+</div>
+
+<!--编码内容模板-->
+<ng-template #codingContentTemp let-formGroup="formGroup" let-col="col">
+  <div class="bg-color">
+    <span class="area-box" title="{{codingContent}}">{{codingContent}}</span>
+  </div>
+</ng-template>
+
+<!--编码示例模板-->
+<ng-template #codingExampleTemp let-formGroup="formGroup" let-col="col">
+  <div class="bg-color">
+    <span class="area-box" title="{{codingExample}}">{{codingExample}}</span>
+  </div>
+</ng-template>

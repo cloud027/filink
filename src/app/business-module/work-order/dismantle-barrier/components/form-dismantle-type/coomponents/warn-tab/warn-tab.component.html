@@ -1,0 +1,63 @@
+<div class="warn-tab-box">
+  <xc-table
+    *ngIf="pageLoad"
+    #tableTemp
+    [dataSet]="_dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)"
+  >
+  </xc-table>
+</div>
+
+<!--告警单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedAlarmId" (ngModelChange)="selectedAlarmChange(data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--告警级别-->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="hidden" title="{{ data.levelName }}">
+    <span class="status-temp alarmLevel" [ngStyle]="{ background: data.levelStyle }"> </span>
+    {{ data.levelName }}
+  </div>
+</ng-template>
+<!--设施类型图标-->
+<ng-template #deviceTemp let-data="data">
+  <div class="hidden" title="{{ data.deviceTypeName }}">
+    <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+    {{ data.deviceTypeName }}
+  </div>
+</ng-template>
+<!--设备类型-->
+<ng-template #equipTemp let-data="data">
+  <div class="tab-text-over" title="{{ data.equipmentTypeName }}">
+    <span class="status-temp" [ngClass]="data.equipClass"></span>
+    {{ data.equipmentTypeName }}
+  </div>
+</ng-template>
+
+<!-- 告警对象 搜索 下拉框 -->
+<ng-template #alarmEquipmentTemp let-filterValue="filterValue">
+  <span
+    class="equipment-name area-name-other"
+    [title]="checkEquipmentObject.name"
+    (click)="openEquipmentSelector(filterValue)"
+  >
+    <span class="title" *ngIf="!checkEquipmentObject.name">{{ language.clickSelect }}</span>
+    {{ checkEquipmentObject.name }}</span
+  >
+</ng-template>
+
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)"
+>
+</equipment-list-selector-component>

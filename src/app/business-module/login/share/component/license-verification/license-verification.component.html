@@ -1,0 +1,23 @@
+<nz-modal
+  class="license-verification"
+  [(nzVisible)]="isVisible"
+  (nzVisibleChange)="isVisibleChangeHandle($event)"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzClosable]= "false">
+  <ng-template #modalTitle>
+    <div class="count-position">{{language.countdown}}{{time}}{{second}}</div>
+  </ng-template>
+  <ng-template #modalContent>
+    <div class="alert"><i class="fiLink-no-more iconfont"></i></div>
+    <div class="font-size"><span>{{language.licenseInvalid}}</span></div>
+    <div class="hint-font-size"><span>{{language.uploadLicenseMsg}}</span></div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <input *ngIf="isVisible" type="file" style="display: none" id="file" (change)="fileChange($event)">
+    <button nz-button nzType="primary" class="link-button" (click)="upload()">{{language.uploadLicense}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="cancel()">{{language.cancel}}</button>
+  </ng-template>
+</nz-modal>
+

@@ -1,0 +1,29 @@
+export interface SupplierLanguageInterface {
+  supplierManage: string;
+  supplierNum: string;
+  supplierName: string;
+  supplierBasicInformation: string;
+  supplierAptitudes: string;
+  address: string;
+  attn: string;
+  attnPhone: string;
+  createUser: string;
+  createTime: string;
+  updateUser: string;
+  updateTime: string;
+  remarks: string;
+  deleteSuccess: string;
+  addSupplier: string;
+  updateSupplier: string;
+  firstLevel: string;
+  twoLevel: string;
+  threeLevel: string;
+  fourLevel: string;
+  fiveLevel: string;
+  phoneError: string;
+  addSuccess: string;
+  editSuccess: string;
+  exportSupplierSuccess: string;
+  selectSupplier: string;
+  supplierNumTips: string;
+}

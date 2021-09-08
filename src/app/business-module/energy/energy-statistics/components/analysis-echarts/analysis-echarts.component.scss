@@ -1,0 +1,18 @@
+.Echarts-box {
+  margin: 10px 0;
+  display: flex;
+  .echarts-item {
+    flex: 1;
+    margin-right: 10px;
+    .echarts-select-box {
+      .echarts-title {
+        flex: 1;
+      }
+      .time-picker-select {
+        flex: 3;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import "../../../../../style-module/config";
+.lighting-details {
+  .title{
+    font-weight: bold;
+    font-size: 14px;
+    background: $bg-c-w;
+  }
+  .policy-details{
+    margin-top: 10px;
+  }
+  .policy-basic{
+    background: $bg-c-w;
+    margin-top: 10px;
+  }
+  .applied{
+    background: $bg-c-w;
+    margin-top: 10px;
+  }
+  .details {
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding: 10px;
+    .details-title{
+      font-weight: bold;
+      font-size: 14px;
+      position: relative;
+      &:after{
+        content: '';
+        position: absolute;
+        top: 32px;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+    .details-content{
+      margin-top: 25px;
+      .program-list{
+        display: flex;
+        margin-bottom: 10px;
+        .content-left{
+          width:180px;
+          color: $disabled-font-color;
+        }
+      }
+      .title {
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.details-active {
+  background: $bg-c;
+
+  .lighting-active {
+    padding: 10px;
+  }
+}

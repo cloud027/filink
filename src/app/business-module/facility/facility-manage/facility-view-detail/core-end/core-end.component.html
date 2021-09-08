@@ -1,0 +1,64 @@
+<!--Build3代码-->
+<!--配置纤芯成端弹窗-->
+<nz-modal
+  [(nzVisible)]="coreEndIsVisible"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  [nzTitle]="title"
+  [nzWidth]="1100"
+  (nzAfterClose)="close()"
+  (nzOnCancel)="modalCancel()">
+  <!--左侧步骤条-->
+  <div style="height: 400px; width: 1100px; margin-bottom: 20px;">
+    <div class="terminationStep">
+      <nz-steps [nzCurrent]="numberOfSteps"
+                nzDirection="vertical"
+      >
+        <nz-step style="height: 100px" nzTitle="{{language.selectFacilitiesAndCableSegment}}"></nz-step>
+        <nz-step nzTitle="{{language.establishingCore}}"></nz-step>
+      </nz-steps>
+    </div>
+    <!--右侧第一步  -->
+    <div class="terminationStepRight" [hidden]="!stepDiagramSwitchingOne()">
+      <div class="stepTitle"><span style="font-size: 16px; color: #333333">{{stepTitle}}</span></div>
+      <div style="margin-top: 30px">
+        <xc-form [column]="formColumn"
+                 (formInstance)="formInstance($event)">
+        </xc-form>
+      </div>
+    </div>
+    <!--右侧第二步-->
+    <div class="terminationStepRight" [hidden]="!stepDiagramSwitchingTwo()">
+      <div class="stepTitle">
+        <span style="font-size: 16px; color: #333333">{{stepTitle}}</span>
+        <div style="float: right">
+          <i style="margin: 0 20px 0 0" class="map-util icon-fiLink-l iconfont fiLink-arrow-select"
+             [class.background]="drawType==='arrow'"
+             (click)="chooseUtil('arrow')"></i>
+          <i class="map-util icon-fiLink-l iconfont fiLink-box-select"
+             [hidden]="mapBoxSelect"
+             [class.background]="drawType==='rectangle'"
+             (click)="chooseUtil('rectangle')"></i>
+        </div>
+      </div>
+      <div class="quneeMap" id="canvas">
+        <ul [hidden]="!showRightMenu" id="right-menu" class="right-menu">
+          <li (click)="deleteConnection()"><a>{{language.deleteConnection}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--底部按钮-->
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="primary" [disabled]="!checkData()" (click)="stepNext()"
+            [hidden]="!stepDiagramSwitchingOne()">{{language.nextStep}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="Previous()"
+            [hidden]="!stepDiagramSwitchingTwo()">{{language.previous}}
+    </button>
+    <button class="link-button" nz-button nzType="primary" *ngIf="stepDiagramSwitchingTwo()"
+            (click)="end()">{{language.end}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="close()">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,100 @@
+@import "../../../../style-module/config";
+
+.select-container {
+  position: absolute;
+  left: 35px;
+  top: 35px;
+  z-index: 99;
+  width: 400px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  .map-select-container{
+    .map-select {
+      width: 110px;
+      padding-right: 5px;
+      text-align: center;
+      border-right: 1px solid $cutting-line;
+      .map-search-select {
+        min-width: 50px;
+        color: $color;
+
+        i {
+          color: $color;
+        }
+      }
+    }
+  }
+  .map-search {
+    flex: 1;
+    position: relative;
+    height: 100%;
+
+    .map-search-name {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      width: 100%;
+
+      input {
+        border: none;
+        border-radius: 0;
+      }
+    }
+
+    .b-map-location-search {
+      position: absolute;
+      left: 10px;
+      top: 0;
+
+      #r-result {
+        margin-top: 5px;
+
+        input {
+          border: none;
+          outline: none;
+          width: 270px;
+          padding-left: 11px;
+        }
+
+        input::placeholder {
+          color: #cbcbcb;
+        }
+      }
+
+      #_searchResultPanel {
+        border: 1px solid #c0c0c0;
+        margin-top: 10px;
+        width: 150px;
+        height: auto;
+        display: none;
+      }
+    }
+
+    .g-map-location-search {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      margin-top: 5px;
+
+      input {
+        border: none;
+        outline: none;
+        width: 270px;
+        padding-left: 11px;
+      }
+
+      input::placeholder {
+        color: #cbcbcb;
+      }
+
+      .location-icon {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+<div class="group-list">
+  <!--详情标题-->
+  <div class="group-header">
+    <h4 class="title">{{languageTable.equipmentTable.circuitDetails}}</h4>
+  </div>
+  <div class="group-card">
+    <!--详情操作-->
+    <div class="group-details flex-card">
+      <div class="group-left">
+        <div class="content loop-list">
+          <div class="title">{{loopData.loopName}}</div>
+          <div class="single lamp">
+            {{loopData.loopType}}
+          </div>
+          <div class="single" *ngIf="loopCode">{{loopCode}}</div>
+        </div>
+        <div class="content">
+          <span class="content-left">{{languageTable.strategyList.createTime}}:</span>
+          <span class="time">{{loopData.createTime}}</span>
+        </div>
+        <div class="content">
+          <span class="user-name">
+            <i class="icon-fiLink fiLink-filink-chuangjianren-icon iconfont"></i>
+          </span>
+          <span>{{userName}}</span>
+        </div>
+        <div class="content">
+          <span class="content-left">{{languageTable.strategyList.distribution}}:</span>
+          <span class="time">{{loopData.distributionBoxName}}</span>
+        </div>
+        <div class="content">
+          <span class="content-left">{{languageTable.strategyList.controlObj}}:</span>
+          <span class="time">{{controlledObject}}</span>
+        </div>
+        <div class="content">
+          <span class="content-left">{{languageTable.strategyList.remark}}:</span>
+          <span class="time">{{loopData.remark}}</span>
+        </div>
+      </div>
+      <!--地图组件-->
+      <div class="group-map">
+        <app-thumbnail #thumbnail [mapType]="mapType"></app-thumbnail>
+      </div>
+    </div>
+  </div>
+  <div class="group-operation">
+    <h4 class="title">{{languageTable.equipmentTable.loopOperation}}</h4>
+    <div class="button-groups">
+      <button
+        [appAccessPermission]="lightLoopTableEnum.primaryPullKey"
+        class="btn"
+        (click)="pullGate(controlInstructEnum.closeBreak)"
+        nz-button nzType="default">
+        <i class="icon-fiLink fiLink-pull-gate iconfont"></i>
+        {{languageTable.equipmentTable.pull}}
+      </button>
+      <button
+        [appAccessPermission]="lightLoopTableEnum.primaryGateKey"
+        class="btn"
+        (click)="pullGate(controlInstructEnum.openBreak)"
+        nz-button nzType="default">
+        <i class="icon-fiLink fiLink-close-gate iconfont"></i>
+        {{languageTable.equipmentTable.gate}}
+      </button>
+    </div>
+  </div>
+  <!--回路关联设施-->
+  <div class="group-content">
+    <div class="header">
+      <h4 class="title">{{languageTable.equipmentTable.associatedFacilities}}</h4>
+    </div>
+    <div class="table-list">
+      <xc-table
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+        (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.deviceStatusIconClass+' '+data.deviceStatusColorClass"></i>
+    <span class="status-text" title="{{data.deviceStatus | translate: deviceStatusEnum: languageEnum.facility}}">
+      {{data.deviceStatus | translate: deviceStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>

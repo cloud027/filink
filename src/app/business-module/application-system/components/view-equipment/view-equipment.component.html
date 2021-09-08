@@ -1,0 +1,24 @@
+<xc-table [dataSet]="dataSet"
+          [pageBean]="pageBean"
+          (pageChange)="pageChange($event)"
+          [tableConfig]="multiEquipmentTable">
+</xc-table>
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          [ngStyle]="data.rowStyle"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i  class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>

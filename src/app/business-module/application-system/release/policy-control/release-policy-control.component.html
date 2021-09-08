@@ -1,0 +1,23 @@
+<!-- 信息发布策略-->
+<div class="box-title">
+  {{languageTable.strategyList.releaseStrategy}}
+</div>
+
+
+<div class="table-wrapper">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--策略状态开启关闭-->
+<ng-template #policyStatus let-data="data">
+  <nz-switch
+    (click)="switchChange(data)"
+    [nzControl]="true"
+    [nzLoading]="data.switchLoading"
+    [ngModel]="data.strategyStatus"></nz-switch>
+  {{data.strategyStatus ? languageTable.strategyStatus.open : languageTable.strategyStatus.close}}
+</ng-template>

@@ -1,0 +1,51 @@
+<nz-modal [(nzVisible)]="isVisible"
+          [nzWidth]="900"
+          [nzTitle]="storageLanguage.model"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="isVisibleChange.emit(false)">
+  <ng-template #modalContent>
+      <xc-table
+        #tableTpl
+        [dataSet]="modelDataSet"
+        [selectedData]="selectModelList"
+        [tableConfig]="tableConfig"
+        [pageBean]="pageBean"
+        (pageChange)="modelPageChange($event)">
+      </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="isVisibleChange.emit(false)">{{commonLanguage.cancel}}</button>
+    <button  *ngIf="!isRadio" nz-button class="link-button" nzType="danger" (click)="cleanUpModel()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+        title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.other" class="status-text"
+        title="{{productLanguage.other}}">{{productLanguage.other}}</span>
+</ng-template>
+
+<!--计量单位的模版-->
+<ng-template #unitTemplate let-data="data">
+  <span>{{data.unit | translate: productUnitEnum:  languageEnum.product}}</span>
+</ng-template>
+
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectRadioId" (ngModelChange)="onRadioChange($event, data)">
+    <label nz-radio [nzValue]="data.productId">
+    </label>
+  </nz-radio-group>
+</ng-template>

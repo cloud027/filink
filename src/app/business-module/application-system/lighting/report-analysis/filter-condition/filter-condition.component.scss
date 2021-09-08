@@ -1,0 +1,84 @@
+@import "../../../../../style-module/config";
+
+.wid-300 {
+  width: 300px;
+}
+
+.condition-box {
+  font-size: 13px;
+  padding-top: 4px;
+  color: #333;
+  border-bottom: 10px solid $bg-c;
+
+  .form-box {
+    padding-left: 16px;
+  }
+
+  .form-item-box {
+    margin: 0 24px 20px 0;
+    display: inline-block;
+
+    .select-statisticalScope {
+      display: inline-block;
+      padding: 4.5px 11px;
+      border: 1px solid $button-delete-disable-border-color;
+      border-radius: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+      height: 32px;
+    }
+
+    .label-box {
+      display: inline-block;
+      margin-right: 10px;
+
+      .form-label {
+        width: 5px;
+
+        em {
+          color: #ff0000;
+        }
+      }
+    }
+
+    .search-button {
+      border: none;
+      outline: 0;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .time-select {
+      width: 82px;
+    }
+
+    .time-picker {
+      margin-left: 10px;
+      width: 208px;
+    }
+  }
+
+  .mar-r-minus-4 {
+    margin-right: -4px;
+  }
+}
+
+
+::ng-deep .report-area-tree-selector {
+  .ztree.link-tree {
+    li span.button.chk.checkbox_true_part {
+      background-position: -25px -25px;
+    }
+
+    li span.button.chk.checkbox_true_part_focus {
+      background-position: -25px -25px;
+
+    }
+
+    li span.button.chk.checkbox_false_disable {
+      background-position: -2px -86px;
+    }
+  }
+}

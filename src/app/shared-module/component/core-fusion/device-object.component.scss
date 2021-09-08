@@ -1,0 +1,74 @@
+@import "../../../style-module/config";
+
+div.screenRender  {
+  .area-name {
+    display: inline-block;
+    width: 50%;
+    border: 1px solid #ccc;
+    // height: 32px;
+    line-height: 15px;
+    padding: 4px 11px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    .title {
+      color: rgb(191,191,191);
+    }
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    background: $bg-c-w;
+    cursor: pointer;
+    &:disabled{
+      cursor: no-drop;
+    }
+  }
+  // max-width: 390px;
+
+}
+
+
+.facility-alarm-c {
+  color: $status-alarm;
+}
+
+.facility-normal-c {
+  color: $status-normal;
+
+}
+
+.facility-offline-c {
+  color: $status-offline;
+}
+
+.facility-lost-c {
+  color: $status-lost;
+}
+
+.facility-unknown-c {
+  color: $status-unknown;
+}
+
+div.form {
+  .area-name {
+    height: 32px;
+    line-height: 24px;
+  }
+  width: 400px;
+}
+
+div.table {
+  .area-name {
+    height: 22px;
+    width: 100%;
+  }
+}
+
+.device-type-icon{
+  vertical-align: middle;
+  font-size: 19px;
+}

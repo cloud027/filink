@@ -1,0 +1,30 @@
+@import '../../../style-module/config';
+
+.odn-device-resources {
+  padding: 10px 10px;
+
+  .chart-left {
+    flex: 1;
+  }
+.select-check{
+  display:inline-block
+}
+
+  .radio-select{
+    width: 170px;
+  }
+
+  .barChart {
+    margin-top: 10px;
+    display: flex;
+  }
+}
+
+.select-height {
+  min-height: 250px;
+  background-color: $bg-c;
+}
+
+.chart-loading {
+  height: 300px;
+}

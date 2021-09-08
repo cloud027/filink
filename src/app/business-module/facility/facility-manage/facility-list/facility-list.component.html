@@ -1,0 +1,57 @@
+<!--设施列表滑块组件-->
+<xc-statistical-slider [appTenantPermission]="'4'"
+                       [sliderConfig]="sliderConfig"
+                       [showCardNum]="6"
+                       (selectChange)="sliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)">
+</xc-statistical-slider>
+<!--设施列表组件-->
+<div class="table-wrapper">
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+<!--设施状态模板-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}">
+      {{data.deviceStatus | translate : deviceStatusEnum: 'facility.config'}}
+    </span>
+  </div>
+</ng-template>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level">
+    <i [ngClass]="data['iconClass']"></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}">
+      {{data.deviceType | translate : deviceTypeEnum: 'facility.config'}}
+    </span>
+  </div>
+</ng-template>
+<!--远程开锁模板-->
+<ng-template #openLockTemp>
+  <xc-table [dataSet]="lockInfo"
+            [pageBean]="lockPageBean"
+            [tableConfig]="lockInfoConfig">
+  </xc-table>
+</ng-template>
+
+<!--导入设备模版-->
+<ng-template #importFacilityTemp>
+  <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <button nz-button><i nz-icon type="upload"></i><span>{{language.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>
+<!--业务状态模版-->
+<ng-template #businessStatusTemplate let-data="data">
+   <span [ngStyle]="data.rowStyle"
+         title="{{data.businessStatus | translate : businessStatusEnum: languageEnum.facility}}">
+      {{data.businessStatus | translate : businessStatusEnum: languageEnum.facility}}
+    </span>
+</ng-template>

@@ -1,0 +1,46 @@
+@import "../../../../style-module/config";
+
+.basic-btn {
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  /*操作按钮样式*/
+  .group-btn {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+    align-items: center;
+
+    .operation {
+      width: 160px;
+      height: 80px;
+      display: flex;
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      color: #626262;
+      &:hover {
+        background-color: $color;
+        color: $bg-c-w;
+        .operation-list .operation-img .iconfont {
+          color: $bg-c-w;
+        }
+      }
+
+      .operation-list {
+        .operation-img {
+          text-align: center;
+
+          .iconfont {
+            color: $page-font-color;
+          }
+        }
+
+        .text {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

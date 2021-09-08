@@ -1,0 +1,214 @@
+<div class="product-info-container">
+  <div nz-col nzSpan="8">
+    <div class="info-card-item first-line-card">
+      <div class="import-info product-base">
+        <!--类型-->
+        <i [class]="productDetail | productIcon: productDetail.typeFlag"></i>
+        <!--类型名称-->
+        <span class="product-description"
+              nz-tooltip="{{productDetail.typeCode | productTypeTranslate: productDetail.typeFlag }}">
+          {{productDetail.typeCode | productTypeTranslate: productDetail.typeFlag }}
+        </span>
+        <!--计量单位-->
+        <span class="unit">{{productDetail.unit | translate: productUnit: language.product}}</span>
+        <!--规格型号-->
+        <span class="product-model" nz-tooltip="{{productDetail.productModel}}">{{productDetail.productModel}}</span>
+        <!--如果是摄像头就显示枪机和球机-->
+        <span *ngIf="productDetail.typeCode === equipmentTypeEnum.camera"
+              class="product-camera"
+              nz-tooltip="{{productDetail.pattern === cameraTypeEnum.bCamera?productLanguage.bCamera: productLanguage.gCamera}}">
+          {{productDetail.pattern === cameraTypeEnum.bCamera ? productLanguage.bCamera : productLanguage.gCamera}}</span>
+        <!--电子锁形态-->
+        <span *ngIf="productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock"
+              class="product-camera"
+              nz-tooltip="{{productDetail.pattern === lockTypeEnum.activeLock?productLanguage.activeLock: productLanguage.passiveLock}}">
+          {{productDetail.pattern === lockTypeEnum.activeLock ? productLanguage.activeLock : productLanguage.passiveLock}}</span>
+        <!--如果是网关就可以预览网关图-->
+        <div class="wisdom-preview">
+          <button class="icon-fiLink-4"
+                  nz-button nzType="default"
+                  type="button"
+                  (click)="onClickPreviewGateway()"
+                  *ngIf="productDetail.typeFlag===productTypeEnum.equipment && productDetail.typeCode === equipmentTypeEnum.gateway">
+            <i class="iconfont fiLink-preview"></i>
+            {{productLanguage.preview}}
+          </button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="product-creator">
+          <!--责任单位-->
+          <div class="install-info-item">
+            <i [nz-tooltip]="productLanguage.deptName" class="icon-fiLink-6 icon-item iconfont fiLink-departments"></i>
+            <span nz-tooltip="{{productDetail.deptName}}">{{productDetail.deptName}}</span>
+          </div>
+          <!--供应商-->
+          <div class="install-info-item ">
+            <i nz-tooltip="{{productLanguage.supplier}}"
+               class="icon-fiLink-9 icon-item  iconfont fiLink-supplier"></i>
+            <span nz-tooltip="{{productDetail.supplierName}}">{{productDetail.supplierName}}</span>
+          </div>
+          <!--软件版本-->
+          <div class="install-info-item" *ngIf="!(productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock && productDetail.pattern === lockTypeEnum.passiveLock)" >
+            <div nz-col nzSpan="7" class="label-name description-label">{{productLanguage.softVersion}}：</div>
+            <div nz-col nzSpan="12" class="label-value">
+              <span nz-tooltip="{{productDetail.softwareVersion}}">{{productDetail.softwareVersion}}</span>
+            </div>
+          </div>
+          <!--硬件版本-->
+          <div class="install-info-item" *ngIf="!(productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock && productDetail.pattern === lockTypeEnum.passiveLock)">
+            <div nz-col nzSpan="7" class="label-name description-label">{{productLanguage.hardWareVersion}}：</div>
+            <div nz-col nzSpan="12" class="label-value">
+              <span nz-tooltip="{{productDetail.hardwareVersion}}">{{productDetail.hardwareVersion}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- 故障率-->
+        <div echarts class="break-chart" [options]="breakRateOption"></div>
+      </div>
+    </div>
+    <!--安装信息-->
+    <div class="info-card-item install-info">
+      <!--云平台和云平台产品-->
+      <div class="install-info-item form-first-item" >
+        <!--云平台-->
+        <div class="platform-info" *ngIf="!(productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock && productDetail.pattern === lockTypeEnum.passiveLock)">
+          <i nz-tooltip="{{productLanguage.platformType}}"
+             class="icon-fiLink-6 icon-item iconfont fiLink-cloud-platform"></i>
+          <span> {{productDetail.platformType | translate: platformEnum: language.product}}</span>
+        </div>
+        <!--云平台产品类型-->
+        <div class="platform-info" *ngIf="!(productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock && productDetail.pattern === lockTypeEnum.passiveLock)">
+          <i nz-tooltip="{{productLanguage.platformProduct}}"
+             class="icon-fiLink-4 icon-item iconfont fiLink-routine-inspection"></i>
+          <span>{{productDetail.appName}}</span>
+        </div>
+      </div>
+      <!--单价-->
+      <div class="install-info-item ">
+        <div nz-col nzSpan="7" class="label-name">{{productLanguage.price}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <span>{{productDetail.price}}</span>
+        </div>
+      </div>
+      <!--运维平均成本-->
+      <div class="install-info-item">
+        <div nz-col nzSpan="7" class="label-name">{{productLanguage.avgCost}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <span></span>
+        </div>
+      </div>
+      <!--安装数量-->
+      <div class="install-info-item">
+        <div nz-col nzSpan="7" class="label-name">{{productLanguage.quantity}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <span>{{productDetail.quantity}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="8">
+    <div class="info-card-item first-line-card">
+      <div class="detail-btn">
+        <!--为网关的时候或者为无缘锁时不显示查看端口-->
+        <button class="info-btn icon-fiLink-4" nz-button nzType="default" type="button"
+                (click)="onClickShowPort()"
+                [hidden]="(productDetail.typeCode === equipmentTypeEnum.intelligentEntranceGuardLock && productDetail.pattern === lockTypeEnum.passiveLock)"
+                *ngIf="(productDetail.typeFlag==='equipment' && productDetail.typeCode!==equipmentTypeEnum.gateway)">
+          <i class="iconfont fiLink-query-group"></i>
+          {{productLanguage.queryPortInfo}}
+        </button>
+      </div>
+      <!--单价-->
+      <div class="install-info-item form-first-item">
+        <div nz-col nzSpan="7" class="label-name">{{productLanguage.scrapTime}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <span>{{productDetail.scrapTime}}</span>
+        </div>
+      </div>
+      <!--数据容量-->
+      <div class="install-info-item">
+        <span nz-col nzSpan="7" class="label-name">{{productLanguage.amount}}：</span>
+        <span nz-col nzSpan="12" class="label-value">
+          <span>{{productDetail.dataCapacity}}</span>
+        </span>
+      </div>
+      <!--产品功能-->
+      <div class="install-info-item form-last-item" nz-row>
+        <span nz-col nzSpan="7" class="label-name">{{productLanguage.productFeatures}}：</span>
+        <span nz-col nzSpan="12" class="label-value" nz-tooltip="{{productDetail.description}}">
+          <span>{{productDetail.description}}</span>
+        </span>
+      </div>
+    </div>
+    <!--产品软件信息-->
+    <div class="info-card-item install-info">
+      <!--创建人-->
+      <div class="install-info-item form-first-item">
+        <div nz-col nzSpan="7" class="label-name">{{productLanguage.createUser}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <span>{{productDetail.createUserName}}</span>
+        </div>
+      </div>
+      <!--创建时间-->
+      <div class="install-info-item">
+        <span nz-col nzSpan="7" class="label-name">{{productLanguage.createTime}}：</span>
+        <span nz-col nzSpan="12" class="label-value">
+           <i class="icon-fiLink-6 iconfont fiLink-time sp-icon"></i>
+          <span>{{productDetail.createTime | dynamic: 'date': null}}</span>
+        </span>
+      </div>
+      <!--更新时间-->
+      <div class="install-info-item">
+        <span nz-col nzSpan="7" class="label-name">{{productLanguage.updateTime}}：</span>
+        <span nz-col nzSpan="12" class="label-value">
+           <i class="icon-fiLink-6 iconfont fiLink-time sp-icon"></i>
+          <span>{{productDetail.updateTime | dynamic: 'date': null }}</span>
+        </span>
+      </div>
+      <!--备注-->
+      <div class="install-info-item" nz-row>
+        <span nz-col nzSpan="7" class="label-name">{{productLanguage.remarks}}：</span>
+        <span nz-col nzSpan="12" class="label-value" nz-tooltip="{{productDetail.remark}}">
+          <span>{{productDetail.remark}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="8">
+    <!--产品设施设备图片-->
+    <div class="info-card-item picture">
+      <img class="product-image" [src]="productImgUrl" alt="">
+    </div>
+  </div>
+</div>
+<!-- 端口列表或者是预览弹框-->
+<nz-modal *ngIf="showGatewayModal"
+          [(nzVisible)]="showGatewayModal"
+          [nzNoAnimation]="true"
+          [nzFooter]="modalFooter"
+          [nzWidth]="800"
+          (nzOnCancel)="showGatewayModal=false"
+          [nzTitle]="productLanguage.preview">
+  <app-product-gateway-update [productId]="productId" [showBtn]="false"></app-product-gateway-update>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>
+<!--端口列表弹框-->
+<nz-modal *ngIf="showPortModal"
+          [(nzVisible)]="showPortModal"
+          [nzNoAnimation]="true"
+          [nzFooter]="modalFooter"
+          nzWidth="50%"
+          nzWrapClassName="vertical-center-modal"
+          (nzOnCancel)="showPortModal=false"
+          [nzTitle]="productLanguage.portInformation">
+  <xc-table
+    [dataSet]="portDataList"
+    [pageBean]="portPageModel"
+    [tableConfig]="portTableConfig"
+    (pageChange)="onPageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>

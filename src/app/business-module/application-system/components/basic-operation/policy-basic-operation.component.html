@@ -1,0 +1,49 @@
+<div class="basic-btn">
+  <h4 class="title">{{languageTable.contentList.basicOperation}}</h4>
+  <div class="group-btn">
+    <!--编辑-->
+    <div class="operation"
+         [appAccessPermission]="strategyPermissionModel.primaryEditKey"
+         (click)="handleOperation(OperationButtonEnum.edit)">
+      <div class="operation-list">
+        <div class="operation-img">
+          <i class="icon-fiLink fiLink-edit-facility iconfont"></i>
+        </div>
+        <div class="text">{{languageTable.strategyList.strategyEdit}}</div>
+      </div>
+    </div>
+    <!--删除-->
+    <div class="operation"
+         [appAccessPermission]="strategyPermissionModel.primaryDeleteKey"
+         (click)="handleOperation(OperationButtonEnum.delete)">
+      <div class="operation-list">
+        <div class="operation-img">
+          <i class="iconfont icon-fiLink fiLink-delete-facility"></i>
+        </div>
+        <div class="text">{{languageTable.strategyList.strategyDelete}}</div>
+      </div>
+    </div>
+    <!--启用-->
+    <div class="operation"
+         [appAccessPermission]="strategyPermissionModel.primaryEnableKey"
+         (click)="handleOperation(OperationButtonEnum.enable)">
+      <div class="operation-list">
+        <div class="operation-img">
+          <i class="icon-fiLink fiLink-enable iconfont"></i>
+        </div>
+        <div class="text">{{languageTable.strategyList.enable}}</div>
+      </div>
+    </div>
+    <!--禁用-->
+    <div class="operation"
+         [appAccessPermission]="strategyPermissionModel.primaryDisableKey"
+         (click)="handleOperation(OperationButtonEnum.disable)">
+      <div class="operation-list">
+        <div class="operation-img">
+          <i class="icon-fiLink fiLink-disable-o iconfont"></i>
+        </div>
+        <div class="text">{{languageTable.strategyStatus.close}}</div>
+      </div>
+    </div>
+  </div>
+</div>

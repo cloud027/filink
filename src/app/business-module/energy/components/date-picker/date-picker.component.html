@@ -1,0 +1,74 @@
+<div [ngSwitch]="pickType" class="date-pick-box">
+  <!-- 时分秒选择 -->
+  <ng-template [ngSwitchCase]="timeSelectType.time">
+    <div class="picker-box time-select-box">
+      <app-time-picker-range
+        [timeRange]="[timeStartTime, timeEndTime]"
+        [format]="'HH:mm'"
+        [freeControl]="true"
+        (confirmTimeRange)="onTimeChange($event)"
+      ></app-time-picker-range>
+    </div>
+  </ng-template>
+
+  <!-- 日期选择 -->
+  <ng-template [ngSwitchCase]="timeSelectType.day">
+    <div class="picker-box date-select-box">
+      <nz-range-picker
+        [(ngModel)]="dataPicker"
+        style="width: 100%"
+        [nzFormat]="'yyyy/MM/dd'"
+        (ngModelChange)="dataPickerChange($event)"
+      ></nz-range-picker>
+    </div>
+  </ng-template>
+
+  <!-- 月份选择 -->
+  <ng-template [ngSwitchCase]="timeSelectType.month">
+    <div class="picker-box month-select-box">
+      <nz-month-picker
+        [nzDisabledDate]="disabledStartMonth"
+        [(ngModel)]="startMonthValue"
+        class="picker-item"
+        [nzFormat]="'yyyy/MM'"
+        (ngModelChange)="onModelChange($event, 'month')"
+        (nzOnOpenChange)="handleStartOpenChange($event, 'month')"
+        [nzPlaceHolder]="language.picInfo.chooseMonth"
+      ></nz-month-picker>
+      ~
+      <nz-month-picker
+        [nzDisabledDate]="disabledEndMonth"
+        [(ngModel)]="endMonthValue"
+        class="picker-item"
+        [nzFormat]="'yyyy/MM'"
+        (ngModelChange)="onModelChange($event, 'month')"
+        (nzOnOpenChange)="handleEndOpenChange($event, 'month')"
+        [nzPlaceHolder]="language.picInfo.chooseMonth"
+      ></nz-month-picker>
+    </div>
+  </ng-template>
+
+  <!-- 年份选择 -->
+  <ng-template [ngSwitchCase]="timeSelectType.year">
+    <div class="picker-box year-select-box">
+      <nz-year-picker
+        [nzDisabledDate]="disabledStartYear"
+        class="picker-item"
+        [(ngModel)]="startYearValue"
+        (ngModelChange)="onModelChange($event, 'year')"
+        (nzOnOpenChange)="handleStartOpenChange($event, 'year')"
+        [nzPlaceHolder]="language.picInfo.chooseYear"
+      ></nz-year-picker>
+      ~
+      <nz-year-picker
+        [nzDisabledDate]="disabledEndYear"
+        class="picker-item"
+        [(ngModel)]="endYearValue"
+        (ngModelChange)="onModelChange($event, 'year')"
+        (nzOnOpenChange)="handleEndOpenChange($event, 'year')"
+        [nzPlaceHolder]="language.picInfo.chooseYear"
+      ></nz-year-picker>
+    </div>
+  </ng-template>
+  <!-- 年份选择 -->
+</div>

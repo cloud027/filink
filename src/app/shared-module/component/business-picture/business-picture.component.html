@@ -1,0 +1,10 @@
+<!--箱AB面选择-->
+<nz-radio-group [(ngModel)]="side" *ngIf="isShow" style="margin:10px" (ngModelChange)="sideChange()">
+  <label nz-radio [nzValue]="0">{{language.box_A_surface}}</label>
+  <label nz-radio [nzValue]="1">{{language.box_B_surface}}</label>
+</nz-radio-group>
+<div *ngIf="!ifBoxData" class="no-data">{{language.noDataAvailableForTheTimeBeing}}</div>
+<div class="business-picture-canvas" id="business-picture-canvas">
+
+</div>
+

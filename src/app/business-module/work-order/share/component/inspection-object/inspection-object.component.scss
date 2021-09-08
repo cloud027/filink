@@ -1,0 +1,199 @@
+@import "../../../../../style-module/config.scss";
+$index-facility-m-height: 32px;
+// 背景色，透明度0.5
+.map-selector-model-disk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+// 弹出框
+.map-selector-model {
+  background: $bg-c-w;
+  z-index: 99;
+  border-radius: 4px;
+  .map-selector-title {
+    height: 40px;
+    line-height: 40px;
+    .map-selector-title-font {
+      padding-left: 26px;
+      font-weight: bold;
+    }
+    .map-selector-pointer {
+      float: right;
+      width: 50px;
+      text-align: center;
+      cursor: pointer;
+      .map-selector-icon{
+        font-size: 16px;
+        color: $color;
+      }
+    }
+  }
+  //footer
+  .map-selector-footer {
+    height: 58px;
+    padding-right: 8px;
+    text-align: right;
+    line-height: 44px;
+    .link-button {
+      margin-right: 10px;
+    }
+  }
+}
+.handle-icon {
+  color: $color;
+}
+// 查询区间模块
+.select-container {
+  position: absolute;
+  left: 35px;
+  top: 50px;
+  width: 400px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background-color: $menu-font-color;
+  .map-select {
+    width: 110px;
+    padding-right: 5px;
+    text-align: center;
+    border-right: 1px solid $border-color;
+    .map-search-type {
+      color:$menu-hover-color;
+      &.map-search-type-width {
+        min-width: 50px;
+      }
+    }
+  }
+
+  // 地图搜索
+  .map-search {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    .map-search-name {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      width: 100%;
+      .address-input {
+        border: none;
+        border-radius: 0;
+      }
+      .address-input::placeholder {
+        color: $equipment-status-lost;
+      }
+      .address-input::-moz-placeholder {
+        color: $equipment-status-lost;
+        opacity: 1;
+      }
+    }
+    .b-map-location-search {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      #r-result {
+        margin-top: 5px;
+        .map-input {
+          border: none;
+          outline: none;
+          width: 270px;
+          padding-left: 11px;
+        }
+        input::placeholder {
+          color: $equipment-status-lost;
+        }
+      }
+      #_searchResultPanel {
+        border: 1px solid $equipment-status-lost;
+        margin-top: 10px;
+        width: 150px;
+        height: auto;
+        display: none;
+      }
+    }
+  }
+}
+
+.progress-bar {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  top: 49%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 5px 15px 5px 10px;
+}
+
+// 放大缩小
+.zoom-control {
+  bottom: 105px;
+  right: 30px;
+  top: auto;
+  left: auto;
+  white-space: nowrap;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  .zoom-control-item {
+    width: $index-facility-m-height;
+    height: $index-facility-m-height;
+    text-align: center;
+    line-height: $index-facility-m-height;
+    font-size: 20px;
+    background-color: $bg-c-w;
+    border: solid 1px $table-bg-color;
+    .zoom-margin {
+      margin-top: 8px;
+    }
+  }
+}
+
+// 表格
+.table-left {
+  border-left: 1px solid $separation-color;
+  width: 50%;
+  .table-content {
+    overflow: auto;
+    margin-bottom: 0 !important;
+    padding: 8px 10px;
+    .table-width{
+      width: 100%;
+      &.table-auto{
+        overflow-x: visible;
+        overflow-y: hidden;
+        }
+      }
+    }
+}
+//内容展示区
+.map-selector-body {
+  border-top: 1px solid $separation-color;
+  border-bottom: 1px solid $separation-color;
+  width:1000px;
+  display: flex;
+  margin: 0 auto;
+  .right-map {
+    flex: 1;
+    .right-map-card {
+      position: relative;
+      height: 504px;
+      border: none;
+      .map-container {
+        height: 425px;
+        margin-top: 30px;
+      }
+    }
+  }
+}
+.column-icon{
+  margin-right: 5px;
+}

@@ -1,0 +1,27 @@
+<nz-modal
+  [nzVisible]="isVisible"
+  (nzVisibleChange)="nzVisibleChange($event)"
+  [nzTitle]="languageTable.strategyList.programList"
+  (nzOnOk)="handleProgramOk()"
+  [nzFooter]="modalFooter"
+  nzWidth="70%" (nzOnCancel)="handleCancel()">
+  <xc-table
+    [dataSet]="programData"
+    [pageBean]="programPageBean"
+    (pageChange)="programPageChange($event)"
+    [tableConfig]="tableProgram">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"  (click)="handleProgramOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()"  >{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--设置指令 节目名称 设备列表单选框-->
+<ng-template #radioProgramTemp let-data="data">
+  <nz-radio-group
+    [(ngModel)]="selectedProgram.id"
+    (ngModelChange)="selectedProgramChange($event, data)">
+    <label nz-radio [nzValue]="data.programId"></label>
+  </nz-radio-group>
+</ng-template>

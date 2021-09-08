@@ -1,0 +1,172 @@
+@import "~src/app/style-module/config";
+
+.info-window-a {
+  position: relative;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgba(256, 256, 256, 0.8);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px 14px 15px;
+
+  .info-frame {
+    margin-bottom: 10px
+  }
+
+  .info-window-a-title {
+    color: $index-window-color;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .info-window-a-name {
+    display: flex;
+    // height: 25px;
+    align-items: center;
+
+
+    .info-window-a-arae-name {
+      margin-left: 15px;
+      font-size: 12px;
+    }
+
+    .info-window-a-count {
+      margin-left: 15px;
+      font-size: 13px;
+      color: #36cfc9;
+    }
+
+    .info-window-a-prompt {
+      text-align: center;
+      color: $page-font-color;
+      font-size: 13px;
+    }
+  }
+
+  .info-window-a-plan {
+    width: 200px;
+    margin-top: 5px;
+    color: $page-font-color;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .info-window-a-model {
+      width: 99px;
+      height: 20px;
+      display: flex;
+
+      .info-window-a-model-name {
+        width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 13px;
+      }
+
+      .info-window-a-model-count {
+        width: 20%;
+        color: $detail-text-color;
+        font-size: 13px;
+      }
+    }
+  }
+
+
+  .info-window-a-device {
+    margin-top: 5px;
+    color: $page-font-color;
+    font-size: 13px;
+    display: inline-block;
+  }
+
+  .info-window-a-icon {
+    background: $index-icon-color no-repeat center;
+    text-align: center;
+    color: $sp-icon-color-4;
+    width: 20px;
+    height: 20px;
+    margin-right: 22px;
+    border-radius: 2px;
+    background-size: 100% 100%;
+    line-height: 20px;
+  }
+
+  .info-window-a-device-count {
+    width: 20px;
+    font-size: 12px;
+    text-align: center;
+    color: $detail-text-color;
+  }
+
+  .info-window-a-alarm {
+    display: flex;
+    margin-top: 4px;
+
+    .info-window-a-alarm-critical {
+      background-color: $statistics-alarm-urgent;
+    }
+
+    .info-window-a-alarm-urgent {
+      margin-right: 60px;
+      color: $index-window-font-color;
+      line-height: 25px;
+    }
+
+    .info-window-a-alarm-main {
+      background-color: $statistics-alarm-serious;
+    }
+
+    .info-window-a-alarm-mains {
+      color: $index-window-font-color;
+      line-height: 25px;
+    }
+
+    .info-window-a-running {
+      background-color: $toBeBuilt;
+    }
+
+    .info-window-a-runnable {
+      background-color: $underConstruction;
+    }
+
+  }
+
+  .info-window-a-bottom-alarm {
+    display: flex;
+    margin-top: 0px;
+
+    .info-window-a-alarm-secondary {
+      background-color: $handle-processing-color;
+    }
+
+    .info-window-a-alarm-secondarys {
+      margin-right: 60px;
+      color: $index-window-font-color;
+      line-height: 25px;
+    }
+
+    .info-window-a-alarm-prompt {
+      background-color: $statistics-alarm-prompt;
+    }
+
+    .info-window-a-alarm-prompts {
+      color: $index-window-font-color;
+      line-height: 25px;
+    }
+
+    .info-window-a-end {
+      background-color: $hasBeenBuilt;
+    }
+
+
+  }
+
+  .info-window-a-alarm-name {
+    text-align: center;
+    height: 20px;
+    width: 40px;
+    color: $sp-icon-color-4;
+    margin-right: 5px;
+    margin-top: 4px;
+  }
+
+}

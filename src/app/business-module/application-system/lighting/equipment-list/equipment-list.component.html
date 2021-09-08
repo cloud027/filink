@@ -1,0 +1,52 @@
+<div class="equipment">
+  <div class="equipment-tabs">
+
+    <!--设备列表和分组列表地图-->
+    <app-map-list *ngIf="listType !==listTypeEnum.loopList && hasEquipmentMapAuth"
+                  [listType]="listType"
+                  (showTableChange)="onShowTable($event)"
+                  (emptySelectChange)="emptySelectChange($event)">
+    </app-map-list>
+
+    <!--回路列表地图-->
+    <app-loop-list-map *ngIf="groupType !== applicationFinal.release
+    && groupType !== applicationFinal.broadcast && listType === listTypeEnum.loopList
+    && checkHasRole(loopAuthCode)"
+                       [loopEventChange]="loopData"
+                       (refreshDataEmit)="queryConditionChange($event)"
+                       (showTableChange)="onShowTable($event)">
+    </app-loop-list-map>
+
+    <div class="mar-t-20" [hidden]="!isShowTable">
+      <nz-tabset>
+        <!--设备列表-->
+        <nz-tab *ngIf="isAuthEquipment"
+                [nzTitle]="languageTable.equipmentTable.equipmentList"
+                (nzClick)="listTypeChange(listTypeEnum.equipmentList)">
+          <app-equipment (selectDataChange)="onSelectEquipment($event)"></app-equipment>
+        </nz-tab>
+        <!--分组列表-->
+        <nz-tab *ngIf="isAuthGroup"
+                [nzTitle]="languageTable.equipmentTable.groupList"
+                (nzClick)="listTypeChange(listTypeEnum.groupList)">
+          <app-group [groupType]="groupType"
+                     (selectDataChange)="onSelectGroup($event)"
+          ></app-group>
+        </nz-tab>
+        <!--回路列表-->
+        <nz-tab *ngIf="groupType !== applicationFinal.release
+        && groupType !== applicationFinal.broadcast
+        && groupType !== applicationFinal.call
+        &&checkHasRole(loopAuthCode)"
+                [nzTitle]="languageTable.equipmentTable.loopList"
+                (nzClick)="listTypeChange(listTypeEnum.loopList)">
+          <ng-template nz-tab>
+            <app-loop [filterValueChange]="filterValueMap"
+                      (loopEvent)="loopEvent($event)">
+            </app-loop>
+          </ng-template>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+</div>

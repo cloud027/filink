@@ -1,0 +1,11 @@
+<div class="timer-selector">
+  <span *ngFor="let item of timeList" [ngClass]="{'active': dateType === item.value}"
+        (click)="changeDateType(item.value)">{{item.label}}</span>
+  <nz-range-picker
+    [nzSize]="'small'"
+    [(ngModel)]="date"
+    [nzStyle]="{'width': '230px'}"
+    [nzAllowClear]="allowClear"
+    (ngModelChange)="changeDateType($event)">
+  </nz-range-picker>
+</div>

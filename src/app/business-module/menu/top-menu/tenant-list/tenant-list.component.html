@@ -1,0 +1,34 @@
+<nz-modal
+  [(nzVisible)]="isShow"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzClosable]= "true"
+  [nzKeyboard]="false"
+  [nzMaskClosable]="false"
+  (nzOnCancel)= "handleCancel()"
+  [nzWidth]="900">
+  <ng-template #modalTitle>
+    <div class="count-position">{{this.language.tenantList}}</div>
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="tenantPageChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" [nzLoading]="isLoading" [disabled]="submitBtnIsDisable" (click)="switchAccountToTenant()">{{this.language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{this.language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+<!--触发条件---------设备列表单选-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group
+    [(ngModel)]="selectId"
+    (ngModelChange)="selectedChange($event, data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>

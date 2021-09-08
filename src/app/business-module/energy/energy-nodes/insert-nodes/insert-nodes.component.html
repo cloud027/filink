@@ -1,0 +1,198 @@
+<!--表单-->
+<nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+  <p class="area-detail-title">{{ pageTitle }}</p>
+  <div class="form-box">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="margin-top20 margin-left20">
+      <button class="link-button margin-right20" nz-button nzType="primary" [nzLoading]="isLoading"
+        [disabled]="isDisabled" (click)="addFacility()">
+        {{ language.handleOk }}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">
+        {{ language.handleCancel }}
+      </button>
+    </div>
+  </div>
+</nz-spin>
+
+<!-- 已有设备模板 -->
+<ng-template #existingEquipmentTmp>
+  <div class="auto-wrapper">
+    <input placeholder="{{ language.picInfo.pleaseChoose }}" nz-input [(ngModel)]="existingEquipmentValue"
+      onfocus="blur()" />
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" nz-tooltip="{{ language.existingEquipment }}"
+      (click)="equmentModalClick(EnergyOpearEquipmentTX.equipment)"></i>
+  </div>
+</ng-template>
+
+<!--型号-->
+<ng-template #modelByTypeTemplate>
+  <div class="custom-template">
+    <input class="input-name" nz-input [disabled]="productTempDisabled" readonly [(ngModel)]="productName" />
+    <span [hidden]="saveEquipmentModel.isSelectExistDevice" class="icon-template open-button"
+      (click)="showProductSelectorModal()"><i class="icon-fiLink fiLink-search-index iconfont"></i></span>
+  </div>
+</ng-template>
+
+<ng-template #equipmentSelect>
+  <div class="alarm-tab">
+    <xc-table #tableCom [dataSet]="_dataSet" [pageBean]="pageBean" [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--告警单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedProductId" (ngModelChange)="selectedProductChange($event, data)">
+    <label nz-radio [nzValue]="data.productId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+    title="{{ data.typeCode | translate: deviceTypeEnum:'facility.config' }}">
+    {{ data.typeCode | translate: deviceTypeEnum:"facility.config" }}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+    title="{{ data.typeCode | translate: equipmentTypeEnum:languageEnum.facility }}">
+    {{ data.typeCode | translate: equipmentTypeEnum:languageEnum.facility }}
+  </span>
+</ng-template>
+
+<!--项目选择模板-->
+<ng-template #projectSelector>
+  <div class="auto-wrapper">
+    <input nz-input [ngModel]="selectSelectProject.projectName" onfocus="blur()" readonly="readonly" [placeholder]="commonLanguage.clickSelect">
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" (click)="showProjectSelectorModal()"></i>
+  </div>
+</ng-template>
+<app-select-project *ngIf="projectSelectVisible" [multiple]="false" [selectList]="[selectSelectProject]"
+  [(isVisible)]="projectSelectVisible" (selectDataChange)="projectSelectChange($event)"></app-select-project>
+
+
+<!--区域选择模板-->
+<ng-template #areaSelector let-col="col">
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly" class="input-name" nz-input placeholder="{{ language.picInfo.pleaseChoose }}"
+        [(ngModel)]="selectedAreaName" [disabled]="saveEquipmentModel.isSelectExistDevice" />
+    </label>
+    <i nz-tooltip="{{ language.areaId }}" [ngStyle]="{
+        cursor: saveEquipmentModel.isSelectExistDevice ? 'not-allowed' : 'pointer'
+      }" class="icon-template" (click)="onClickShowArea()">
+      <span class="icon-fiLink fiLink-search-index iconfont"> </span>
+    </i>
+  </div>
+</ng-template>
+<!--区域选择器-->
+<xc-tree-area-selector *ngIf="areaSelectVisible" [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig" [canClear]="false" (selectDataChange)="areaSelectChange($event)">
+</xc-tree-area-selector>
+
+<!-- 采集设施 -->
+<ng-template #collectionFacSelector>
+  <div class="auto-wrapper">
+    <input placeholder="{{ language.picInfo.pleaseChoose }}" nz-input onfocus="blur()" [(ngModel)]="splitDeviceName" />
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" nz-tooltip="{{ language.collectDeviceId }}"
+      (click)="modelShowClick(EnergyInsertCollectionType.device)"></i>
+  </div>
+</ng-template>
+<!-- 采集设施 弹出框 -->
+<!--设施列表选择器-->
+<facility-list-selector-component *ngIf="conlectionSSVisible" [(facilityVisible)]="conlectionSSVisible"
+  [multiple]="true" [filterConditions]="facilityFilter" [energyBizParams]="energyBizParams"
+  title="{{ language.collectDeviceId }}" [selectFacilityIds]="selectLinkDeviceIds"
+  (selectDataChange)="onCollectionDataChange($event)">
+</facility-list-selector-component>
+
+<!-- 采集设备 -->
+<ng-template #collectionEquipmentSelector>
+  <div class="auto-wrapper">
+    <input placeholder="{{ language.picInfo.pleaseChoose }}" nz-input onfocus="blur()"
+      [(ngModel)]="splitCollectEquipmentName" />
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" nz-tooltip="{{ language.collectEquipmentId }}"
+      (click)="modelShowClick(EnergyInsertCollectionType.equipment)"></i>
+  </div>
+</ng-template>
+<equipment-list-selector-component *ngIf="collectionEquipmentVisible" [(equipmentVisible)]="collectionEquipmentVisible" [isCheckOkBtn]="false"
+  [filterConditions]="collectionEquipmentFilterData" [multiple]="true" [selectEquipments]="selectCollectionEquipment"
+  [energyBizParams]="energyEquipmentBizParams" title="{{ language.collectEquipmentId }}"
+  (selectDataChange)="onSelectEquipment($event)">
+</equipment-list-selector-component>
+
+<!-- 采集回路 -->
+<ng-template #collectionLoopSelector>
+  <div class="auto-wrapper">
+    <input placeholder="{{ language.picInfo.pleaseChoose }}" nz-input [(ngModel)]="splitCollectLoopName"
+      onfocus="blur()" />
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" nz-tooltip="{{ language.collectLoopId }}"
+      (click)="modelShowClick(EnergyInsertCollectionType.loop)"></i>
+  </div>
+</ng-template>
+
+<!-- 采集回路 弹出框 -->
+<app-collection-hl *ngIf="collectionHLVisible" [(collectionHLVisible)]="collectionHLVisible"
+  [selectEquipments]="selectLinkLoopIds" title="{{ language.collectLoopId }}"
+  [tranFilterConditions]="loopFilterConditions" (selectDataChange)="onCollectionHLDataChange($event)">
+</app-collection-hl>
+
+<!-- 通信设备 -->
+<ng-template #communicationEquipmentor>
+  <div class="auto-wrapper">
+    <input placeholder="{{ language.picInfo.pleaseChoose }}" nz-input
+      [(ngModel)]="saveEquipmentModel.equipmentInfo.gatewayName" onfocus="blur()"
+      [disabled]="saveEquipmentModel.isSelectExistDevice" />
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" [ngStyle]="{
+        cursor: saveEquipmentModel.isSelectExistDevice ? 'not-allowed' : 'pointer'
+      }" nz-tooltip="{{ language.communicationEquipment }}"
+      (click)="equmentModalClick(EnergyOpearEquipmentTX.communication)"></i>
+  </div>
+</ng-template>
+<!-- 已有设备  通信设备 模板弹出框 确认 -->
+<app-exist-equipment *ngIf="equipmentedVisible" [(equipmentVisible)]="equipmentedVisible"
+  [selectEquipmentId]="selectedEquipmentId" tableTitle="{{ tableTitle }}"
+  (selectDataChange)="onExistEquipmentDataChange($event)" [equipmentModalType]="equipmentModalType"
+  [filterConditionsData]="gatewayFilter">
+</app-exist-equipment>
+
+<!--所属设施 模板-->
+<ng-template #facilitiesSelector>
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly" class="input-name" nz-input placeholder="{{ language.picInfo.pleaseChoose }}"
+        [(ngModel)]="saveEquipmentModel.equipmentInfo.deviceName" />
+    </label>
+    <i nz-tooltip="{{ language.nodesDetails.facilities }}" class="icon-template" (click)="mapVisible = true">
+      <span class="icon-fiLink fiLink-search-index iconfont"> </span>
+    </i>
+  </div>
+</ng-template>
+<!--所属设施 设施 列表选择器-->
+<facility-list-selector-component *ngIf="mapVisible" [(facilityVisible)]="mapVisible" [multiple]="false"
+  [filterConditions]="facilityFilter" [selectFacilityId]="saveEquipmentModel.equipmentInfo.deviceId"
+  title="{{ language.nodesDetails.facilities }}" (selectDataChange)="facilitieSelectDataChange($event)">
+</facility-list-selector-component>
+
+<!--挂载位置-->
+<ng-template #positionByDeviceTemplate let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select class="mount-position-select" formControlName="mountPosition"
+      nzPlaceHolder="{{ language.picInfo.pleaseChoose }}" (click)="openPosition()">
+      <xc-nz-option *ngFor="let item of positionSelectList" [nzLabel]="item" [nzValue]="item">
+      </xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>
+<!--网关端口选择器-->
+<ng-template #gatewayPortTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select nzPlaceHolder="{{ language.picInfo.pleaseChoose }}" formControlName="portNo"
+      [(ngModel)]="saveEquipmentModel.equipmentInfo.portNo">
+      <xc-nz-option *ngFor="let item of gatewayPortList" [nzLabel]="item" [nzValue]="item">
+      </xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>

@@ -1,0 +1,32 @@
+<!--亮度调节-->
+<div>
+  <div class="instruct-list">
+    <div nz-col nzSpan="8" class="title-label">
+      <p class="strategy-title">录音设备</p>
+    </div>
+    <nz-select nz-col nzSpan="16" [(ngModel)]="sourceId" (ngModelChange)="changeProgram()">
+      <nz-option *ngFor="let equipment of equipmentList"
+                 [nzValue]="equipment.sequenceId" [nzLabel]="equipment.equipmentName"></nz-option>
+    </nz-select>
+  </div>
+  <div class="instruct-list">
+    <div class="instruct-title">
+    <span class="light">
+      <i class="icon-fiLink-l iconfont fiLink-filink-yinliang-icon volume"></i>
+    </span>
+      <span>
+      {{languageTable.equipmentTable.volume}}
+    </span>
+    </div>
+    <div class="instruct-volume">
+      <nz-slider
+        [nzMin]="sliderValue.min"
+        (nzOnAfterChange)="handleConvenientChange()"
+        [nzMax]="volumeMax"
+        [(ngModel)]="onlineVolumeValue">
+      </nz-slider>
+    </div>
+    <div>{{onlineVolumeValue}}</div>
+  </div>
+</div>
+

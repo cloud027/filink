@@ -1,0 +1,41 @@
+<!--我的关注-->
+<div class="my-attention-list-panel">
+  <!--  设备设施列表-->
+  <div class="my-attention-list">
+    <div class="facility-list-container">
+      <!--设施列表-->
+      <div class="left-panel-tabs">
+        <div class="left-panel-tab tab-selected">
+          <div class="text-content hidden" *ngIf="facilityOrEquipment === facilityListTypeEnum.facilitiesList"
+               title="{{indexLanguage.facilitiesList}}">{{indexLanguage.facilitiesList}}</div>
+          <div class="text-content hidden" *ngIf="facilityOrEquipment === facilityListTypeEnum.equipmentList"
+               title="{{indexLanguage.equipmentList}}">{{indexLanguage.equipmentList}}</div>
+        </div>
+        <div class="filter-icon" (click)="showFilter()" title="{{indexLanguage.filter}}">
+          <span><i class="icon-l iconfont fiLink-filter index-icon-l"></i></span>
+        </div>
+      </div>
+
+      <!--设施列表表格-->
+      <div class="facility-content">
+        <div *ngIf="facilityOrEquipment === facilityListTypeEnum.facilitiesList" class="facility-table">
+          <xc-table [dataSet]="facilityListDataSet"
+                    [pageBean]="facilityListPageBean"
+                    [tableConfig]="facilityListTableConfig"
+                    (pageChange)="pageFacilityList($event)"
+          >
+          </xc-table>
+        </div>
+        <!--设备列表表格-->
+        <div *ngIf="facilityOrEquipment === facilityListTypeEnum.equipmentList" class="facility-table">
+          <xc-table [dataSet]="equipmentListDataSet"
+                    [pageBean]="equipmentListPageBean"
+                    [tableConfig]="equipmentListTableConfig"
+                    (pageChange)="pageEquipmentList($event)"
+          >
+          </xc-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

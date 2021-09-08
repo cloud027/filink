@@ -1,0 +1,47 @@
+<div class="dynamic-rule">
+  <!--标题-->
+  <div><span class="page-detail-title">{{pageTitle}}</span></div>
+  <!--表单-->
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+  <!--底部按钮-->
+  <div class="temp-button">
+    <button class="link-button" nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="!isFormDisabled"
+            (click)="saveFormData()">{{commonLanguage.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancel}}</button>
+  </div>
+  <!--任务数据-->
+  <ng-template #taskDataTemp>
+    <button class="link-button" nz-button nzType="danger" (click)="selectFile()">{{commonLanguage.uploadFile}}</button>
+    <div *ngIf="fileName" class="file-name">{{fileName}}</div>
+  </ng-template>
+  <!--周期执行时间点-->
+  <ng-template #periodTimeTemp let-formGroup="formGroup" let-col="col">
+    <form [formGroup]="formGroup">
+      <nz-time-picker formControlName="periodExecutionTime" [nzClearText]="commonLanguage.cleanUp"></nz-time-picker>
+    </form>
+  </ng-template>
+  <!--是否立即启动-->
+  <ng-template #autoStart>
+    <nz-radio-group [(ngModel)]="isStartAction" name="action">
+      <label nz-radio [nzValue]="startEnum.enable">{{alarmLanguage.start}}</label>
+      <label nz-radio [nzValue]="startEnum.disable">{{alarmLanguage.stop}}</label>
+    </nz-radio-group>
+  </ng-template>
+</div>
+
+<!--上传文件-->
+<app-web-upload
+  [(xcVisible)]="isVisible"
+  [businessId]="businessId"
+  [callBakUrl]="''"
+  [callBakParams]="''"
+  [uploadTitle]="''"
+  [uploadMsg]="uploadMsg"
+  [defaultAccepts]="defaultAccepts"
+  [isNeedBtn]="false"
+  (outputFiles)="getInputFile($event)"
+  (closeModal)="clearFile($event)">
+</app-web-upload>

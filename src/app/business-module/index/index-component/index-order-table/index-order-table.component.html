@@ -1,0 +1,84 @@
+<!--工单列表头-->
+<div class="order-list-title-text" *ngIf="this.orderData.length">
+  <div class="select">
+    <nz-select
+      [ngModel]="selectWorkOrderType"
+      (ngModelChange)="workOrderChange($event)"
+      class="select-option"
+      nzSize="small"
+      nzAllowClear="false"
+      [nzPlaceHolder]=titleName>
+      <nz-option *ngFor="let item of orderData" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+    </nz-select>
+  </div>
+  <div class="batch-handle-button" title="{{indexLanguage.filter}}" (click)="showSearch()">
+    <span><i class="icon-l iconfont fiLink-filter index-icon-l"></i></span>
+  </div>
+  <div class="text-more" title="{{indexLanguage.more}}" (click)="goToWorkOrderPage()">
+    <span><i class="icon-l iconfont fiLink-more iconfont-style index-icon-l"></i></span>
+  </div>
+</div>
+<div *ngIf="orderData.length">
+<!--巡检工单列表-->
+<div [hidden]="selectWorkOrderType !== indexWorkOrderTypeEnum.inspection" class="work-order-table" [appTenantPermission]="'1-1-3-4'">
+  <xc-table [dataSet]="workOrderInspectionDataSet"
+            [pageBean]="workOrderInspectionPageBean"
+            [tableConfig]="workOrderInspectionTableConfig"
+            (pageChange)="pageWorkOrderInspection($event)"
+  >
+  </xc-table>
+</div>
+
+<!--销障工单列表-->
+<div [hidden]="selectWorkOrderType !== indexWorkOrderTypeEnum.clearFailure" class="work-order-table" [appTenantPermission]="'1-1-3-5'">
+  <xc-table [dataSet]="workOrderClearDataSet"
+            [pageBean]="workOrderClearPageBean"
+            [tableConfig]="workOrderClearTableConfig"
+            (pageChange)="pageWorkOrderClear($event)"
+  >
+  </xc-table>
+</div>
+  <!--告警确认工单列表-->
+  <div [hidden]="selectWorkOrderType !== indexWorkOrderTypeEnum.confirm" class="work-order-table" [appTenantPermission]="'1-1-3-7'">
+    <xc-table [dataSet]="workOrderConfirmDataSet"
+              [pageBean]="workOrderConfirmPageBean"
+              [tableConfig]="workOrderConfirmTableConfig"
+              (pageChange)="pageWorkOrderConfirm($event)"
+    >
+    </xc-table>
+  </div>
+  <!--安装工单列表-->
+  <div [hidden]="selectWorkOrderType !== indexWorkOrderTypeEnum.install" class="work-order-table" [appTenantPermission]="'1-1-3-6'">
+    <xc-table [dataSet]="workOrderInstallDataSet"
+              [pageBean]="workOrderInstallPageBean"
+              [tableConfig]="workOrderInstallTableConfig"
+              (pageChange)="pageWorkOrderInstall($event)"
+    >
+    </xc-table>
+  </div>
+<!--拆除工单列表-->
+<div [hidden]="selectWorkOrderType !== indexWorkOrderTypeEnum.remove" class="work-order-table" [appTenantPermission]="'1-1-3-8'">
+  <xc-table [dataSet]="workOrderRemoveDataSet"
+            [pageBean]="workOrderRemovePageBean"
+            [tableConfig]="workOrderRemoveTableConfig"
+            (pageChange)="pageWorkOrderRemove($event)"
+  >
+  </xc-table>
+</div>
+</div>
+<div *ngIf="orderData.length === 0" class="no-role">{{workOrderLanguage.noProcRole}}</div>
+<!--工单状态装换模板-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.statusName}}">
+    <span [ngClass]="data.statusClass"></span>
+    {{data.statusName}}
+  </div>
+</ng-template>
+
+
+<!--工单进度转换模板-->
+<ng-template #progressSpeed let-data="data">
+  <span>{{data.progressSpeed}}%</span>
+</ng-template>
+
+

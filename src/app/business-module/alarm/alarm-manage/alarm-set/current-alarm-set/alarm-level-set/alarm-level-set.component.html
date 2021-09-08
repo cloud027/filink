@@ -1,0 +1,85 @@
+<div class="alarm-level-set">
+  <div class="alarm-common-title">{{language.alarmLevelSet}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+<!--告警级别-->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="alarm-flex">
+    <span class="alarm-left">{{data.alarmLevelCode | translate: alarmLevelEnum: languageEnum.alarm}}</span>
+  </div>
+</ng-template>
+<!--告警颜色-->
+<ng-template #alarmColorTemp let-data="data">
+  <div>
+    <div class="box-icon" [ngStyle]="data.color.style"></div>
+    <span class="alarm-left">{{data.alarmLevelColor | translate: alarmSetLevelColorEnum: languageEnum.alarm}}</span>
+  </div>
+</ng-template>
+<!--是否播放提示音-->
+<ng-template #isPlayTemp let-data="data">
+  <div>
+      <span *ngIf="data.isPlay === alarmSoundEnum.yes">{{language.yes}}</span>
+      <span *ngIf="data.isPlay === alarmSoundEnum.no">{{language.no}}</span>
+  </div>
+</ng-template>
+
+<!-- 编辑告警设置 -->
+<nz-modal [(nzVisible)]="isVisible"
+          [nzTitle]="modalTitle"
+          [nzContent]="modalContent"
+          [nzMaskClosable]="false"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="editHandleCancel()">
+  <ng-template #modalTitle>
+    {{language.editAlarmLevel}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-form [column]="tableColumnEdit" (formInstance)="formInstance($event)"></xc-form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="editHandle()" [nzLoading]="isLoading" class="link-button" [disabled]="!isSubmit">{{language.okText}}</button>
+    <button nz-button nzType="danger" (click)="editHandleCancel()" class="link-button">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+<!-- 音乐开关 -->
+<ng-template #musicSwitchTemp let-data="data">
+  <div class="alarm-flex">
+    <i class="icon icon_alarm_play alarm-align" (click)="playMusic(data)"></i>
+    <span class="music-left">{{data.alarmLevelSound}}</span>
+  </div>
+</ng-template>
+
+<!-- 播放次数 -->
+<ng-template #playCountTemp let-formGroup="formGroup" let-col="col">
+  <div class="alarm-flex">
+    <input nz-input  nzSize="default" [(ngModel)]="countValue" (keyup)="onKey($event)" oninput="value=value.replace(/^[1-5]\d*$/g,'')" maxlength="1">
+    <span class="plus-left" (click)="plus()"><i class="icon icon_plus alarm-align"></i></span>
+    <span class="minus-left" (click)="minus()"><i class="icon icon_minus alarm-align"></i></span>
+  </div>
+</ng-template>
+<!--告警颜色选择-->
+<ng-template #selectOptionsTemp let-formGroup="formGroup" let-col="col">
+  <nz-select [(ngModel)]="resultSelectedColor">
+    <ng-container *ngFor="let option of selectOptions">
+      <nz-option nzCustomContent  [nzValue]="option.value" [nzLabel]="option.label">
+          <span class="box-color-icon select-color"
+                [ngStyle]="option.style">
+          </span>
+        <span>{{option.label}}</span>
+      </nz-option>
+    </ng-container>
+  </nz-select>
+</ng-template>
+
+<!-- 音频 -->
+<audio id="music" hidden="true"></audio>
+<audio id="audio" hidden="true"></audio>

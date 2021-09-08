@@ -1,0 +1,42 @@
+/**
+ * Created by WH1910108 on 2019/1/9.
+ */
+@import "../config";
+.common-card .ant-card-head .ant-card-head-title {
+  padding: 20px 20px 20px 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.common-card .ant-card-body {
+  padding: 0 16px 20px 16px;
+}
+.common-card.ant-card-bordered {
+  border: none;
+}
+.fault-experience .ant-card-body{
+  padding: 0;
+}
+.allocation-warp .ant-tabs-nav-wrap{
+  padding-left: 16px;
+}
+.allocation-warp .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
+.allocation-warp .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
+  padding: 0 16px 20px 16px;
+}
+.allocation-warp .ant-tabs .ant-tabs-large-bar .ant-tabs-nav-container {
+  font-size: 14px;
+}
+
+.reason-list .ant-tabs-bar{
+  margin-bottom: 0;
+}
+
+.reason-list .ant-tabs-nav-container .ant-tabs-nav-wrap{
+  min-height: 45px;
+}
+
+.reason-list .ant-tabs-content{
+  margin-top: 20px;
+}
+

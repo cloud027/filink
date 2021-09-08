@@ -1,0 +1,16 @@
+<!--设备信息上报状态-->
+<div class="equipment-status-container"
+     [ngStyle]="{'line-height': containerLineHeight,'height':containerHeight,'width':containerWidth}">
+  <span *ngIf="!performanceList.length" class="no-data-wrapper">
+    {{language.noDataAvailableForTheTimeBeing}}</span>
+  <ul class="status-ul" *ngIf="performanceList.length">
+    <li class="status-item" *ngFor="let item of performanceList">
+      <span class="status-label" title="{{item.name}}{{item.unit ? '(' + item.unit + ')' : ''}}">{{item.name}}{{item.unit ? '(' + item.unit + ')' : ''}}</span>
+      <span class="label-cl">:</span>
+      <span class="status-value" [ngStyle]="{'max-width':containerMaxWidth}"
+            [title]="item.statusValue + ' '">{{item.statusValue}}</span>
+    </li>
+  </ul>
+</div>
+
+

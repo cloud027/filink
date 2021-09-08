@@ -1,0 +1,92 @@
+<div class="coding-standard" [appAccessPermission]="'03-12'">
+  <div class="coding-standard-title">
+    <h4>{{language.codingStandard.codingStandard}}</h4>
+  </div>
+  <div class="coding-standard-content">
+    <div class="coding-standard-table">
+      <xc-table #codingTableList
+                [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+</div>
+
+<nz-modal
+        [(nzVisible)]="isShow"
+        [nzTitle]="modalFieldTitle"
+        [nzContent]="modalFieldContent"
+        [nzFooter]="modalFieldFooter"
+        [nzClosable]= "true"
+        [nzKeyboard]="false"
+        [nzMaskClosable]="false"
+        (nzOnCancel)= "handleCancel()"
+        [nzWidth]="900">
+  <ng-template #modalFieldTitle>
+    <div>{{this.language.codingStandard.queryOptionalFields}}</div>
+  </ng-template>
+  <ng-template #modalFieldContent>
+    <div class="optional-field">
+      <div *ngFor="let item of fieldList" class="optional-field-item">{{item}}</div>
+    </div>
+  </ng-template>
+  <ng-template #modalFieldFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleCancel()">{{this.language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{this.language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--启用状态模板-->
+<ng-template #enableStatus let-data="data">
+  <nz-switch [appAccessPermission] = "data.buttonDisabled ? '03-12-7' : '03-12-6'"
+          (click)="switchChange(data)"
+          [nzControl]="true"
+          [nzLoading]="data.switchLoading"
+          [ngModel]="data.buttonDisabled"></nz-switch>
+  {{data.buttonDisabled ? language.codingStandard.enable : language.codingStandard.disable}}
+</ng-template>
+
+<nz-modal
+        [(nzVisible)]="isShowCodingRange"
+        [nzTitle]="modalTitle"
+        [nzContent]="modalContent"
+        [nzFooter]="modalFooter"
+        [nzClosable]= "true"
+        [nzKeyboard]="false"
+        [nzMaskClosable]="false"
+        (nzOnCancel)= "handleCancelCodingRange()"
+        [nzWidth]="900">
+  <ng-template #modalTitle>
+    <div>{{language.codingStandard.codingRange}}</div>
+  </ng-template>
+  <ng-template #modalContent>
+    <div class="coding-tree">
+      <div class="leftTree">
+        <div class="assetType-title-box">
+          <p class="assetType-title">{{language.codingStandard.assetType}}</p>
+        </div>
+        <nz-card>
+          <div class="tree-box">
+            <ul id="assetType" class="ztree link-tree"></ul>
+          </div>
+        </nz-card>
+      </div>
+      <div class="rightTree">
+        <div class="assetType-title-box">
+          <p class="assetType-title">{{language.codingStandard.codingRange}}</p>
+        </div>
+        <nz-card>
+          <div class="tree-box">
+            <ul id="codingRange" class="ztree link-tree"></ul>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleCancelCodingRange()">{{this.language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancelCodingRange()">{{this.language.cancelText}}</button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,41 @@
+
+@import "../../../../style-module/config";
+// 配置表格样式
+.config-tab-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+.config-f {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.area-detail-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.tab-container{
+  max-height: 400px;
+  overflow: auto;
+}
+.config-s {
+  .config-item-container {
+    margin: 0 20px;
+    border-bottom: 1px solid $separation-color;
+  }
+}
+
+.config-item-title {
+  display: inline-block;
+  padding-left: 3px;
+  height: 22px;
+  color: $bg-c-w;
+  background: $color;
+}
+
+.config-cable {
+  overflow: auto;
+}

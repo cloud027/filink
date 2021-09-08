@@ -1,0 +1,73 @@
+@import "../../../../../style-module/config";
+
+.first-menu {
+  .bgc {
+    background-color: $menu-hover-color !important;
+  }
+
+  .disLi {
+    display: none;
+  }
+
+  .first-ul li {
+    position: relative;
+    line-height: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #001429;
+
+    p {
+      position: relative;
+      left: 40px;
+      color: $sp-icon-color-4;
+
+      .menu-icon {
+        position: absolute;
+        font-size: 16px;
+        top: 0;
+        color: $sp-icon-color-4;
+        right: 195px;
+      }
+
+      .up-down {
+        position: absolute;
+        font-size: 10px;
+        top: 20px;
+        right: 50px;
+      }
+    }
+
+    .second-ul li {
+      cursor: pointer;
+      background-color: $menu-second-color;
+
+      p {
+        position: relative;
+        color: $sp-icon-color-4;
+        left: 58px;
+        width: 142px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .second-ul li:not(.bgc) p:hover {
+      color: $menu-hover-color;
+    }
+  }
+
+  .collapsed li {
+    line-height: 50px;
+
+    i {
+      position: relative;
+      top: -20px;
+      font-size: 16px;
+      color: $sp-icon-color-4;
+      margin-left: 16px;
+    }
+  }
+}

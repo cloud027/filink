@@ -1,0 +1,99 @@
+<div class="screen">
+  <!--设备列表-->
+  <div *ngIf="isWorkbench" class="passageway-list">
+    <!--标题 通道列表-->
+    <p class="title">{{language.securityWorkbench.channelList}}</p>
+    <!--搜索-->
+    <nz-input-group [nzSuffix]="suffixIconSearch" class="search-box">
+      <input type="text" nz-input [(ngModel)]="searchValue"/>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search" class="search-icon" (click)="search()"></i>
+    </ng-template>
+    <!--列表-->
+    <div *ngIf="passagewayList.length !== 0" class="equipment-list">
+      <p *ngFor="let data of passagewayList, let index = index"
+         [ngClass]="{'equipment-list-text': true,'selected-equipment':data.state}"
+         (click)="changeEquipment(index)" nz-tooltip [nzTitle]="data.channelName">
+        <span>{{data.channelName}}</span>
+      </p>
+    </div>
+    <!-- 列表为0的情况下-->
+    <div *ngIf="passagewayList.length === 0" class="equipment-list">
+    </div>
+    <nz-pagination (nzPageIndexChange)="nzPageIndexChange($event)" [nzPageIndex]="passagewayPaging.pageNum"
+                   [nzTotal]="passagewayPaging.totalCount" nzSimple class="paging"></nz-pagination>
+  </div>
+  <!--分屏-->
+  <div class="camera-wrap">
+    <div class="split-screen">
+      <!-- 配置按钮-->
+      <div class="title-list" *ngIf="isWorkbench">
+        <!-- 通道配置-->
+        <button [appAccessPermission]="cameraCodeEnum.channelConfiguration"
+                nz-button nzType="primary" class="passageway" (click)="goPassageway()">
+          {{language.securityWorkbench.channelConfiguration}}</button>
+        <!-- 基础配置-->
+        <button [appAccessPermission]="cameraCodeEnum.basicConfiguration"
+                nz-button nzType="default" [disabled]="true" (click)="goBasics()">
+          {{language.securityWorkbench.basicConfiguration}}</button>
+      </div>
+      <ng-container *ngIf="liveBroadcastList.length !== 0">
+        <!-- 向左翻页 -->
+        <i nz-icon nzType="left" nzTheme="outline"
+           class="pagingLogo pagingLogo-left"
+           [ngClass]="{'no-clickable':selectedPassagewayPaging.pageNum <= 1}"
+           (click)="onPagingChange('left')"></i>
+        <!-- 向右翻页 -->
+        <i nz-icon nzType="right" nzTheme="outline"
+           class="pagingLogo pagingLogo-right"
+           [ngClass]="{'no-clickable':selectedPassagewayPaging.pageNum >= selectedPassagewayPaging.totalPage}"
+           (click)="onPagingChange('right')"></i>
+        <!--摄像头 -->
+        <div class="monitor">
+          <!--直播-->
+          <app-live-broadcast *ngFor="let data of liveBroadcastList,let i = index"
+                              (click)="selectCamera(i)"
+                              [ngClass]="{'one':splitScreen==='one','two':splitScreen==='two','three':splitScreen==='three','four':splitScreen==='four','selected-broadcast':data.state}"
+                              [videoId]="'video'+i"
+                              [channelData]="data"
+                              [playIcon]="playIcon"
+                              [operatePermission]="cameraCodeEnum.play"
+                              [url]="data.path"
+                              (startPlay)="startPlay($event)"
+                              (stopPlay)="stopPlay($event)">
+          </app-live-broadcast>
+        </div>
+
+      </ng-container>
+      <!-- 摄像头为空时-->
+      <div *ngIf="liveBroadcastList.length === 0" class="monitor">
+        <app-live-broadcast class="one" videoId="video" [url]="''" (startPlay)="startPlay($event)"></app-live-broadcast>
+      </div>
+    </div>
+    <!--分屏设置-->
+    <div class="split-menu">
+      <div *ngIf="isWorkbench" class="split-setting">
+        <!-- 分屏设置-->
+        <span>{{language.securityWorkbench.splitScreenSetting}}:</span>
+        <span [ngClass]="{'spacing':true,'several':splitScreen==='one'}" (click)="splitView('one')">1*1</span>
+        <span [ngClass]="{'spacing':true,'several':splitScreen==='two'}" (click)="splitView('two')">2*2</span>
+        <span [ngClass]="{'spacing':true,'several':splitScreen==='three'}" (click)="splitView('three')">3*3</span>
+        <span [ngClass]="{'spacing':true,'several':splitScreen==='four'}" (click)="splitView('four')">4*4</span>
+      </div>
+      <div class="open-close" *ngIf="whereUsed !== beUsed.homePage">
+        <!-- 全部开启-->
+        <button [appAccessPermission]="cameraCodeEnum.play"
+                nz-button nzType="default" (click)="onOpen()"
+                [ngClass]="{'confirm-cancel-btn-hover':hasRole(cameraCodeEnum.play)}"
+                class="confirm-cancel-btn">{{language.securityWorkbench.allOn}}</button>
+        <!-- 全部关闭-->
+        <button [appAccessPermission]="cameraCodeEnum.play"
+                nz-button nzType="default" (click)="onClose()"
+                [ngClass]="{'confirm-cancel-btn-hover':hasRole(cameraCodeEnum.play)}"
+                class="confirm-cancel-btn">{{language.securityWorkbench.closeAll}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+

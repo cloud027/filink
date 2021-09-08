@@ -1,0 +1,48 @@
+<div class="trouble-details">
+  <div class="trouble-view-title">{{language.troubleDetail}}</div>
+  <div class="detail-height" *ngIf="isShow">
+    <div class="view-item">
+      <!--故障详情-->
+      <app-fault-details [troubleInfo] = "troubleInfo"></app-fault-details>
+    </div>
+    <div class="view-item" *ngIf="isShowOperate">
+      <!--基本故障操作-->
+      <app-fault-operation *ngIf="isShow"
+        [troubleId] = "troubleId"
+        [flowId] = "flowId"
+        [handleStatus] = "handleStatus"
+        [instanceId] = "instanceId"
+        [troubleSource] = "troubleSource"
+        [areaCode]= "areaCode"
+      >
+      </app-fault-operation>
+    </div>
+    <div class="view-item">
+      <!--故障维护经验-->
+      <app-fault-experience *ngIf="troubleInfo.troubleSource === 'alarm'"></app-fault-experience>
+    </div>
+    <div class="view-item">
+      <!--资源调配-->
+      <app-resource-allocation
+        [person] = "troubleInfo.staff"
+        [car] = 'troubleInfo.car'
+        [materiel] = 'troubleInfo.materiel'
+      >
+      </app-resource-allocation>
+    </div>
+    <div class="view-item">
+      <!--历史流程记录-->
+      <app-history-process-record-table [troubleId]="troubleId"></app-history-process-record-table>
+    </div>
+    <div class="view-item">
+      <!--故障照片-->
+      <app-trouble-img-view [deviceId] = "troubleInfo.deviceId" [alarmId]="troubleInfo.alarmId" [procId]="procId"></app-trouble-img-view>
+    </div>
+  </div>
+</div>
+<nz-spin [nzSimple]="true"
+         *ngIf="ifSpin"
+         class="loading"
+         [nzSpinning]="true"
+></nz-spin>
+

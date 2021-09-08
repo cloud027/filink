@@ -1,0 +1,189 @@
+<!--添加策略详情-->
+<div class="strategy-add">
+  <span class="left" (click)="isShowDetails = true">
+    <i class="icon-fiLink fiLink-pic-to-big iconfont"></i>
+    <span class="text">{{languageTable.strategyList.equipmentAdd}}</span>
+  </span>
+  <span *ngIf="isShowDetails" class="right"><span
+    class="required-info">*</span>{{languageTable.strategyList.equipmentTip}}:{{languageTable.strategyList.conditions}}</span>
+</div>
+
+<!--新增详情内容-->
+<div class="strategy-content" *ngIf="isShowDetails">
+  <div class="strategy-close">
+    <i nz-icon nzType="save" nzTheme="outline" (click)="handSave()" class="button-save"></i>
+    <i nz-icon nzType="close" nzTheme="outline" (click)="handleClose()"></i>
+  </div>
+  <h4 class="strategy-condition">{{languageTable.strategyList.term}}</h4>
+  <!-- 选择日出日落-->
+  <div class="strategy-form">
+    <div class="interval label-left">
+      {{languageTable.strategyList.timeInterval}}
+    </div>
+    <div class="interval-time">
+      <xc-nz-select class="timer-select" [(ngModel)]="params.sunriseOrSunset">
+        <!--日出-->
+        <xc-nz-option  [nzValue]="sunriseOrSunsetEnum.sunrise" [nzLabel]="languageTable.strategyList.sunrise"></xc-nz-option>
+        <!--日落-->
+        <xc-nz-option  [nzValue]="sunriseOrSunsetEnum.sunset" [nzLabel]="languageTable.strategyList.sunset"></xc-nz-option>
+        <!--自定义时段-->
+        <xc-nz-option  [nzValue]="sunriseOrSunsetEnum.custom" [nzLabel]="languageTable.strategyList.custom"></xc-nz-option>
+      </xc-nz-select>
+    </div>
+  </div>
+  <!--时段 当选择自定义时段显示-->
+  <div class="strategy-form" *ngIf="params.sunriseOrSunset === sunriseOrSunsetEnum.custom">
+    <div class="interval label-left">
+    </div>
+    <div class="interval-time">
+      <app-time-picker-range
+        [timeRange]="[params.startTime, params.endTime]"
+        [format]="'HH:mm'"
+        [freeControl]="true"
+        (confirmTimeRange)="onChange($event)"
+      ></app-time-picker-range>
+    </div>
+  </div>
+  <!--光照强度 -->
+  <div class="strategy-form">
+    <div class="strength label-left">{{languageTable.strategyList.lightIntensity}}</div>
+    <div class="strength-input">
+      <div class="facilities">
+          <span class="area-name" [title]="params.sensorName">
+            {{params.sensorName}}
+          </span>
+        <button class="open-button" (click)="handleClickStrategy()">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </div>
+      <div class="light-intensity">
+        <nz-input-number [nzDisabled]="!params.sensor" class="light-input" [(ngModel)]="params.lightIntensity"
+                         [nzMin]="1"></nz-input-number>
+        <xc-nz-select
+          class="light-select"
+          [(ngModel)]="params.operator"
+          [nzDisabled]="!params.sensor">
+          <xc-nz-option *ngFor="let item of filterSelect" [nzValue]="item[0]" [nzLabel]="item[1]"></xc-nz-option>
+        </xc-nz-select>
+      </div>
+    </div>
+  </div>
+  <!--动作-->
+  <div class="lighting">
+    <h4 class="strategy-condition action">{{languageTable.strategyList.action}}</h4>
+    <div class="switch-light">
+      <div class="switch-left">
+        <span class="icon-wrap open-wrap">
+          <i class="iconfont fiLink-open"></i>
+        </span>
+        <span>{{languageTable.strategyList.switch}}</span>
+      </div>
+      <div class="switch-right">
+        <nz-radio-group [(ngModel)]="params.switchLight" (ngModelChange)="switchLightChange($event)">
+          <label nz-radio [nzValue]="switchStatus.on">{{languageTable.equipmentTable.switch}}</label>
+          <label nz-radio [nzValue]="switchStatus.off">{{languageTable.equipmentTable.shut}}</label>
+        </nz-radio-group>
+        <span class="switch-right-close"><i nz-icon nzType="close-circle" nzTheme="outline" (click)="handleSwitchLightClear()"></i></span>
+      </div>
+    </div>
+    <div class="movement">
+      <div class="dimming">
+        <span class="icon-wrap light-wrap">
+          <i class="iconfont fiLink-light"></i>
+        </span>
+        <span>
+          {{languageTable.strategyList.dimming}}
+        </span>
+      </div>
+      <div class="light">
+        <div class="light-slider">
+          <nz-slider [nzDisabled]="params.switchLight === switchStatus.off" [(ngModel)]="params.light"
+                     [nzMin]="min" [nzMax]="max"
+                     (ngModelChange)="lightSliderChange($event)"></nz-slider>
+        </div>
+        <div class="light-tip">
+          {{params.light}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--已选择的数据列表回显-->
+<div class="context-list">
+  <xc-table
+    [dataSet]="instructLightList"
+    [tableConfig]="multiEquipmentTable">
+  </xc-table>
+</div>
+<!-- 这个地方只能选择传感器的设备 一期没有 先使用future代替-->
+<app-select-equipment [selectType]="'radio'"
+                      [targetType]="'future'"
+                      [(isVisible)]="isStrategy"
+                      [selectEquipment]="selectEquipment"
+                      (selectChange)="handleEquipmentOk($event)"></app-select-equipment>
+<!--告警列表-->
+<nz-modal
+  *ngIf="isSource"
+  [(nzVisible)]="isSource"
+  nzWidth="70%"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter">
+  <nz-tabset>
+    <nz-tab [nzTitle]="languageTable.strategyList.alarmList">
+      <xc-table
+        [dataSet]="reportData"
+        [pageBean]="pageBean"
+        (pageChange)="reportPageChange($event)"
+        [tableConfig]="tableConfig">
+      </xc-table>
+    </nz-tab>
+    <nz-tab [nzTitle]="languageTable.strategyList.eventList">
+      <xc-table
+        [dataSet]="[]"
+        [tableConfig]="eventTableConfig">
+      </xc-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            (click)="handleReportOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+
+<!--其他事件源 告警列表单选框-->
+<ng-template #radioReportTemp let-data="data">
+  <nz-radio-group
+    [(ngModel)]="selectReport.id"
+    (ngModelChange)="selectedReportChange($event, data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>
+
+<ng-template #alarmDefaultLevelTemp let-data="data">
+  <div class="alarm">
+    <div class="box-icon" [ngStyle]="data.defaultStyle"></div>
+    <span class="alarm-text">{{data.defaultName}}</span>
+  </div>
+</ng-template>
+
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="alarm">
+    <div class="box-icon" [ngStyle]="data.styleColor"></div>
+    <span class="alarm-text">{{data.languageName}}</span>
+  </div>
+</ng-template>
+
+<!--  告警类别  -->
+<ng-template #alarmTypeTemp let-data="data">
+  <div>{{ typeStatus[data.alarmClassification] }}</div>
+</ng-template>
+
+<!--触发条件-----告警确认-->
+<ng-template #alarmConfirmTemp let-data="data">
+  <div *ngIf="data.alarmAutomaticConfirmation ==='1'">{{alarmLanguage.yes}}</div>
+  <div *ngIf="data.alarmAutomaticConfirmation ==='0'">{{alarmLanguage.no}}</div>
+</ng-template>
+
+

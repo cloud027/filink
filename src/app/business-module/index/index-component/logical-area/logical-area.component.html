@@ -1,0 +1,29 @@
+<!--选择区域-->
+<div class="logic-area-container">
+  <div class="logic-area-title">
+    <div class="iconfont fiLink-SelectAll-icon select-all"
+         (click)="clickSelectAll(true)"
+         title="{{indexLanguage.allCheck}}"></div>
+    <div class="iconfont fiLink-UnselectAll select-all"
+         (click)="clickSelectAll(false)"
+         title="{{indexLanguage.cancelCheck}}"></div>
+  </div>
+  <!--搜索框-->
+  <div class="search">
+    <xc-search-input
+      [selectInfo]="selectInfo"
+      [searchValue]="searchKey"
+      (modelChange)="modelChange($event)"
+      (inputChange)="inputChange($event)"
+      [inputStyle]="{height:'24px',borderRadius:'10px',fontSize:'12px'}"
+    ></xc-search-input>
+  </div>
+  <div class="no-data" *ngIf="noData">{{indexLanguage.noData}}</div>
+  <div class="tree" *ngIf="!noData">
+    <ul [id]="treeName" class="ztree link-tree"></ul>
+  </div>
+  <!--下拉选择框-->
+  <div class="select-type" *ngIf="selectType">
+    <div class="select-area">{{indexLanguage.selectArea}}</div>
+  </div>
+</div>

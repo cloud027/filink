@@ -1,0 +1,97 @@
+@import "../../../../../style-module/config";
+
+.lighting-details{
+  padding: 20px;
+  width: 100%;
+  .operation-btn{
+    width: 800px;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+  .information{
+    width: 800px;
+    border: 1px solid $border-color;
+    margin-bottom: 30px;
+    .title{
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 30px;
+      height: 25px;
+    }
+    .information-content{
+      display: flex;
+      .content-left{
+        text-align: center;
+        width: 50%;
+        border: 1px solid $title-color;
+        .details-info{
+          width: 200px;
+          span{
+            display: inline-block;
+          }
+          .info-title{
+            width: 80px;
+            text-align: right;
+          }
+          .info-content{
+            margin-left: 20px;
+          }
+        }
+      }
+      .content-right{
+        width: 50%;
+      }
+    }
+  }
+  .operation{
+    margin-bottom: 30px;
+    h3{
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .operation-content{
+      padding-left: 30px;
+      .operation-btn{
+        margin-right: 30px;
+      }
+    }
+  }
+  .application{
+    width: 800px;
+    border: 1px solid $border-color;
+    margin-bottom: 30px;
+    h3{
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 30px;
+      height: 25px;
+    }
+    .application-content{
+      border: 1px solid $border-color;
+    }
+  }
+  .details{
+    border: 1px solid $border-color;
+    width: 800px;
+    h3{
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 30px;
+      height: 25px;
+    }
+    .details-content{
+      padding: 0 20px;
+      border: 1px solid $title-color;
+      .content-list{
+        .volume-adjust{
+          display: flex;
+          justify-content: space-between;
+        }
+        .brightness-adjust{
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+<!--菜单树-->
+<div class="tenant-menu">
+  <div>
+    <div class="menu-title-box">
+      <p class="menu-title">{{this.indexLanguage.systemMenu}}</p>
+    </div>
+    <nz-card>
+      <div class="menu-tree">
+        <nz-tree
+          [nzData]="nodes"
+          nzDraggable="true">
+          <ng-template #nzTreeTemplate let-node>
+        <span class="custom-node">
+          <span class="folder-name">{{node.origin.menuName}}</span>
+        </span>
+            <span class="operate">
+              <i class="icon fiLink-edit iconfont"
+                 title="{{indexLanguage.edit}}"
+                 (click)="titleEdit(node)"></i>
+            <i class="icon fiLink-overview iconfont"
+               title="{{indexLanguage.operate.hidden}}"
+               (click)="isShow(node)"
+               *ngIf="node.origin.isShow === '1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont" (click)="isShow(node)"
+               title="{{indexLanguage.operate.show}}" *ngIf="node.origin.isShow === '0'"></i>
+            <i class="icon  fiLink-move-up iconfont" (click)="moveUp(node)"
+               title="{{indexLanguage.operate.moveUp}}"></i>
+            <i class="icon fiLink-move-down iconfont" (click)="moveDown(node)"
+               title="{{indexLanguage.operate.moveDown}}"></i>
+        </span>
+          </ng-template>
+        </nz-tree>
+      </div>
+    </nz-card>
+  </div>
+</div>
+
+<!--菜单名修改弹窗-->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzMaskClosable]="false"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #modalTitle>
+    {{indexLanguage.editMenu}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <div class="modal-box">
+      <span class="modal-box-title">{{indexLanguage.menuName}}</span>
+      <span class="modal-box-input">
+      <input nz-input [maxlength]="8" placeholder="{{this.nodeName}}" [(ngModel)]="this.nodeName"/>
+    </span>
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()"
+            [nzLoading]="isConfirmLoading">{{indexLanguage.confirm}}</button>
+    <button nz-button nzType="default" (click)="handleCancel()">{{indexLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+

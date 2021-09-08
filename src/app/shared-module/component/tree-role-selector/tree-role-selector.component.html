@@ -1,0 +1,28 @@
+<nz-modal [nzWidth]="treeSelectorConfig.width"
+          [(nzVisible)]="xcVisible"
+          nzTitle="{{treeSelectorConfig.title}}"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleCancel()"
+          [nzFooter]="modalFooter"
+>
+  <div class="tree-select-role-box">
+    <nz-card class="tree-select-role-card tree-select-role-card-left">
+      <p>{{treeSelectorConfig.leftTitle}}</p>
+      <div class="tree-box">
+        <ul id="roleLeft" class="ztree link-tree"></ul>
+      </div>
+    </nz-card>
+    <nz-card class="tree-select-role-card">
+      <p>{{treeSelectorConfig.rightTitle}}</p>
+      <div class="tree-box">
+        <ul id="roleRight" class="ztree link-tree"></ul>
+      </div>
+    </nz-card>
+  </div>
+  <ng-template #modalFooter>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="danger" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="danger" (click)="restSelectData()">{{commonLanguage.reset}}</button>
+  </ng-template>
+</nz-modal>
+

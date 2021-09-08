@@ -1,0 +1,13 @@
+<!--设备日志-->
+<nz-card nzTitle="{{language.equipmentLog}}" [nzExtra]="extraTemplate">
+  <div class="card-table-container">
+    <xc-table [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig">
+    </xc-table>
+  </div>
+</nz-card>
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMore()"><span>{{language.more}} >></span></a>
+</ng-template>

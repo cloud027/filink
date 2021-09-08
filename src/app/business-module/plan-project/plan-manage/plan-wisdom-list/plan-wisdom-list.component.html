@@ -1,0 +1,28 @@
+<!--顶部标题-->
+<!--设施列表滑块组件-->
+<xc-statistical-slider [sliderConfig]="sliderConfig"
+                       [showCardNum]="4"
+                       (selectChange)="sliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)">
+</xc-statistical-slider>
+<div class="template-warp">
+  <!--产品列表-->
+  <div class="table-wrapper">
+    <xc-table #tableComponent
+      [dataSet]="planWisdomList"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+<!--智慧杆状态模板-->
+<ng-template #pointStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass " ></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.pointStatus | translate : pointStatusEnum: 'planProject'}}">
+      {{data.pointStatus | translate : pointStatusEnum: 'planProject'}}
+    </span>
+  </div>
+</ng-template>

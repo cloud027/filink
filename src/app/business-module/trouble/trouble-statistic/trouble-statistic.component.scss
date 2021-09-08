@@ -1,0 +1,35 @@
+@import "../../../style-module/config";
+.trouble-statistic-box {
+  background-color: $bg-c;
+  .trouble-statistic-container {
+    padding: 16px;
+    background-color: $bg-c-w;
+    .select-box {
+      display: flex;
+      .select-item {
+        width: 150px;
+        margin-right: 10px;
+      }
+    }
+    .statistic-btn {
+      width: auto;
+    }
+  }
+  .echrts-box {
+    display: flex;
+    margin-top: 20px;
+    .echarts-item {
+      padding: 0 16px;
+      flex: 1;
+      margin-right: 10px;
+      background-color: #f7f7f7;
+      .empty-container {
+        height: 380px;
+        padding-top: 80px;
+      }
+    }
+  }
+  .table-box {
+    margin-top: 20px;
+  }
+}

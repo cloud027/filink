@@ -1,0 +1,55 @@
+@import "../../../../../style-module/config";
+
+.policy-warp {
+  padding: 0 16px 20px;
+}
+
+// 通道详情
+.passagewayDetail {
+  line-height: 40px;
+  // 通道标题
+  .way-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  // 通道标签
+  .onvif-label {
+    margin-left: 20px;
+    padding: 2px 8px;
+    background: $color;
+    color: $bg-c-w;
+    border-radius: 2px;
+  }
+
+
+
+  // 通道图标
+  .way-icon {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  // 通道图标颜色
+  .icon-port {
+    color: $frequency-color;
+  }
+
+  // 用户名图标颜色
+  .user-icon {
+    color: $handle-processing-color;
+  }
+
+  // 密码图标颜色
+  .password-icon {
+    color: $color;
+  }
+
+  // 标签
+  .label {
+    color: $disabled-font-color;
+  }
+}
+
+
+

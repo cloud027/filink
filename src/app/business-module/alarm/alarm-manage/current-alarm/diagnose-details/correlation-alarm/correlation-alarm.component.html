@@ -1,0 +1,24 @@
+<div class="correlation-alarm">
+  <nz-card nzTitle="{{language.correlationAlarm}}" class="common-card no-checkbox-table">
+    <xc-table [dataSet]="correlationData"
+              [tableConfig]="alarmTableConfig"
+              >
+    </xc-table>
+    <!--告警级别-->
+    <ng-template #alarmFixedLevelTemp let-data="data">
+      <div class="level-box">
+        <div class="box-icon" [ngStyle]="data.style"></div>
+        <span class="level-left">{{ data.alarmFixedLevel | translate : alarmLevelEnum : languageEnum.alarm}} </span>
+      </div>
+    </ng-template>
+    <!--表格清除状态-->
+    <ng-template #isCleanTemp let-data="data">
+      <div>{{ data.alarmCleanStatus | translate : alarmCleanStatusEnum }}</div>
+    </ng-template>
+    <!--表格确认状态-->
+    <ng-template #isConfirmTemp let-data="data">
+      <div>{{ data.alarmConfirmStatus | translate : alarmConfirmStatusEnum }}</div>
+    </ng-template>
+  </nz-card>
+</div>
+

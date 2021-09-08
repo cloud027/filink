@@ -1,0 +1,67 @@
+<!--上传文件弹框-->
+<nz-modal
+  *ngIf="uploadVisible"
+  [nzVisible]="uploadVisible"
+  [nzFooter]="modalFooter"
+  nzWrapClassName="vertical-center-modal"
+  [nzNoAnimation]="true"
+  [nzTitle]="productLanguage.uploadFile"
+  (nzOnCancel)="onCloseModal()">
+  <nz-spin [nzSpinning]="_pageLoading">
+  <div class="upload-container">
+    <!--杆型图-->
+    <div [class]="'upload-item ' + filesIsRight.mainClass">
+      <div class="upload-desc">
+        <i class="fiLink-upload-file iconfont upload-icon upload-wisdom-icon"></i>
+        <div
+          class="click-upload">{{uploadFileType === fileTypeEnum.pole ? productLanguage.poleMainImage : productLanguage.gatewayMainImage}}</div>
+        <div class="upload-tip">{{productLanguage.mainImageRule}}</div>
+      </div>
+    </div>
+    <!--点位图-->
+    <div [class]="'upload-item ' + filesIsRight.positionClass">
+      <div class="upload-desc">
+        <i class="fiLink-upload-file iconfont upload-icon upload-wisdom-icon"></i>
+        <div class="click-upload">{{productLanguage.positionConfig}}</div>
+        <div class="upload-tip">{{productLanguage.positionImageRule}}</div>
+      </div>
+    </div>
+    <!--设备配置图-->
+    <div [class]="'upload-item ' + filesIsRight.configClass">
+      <div class="upload-desc">
+        <i class="fiLink-upload-file iconfont upload-icon upload-wisdom-icon"></i>
+        <div
+          class="click-upload">{{uploadFileType === fileTypeEnum.pole ? productLanguage.equipmentModel : productLanguage.portModel}}</div>
+        <div class="upload-tip">{{productLanguage.modelImageRule}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="upload-template-container">
+    <!--一键上传文件-->
+    <div class="upload-all">
+      <nz-upload
+        [nzBeforeUpload]="beforeUploadAllImg"
+        [nzShowUploadList]="false"
+        [nzOpenFileDialogOnClick]="true"
+        [nzMultiple]="true"
+        [nzLimit]="3"
+        [nzFileList]="fileListRec"
+        nzAction="">
+        <i class="upload-all-icon iconfont fiLink-file"></i><span
+        class="upload-msg">{{productLanguage.uploadFile}}</span>
+      </nz-upload>
+    </div>
+    <span class="delimiter">|</span>
+    <!--模版下载-->
+    <div class="upload-all" (click)="onClickDownTemplate()">
+      <i class="fiLink-download-file iconfont"></i><span class="upload-msg">{{productLanguage.templateDownload}}</span>
+    </div>
+  </div>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            [disabled]="saveBtnDisabled || pageLoading"
+            (click)="onClickDoUpload()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="onCloseModal()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+  </nz-spin>
+</nz-modal>

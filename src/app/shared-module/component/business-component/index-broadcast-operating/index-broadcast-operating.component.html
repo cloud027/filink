@@ -1,0 +1,75 @@
+<div>
+  <div class="content-title">广播</div>
+  <div>
+    <app-index-volume-slider-model [volumeValue]="volumeValue" (sliderNotify)="handleVolumeSlider($event, 0)"></app-index-volume-slider-model>
+  </div>
+  <div class="options-body">
+    <div class="options-button">
+      <button
+        nz-button
+        [disabled]="checkHasRole(['09-6-3-0-2'])"
+        [nzType]="'primary'"
+        class="link-button button-right"
+        (click)="showOnlineModel()">
+      <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-filink-xianchangguangbo-icon"></i>现场广播
+              </span>
+      </button>
+    </div>
+    <div class="options-button">
+      <button
+        nz-button
+        [disabled]="checkHasRole(['09-6-3-0-1'])"
+        [nzType]="'primary'"
+        class="link-button button-right"
+        (click)="showInsertModel()">
+      <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-filink-chabo-icon"></i>插播
+              </span>
+      </button>
+    </div>
+    <div class="options-button">
+      <button
+        nz-button
+        [disabled]="checkHasRole(['09-6-3-0-4'])"
+        [nzType]="'primary'"
+        class="link-button button-right"
+        (click)="stopInsert()">
+      <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-suspend"></i>停止插播
+              </span>
+      </button>
+    </div>
+  </div>
+</div>
+<!--插播-->
+<app-insert-broadcast-model *ngIf="isInsert"
+                            [title]="languageTable.equipmentTable.insertBroadcast"
+                            [insertVolumeValue]="insertVolumeValue"
+                            [(xcVisible)]="isInsert"
+                            [equipmentList]="selectedEquipmentData"
+                            [insertType]="insertType"
+></app-insert-broadcast-model>
+<!--现场广播-->
+<nz-modal
+  *ngIf="isOnline"
+  [(nzVisible)]="isOnline"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="handleCloseOnline()"
+  [nzTitle]="languageTable.equipmentTable.onlineBroadcast"
+  [nzFooter]="onlineModalFooter"
+  nzWidth="500">
+  <app-online-broadcast-model [sourceId]="sourceId" [onlineVolumeValue]="onlineVolumeValue"
+                              [equipmentList] = "recordEquipmentList"
+                              (sliderNotify)="handleVolumeSlider($event, 1)" (sourceNotify)="handleSource($event)"></app-online-broadcast-model>
+  <ng-template #onlineModalFooter>
+    <div class="audio-btn-group">
+      <span (click)="switchOnlineOperate('0')" *ngIf="!isStop">
+        <i class="iconfont fiLink-pic-bofang1 start btn-size"></i>
+      </span>
+      <span (click)="switchOnlineOperate('1')" *ngIf="isStop">
+        <i class="icon-fiLink-l iconfont fiLink-video-tingzhibofang btn-size"></i>
+      </span>
+    </div>
+  </ng-template>
+</nz-modal>

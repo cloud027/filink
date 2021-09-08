@@ -1,0 +1,34 @@
+<!--登录页组件-->
+<div class="login-container">
+  <div class="login">
+    <div class="login-form">
+      <div class="login-form-left">
+        <img alt="{{language.agreement.loginImage}}" src="../../../assets/img/login/earth.png">
+      </div>
+      <div class="login-form-right">
+        <div class="login-tab" >
+          <div>{{loginTitle}}</div>
+          <img (click)="changeAutoLoginType()" *ngIf="autoLoginType" alt="{{language.agreement.mobileLogin}}"
+               src="../../../assets/img/login/icon_login_phone.png">
+          <img (click)="changeAutoLoginType()" *ngIf="!autoLoginType" alt="{{language.agreement.userLogin}}"
+               src="../../../assets/img/login/icon_login_user.png">
+        </div>
+        <div class="login-title">
+          <img src="../../../assets/img/login/icon_log_rec.svg">
+          <i class="fiLink-FiLink iconfont"></i>
+        </div>
+        <div class="login-user">
+          <app-user-login [hidden]="!autoLoginType" (afterLoginChange)="handleAfterLogin($event)"></app-user-login>
+          <app-phone-login [hidden]="autoLoginType" (afterLoginChange)="handleAfterLogin($event)"></app-phone-login>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login-footer">
+    <p>copyright &copy; 2019 {{language.agreement.fiberHome}} All rights Reserved
+      <span (click)="linkToGov()" class="link-to-gov" *ngIf="recordNumber">{{recordNumber}}</span>
+    </p>
+  </div>
+</div>
+
+

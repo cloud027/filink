@@ -1,0 +1,203 @@
+<div class="work-order-detail">
+  <!--标题-->
+  <div>
+    <span class="page-detail-title">{{ pageTitle }}</span>
+  </div>
+  <div>
+    <xc-form
+      [column]="formColumn"
+      (formInstance)="formInstance($event)"
+      class="form-column-width"
+    ></xc-form>
+    <div class="tab-area">
+      <button
+        class="link-button"
+        nz-button
+        nzType="primary"
+        (click)="submitData()"
+        type="button"
+        *ngIf="isShowBtn"
+        [nzLoading]="isLoading"
+        [disabled]="!isFormDisabled"
+      >
+        {{ InspectionLanguage.handleOk }}
+      </button>
+      <button type="button" class="link-button" nz-button nzType="danger" (click)="goBack()">
+        {{ InspectionLanguage.handleCancel }}
+      </button>
+    </div>
+  </div>
+
+  <!--区域选择模板-->
+  <ng-template #areaSelector let-col="col">
+    <div class="custom-template">
+      <label>
+        <input
+          readonly="readonly"
+          class="input-name"
+          nz-input
+          [disabled]="ifDisabled ||unitDisabled"
+          placeholder="{{ workOrderLanguage.pleaseSelect }}"
+          [(ngModel)]="dismantleBarrierInsertEditForm.deviceAreaName"
+        />
+      </label>
+      <i
+        class="icon-template"
+        nz-tooltip="{{ workOrderLanguage.deviceArea }}"
+        (click)="showAreaSelectorModal()"
+        [class.btn-disabled]="ifDisabled|| unitDisabled"
+      >
+        <span class="icon-fiLink fiLink-search-index iconfont"> </span>
+      </i>
+    </div>
+  </ng-template>
+  <!--区域选择器-->
+  <xc-tree-area-selector
+    *ngIf="areaSelectVisible"
+    [(xcVisible)]="areaSelectVisible"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)"
+  >
+  </xc-tree-area-selector>
+  <!-- 设施名称 -->
+  <ng-template #deviceNameTemp>
+    <div class="custom-template">
+      <input
+        placeholder="{{ workOrderLanguage.pleaseSelect }}"
+        nz-input
+        class="input-name"
+        [disabled]="ifDisabled ||unitDisabled"
+        [(ngModel)]="dismantleBarrierInsertEditForm.deviceName"
+        onfocus="blur()"
+      />
+      <i
+        class="icon-fiLink fiLink-search-index iconfont auto-icon icon-template"
+        nz-tooltip="{{ workOrderLanguage.deviceName }}"
+        (click)="deviceModelClick()"
+        [class.btn-disabled]="ifDisabled || unitDisabled"
+      ></i>
+    </div>
+  </ng-template>
+  <!-- 设施名称 选择器 -->
+  <app-dismantle-device-name
+    *ngIf="deviceNameModelVisible"
+    [(equipmentVisible)]="deviceNameModelVisible"
+    [selectDeviceId]="dismantleBarrierInsertEditForm.deviceId"
+    [filterAreaId]="dismantleBarrierInsertEditForm.deviceAreaId"
+    (selectDataChange)="selectModelDataChange($event)"
+    [title]="workOrderLanguage.deviceName"
+  ></app-dismantle-device-name>
+
+  <!-- 设备名称 -->
+  <ng-template #equipmentNameTemp>
+    <div class="custom-template">
+      <input
+        placeholder="{{ workOrderLanguage.pleaseSelect }}"
+        nz-input
+        class="input-name"
+        [disabled]="ifDisabled || unitDisabled"
+        [(ngModel)]="equipmentNameModel"
+        onfocus="blur()"
+      />
+      <i
+        class="icon-fiLink fiLink-search-index iconfont auto-icon icon-template"
+        nz-tooltip="{{ workOrderLanguage.demolitionPoint }}"
+        (click)="dismantlePointModelClick()"
+        [class.btn-disabled]="ifDisabled || unitDisabled"
+      ></i>
+    </div>
+  </ng-template>
+  <!-- 设备名称弹出框 -->
+  <app-dismantle-ponit-model
+    *ngIf="dismantlePointVisible"
+    [(dismantlePointVisible)]="dismantlePointVisible"
+    [deviceId]="dismantleBarrierInsertEditForm.deviceId"
+    [selectedEquipments]="selectedDismantlePointEquipment"
+    [selectEquipmentId]="selectEquipmentId"
+    (selectDataChange)="selecDismantlePointEquipmentData($event)"
+    [isEditPage]="pageType === workOrderPageTypeEnum.update"
+    [title]="workOrderLanguage.removePosition"
+  >
+  </app-dismantle-ponit-model>
+  <!--关联告警、故障-->
+  <ng-template #alarmTemp let-formGroup="formGroup" let-col="col">
+    <div class="custom-template">
+      <input
+        class="input-name"
+        nz-input
+        placeholder="{{ workOrderLanguage.pleaseSelect }}"
+        [(ngModel)]="dismantleBarrierInsertEditForm.refName"
+        onfocus="blur()"
+        [disabled]="unitDisabled"
+      />
+      <i
+        class="icon-fiLink fiLink-search-index iconfont auto-icon icon-template"
+        nz-tooltip="{{ workOrderLanguage.relevancyAlarmFault }}"
+        (click)="showAlarmSelectorModal()"
+        [class.btn-disabled]="unitDisabled"
+      ></i>
+    </div>
+  </ng-template>
+  <!--关联告警、故障 弹出框-->
+  <app-form-dismantle-type
+    *ngIf="dismantleTypeVisible"
+    [(dismantleTypeVisible)]="dismantleTypeVisible"
+    [selectDataId]="dismantleBarrierInsertEditForm.refId"
+    [selectDataType]="dismantleBarrierInsertEditForm.refType"
+    [selectDataName]="dismantleBarrierInsertEditForm.refName"
+    [filterData]="warnTroubleFilterData"
+    (selectDataChange)="dismantleTypeModelChange($event)"
+  >
+  </app-form-dismantle-type>
+
+  <!-- 责任单位 -->
+  <ng-template #accountabilityUnit let-formGroup="formGroup" let-col="col">
+    <div class="custom-template">
+      <input
+        class="input-name"
+        nz-input
+        [disabled]="unitDisabled"
+        onfocus="blur()"
+        [(ngModel)]="dismantleBarrierInsertEditForm.accountabilityDeptName"
+        placeholder="{{ workOrderLanguage.pleaseSelect }}"
+      />
+      <i
+        class="icon-fiLink fiLink-search-index iconfont auto-icon icon-template"
+        nz-tooltip="{{ workOrderLanguage.accountabilityUnitName }}"
+        (click)="showSelectorModal()"
+        [class.btn-disabled]="unitDisabled"
+      ></i>
+    </div>
+  </ng-template>
+  <!--责任人单位-->
+  <xc-tree-area-selector
+    [(xcVisible)]="isUnitsVisible"
+    (selectDataChange)="selectUnitDataChange($event)"
+    [treeSelectorConfig]="treeUnitSelectorConfig"
+  >
+  </xc-tree-area-selector>
+  <!--期望完工时间-->
+  <ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col">
+    <form [formGroup]="formGroup">
+      <nz-date-picker
+        [nzDisabled]="unitDisabled"
+        nzShowTime
+        formControlName="expectedCompletedTime"
+      ></nz-date-picker>
+    </form>
+  </ng-template>
+  <!--工单状态-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{ data.statusName }}" [ngStyle]="data.rowStyle">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{ data.statusName }}
+    </div>
+  </ng-template>
+</div>
+<!--自动派单-->
+<ng-template #autoDispatch>
+  <nz-radio-group [(ngModel)]="dispatchValue" [nzDisabled]="isDispatch" name="autoDispatch" (ngModelChange)="selectDispatch($event)">
+    <label nz-radio [nzValue]="dispatchEnum.right">{{InspectionLanguage.right}}</label>
+    <label nz-radio [nzValue]="dispatchEnum.deny">{{InspectionLanguage.deny}}</label>
+  </nz-radio-group>
+</ng-template>

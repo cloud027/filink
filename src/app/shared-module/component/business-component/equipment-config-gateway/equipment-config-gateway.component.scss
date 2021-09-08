@@ -1,0 +1,20 @@
+@import "../../../../style-module/config";
+.config{
+  margin-bottom: 30px;
+  .config-item-container {
+    margin: 0 20px;
+    border-bottom: 1px solid $separation-color;
+    .config-item-title {
+      display: inline-block;
+      padding:0 3px;
+      height: 22px;
+      color: $bg-c-w;
+      background: $color;
+    }
+  }
+}
+
+.content-link{
+  float: right;
+}
+

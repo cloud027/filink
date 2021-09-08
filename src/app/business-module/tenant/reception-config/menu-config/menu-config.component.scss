@@ -1,0 +1,31 @@
+.mune-form {
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 400px;
+
+  .button-group {
+    margin-top: 40px;
+    margin-left: 20px;
+    padding-bottom: 20px;
+
+    .space {
+      margin-right: 20px
+    }
+  }
+}
+
+.first-view {
+  width: 190px;
+  height: 300px;
+  position: relative;
+
+  nz-sider {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.three-view {
+  height: 600px;
+}
+

@@ -1,0 +1,90 @@
+<ng-template #renderItemTemplate let-type let-page="page">
+  <a class="ant-pagination-item-link" *ngIf="type==='pre'"><i nz-icon type="left"></i></a>
+  <a class="ant-pagination-item-link" *ngIf="type==='next'"><i nz-icon type="right"></i></a>
+  <a *ngIf="type=='page'">{{page}}</a>
+</ng-template>
+
+<ng-container>
+  <ul class="ant-pagination">
+    <li class="ant-pagination-prev"
+        [attr.title]="language.prev_page"
+        [class.ant-pagination-disabled]="xcPageIndex===firstIndex"
+        (click)="jumpDiff(-1)">
+      <ng-template [ngTemplateOutlet]="xcItemRender"
+                   [ngTemplateOutletContext]="{ $implicit: 'pre'}"></ng-template>
+    </li>
+    <li class="ant-pagination-item"
+        [attr.title]="firstIndex"
+        [class.ant-pagination-item-active]="xcPageIndex===firstIndex"
+        (click)="jump(firstIndex)">
+      <ng-template [ngTemplateOutlet]="xcItemRender" [ngTemplateOutletContext]="{ $implicit: 'page',page: firstIndex }"></ng-template>
+    </li>
+    <li class="ant-pagination-jump-prev"
+        *ngIf="(lastIndex > 9) && (xcPageIndex - 3 > firstIndex)"
+        [attr.title]="language.prev_5"
+        (click)="jumpDiff(-5)">
+      <a class="ant-pagination-item-link">
+        <div class="ant-pagination-item-container">
+          <i nz-icon type="double-left" class="ant-pagination-item-link-icon"></i>
+          <span class="ant-pagination-item-ellipsis">•••</span>
+        </div>
+      </a>
+    </li>
+    <li class="ant-pagination-item"
+        *ngFor="let item of pages"
+        [attr.title]="item"
+        [class.ant-pagination-item-active]="xcPageIndex === item"
+        (click)="jump(item)" >
+      <ng-template [ngTemplateOutlet]="xcItemRender"
+                   [ngTemplateOutletContext]="{ $implicit: 'page',page: item }"></ng-template>
+    </li>
+    <!--向后5页-->
+    <li class="ant-pagination-jump-next ant-pagination-item-link-icon"
+        [attr.title]="language.next_5"
+        (click)="jumpDiff(5)"
+        *ngIf="(lastIndex > 9) && (xcPageIndex + 3 < lastIndex)">
+      <a class="ant-pagination-item-link">
+        <div class="ant-pagination-item-container">
+          <i nz-icon type="double-right" class="ant-pagination-item-link-icon"></i>
+          <span class="ant-pagination-item-ellipsis">•••</span>
+        </div>
+      </a>
+    </li>
+    <li class="ant-pagination-item"
+        [attr.title]="lastIndex"
+        (click)="jump(lastIndex)"
+        *ngIf="(lastIndex > 0) && (lastIndex !== firstIndex)"
+        [class.ant-pagination-item-active]="xcPageIndex === lastIndex">
+      <ng-template [ngTemplateOutlet]="xcItemRender" [ngTemplateOutletContext]="{ $implicit: 'page',page: lastIndex }"></ng-template>
+    </li>
+    <li class="ant-pagination-next"
+        [title]="language.next_page"
+        [class.ant-pagination-disabled]="xcPageIndex===lastIndex"
+        (click)="jumpDiff(1)" >
+      <ng-template [ngTemplateOutlet]="xcItemRender"
+                   [ngTemplateOutletContext]="{ $implicit: 'next'}"></ng-template>
+    </li>
+    <div class="ant-pagination-options">
+      <override-nz-select
+        class="ant-pagination-options-size-changer"
+        [ngModel]="xcPageSize"
+        (ngModelChange)="onPageSizeChange($event)">
+        <override-nz-option
+          *ngFor="let option of xcPageSizeOptions"
+          [nzLabel]="option + language.items_per_page"
+          [nzValue]="option">
+        </override-nz-option>
+        <override-nz-option
+          *ngIf="xcPageSizeOptions.indexOf(xcPageSize)==-1"
+          [nzLabel]="xcPageSize + language.items_per_page"
+          [nzValue]="xcPageSize">
+        </override-nz-option>
+      </override-nz-select>
+      <div class="ant-pagination-options-quick-jumper">
+        {{commonLanguage.jumpTo}}
+        <input #quickJumperInput (keydown.enter)="handleKeyDown($event,quickJumperInput,true)">
+        {{commonLanguage.page}}
+      </div>
+    </div>
+  </ul>
+</ng-container>

@@ -1,0 +1,46 @@
+<div>
+  <div class="alarm-detail">
+    <span class="page-title">
+      {{ pageTitle }}
+    </span>
+  </div>
+  <div class="correlation-warp">
+    <!--步骤条组件-->
+    <div class="xc-steps">
+      <app-xc-steps
+        (notify)="changeSteps($event)"
+        [isActiveStepsCount]="isActiveSteps"
+        [setData]="stepData">
+      </app-xc-steps>
+    </div>
+    <div class="step-content">
+      <!--选择告警-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+        <app-select-alarm
+          #selectAlarm
+          [stepsFirstData]="stepsFirstData"
+          (formValid)="infoValid($event,finalValueEnum.STEPS_FIRST)"></app-select-alarm>
+      </div>
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+          <app-rule-condition
+            [stepsFirstData]="stepsFirstData"
+          ></app-rule-condition>
+      </div>
+      <!--其他设置-->
+      <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_THIRD">
+          <app-other-setting #otherSet
+            [stepsFirstData]="stepsFirstData"
+            (otherSetValidChange)="infoValid($event,finalValueEnum.STEPS_THIRD)"></app-other-setting>
+      </div>
+      <!--按钮-->
+      <app-button-group
+        [isLoading]="isSaveLoading"
+        [isDisabled]="nextButtonDisable"
+        [isActiveSteps]="isActiveSteps"
+        (changeSteps)="changeSteps($event)"
+        (submitNotify)="handStepsSubmit()"
+        (cancelNotify)="handCancelSteps()"
+      ></app-button-group>
+    </div>
+  </div>
+</div>

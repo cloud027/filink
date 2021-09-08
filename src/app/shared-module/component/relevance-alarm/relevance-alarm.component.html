@@ -1,0 +1,121 @@
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="1150"
+          [nzTitle]="workOrderLanguage.refAlarm"
+          [nzContent]="alarmTemplate"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #alarmTemplate>
+    <div nz-row nzGutter="60" class="alarm-box">
+      <!--标题部分-->
+      <div nz-col class="alarm-box-item column-title" nzSpan="8">
+        <div class="head">
+          <span class="title-tag title" [title]="modalData.alarmName">{{modalData.alarmName}}</span>
+          <span class="title-tag alarm-level" [ngStyle]="modalData.alarmLevelColor">{{modalData.alarmLevelStatus}}</span>
+          <span class="title-tag alarm-clear" [ngClass]="modalData.alarmCleanColor">{{modalData.alarmCleanStatus}}</span>
+          <span class="title-tag alarm-confirm" [ngClass]="modalData.alarmConfirmColor">{{modalData.alarmConfirmStatus}}</span>
+        </div>
+        <div class="happen-time line-heights">
+          <span>{{alarmLanguage.alarmBeginTime}}：</span><span>{{modalData.alarmBeginTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <div class="alarm-type line-heights">
+          <span class="label-txt">{{alarmLanguage.AlarmType}}：</span><span>{{modalData.alarmClassificationName}}</span>
+        </div>
+        <div class="line-heights">
+          <span class="label-txt">{{alarmLanguage.alarmContinousTime}}：</span><span>{{modalData.alarmContinuedTimeString}}</span>
+        </div>
+        <!--需确认是否有责任人-->
+        <div class="unit-box line-heights"></div>
+        <div class="unit-box dept-box line-heights">
+          <i nz-tooltip [nzTitle]="inspectionLanguage.responsibleUnit" class="icon-fiLink iconfont fiLink-departments"></i>
+          <span class="dept hidden" [title]="modalData.responsibleDepartment">{{modalData.responsibleDepartment}}</span>
+        </div>
+        <!--频次-->
+        <div class="frequency-box">
+          <div class="frequency" [title]="modalData.alarmHappenCount">
+            <div class="frequency-c" [ngStyle]="{fontSize: modalData.fontSize + 'px'}">{{modalData.alarmHappenCount}}</div>
+          </div>
+          <div class="label-txt">{{alarmLanguage.alarmHappenCount}}</div>
+        </div>
+      </div>
+      <!--区域-->
+      <div nz-col class="alarm-box-item column-area" nzSpan="8">
+        <div class="head-title">
+          <span class="detail-row-top hidden" [title]="modalData.areaName">{{modalData.areaName}}</span>
+          <span class="alarm-row hidden" [title]="modalData.alarmDeviceName">{{modalData.alarmDeviceName}}</span>
+          <span class="alarm-row">
+              <i nz-tooltip [nzTitle]="modalData.deviceTypeName" class="iconfont icon-fiLink icon-span" [ngClass]="modalData.deviceTypeClass"></i>
+              <span class="text">{{modalData.deviceTypeName}}</span>
+            </span>
+        </div>
+        <!-- 地址  -->
+        <div class="device-margin">
+            <span class="font-color-content">
+              <i nz-tooltip [nzTitle]="inspectionLanguage.address" class="iconfont icon-fiLink fiLink-filink-location-icon"></i>{{modalData.address}}
+            </span>
+        </div>
+        <!--  关联告警对象  -->
+        <div class="cate-margin alarm-obj">
+          <span class="obj-width value-txt">{{alarmLanguage.alarmobject}}：</span><span class="value-txt">{{modalData.alarmObject}}</span>
+        </div>
+        <div class="cate-margin equip">
+          <span class="label-txt obj-width">{{inspectionLanguage.equipmentType}}：</span>
+          <span class="equip-type value-txt hidden" [title]="modalData.equipmentTypeName">
+            <span *ngFor="let equipment of modalData.equipmentList">
+              <i nz-tooltip [nzTitle]="equipment.name" class="iconfont icon-fiLink icon-span" [ngClass]="equipment.iconClass"></i>{{equipment.name}}
+            </span>
+          </span>
+        </div>
+        <!--确认用户-->
+        <div class="cate-margin">
+          <span class="label-txt obj-width">{{alarmLanguage.alarmConfirmPeopleNickname}}：</span><span class="value-txt">{{modalData.alarmConfirmPeopleNickname}}</span>
+        </div>
+        <!--清除用户-->
+        <div class="cate-margin">
+          <span class="label-txt obj-width">{{alarmLanguage.alarmCleanPeopleNickname}}：</span><span class="value-txt">{{modalData.alarmCleanPeopleNickname}}</span>
+        </div>
+      </div>
+      <!--时间-->
+      <div nz-col class="alarm-box-item column-time" nzSpan="8">
+        <!--最近发生时间-->
+        <div class="row-time">
+          <span class="label-txt">{{alarmLanguage.alarmNearTime}}：</span>
+          <span class="value-txt">
+            <i class="iconfont fiLink-time"></i>{{modalData.alarmNearTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+          </span>
+        </div>
+        <!--确认时间-->
+        <div class="row-time">
+          <span class="label-txt">{{alarmLanguage.alarmConfirmTime}}：</span>
+          <span class="value-txt">
+            <i class="iconfont fiLink-time"></i>{{modalData.alarmConfirmTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+          </span>
+        </div>
+        <!--清除时间-->
+        <div class="row-time">
+          <span class="label-txt">{{alarmLanguage.alarmCleanTime}}：</span>
+          <span class="value-txt">
+            <i class="iconfont fiLink-time"></i>{{modalData.alarmCleanTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+          </span>
+        </div>
+        <!--告警附加信息-->
+        <div class="row-time alarm-left">
+          <span class="label-txt">{{alarmLanguage.alarmAdditionalInformation}}：</span>
+          <span class="value-txt hidden" [title]="modalData.extraMsg">{{modalData.extraMsg}}</span>
+        </div>
+        <!--告警处理建议-->
+        <div class="row-time alarm-left">
+          <span class="label-txt">{{alarmLanguage.alarmTreatmentRecommendations}}：</span>
+          <span class="value-txt hidden" [title]="modalData.alarmProcessing">{{modalData.alarmProcessing}}</span>
+        </div>
+        <div class="row-time alarm-left">
+          <span class="label-txt">{{alarmLanguage.remark}}：</span>
+          <span class="value-txt hidden" [title]="modalData.remark">{{modalData.remark}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{inspectionLanguage.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

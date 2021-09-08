@@ -1,0 +1,186 @@
+<nz-spin class="group-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="group-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="saveButtonDisable"
+              (click)="onClickSaveGroup()">
+        {{commonLanguage.confirm}}
+      </button>
+      <button class="link-button"
+              nz-button nzType="danger"
+              (click)="onClickCancel()">
+        {{commonLanguage.cancel}}
+      </button>
+    </div>
+  </div>
+</nz-spin>
+<!--分组内容-->
+<ng-template #groupContentTemp>
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="input-name"
+             nz-input
+             [title]="groupContentMessage"
+             placeholder="{{language.picInfo.pleaseChoose}}"
+             [(ngModel)]="groupContentMessage">
+    </label>
+    <i nz-tooltip="{{language.selectGroupContent}}"
+       class="icon-template"
+       (click)="onShowGroupContent()">
+        <span class="icon-fiLink fiLink-search-index iconfont">
+        </span>
+    </i>
+  </div>
+</ng-template>
+
+<!--选择分组内容-->
+<nz-modal *ngIf="showGroupContent"
+          [(nzVisible)]="showGroupContent"
+          nzTitle="{{assetLanguage.groupContent}}"
+          nzWidth="70%"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="onClose()"
+          (nzOnOk)="onOk()">
+  <nz-tabset [nzAnimated]="false">
+    <!--设施tab-->
+    <nz-tab nzTitle="{{language.facilityList}}">
+      <div>
+        <label class="quick-group-label">{{assetLanguage.quickGroup}}:</label>
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{language.picInfo.pleaseChoose}}"
+          (ngModelChange)="onChangeDeviceGroupType($event)"
+          [(ngModel)]="deviceGroupType"
+          class="select-type">
+          <nz-option nzValue="{{quickGroupTypeEnum.oneByOne}}"
+                     nzLabel="{{assetLanguage.oneByOne}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfTwo}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfTwo}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfThree}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfThree}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfFour}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfFour}}">
+          </nz-option>
+        </nz-select>
+      </div>
+      <!--设施列表-->
+      <xc-table
+        #facilityTable
+        [dataSet]="facilityData"
+        [pageBean]="facilityPageBean"
+        [tableConfig]="facilityTableConfig"
+        (pageChange)="facilityPageChange($event)">
+      </xc-table>
+    </nz-tab>
+    <!--选择设备-->
+    <nz-tab nzTitle="{{language.equipmentList}}">
+      <div>
+        <label class="quick-group-label">{{assetLanguage.quickGroup}}:</label>
+        <nz-select nzShowSearch
+                   nzPlaceHolder="{{language.picInfo.pleaseChoose}}"
+                   [(ngModel)]="equipmentGroupType"
+                   (ngModelChange)="onChangeEquipmentGroupType($event)"
+                   class="select-type">
+          <nz-option nzValue="{{quickGroupTypeEnum.oneByOne}}"
+                     nzLabel="{{assetLanguage.oneByOne}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfTwo}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfTwo}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfThree}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfThree}}">
+          </nz-option>
+          <nz-option nzValue="{{quickGroupTypeEnum.chooseOneOutOfFour}}"
+                     nzLabel="{{assetLanguage.chooseOneOutOfFour}}">
+          </nz-option>
+        </nz-select>
+      </div>
+      <!--设备列表-->
+      <xc-table
+        #equipmentTable
+        [dataSet]="equipmentData"
+        [pageBean]="equipmentPageBean"
+        [tableConfig]="equipmentTableConfig"
+        (pageChange)="equipmentPageChange($event)">
+      </xc-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary"
+            (click)="onClickSelectContent()">{{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger"
+            (click)="onClickCancelContent()">{{commonLanguage.cancel}}</button>
+    <button nz-button class="link-button" nzType="danger"
+            (click)="onClickCleanUp()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+<!--设施状态模板-->
+<ng-template #deviceStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.deviceStatusIconClass+' '+data.deviceStatusColorClass"></i>
+    <span class="status-text" title="{{data.deviceStatus
+      | translate:deviceStatusCodeEnum}}">
+     {{data.deviceStatus | translate:deviceStatusCodeEnum}}</span>
+  </div>
+</ng-template>
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text" title="{{data.equipmentStatus
+                | translate:equipmentStatusEnum:languageEnum.facility}}">
+      {{data.equipmentStatus | translate:equipmentStatusEnum:languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text" [ngStyle]="data['rowStyle']"
+        title="{{data.equipmentType | translate:equipmentTypeEnum:languageEnum.facility}}">
+    {{data.equipmentType | translate:equipmentTypeEnum:languageEnum.facility}}
+  </span>
+</ng-template>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>
+<!--所属设施过滤选择器-->
+<facility-list-selector-component *ngIf="facilityFilterShow"
+                                  [(facilityVisible)]="facilityFilterShow"
+                                  [multiple]="true"
+                                  [selectFacilityIds]="selectedFacility"
+                                  title="{{language.facilityList}}"
+                                  (selectDataChange)="onSelectData($event)">
+</facility-list-selector-component>
+<!--所属设施过滤模版-->
+<ng-template #deviceSelectorTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="language.picInfo.pleaseChoose"
+         [(ngModel)]="selectedDeviceName"
+         (click)="onShowDeviceSelector(filterValue)">
+</ng-template>
+<!--设备列表处的设施类型模版-->
+<ng-template #deviceRefEquipTemp let-data="data">
+  <i [ngClass]="data.deviceIcon" class="device-type-icon"></i>
+  <span class="status-text" title="{{data.deviceType | translate: deviceTypeEnum}}">
+    {{data.deviceType | translate: deviceTypeEnum}}
+  </span>
+</ng-template>

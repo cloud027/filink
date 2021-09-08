@@ -1,0 +1,7 @@
+@import "../../style-module/config";
+.alarm {
+  background: $menu-font-color;
+  > div {
+    background: $menu-font-color;
+  }
+}

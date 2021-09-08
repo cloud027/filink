@@ -1,0 +1,18 @@
+<!--转派-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="620"
+          [nzTitle]="workOrderLanguage.worker + workOrderLanguage.transferOrder"
+          [nzContent]="transTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #transTemp>
+    <div class="trans-box">
+      <xc-form [column]="transFormColumn" (formInstance)="transFormInstance($event)" class="trans-form"></xc-form>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" [disabled]="isFormDisabled" (click)="transferOrder()">{{InspectionLanguage.handleOk}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{InspectionLanguage.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

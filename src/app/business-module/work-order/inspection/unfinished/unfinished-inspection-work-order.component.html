@@ -1,0 +1,149 @@
+<div class="order-box-warp">
+  <!--卡片 -->
+  <xc-statistical-slider class="not-click-slider"  [sliderConfig]="sliderConfig" (selectChange)="sliderChange($event)"
+                          (slideShowChange)="slideShowChange($event)"></xc-statistical-slider>
+  <!--底部表格-->
+  <div class="table-container table-wrapper">
+    <xc-table #workTable *ngIf="isShowTable"
+              [dataSet]="tableDataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+
+  <!--退单重新生成底部按钮-->
+  <ng-template #footerTemp>
+    <div class="btn-container">
+      <button class="link-button-order" nz-button nzType="primary" (click)="singleBackConfirm()">{{InspectionLanguage.handleOk}}</button>
+      <button class="link-button-order" nz-button nzType="primary" (click)="regenerate()" appAccessPermission="06-1-1-1-1">{{InspectionLanguage.regenerate}}</button>
+      <button class="link-button-order" nz-button nzType="danger" (click)="closeSingleBackConfirmModal()">{{InspectionLanguage.handleCancel}}</button>
+    </div>
+  </ng-template>
+
+  <!--进度弹框 查看关联工单-->
+  <nz-modal [(nzVisible)]="scheduleIsVisible"
+            [nzMaskClosable]="false"
+            [nzWidth]="1200"
+            [nzTitle]="title"
+            (nzOnCancel)="closeModal()"
+            [nzFooter]="scheduleModalFooter">
+    <xc-table #scheduleTable
+              [dataSet]="schedule_dataSet"
+              [pageBean]="schedulePageBean"
+              [tableConfig]="scheduleTableConfig"
+              (pageChange)="schedulePageChange($event)">
+    </xc-table>
+
+    <ng-template #scheduleModalFooter>
+      <button class="link-button" nz-button nzType="danger" (click)="closeModal()">{{InspectionLanguage.handleCancel}}</button>
+    </ng-template>
+  </nz-modal>
+
+  <!--进度-->
+  <ng-template #schedule let-data="data">
+    <div title="{{data.progressSpeed}}%" [ngStyle]="data.rowStyle">
+      <a (click)="showCompleted(data)">
+        <nz-progress [nzPercent]="data.progressSpeed" nzSize="small"></nz-progress>
+      </a>
+    </div>
+  </ng-template>
+
+  <!--指派责任人单位-->
+  <xc-tree-area-selector
+    [(xcVisible)]="isUnitVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+  <!--工单类型-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}" [ngStyle]="data.rowStyle">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+
+  <!--筛选部门-->
+  <ng-template #UnitNameSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly
+           (click)="showModal(filterValue)" [(ngModel)]="departFilterValue.filterName || filterValue.filterName" />
+  </ng-template>
+  <!--列表中单位选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="responsibleUnitIsVisible"
+    (selectDataChange)="departmentSelectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig">
+  </xc-tree-area-selector>
+
+  <!-- 责任人 -->
+  <ng-template #roleTemp let-data="data">
+    <span class="width-style" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+  </ng-template>
+
+  <!--点击退单modal主体内容-->
+  <ng-template #SingleBackTemp>
+    <p style="height: 100px">{{InspectionLanguage.doYouConfirmTheRefundOfThisWorkOrder}}</p>
+  </ng-template>
+
+  <!--巡检区域弹框-->
+  <ng-template #AreaSearch let-filterValue="filterValue">
+    <input type="text" class="cursor-pointer" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly
+           (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName" />
+  </ng-template>
+  <!--区域选择-->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [pageType]="InspectionLanguage.area"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)">
+  </xc-tree-area-selector>
+  <!--指派单位树-->
+  <xc-tree-area-selector
+    [(xcVisible)]="assignVisible"
+    (selectDataChange)="selectAssignDataChange($event)"
+    [treeSelectorConfig]="assignTreeSelectorConfig">
+  </xc-tree-area-selector>
+  <!--设施类型图标-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="hidden" title="{{data.deviceTypeName}}" [ngStyle]="data.rowStyle">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" [ngStyle]="data.rowStyle" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!--转派-->
+  <app-transfer-worker-order *ngIf="isShowTransModal"
+                             [(xcVisible)]="isShowTransModal"
+                             [modalData]="transModalData"
+                             (selectDataChange)="transferInspectOrders($event)">
+  </app-transfer-worker-order>
+  <!--用户列表-->
+  <ng-template #userSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowUserTemp"
+    [(xcVisible)]="isShowUserTemp"
+    [selectUserList]="selectUserList"
+    (selectDataChange)="onSelectUser($event)">
+  </app-select-user>
+  <!--关联工单用户列表-->
+  <ng-template #refUserSearchTemp let-filterValue="filterValue">
+    <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+           (click)="openUserSelector(filterValue, true)" [(ngModel)]="filterValue.filterName || refCheckUserObject.name" />
+  </ng-template>
+  <app-select-user
+    *ngIf="isShowRefUserTemp"
+    [(xcVisible)]="isShowRefUserTemp"
+    [selectUserList]="selectRefUserList"
+    (selectDataChange)="onSelectUser($event, true)">
+  </app-select-user>
+</div>

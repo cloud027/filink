@@ -1,0 +1,178 @@
+@import 'src/app/style-module/config';
+
+@mixin icon-font-item {
+  display: flex;
+  align-items: center;
+  padding: 2px 6px;
+  height: 20px;
+  line-height: 20px;
+  font-size: $eCharts-font-size;
+  border-radius: 2px;
+  color: $sp-icon-color-4;
+}
+
+@mixin blob-title {
+  display: block;
+  margin-right: 10px;
+  max-width: 40%;
+  height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: $primary-title-size;
+  color: $title-color;
+}
+
+.detail-container-wrapper {
+  display: flex;
+
+  .facility-item {
+    width: 450px;
+    margin-bottom: 20px;
+    font-size: $page-font-size;
+
+    .facility-item-label {
+      color: $disabled-font-color;
+    }
+
+    .facility-item-value {
+      color: rgba(0, 0, 0, 0.65)
+    }
+    .facility-remarks{
+      width: 55%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .detail-container-item {
+    padding: 20px 0 10px 6px;
+  }
+
+  .detail-container-one {
+    margin-right: 10px;
+    width: 35%;
+
+
+    .facility-title {
+      @include blob-title;
+      font-size: $primary-title-size;
+      color: $title-color;
+    }
+
+
+    .base-card {
+      height: 300px;
+      margin-bottom: 10px;
+
+      .title-flex {
+        display: flex;
+        align-items: center;
+
+        .business-status {
+          @include icon-font-item;
+          background-color: $sp-icon-color-3;
+        }
+
+        .device-status {
+          @include icon-font-item;
+        }
+      }
+
+      .code-bottom {
+        position: absolute;
+        bottom: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .code-width {
+          width: 180px;
+
+          .mg-right {
+            margin-right: 5px;
+          }
+        }
+
+        .code-bottom-item {
+          display: flex;
+          margin-bottom: 10px;
+        }
+
+        .item-separation {
+          height: 12px;
+          width: 1px;
+          color: $separation-color;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .detail-container-two {
+    margin-right: 10px;
+    width: 35%;
+    .area-flex {
+      display: flex;
+      align-items: center;
+      padding: 14px 0 3px 0;
+      line-height: 20px;
+      font-size: $page-font-size;
+
+      .area-item {
+        @include blob-title;
+      }
+
+      .equipment-quantity-item {
+        @include icon-font-item;
+        background-color: $sp-icon-color-3;
+      }
+    }
+
+    .group-and-loop {
+      margin: 60px 0;
+      .info-btn {
+        margin-right: 10px;
+      }
+    }
+
+    .project-scrap-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .base-card {
+      height: 300px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .detail-container-three {
+    width: 35%;
+
+    .thumbnail-picture {
+      height: 182px;
+      margin-bottom: 10px;
+      text-align: center;
+
+      .really-img {
+        height: auto;
+        width: auto;
+        max-width: 100%;
+        max-height: 160px;
+      }
+    }
+
+    .thumbnail-img-card {
+      width: 100%;
+      height: 250px;
+      .thumbnail-info {
+        height: 230px;
+      }
+    }
+  }
+}
+
+
+

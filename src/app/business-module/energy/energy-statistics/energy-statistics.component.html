@@ -1,0 +1,65 @@
+<div class="energy-statistic">
+  <div class="top-box">
+    <div nz-row [nzGutter]="10">
+      <div nz-col [nzSpan]="6" *ngFor="let cardItem of energyStatisticsCardList">
+        <nz-card class="card-box">
+          <p class="data-text" [ngClass]="cardItem.color">{{ cardItem.data }} kW·h</p>
+          <p>{{ language[cardItem.title] }}</p>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+  <div class="select-box">
+    <!-- 统计范围 -->
+    <nz-select style="width: 150px; margin-right: 10px" nzAllowClear [(ngModel)]="submitData.scope"
+      [nzPlaceHolder]="language.picInfo.pleaseChooseStatis" *ngIf="selectFlag">
+      <nz-option *ngFor="let option of energyStatisticsSelectRangeList" [nzLabel]="option.label"
+        [nzValue]="option.code"></nz-option>
+    </nz-select>
+    <!-- 区域选择 -->
+    <ng-template [ngIf]="submitData.scope === statictisRangeType.statisticsRegion">
+      <input readonly [placeholder]="language.selectArea" (click)="showAreaSelect()" nz-input
+        style="width: 120px; margin-right: 10px" nzSize="default" [(ngModel)]="areaName" />
+    </ng-template>
+    <!-- 项目选择 -->
+    <ng-template  [ngIf]="submitData.scope === statictisRangeType.statisticsProject">
+      <input type="text" readonly  nz-input [placeholder]="language.selectProject"  style="width: 120px; margin-right: 10px" [ngModel]="selectProjectName" (click)="showProjectSelect()">
+    </ng-template>
+    <app-select-project *ngIf="projectSelectVisible" [multiple]="true" [selectList]="selectSelectProject"
+      [(isVisible)]="projectSelectVisible" (selectDataChange)="projectSelectChange($event)"></app-select-project>
+    <!--统计-->
+    <button style="margin-right: 10px" type="button" class="link-button" nz-button nzType="primary"
+      (click)="statistical()" [nzLoading]="btnLoading">
+      {{ language.statistics }}
+    </button>
+    <!--重置-->
+    <button type="button" class="link-button" nz-button nzType="default" (click)="resetBtn()"
+      style="width: 120px; margin-right: 10px">
+      {{ language.reset }}
+    </button>
+    <!-- 电费策略 -->
+    <!-- <button
+            style="margin-right: 10px"
+            type="button"
+            class="link-button power-rate-button"
+            nz-button
+            nzType="default"
+            (click)="powerRateBtn()"
+            style="width: 120px; margin-right: 10px"
+        >
+            {{ language.powerRate }}
+        </button> -->
+  </div>
+  <app-statistic-echarts #statisticEcharts [searchContainer]="submitData"
+    (statisticRankData)="statisticRankData($event)"></app-statistic-echarts>
+
+  <!-- 日能耗 月能耗 年能耗 -->
+  <app-analysis-echarts #analysisEcharts [searchContainer]="submitData"></app-analysis-echarts>
+  <!-- 表格 -->
+  <app-statistic-table [statisticRankData]="tranStatisticTableData"></app-statistic-table>
+</div>
+
+<!--区域选择器-->
+<xc-tree-selector [(xcVisible)]="isVisible" (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

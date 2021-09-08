@@ -1,0 +1,10 @@
+<!--顶部标题-->
+<div class="page-top-title">{{pageTitle}}</div>
+<!--预览-->
+<app-product-wisdom-preview *ngIf="operateType===operateTypeEnum.preview" [previewDataDetail]="previewData" (positionConfig)="OnPositionConfig($event)" ></app-product-wisdom-preview>
+<!--上传-->
+<app-upload-wisdom *ngIf="operateType===operateTypeEnum.add" (afterUpload)="onAfterUpload($event)">
+</app-upload-wisdom>
+<!--编辑-->
+<app-product-update-wisdom *ngIf="operateType === operateTypeEnum.update" [productId]="productId" (previewWisdom)="onPreview($event)"></app-product-update-wisdom>
+

@@ -1,0 +1,42 @@
+@import "../../../../../style-module/config";
+
+.lighting-details {
+  .title {
+    font-weight: bold;
+    font-size: 14px;
+    background: $bg-c-w;
+  }
+
+  .policy-details {
+    margin-top: 10px;
+  }
+
+  .policy-basic {
+    background: $bg-c-w;
+    margin-top: 10px;
+  }
+
+  .applied {
+    background: $bg-c-w;
+    margin-top: 10px;
+  }
+
+  .details {
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding: 10px;
+
+    .title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+}
+
+.details-active {
+  background: $bg-c;
+
+  .lighting-active {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,30 @@
+<!--项目/规划设施点-->
+<div class="info-window-m">
+  <div class="info-window-m-name">
+    <div>
+        <span class="info-data-w"
+              [ngStyle]="{'background-color': infoData.data.pointStatusColor,'color':'#fff'}">
+           {{infoData.data.pointStatus | translate: pointStatusEnum: languageEnum.planProject }}
+        </span>
+      <span class="iconfont icon-fiLink fiLink-wisdom"></span>
+      <span class="info-data-w-title">{{infoData.data.pointName}}</span>
+    </div>
+  </div>
+  <div class="info-window-m-name">
+    <div>
+      <span class="info-data-w"
+            [ngStyle]="{'background-color': '#74ddda','color':'#fff'}">{{language.model}}</span>
+      <span class="info-window-m-font">{{infoData.data.pointModel}}</span>
+    </div>
+  </div>
+  <div class="info-window-m-name" *ngIf="viewIndex ===projectView">
+          <span class="info-data-w"
+                [ngStyle]="{'background-color': '#74ddda','color':'#fff'}">{{language.supplierName}}</span>
+    <span class="info-window-m-font">{{infoData.data.supplierName}}</span>
+  </div>
+  <div class="info-window-m-name">
+    <span class="iconfont icon-fiLink-s fiLink-filink-location-icon disabled-red-icon"></span>
+    <span class="info-window-m-font">{{infoData.data.projectPlanName}}</span>
+  </div>
+</div>
+

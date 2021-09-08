@@ -1,0 +1,311 @@
+<div><span class="area-detail-title"> {{pageTitle}} </span></div>
+<div class="info-container" *ngIf="inspectTable || orderTable" [ngClass]="{'task-info': pageType === pageTypeDetail.taskView }">
+  <div class="detail-info" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box">
+        <div class="title">
+          <span class="order-title text" [title]="resultData.title">{{resultData.title}}</span>
+          <span class="order-status iconStatus" [ngClass]="resultData.statusClass">
+            <i class="icon-fiLink iconfont" [ngClass]="resultData.statusClass"></i>{{resultData.statusName}}
+          </span>
+          <span class="opens iconStatus" *ngIf="inspectTable">{{resultData.openStatus}}</span>
+          <span *ngIf="resultData.autoDispatch === '1'" class="auto-dis iconStatus">{{InspectionLanguage.autoDispatchStr}}</span>
+        </div>
+        <div class="ctime">{{InspectionLanguage.creationTime}}： {{resultData.createTime}}</div>
+        <div class="user" *ngIf="orderTable">
+          <i nz-tooltip [nzTitle]="InspectionLanguage.responsible" class="icon-fiLink iconfont fiLink-user-menu"></i>{{resultData.assignName}}
+        </div>
+        <div class="user" *ngIf="inspectTable">
+          <i nz-tooltip [nzTitle]="InspectionLanguage.inspectionTaskType" class="icon-fiLink iconfont fiLink-routine-inspection"></i>{{resultData.inspectionTaskType}}
+        </div>
+        <div class="user">
+          <i nz-tooltip [nzTitle]="InspectionLanguage.responsibleUnit" class="icon-fiLink iconfont fiLink-departments"></i>{{resultData.accountabilityDeptName}}
+        </div>
+        <!--未完成工单-->
+        <div class="last-time" *ngIf="pageType === pageTypeDetail.unfinishedView">
+          <div class="lastDay" [ngClass]="resultData.latsDayClass">{{resultData.lastDays}}</div>
+          <div class="day-label mt">{{InspectionLanguage.daysRemaining}}</div>
+          <div class="task-pro">
+            <span class="pro-label">{{InspectionLanguage.speedOfProgress}}：</span>
+            <div [title]="resultData.progressSpeed+'%'" class="row-progress">
+              <nz-progress [nzPercent]="resultData.progressSpeed" [nzStrokeColor]="'#36cfc9'" nzSize="small"></nz-progress>
+            </div>
+          </div>
+        </div>
+        <!--巡检任务使用-->
+        <div class="last-time task" *ngIf="pageType === pageTypeDetail.taskView">
+          <div class="lastDay" [ngClass]="resultData.latsDayClass">{{resultData.lastDays}}</div>
+          <div class="day-label">{{InspectionLanguage.taskExpectedTime}}</div>
+        </div>
+        <!--已完成工单-->
+        <div class="last-time" *ngIf="pageType === pageTypeDetail.finished">
+          <div class="order-top"></div>
+          <div class="order"></div>
+          <div class="day-label">{{InspectionLanguage.orderEvaluation}}</div>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <!--工单-->
+      <div class="gutter-box" *ngIf="orderTable">
+        <div class="title">
+          <span class="order-title">{{resultData.deviceAreaName}}</span>
+          <span>
+            <i nz-tooltip [nzTitle]="resultData.deviceName" class="icon-fiLink iconfont" [ngClass]="resultData.deviceIcon"></i>{{resultData.deviceName}}
+          </span>
+          <span class="count">{{resultData.inspectionDeviceCount}}</span>
+        </div>
+        <div class="equip" [ngStyle]="{height: equipHeight}">
+          <span *ngFor="let item of resultData.equipmentDetailList" class="equip-name" nz-tooltip  [nzTitle]="item.name">
+            <i class="icon-fiLink iconfont" [ngClass]="item.iconClass"></i>{{item.name}}
+          </span>
+        </div>
+        <div class="car-mater">
+          <span class="cm-label">{{InspectionLanguage.carInfo}}：</span>
+          <span class="cm-value" [title]="resultData.carName">{{resultData.carName}}</span>
+        </div>
+        <div class="car-mater">
+          <span class="cm-label">{{InspectionLanguage.materielInfo}}：</span>
+          <span class="cm-value" [title]="resultData.materielName">{{resultData.materielName}}</span>
+        </div>
+        <div class="car-mater" *ngIf="pageType === pageTypeDetail.finished">
+          <span class="cm-label">{{InspectionLanguage.feeInformation}}：</span>
+          <span class="cm-value" [title]="resultData.cost">{{resultData.cost}}</span>
+        </div>
+      </div>
+      <!--巡检任务-->
+      <div class="gutter-box" *ngIf="inspectTable">
+        <div class="title">
+          <span class="order-title">{{resultData.inspectionAreaName}}</span>
+          <span class="dev-total">{{InspectionLanguage.totalInspectionFacilities}}：<i>{{resultData.inspectionDeviceCount}}</i></span>
+        </div>
+        <div class="btn-modal">
+          <a class="btn-check" (click)="showDeviceTable()"><i class="icon-fiLink iconfont fiLink-order-device"></i>{{InspectionLanguage.seekInspectionDevice}}</a>
+          <a class="btn-check" (click)="showEquipmentTable()"><i class="icon-fiLink iconfont fiLink-order-equipment"></i>{{InspectionLanguage.seekInspectionDeviceType}}</a>
+        </div>
+        <div class="more-order">
+          <span class="more">{{InspectionLanguage.isCreatMultiWorkOrder}}：</span>
+          <span class="isOrder"><i class="icon-fiLink iconfont " [ngClass]="resultData.multiClass"></i>{{resultData.multiWorkOrder}}</span>
+        </div>
+      </div>
+    </div>
+    <!--第三列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <!--巡检工单-->
+      <div class="gutter-box tran" *ngIf="orderTable">
+        <div class="time" [ngStyle]="{height: modalHeight.timeHeight}">
+          <div class="time-box">
+            <span class="time-label">{{InspectionLanguage.startTime}}：</span>
+            <span class="time-value"><i class="icon-fiLink iconfont fiLink-completed-o"></i>{{resultData.orderStartTime}}</span>
+          </div>
+          <div class="time-box">
+            <span class="time-label">{{InspectionLanguage.inspectionEndTime}}：</span>
+            <span class="time-value"><i class="icon-fiLink iconfont fiLink-completed-o"></i>{{resultData.orderEndTime}}</span>
+          </div>
+          <div class="time-box" *ngIf="pageType === pageTypeDetail.finished">
+            <span class="time-label">{{InspectionLanguage.actualTime}}：</span>
+            <span class="time-value"><i class="icon-fiLink iconfont fiLink-completed-o"></i>{{resultData.realityCompletedTime}}</span>
+          </div>
+        </div>
+        <div class="remark" [ngStyle]="{height: modalHeight.remarkHeight}">
+          <div class="time-box">
+            <span class="time-label">{{InspectionLanguage.retreatSingleReason}}：</span>
+            <span class="time-value" [title]="resultData.concatSingleBackReason">{{resultData.concatSingleBackReason}}</span>
+          </div>
+          <div class="time-box" *ngIf="pageType === pageTypeDetail.unfinishedView">
+            <span class="time-label">{{InspectionLanguage.reasonsForTransfer}}：</span>
+            <span class="time-value" [title]="resultData.turnReason">{{resultData.turnReason}}</span>
+          </div>
+          <div class="time-box">
+            <span class="time-label">{{InspectionLanguage.remark}}：</span>
+            <span class="time-value" [title]="resultData.remark">{{resultData.remark}}</span>
+          </div>
+        </div>
+      </div>
+      <!--巡检任务-->
+      <div class="gutter-box" *ngIf="inspectTable">
+        <div class="time-box task">
+          <span class="time-label">{{InspectionLanguage.inspectionCycle}}：</span>
+          <span class="time-value"><i class="icon-fiLink iconfont fiLink-log"></i>{{resultData.taskPeriod}}</span>
+        </div>
+        <div class="time-box task">
+          <span class="time-label">{{InspectionLanguage.startTime}}：</span>
+          <span class="time-value"><i class="icon-fiLink iconfont fiLink-completed-o"></i>{{resultData.taskStartTime}}</span>
+        </div>
+        <div class="time-box task">
+          <span class="time-label">{{InspectionLanguage.endTime}}：</span>
+          <span class="time-value"><i class="icon-fiLink iconfont fiLink-completed-o"></i>{{resultData.taskEndTime}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-infos">
+    <div><span class="area-detail-title tabTitle"> {{tableTitle}} </span></div>
+    <!-- 任务详情表格 -->
+    <div class="detail-table no-checkbox-table" *ngIf="inspectTable">
+      <xc-table #deviceTable
+                [dataSet]="device_dataSet"
+                [pageBean]="devicePageBean"
+                [tableConfig]="deviceTableConfig"
+                (pageChange)="devicePageChange($event)">
+      </xc-table>
+    </div>
+    <!--工单详情表格-->
+    <div class="detail-table no-checkbox-table" *ngIf="orderTable">
+      <xc-table #orderTable
+                [dataSet]="order_dataSet"
+                [pageBean]="orderPageBean"
+                [tableConfig]="orderTableConfig"
+                (pageChange)="orderPageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+  <!--设施弹窗-->
+  <nz-modal [(nzVisible)]="deviceVisible"
+            [nzWidth]="550"
+            [nzTitle]="InspectionLanguage.setDevice"
+            [nzContent]="deviceModalTemp"
+            [nzFooter]="modalFooter"
+            [nzMaskClosable]="false"
+            (nzOnCancel)="handleCancel(1)">
+    <ng-template #deviceModalTemp>
+      <div class="no-checkbox-table">
+        <xc-table [dataSet]="inspectDeviceDataSet"
+                  [pageBean]="inspectDevicePageBean"
+                  [tableConfig]="inspectDeviceTableConfig"
+                  (pageChange)="inspectDevicePageChange($event)">
+        </xc-table>
+      </div>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button class="link-button" nzType="danger" (click)="handleCancel(1)">{{InspectionLanguage.handleCancel}}</button>
+    </ng-template>
+  </nz-modal>
+  <!--设备弹窗-->
+  <nz-modal [(nzVisible)]="equipVisible"
+            [nzWidth]="450"
+            [nzTitle]="InspectionLanguage.inspectionEquipment"
+            [nzContent]="equipModalTemp"
+            [nzFooter]="equipModalFooter"
+            [nzMaskClosable]="false"
+            (nzOnCancel)="handleCancel(2)">
+    <ng-template #equipModalTemp>
+      <div class="no-checkbox-table no-data">
+        <xc-table [dataSet]="equipDataSet" [tableConfig]="equipTableConfig"></xc-table>
+      </div>
+    </ng-template>
+    <ng-template #equipModalFooter>
+      <button nz-button class="link-button" nzType="danger" (click)="handleCancel(2)">{{InspectionLanguage.handleCancel}}</button>
+    </ng-template>
+  </nz-modal>
+</div>
+<!--巡检报告-->
+<div class="report-warp" *ngIf="showReport">
+  <div class="report-box">
+    <div class="report-left">
+      <div class="tree-title">{{InspectionLanguage.setDevice}}</div>
+      <div class="device-tree">
+        <nz-spin class="spins" [nzSpinning]="isSpinning" *ngIf="isSpinning"></nz-spin>
+        <nz-input-group [nzSuffix]="suffixIcon">
+          <input type="text" nz-input [placeholder]="InspectionLanguage.pleaseEnter" [(ngModel)]="searchValue" (input)="onInputValue($event.target?.value)" [nzAutocomplete]="auto" />
+          <nz-autocomplete nzBackfill #auto>
+            <nz-auto-option *ngFor="let option of resultOptions" [nzValue]="option.key" [nzLabel]="option.title" (click)="changeResult(option)">{{option.title }}</nz-auto-option>
+          </nz-autocomplete>
+        </nz-input-group>
+        <ng-template #suffixIcon>
+          <span class="icon-fiLink fiLink-search-index iconfont"></span>
+        </ng-template>
+        <div class="tree-warp" id="tree-warp">
+          <nz-tree [nzData]="reportNodes"
+                   [nzSearchValue]="searchValue"
+                   [nzExpandAll]="isExpand"
+                   (nzClick)="clickNodes($event)">
+          </nz-tree>
+        </div>
+        <div class="tree-nodata" *ngIf="reportNodes.length === 0">{{InspectionLanguage.noData}}</div>
+      </div>
+    </div>
+    <div class="report-right no-checkbox-table">
+      <xc-table [dataSet]="reportDataSet"
+                [pageBean]="reportPageBean"
+                [tableConfig]="reportTableConfig"
+                (pageChange)="reportPageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!--表格内模板-->
+<div>
+  <!--状态模板-->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{data.statusName}}" [ngStyle]="data.rowStyle">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--单位名称选择-->
+  <ng-template #UnitNameSearch let-filterValue="filterValue">
+    <input class="area-name" (click)="showModal(filterValue)" readonly type="text" [placeholder]="InspectionLanguage.pleaseChoose"
+           [(ngModel)]="selectUnitName">
+  </ng-template>
+  <!-- 单位树 -->
+  <xc-tree-area-selector
+    [(xcVisible)]="responsibleUnitIsVisible"
+    (selectDataChange)="departmentSelectDataChange($event)"
+    [treeSelectorConfig]="unitTreeConfig">
+  </xc-tree-area-selector>
+  <!-- 责任人 -->
+  <ng-template #roleTemp let-data="data">
+    <span class="width-style" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+  </ng-template>
+  <!--是否通过-->
+  <ng-template #resultTemp let-data="data">
+    <div title="{{data.statusName}}">
+      <span class="status-temp" [ngClass]="data.statusClass"></span>
+      {{data.statusName}}
+    </div>
+  </ng-template>
+  <!--设施类型-->
+  <ng-template #deviceTypeTemp let-data="data">
+    <div title="{{data.deviceTypeName}}" class="tab-text-over">
+      <span class="status-temp" [ngClass]="data.deviceIcon"></span>
+      {{data.deviceTypeName}}
+    </div>
+  </ng-template>
+  <!--设备类型多个-->
+  <ng-template #equipTemp let-data="data">
+    <div class="tab-text-over">
+      <span *ngFor="let item of data.equipmentTypeList" class="over-type" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{item.name}}
+      </span>
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTaskTemp let-data="data">
+    <div title="{{data.equipmentTypeName}}" class="tab-text-over">
+      <span class="status-temp" [ngClass]="data.equipIcon"></span>
+      {{data.equipmentTypeName}}
+    </div>
+  </ng-template>
+  <!--进度-->
+  <ng-template #schedule let-data="data">
+    <div title="{{data.progressSpeed}}%">
+      <nz-progress [nzPercent]="data.progressSpeed" nzSize="small"></nz-progress>
+    </div>
+  </ng-template>
+</div>
+<!--用户列表-->
+<ng-template #userSearchTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{InspectionLanguage.pleaseChoose}}" readonly class="cursor-pointer"
+         (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+</ng-template>
+<app-select-user
+  *ngIf="isShowUserTemp"
+  [(xcVisible)]="isShowUserTemp"
+  [selectUserList]="selectUserList"
+  (selectDataChange)="onSelectUser($event)">
+</app-select-user>
+

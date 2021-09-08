@@ -1,0 +1,12 @@
+{
+  "/": {
+    "target": "http://39.100.58.173:4200/",
+    "secure": false
+  },
+  "/websocket": {
+    "target": "ws://39.100.58.173:4200/",
+    "ws": true,
+    "secure": false,
+    "changeOrigin": true
+  }
+}

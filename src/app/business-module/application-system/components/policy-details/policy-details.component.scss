@@ -1,0 +1,104 @@
+@import "../../../../style-module/config";
+
+.policy-box {
+  .policy-card {
+    display: flex;
+
+    .card-list {
+      width: 33.3%;
+      margin-right: 5px;
+      padding: 20px 6px 10px 6px;
+
+      .details-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .create-user {
+          margin-right: 5px;
+          color: $left-top-color;
+        }
+
+        .clock-circle {
+          margin-right: 5px;
+          color: $communication-model-color;
+        }
+
+        .title {
+          font-weight: bold;
+          font-size: 14px;
+          margin-right: 10px;
+          width: 100px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          cursor: pointer;
+        }
+
+        .status {
+          width: 62px;
+          height: 20px;
+          line-height: 20px;
+          color: $menu-font-color;
+          text-align: center;
+          border-radius: 3px;
+          margin-right: 10px;
+          background-color: $statistics-assigned;
+
+          .status-icon {
+            font-size: 15px;
+          }
+
+          .status-text {
+            vertical-align: top;
+          }
+        }
+        .disable-status{
+          background: #ccc;
+        }
+
+        .exec-status {
+          background: $handle-commit-color;
+        }
+        .exec-type{
+          width: 100px;
+          background: $sp-icon-color-2;
+        }
+        .exec {
+          width: 50px;
+          color: $menu-font-color;
+          text-align: center;
+          border-radius: 3px;
+          background: #35cfc9;
+        }
+
+        .info-title {
+          width: 100px;
+          color: $disabled-font-color;
+        }
+        .info-right{
+          margin-left: 20px;
+        }
+        .remark-text {
+          width: 180px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .create {
+        color: $disabled-font-color;
+
+        .create-time {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .display-border {
+      margin-right: 0;
+      padding: 0;
+    }
+  }
+}

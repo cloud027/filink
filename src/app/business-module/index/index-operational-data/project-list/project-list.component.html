@@ -1,0 +1,44 @@
+<div class="facility-list-panel">
+  <!--选择区域-->
+  <div class="app-logic-area">
+    <div class="logic-left">
+      <app-index-left-tab
+        [tabList]="deviceTabList"
+        [active]="deviceActive"
+        (tabChange)="tabChange($event)"
+        [AreaType]="'deviceArea'"></app-index-left-tab>
+    </div>
+    <div class="logic-right">
+      <!--选择项目-->
+      <app-planning-tree [appTenantPermission]="'2-1-1'" [hidden]="deviceActive !== deviceTabListEnum.project"
+                         [isProjectOrPlanning]="true"
+                         (planningDataEvent)="projectDataChange($event)"
+                         [treeName]="'zTree'"></app-planning-tree>
+      <!--智慧杆型号-->
+      <app-smart-pole-model-tree [appTenantPermission]="'2-1-2'" [hidden]="deviceActive !== deviceTabListEnum.smartPoleModelProject"
+                         (areaDataEvent)="smartPoleModelDataChange($event)"
+                         [treeName]="'zTree2'"></app-smart-pole-model-tree>
+      <!--公共选择-->
+      <app-tab-device
+        [firstClick]="firstClick"
+        [setSmartPoleModelData]="setSmartPoleModelData"
+        [setConstructionStatusData]="setConstructionStatusData"
+        [facilityEquipmentConfig]="facilityEquipmentComponent"
+        (smartPoleModelData)="smartPoleModelSelect($event)"
+        (constructionStatusData)="constructionStatusSelect($event)">
+      </app-tab-device>
+    </div>
+  </div>
+  <!--项目列表-->
+  <div class="app-facility-list">
+    <app-planning-liat-left-card
+      [appTenantPermission]="'2-1-4'"
+      [viewIndex]="viewIndex"
+      [planningData]="areaData"
+      [smartPoleModelData]="smartData"
+      [constructionStatusData]=constructionStatusData
+      [isShowPlanningOrProject]="false"
+    ></app-planning-liat-left-card>
+  </div>
+</div>
+

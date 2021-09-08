@@ -1,0 +1,51 @@
+<nz-modal
+  nzWidth="80%"
+  *ngIf="collectionHLVisible"
+  [nzTitle]="title"
+  [(nzVisible)]="collectionHLVisible"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="collectionHLVisible = false"
+>
+  <ng-template #modalContent>
+    <xc-table
+      #tableComponent
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      [selectedData]="selectEquipments"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="Confirm()">
+      {{ language.okText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="collectionHLVisible = false">
+      {{ language.cancelText }}
+    </button>
+    <!-- <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">
+            {{ commonLanguage.cleanUp }}
+        </button> -->
+  </ng-template>
+</nz-modal>
+
+<ng-template #loopStatusRef let-data="data">
+  <span title="{{ data.loopStatus | translate: loopStatusEnum:languageEnum.facility }}">
+    {{ data.loopStatus | translate: loopStatusEnum:languageEnum.facility }}
+  </span>
+</ng-template>
+<!--回路类型模版-->
+<ng-template #loopTypeRef let-data="data">
+  <span *ngIf="data.loopType === loopTypeEnum.customize" title="{{ data.customizeLoopType }}">
+    {{ data.customizeLoopType }}
+  </span>
+  <span
+    *ngIf="data.loopType !== loopTypeEnum.customize"
+    title="{{ data.loopType | translate: loopTypeEnum:languageEnum.facility }}"
+  >
+    {{ data.loopType | translate: loopTypeEnum:languageEnum.facility }}
+  </span>
+</ng-template>

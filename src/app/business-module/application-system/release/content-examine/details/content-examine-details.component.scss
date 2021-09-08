@@ -1,0 +1,227 @@
+@import "../../../../../style-module/config";
+
+// 内容工单标题
+.title {
+  padding-left: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 50px;
+}
+
+.body-background {
+  background-color: rgba(0, 0, 0, 0.025);
+  padding-top: 10px;
+  /** 卡片内容 */
+  .card-content {
+    background-color: $sp-icon-color-4;
+    margin-top: 10px;
+    padding-bottom: 16px;
+    min-width: 1280px;
+    /**卡片标题 */
+    .card-titles {
+      font-size: 16px;
+      line-height: 50px;
+      font-weight: bold;
+      padding-left: 16px;
+    }
+
+    /** 内容间距*/
+    .card-content-spacing {
+      padding-left: 16px;
+      // 图片预览
+      .preview-img {
+        width: 620px;
+        height: 380px
+      }
+
+      /** 间距 */
+      .spacing {
+        margin-top: 16px;
+
+        // 标签
+        .label {
+          color: $disabled-font-color;
+        }
+
+
+
+        .text-input {
+          width: 50%;
+        }
+      }
+
+      // 标签
+      .label {
+        color: $disabled-font-color;
+      }
+
+      /**  取消按钮的颜色*/
+      .cancel {
+        color: $facility-edit-color;
+      }
+
+      /** 转派按钮的颜色 */
+      .Transfer {
+        color: $statistics-all;
+      }
+
+      /** 退单按钮的颜色 */
+      .chargeback {
+        color: $statistics-facility-all;
+      }
+
+      /** 按钮图标 */
+      .button-icon {
+        margin-right: 100px;
+        cursor: pointer;
+      }
+
+      /** 提交按钮 */
+      .btn-submit {
+        width: 96px;
+        margin-top: 16px;
+      }
+    }
+
+    // 操作
+    .operation {
+      display: flex;
+
+      .btn {
+        width: 200px;
+        padding: 16px 0;
+        color: black;
+        text-align: center;
+        cursor: pointer;
+        margin-right: 20px;
+        border-radius: 4px;
+
+        .icon-transfer {
+          font-size: 20px;
+        }
+
+        &:hover {
+          color: $sp-icon-color-4;
+          background-color: $color;
+        }
+      }
+
+      .not-my-work-order {
+        width: 200px;
+        padding: 16px 0;
+        color: black;
+        text-align: center;
+        margin-right: 20px;
+        border-radius: 4px;
+
+        .icon-transfer {
+          font-size: 20px;
+        }
+
+        &:hover {
+          color: $sp-icon-color-4;
+          background-color: $disabled-font-color;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .top-card {
+    display: flex;
+    /** 内容间距*/
+    .card-content-spacing {
+      padding: 0px 20px 20px 16px;
+      /** 间距 */
+      .spacing {
+        margin-top: 16px;
+
+        .work-name {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        // 备注
+        .remake {
+          width: 450px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .work-status {
+          margin-left: 14px;
+          background: $color;
+          padding: 2px 8px;
+          color: $sp-icon-color-4;
+          border-radius: 2px;
+        }
+
+        // 标签
+        .label {
+          color: $disabled-font-color;
+          margin-right: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        // 人像图标
+        .personLiable {
+          color: $handle-processing-color;
+          margin-right: 10px;
+        }
+
+        // 时间图标
+        .time {
+          color: $facility-edit-color;
+          margin-right: 10px;
+        }
+      }
+    }
+
+
+    .basic-left {
+      width: 50%;
+      background-color: $sp-icon-color-4;
+    }
+
+    .basic-right {
+      width: 50%;
+      margin-left: 10px;
+      background-color: $sp-icon-color-4;
+      white-space: nowrap;
+    }
+  }
+}
+
+/** 转派 */
+.transfer-box {
+  margin-top: 16px;
+}
+
+// 审核人样式
+.examine {
+  margin-right: 24px;
+}
+
+// 选择审核人
+.select-user {
+  width: 150px;
+}
+
+// 提示框样式
+.advice-tips {
+  height: 24px;
+  line-height: 24px;
+
+  .remake-tips {
+    color: $error-color;
+    font-size: 12px;
+  }
+}
+
+.border-tips {
+  color: $form-error-color;
+  border-color: $form-error-color;
+}
+

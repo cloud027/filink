@@ -1,0 +1,41 @@
+<!-- 用户列表弹窗 -->
+<nz-modal [nzWidth]="1000"
+          [(nzVisible)]="userVisible"
+          [nzTitle]="scheduleLanguage.associatedUsers"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="userVisibleChange.emit()">
+  <xc-table
+    [dataSet]="userDataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="userPageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter >
+    <button class="link-button" nz-button nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button class="link-button" nz-button nzType="danger" (click)="userVisibleChange.emit()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+<!-- 用户单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedUserId" (ngModelChange)="onRadioChange($event, data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>
+<!--用户状态-->
+<ng-template #userStatusTemp let-data="data">
+  <span *ngIf="data.userStatus === userStatusEnum.disable" class="mr-l-15">{{userLanguage.disable}}</span>
+  <span *ngIf="data.userStatus === userStatusEnum.enable" class="mr-l-15">{{userLanguage.enable}}</span>
+</ng-template>
+<!-- 单位部门模板 -->
+<ng-template #unitNameSearch let-data="data">
+  <span class="width-style" title="{{data.department?.deptName}}">{{data.department?.deptName}}</span>
+</ng-template>
+<!--角色-->
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.role?.roleName}}">{{data.role?.roleName}}</span>
+</ng-template>
+<!--用户模式-->
+<ng-template #loginTypeTemp let-data="data">
+  <span *ngIf="data.loginType === loginTypeEnum.singleUser">{{userLanguage.singleUser}}</span>
+  <span *ngIf="data.loginType === loginTypeEnum.multiUser">{{userLanguage.multiUser}}</span>
+</ng-template>

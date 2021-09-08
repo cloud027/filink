@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="450"
+          [nzTitle]="workOrderLanguage.singleBackConfirm"
+          [nzContent]="transTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #transTemp>
+    <div class="trans-box">
+      <h3>{{workOrderLanguage.isSureReturnWorkOrder}}</h3>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" (click)="confirmOrder()">{{inspectionLanguage.handleOk}}</button>
+    <button class="link-button" nz-button nzType="primary" (click)="regenerateOrder()" [disabled]="!isPermission">{{inspectionLanguage.regenerate}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{inspectionLanguage.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

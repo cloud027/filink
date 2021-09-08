@@ -1,0 +1,13 @@
+@import 'src/app/style-module/config';
+
+.table-wrapper {
+  .area-level {
+    display: flex;
+    align-items: center;
+    .status-text {
+      margin-left: 6px;
+    }
+  }
+}
+
+

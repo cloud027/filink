@@ -1,0 +1,13 @@
+@import "../../../style-module/config";
+.detail-title {
+  margin-top: 20px;
+  margin-left: 16px;
+  h3 {
+    margin: 0;
+    border-left: 2px solid #7cb0dd;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}

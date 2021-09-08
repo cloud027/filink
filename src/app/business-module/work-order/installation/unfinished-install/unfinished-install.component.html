@@ -1,0 +1,9 @@
+<div class="order-box-warp">
+  <!--卡片 -->
+  <xc-statistical-slider class="not-click-slider"  [sliderConfig]="sliderConfig" (selectChange)="sliderChange($event)"
+                         (slideShowChange)="slideShowChange($event)"></xc-statistical-slider>
+  <!--底部表格-->
+  <div class="table-container table-wrapper">
+    <app-installation-table #installTable [orderTableType]="orderPageType" (refreshCard)="getCardList()"></app-installation-table>
+  </div>
+</div>

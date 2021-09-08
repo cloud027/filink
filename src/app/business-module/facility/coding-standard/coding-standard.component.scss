@@ -1,0 +1,76 @@
+@import "../../../style-module/config";
+.coding-standard {
+  background: $table-bg-color;
+  .coding-standard-title {
+    background: $bg-c-w;
+    padding: 0 16px 20px;
+    h4 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  .coding-standard-content {
+    width:100%;
+    margin-top: 10px;
+    background: $bg-c-w;
+    .margin-color {
+      height: 10px;
+      background-color: #f0f2f5;
+    }
+    .coding-standard-table {
+      padding: 10px 20px 50px 20px;
+    }
+  }
+
+  }
+.optional-field {
+  width: 100%;
+  .optional-field-item {
+    display: inline-block;
+    margin: 10px 10px;
+    border: 1px solid $border-color;
+    padding: 5px 30px;
+    border-radius: 5px;
+    background-color: $bg-c;
+  }
+}
+
+.coding-tree {
+  display: flex;
+  .leftTree {
+    height: 400px;
+    flex: 1;
+    margin-right: 20px;
+    .assetType-title-box {
+      background-color: #EAEDF1;
+      height: 40px;
+      font-weight: bold;
+      .assetType-title {
+        padding-top: 10px;
+        padding-left: 10px;
+      }
+    }
+    .tree-box {
+      height: 350px;
+      padding: 10px;
+      overflow: auto
+    }
+  }
+  .rightTree{
+    height: 400px;
+    flex: 1;
+    .assetType-title-box {
+      background-color: #EAEDF1;
+      height: 40px;
+      font-weight: bold;
+      .assetType-title {
+        padding-top: 10px;
+        padding-left: 10px;
+      }
+    }
+    .tree-box {
+      height: 350px;
+      overflow: auto
+    }
+  }
+}

@@ -1,0 +1,78 @@
+@import "../../../style-module/config";
+.dangerous {
+  color: $status-danger;
+  vertical-align: inherit
+}
+.no-more {
+  color: $status-prompt;
+  vertical-align: inherit
+}
+
+.prompt-w {
+  color: $status-common;
+  vertical-align: inherit
+}
+
+.space {
+  margin-left: 10px
+}
+
+.vertical {
+  vertical-align: inherit
+}
+
+.icon-middle {
+  line-height: 16px;
+}
+.box {
+  .item-height {
+    height: 26px;
+    line-height: 26px;
+    &.item-bottom {
+      margin-bottom: 5px;
+    }
+    .label-title {
+      display: inline-block;
+      width: 160px;
+      color: $switch-bg-color;
+      vertical-align: top;
+    }
+
+    .one-text {
+      display: inline-block;
+      white-space: nowrap;
+      width: calc(100% - 180px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .log-status {
+      display: inline-block;
+      height: 22px;
+      line-height: 22px;
+      color: $button-danger-color;
+      padding: 0 5px;
+      margin-left: 5px;
+      border-radius: 2px;
+      font-size: 12px;
+    }
+  }
+}
+.danger-status {
+  background-color: $status-danger;
+}
+.general-status {
+  background-color: $status-common;
+}
+.prompt-status {
+  background-color: $status-prompt;
+}
+.opt-color {
+  background-color: $statistics-assigned;
+}

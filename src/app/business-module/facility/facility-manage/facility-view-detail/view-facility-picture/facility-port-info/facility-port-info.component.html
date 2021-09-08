@@ -1,0 +1,52 @@
+<div class="facility-port-info">
+  <div class="facility-port-item">
+    <ul>
+      <!--端口号-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.portNo}}:</span>
+        <span class="port-value">{{facilityPortInfo.portId}}</span></li>
+      <!--智能标签ID-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.smartID}}:</span>
+        <span class="port-value">{{facilityPortInfo.rfId}}</span></li>
+      <!--状态-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.state}}:</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.state=== portStateEnum.PRE_OCCUPY">{{language.facility.PreOccupy}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.state=== portStateEnum.OCCUPY">{{language.facility.Occupy}}</span>
+        <span class="port-value" *ngIf="facilityPortInfo.state=== portStateEnum.FREE">{{language.facility.Free}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.state=== portStateEnum.EXCEPTION">{{language.facility.Exception}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.state=== portStateEnum.VIRTUAL_OCCUPY">{{language.facility.VirtualOccupy}}</span>
+      </li>
+      <!--适配器类型-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.adaptorType}}:</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.adapterType=== adapterTypeEnum.FC">{{language.facility.FC}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.adapterType=== adapterTypeEnum.SC">{{language.facility.SC}}</span></li>
+      <!--标签类型-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.tagType}}:</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.labelType=== labelTypeEnum.RFID">{{language.facility.Rfid}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.labelType=== labelTypeEnum.QR_CODE">{{language.facility.QrCode}}</span>
+        <span class="port-value"
+              *ngIf="facilityPortInfo.labelType=== labelTypeEnum.NO_TYPE">{{language.facility.NONE}}</span></li>
+      <!--光缆段信息-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.opticCableSectionName}}:</span>
+        <span class="port-value">{{facilityPortInfo.opticCableSectionName}}</span></li>
+      <!--纤芯信息-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.cableCoreInfo}}:</span>
+        <span class="port-value">{{facilityPortInfo.cableCore}}</span></li>
+      <!--智能标签备注信息-->
+      <li><span class="port-label">{{language.facility.viewFacilityPicture.smartRemark}}:</span>
+        <span class="port-value">{{facilityPortInfo.remark}}</span></li>
+    </ul>
+  </div>
+  <div class="facility-port-chart">
+    <p>{{language.facility.StatisticsJumper}}</p>
+    <div echarts [options]="eChartOption"></div>
+  </div>
+</div>
+

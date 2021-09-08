@@ -1,0 +1,49 @@
+@import "../../../../../style-module/config";
+//我的关注列表
+.my-attention-list-panel {
+  width: 410px;
+  border-top: 1px solid $border-color;
+  background-color: white;
+  overflow-y: auto;
+  max-height: 210px;
+  //max-height: calc(100% - 25px);;
+  .my-attention-list {
+    min-width: 180px;
+    min-height: 20px;
+  }
+}
+.facility-list-container {
+  background-color: white;
+  $text-margin: 0 5px;
+
+  .facility-table {
+    padding: 5px 10px 10px 10px;
+  }
+
+  .left-panel-tabs {
+    display: flex;
+    background-color: white;
+    margin-left: 4px;
+    justify-content: space-between;
+    .filter-icon{
+      margin: 5px 10px;
+    }
+    .left-panel-tab {
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+
+      .text-content {
+        cursor: pointer;
+        float: left;
+        width: 70px;
+      }
+    }
+  }
+}
+
+//tab切换表样式
+.tab-selected {
+  color: $color;
+  font-weight: bold;
+}

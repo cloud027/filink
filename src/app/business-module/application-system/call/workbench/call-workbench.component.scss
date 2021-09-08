@@ -1,0 +1,765 @@
+@import "../../../../style-module/config";
+
+// 整体背景
+.overall-background {
+  background-color: $bg-c;
+
+  .box-title {
+    margin-bottom: 0;
+    position: relative;
+
+    .box-right {
+        position: absolute;
+        right: 10px;
+        bottom: 20px;
+
+        .device-number-box {
+            width: 100px;
+            text-align: center;
+
+            .top {
+                font-size: 20px;
+                color: #C458E8;
+            }
+
+            .bottom {
+                font-size: 14px;
+                color: #A6A6A6;
+            }
+
+            &:last-child {
+                border-right: none;
+
+            }
+
+            ~.middle {
+                width: 1px;
+                height: 20px;
+                margin-top: 13px;
+                border-right: 1px solid #E8E8E8;
+            }
+
+            ~.right {
+                .top {
+                    color: #5ED7D8;
+                }
+            }
+        }
+    }
+  }
+
+  // 策略
+  .strategy {
+    display: flex;
+
+    .supplier-icon {
+        color: #67A8F7;
+        margin-right: 8px;
+    }
+
+    // 使用中的策略列表
+    .use-strategies {
+      width: 66.7%;
+      background: $bg-c-w;
+      // 分割线
+      .line {
+        border-bottom: 0.5px solid $border-color;
+        height: 54px;
+        line-height: 54px;
+
+        .strategies-title {
+          display: flex;
+          // 标题
+          .title {
+            font-size: 14px;
+            font-weight: bold;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 16px;
+            margin-right: 10px;
+          }
+
+          // 标题-分页
+          .title-paging {
+            font-size: 12px;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 10px;
+            color: $disabled-font-color;
+
+            .paging-num {
+              color: $color;
+            }
+          }
+
+          .call {
+            margin-top: 10px;
+            margin-left: 10px;
+          }
+        }
+        .search-box{
+          display: flex;
+        }
+        .call-name-search {
+            position: relative;
+            align-self: center;
+            width: 170px;
+            height: 64px;
+            margin-left: 30px;
+            // margin-right: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            nz-list {
+              position: absolute;
+              top: 48px;
+              width: 200px;
+              background-color: white;
+            }
+
+            input {
+              position: relative;
+              margin-top: -8px;
+              width: 170px;
+              height: 32px;
+              padding-right: 30px;
+              border-radius: 16px;
+            }
+
+            i {
+              position: absolute;
+              font-size: 20px;
+              margin: 8px;
+              top: -8px;
+              right: 5px;
+              color: #cbcbcb;
+            }
+          }
+
+        // 右边按钮
+        .right-btn {
+          text-align: right;
+          padding-right: 16px;
+          line-height: 54px;
+          // 新增
+        //   .add {
+        //     width: 90px;
+        //     margin-right: 12px;
+        //   }
+
+
+        }
+      }
+      .device-card{
+        width: 100%;
+      }
+      // 列表卡片高度
+      .list-content {
+        .paging-icon {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          font-size: 24px;
+          color: $color;
+        }
+
+        // 分页不可点击
+        .not-allowed {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        // 分页图标
+        .icon-left {
+          left: 16px;
+        }
+
+        .icon-right {
+          right: 16px;
+        }
+
+        // 内容卡片
+        .content-card {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          height: 537px;
+          padding: 20px 40px 8px 50px;
+
+          .content-space {
+            padding: 0 10px 12px 0;
+            //min-width: 512px;
+            // 执行周期
+            .execType {
+              margin-top: 30px;
+              // 卡片内容
+              .content-strategyType {
+                font-size: 14px;
+                line-height: 24px;
+                color: $sp-icon-color-7;
+              }
+
+              .execType-icon {
+                color: $status-lost;
+                margin-right: 8px;
+              }
+              .no-wrap{
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .supplier{
+                text-align: right;
+              }
+            }
+
+            // 有效期
+            .effectivePeriodTime {
+              margin-top: 10px;
+              // 卡片内容
+              .content-strategyType {
+                font-size: 14px;
+                line-height: 24px;
+                color: $sp-icon-color-7;
+              }
+
+              .effectivePeriodTime-icon {
+                color: $frequency-color;
+                margin-right: 8px;
+              }
+              .supplier{
+                text-align: right;
+              }
+              .no-wrap{
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
+
+            // 图标
+            .img-icon {
+              font-size: 16px;
+              line-height: 24px;
+            }
+
+            // 策略标题
+            .strategy-title {
+              font-size: 13px;
+              font-weight: bold;
+            }
+
+            .title-icon {
+              width: 40px;
+              height: 40px;
+              min-width: 40px;
+              text-align: center;
+              line-height: 40px;
+              font-size: 24px;
+              background: $frequency-color;
+              color: white;
+              border-radius: 50%;
+              margin-right: 12px;
+            }
+
+            .switch-strategy {
+              text-align: right;
+              min-width: 90px;
+            }
+
+            .top-title {
+              display: flex;
+              .top-content{
+                width: 100%;
+              }
+              .titles {
+                width: 64%;
+                .no-wrap{
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
+              }
+              // 卡片内容
+              .content-strategyType {
+                font-size: 14px;
+                line-height: 24px;
+                color: $sp-icon-color-7;
+              }
+              .equipment-type{
+                //max-width: 64%;
+                //float: left;
+                width: 100%;
+              }
+              .supplier{
+                text-align: right;
+              }
+            }
+            .content-line-height{
+              line-height: 24px;
+             }
+            // 周期
+            .execCron {
+              margin-top: 16px;
+            }
+          }
+        }
+
+        // 分页
+        .paging {
+          text-align: right;
+          padding: 16px 24px;
+        }
+      }
+    }
+
+    // 便捷入口
+    .convenient-entrance {
+      width: 33.3%;
+      margin-left: 10px;
+      background: white;
+      //min-width:532px;
+      .content-line-height{
+        line-height: 24px;
+      }
+      .content-strategyType {
+        font-size: 14px;
+        line-height: 24px;
+        color: $sp-icon-color-7;
+      }
+
+      .execType-icon {
+        color: $status-lost;
+        margin-right: 8px;
+      }
+
+      .call-operate-box {
+          margin-top: 2px;
+          margin-bottom: 2px;
+          position: relative;
+          background-color: #D8D8D8;
+          width: 100%;
+          height: 300px;
+
+          .top {
+              position: absolute;
+              top:0;
+              left:0;
+              width: 100%;
+              height: 60px;
+              line-height: 60px;
+              font-size: 14px;
+              color: #fff;
+              background-color: rgba(43,51,63,0.70);
+
+              .left {
+                  font-weight: 400;
+              }
+
+              .right {
+                text-align: right;
+                padding-right: 20px;
+
+                  .call-icon {
+                    color: #A7CDF8;
+                    margin-right: 10px;
+                  }
+              }
+          }
+
+          .bottom {
+            position: absolute;
+            bottom:0;
+            left:0;
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            text-align: center;
+            background-color: rgba(43,51,63,0.70);
+
+            .icon-box {
+                width: 16px;
+                height: 16px;
+                border-radius: 10px;
+                padding: 2px;
+                margin-right: 25px;
+                background-color: #fff;
+
+                i {
+                    font-size: 16px;
+                    color: $color;
+                }
+
+                &:last-child i {
+                    color: $error-color;
+                }
+            }
+
+        }
+      }
+
+      .btn-up-and-down {
+        margin-top: 12px;
+
+        .instructions {
+          margin-right: 16px;
+          width: 104px;
+        }
+      }
+
+      // 标题
+      .title {
+        font-size: 14px;
+        font-weight: bold;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 16px;
+      }
+
+      // 分割线
+      .line {
+        border-bottom: 0.5px solid $border-color;
+        height: 54px;
+        line-height: 54px;
+      }
+
+      // 便捷入口
+      .convenient {
+        padding: 18px 16px 20px 16px;
+
+        .bottom-time {
+          .title-label {
+            display: flex;
+            position: relative;
+            // 策略标题
+            .strategy-title {
+              font-size: 14px;
+              font-weight: bold;
+              margin-right: 16px;
+              line-height: 25px;
+            }
+            .equipment-status{
+              position: absolute;
+              right: 10px;
+            }
+
+            // 执行状态
+            .execStatus {
+              background: $frequency-color;
+              padding: 0 8px;
+              height: 20px;
+              margin-top: 2px;
+              line-height: 20px;
+              font-size: 12px;
+              color: white;
+              border-radius: 4px;
+            }
+          }
+        }
+
+        // 有效期
+        .term-validity {
+          margin-bottom: 16px;
+          color: $disabled-font-color;
+        }
+
+        .light {
+        //   margin-top: 8px;
+          margin: 8px 0;
+
+          // 音量和亮度
+          .explain {
+            line-height: 36px;
+            min-width: 80px;
+
+            .switch {
+              color: white;
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              text-align: center;
+              line-height: 24px;
+              background-color: $facility-edit-color;
+              border-radius: 50%;
+            }
+
+            // 亮度 图标
+            .brightness {
+              color: white;
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              text-align: center;
+              line-height: 24px;
+              background-color: $singlelightcon-color;
+              border-radius: 50%;
+            }
+
+            .volume {
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              text-align: center;
+              line-height: 24px;
+              background-color: #B9ABF7;
+              border-radius: 50%;
+              color: white;
+            }
+          }
+
+          .light-num {
+            line-height: 36px;
+            padding-left: 16px;
+          }
+
+          //开关
+          .open-close {
+            line-height: 36px;
+          }
+        }
+        .light-switch{
+          margin-top: 16px;
+        }
+      }
+
+      // 未选中
+      .unchecked {
+        height: 440px;
+        text-align: center;
+      }
+    }
+  }
+
+  // 统计图
+  .statistical {
+    display: flex;
+
+    .statistical-left {
+      display: flex;
+      width: 66.7%;
+    }
+
+    .duration {
+      width: 33.3%;
+      margin-left: 10px;
+    }
+  }
+
+  // 全部策略
+  .all-strategy {
+    color: $color;
+    cursor: pointer;
+  }
+
+  .preview-box {
+    width: 100%;
+    height: 250px;
+    // 预览
+    .preview {
+      width: 100%;
+      height: 250px;
+    }
+
+    .picture {
+      position: relative;
+
+      .picture-btn {
+        height: 36px;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(43, 51, 63, 0.7);
+        bottom: 0;
+
+        .btn-box {
+          display: flex;
+          width: 120px;
+          margin: auto;
+
+          .btn-icon {
+            width: 40px;
+            height: 36px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+
+            .icon-up {
+              font-size: 22px;
+              color: $color;
+              background: white;
+              border-radius: 50%;
+
+              &:hover {
+                color: $bg-c-w;
+                background: $color;
+              }
+            }
+          }
+        }
+      }
+
+      // todo 暂不删除
+      //.hideSlow{
+      //  background-color: rgba(43, 51, 63, 0.7);
+      //  animation: hide-tip 5s 1;
+      //  animation-fill-mode: forwards;
+      //  -webkit-animation: showtip 5s 1;
+      //  -webkit-animation-fill-mode: forwards;
+      //}
+      //@keyframes hide-tip {
+      //  from {
+      //    opcity: 1;
+      //  }
+      //  to {
+      //    opacity: 0;
+      //  }
+      //}
+      //@-webkit-keyframes hide-tip {
+      //  from {
+      //    opcity: 1;
+      //  }
+      //  to {
+      //    opacity: 0;
+      //  }
+      //}
+    }
+
+
+  }
+
+  .preview-video {
+    background-color: black;
+  }
+
+  .pie-chart {
+    display: flex;
+
+    .equipmentStatusData {
+      width: 50%;
+    }
+  }
+
+  .workbench-title {
+    background: white;
+    margin-bottom: 10px;
+    font-size: 16px;
+    padding: 10px 0 20px 10px;
+    font-weight: bold;
+  }
+
+  .default-page {
+    text-align: center;
+    background-color: $bg-c-w;
+    padding: 23vh 0;
+
+    .default-p {
+      color: $disabled-font-color;
+      line-height: 40px;
+    }
+  }
+}
+
+// 折线图
+.line-chart {
+  width: 50%;
+  background-color: $bg-c-w;
+  margin-top: 10px;
+
+  .bottom-line {
+    display: flex;
+    border-bottom: 0.5px solid $border-color;
+    height: 54px;
+    line-height: 54px;
+    color: #333;
+    position: relative;
+    // 统计标题
+    .statistics-title {
+      margin-left: 16px;
+      margin-right: 5px;
+      font-weight: bold;
+      white-space: nowrap;
+      min-width: 50px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .statistics-title-detail{
+      font-weight: bold;
+      margin-right: 5px;
+      white-space: nowrap;
+      min-width: 50px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    // 选择时间
+    .select-time {
+      //padding-right: 20px;
+      line-height: 54px;
+      width: 218px;
+      //margin-left: 20px;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  .empty-container {
+    height: 266px;
+    padding-top: 80px;
+  }
+
+  .chart{
+    height: 266px;
+  }
+}
+
+.programLaunchQuantity {
+  margin-left: 10px;
+}
+
+/**
+ * 卡片样式
+ */
+.card-content {
+  border: 1px solid $border-color;
+  height: 156px;
+  padding: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+
+  .available-img {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .available-text {
+    text-align: center;
+  }
+}
+
+/**
+ * 被选中的列表（样式放最下面）
+ */
+.be-selected {
+  border: 1px solid $color;
+}
+.work-title {
+  padding-right: 10px;
+  cursor: pointer;
+}
+.active {
+  color: $color;
+}
+// 统计图
+.statistical {
+  display: flex;
+
+  .statistical-left {
+    display: flex;
+    width: 66.7%;
+  }
+
+  .duration {
+    width: 33.3%;
+    margin-left: 10px;
+  }
+}

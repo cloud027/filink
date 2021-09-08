@@ -1,0 +1,177 @@
+$borderColorApplication: #ccc;
+$hoverColorApplication: #35cfc9;
+$borderApplication: #ddd;
+@import "../../../../style-module/config";
+
+/*超出省略号*/
+@mixin text-overflow {
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*自定义input样式*/
+@mixin input-style {
+  display: inline-block;
+  width: 300px;
+  border: 1px solid $borderColorApplication;
+  height: 32px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*按钮样式*/
+@mixin button-style {
+  border: none;
+  outline: none;
+  background: $menu-font-color;
+}
+
+/*分页的布局*/
+@mixin page-style {
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  &:hover {
+    color: $hoverColorApplication;
+  }
+}
+
+/*信息屏样式*/
+@mixin screen-style {
+  width: 500px;
+  border: 1px dashed $borderApplication;
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 3px;
+  border-top: none;
+  position: relative;
+  .information-screen {
+    position: absolute;
+    color: $hoverColorApplication;
+    top: -12px;
+    left: 30px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: -30px;
+      width: 25px;
+      border-top: 1px dashed $borderApplication;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 47px;
+      width: 420px;
+      border-top: 1px dashed $borderApplication;
+    }
+  }
+  .lamp {
+    &:after {
+      left: 15px;
+      width: 452px;
+    }
+  }
+  .program-select {
+    display: flex;
+    align-items: center;
+
+    .program-title {
+      width: 100px;
+    }
+  }
+  .instruct-list {
+    display: flex;
+    align-items: center;
+
+    .instruct-title {
+      width: 140px;
+    }
+
+    .instruct-volume {
+      width: 60%;
+      margin: 20px 20px 20px 0;
+
+      .switch-right-close {
+        color: $color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+/*详情按钮样式*/
+@mixin group-content-style {
+  margin-top: 10px;
+  background: $menu-font-color;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px;
+      background: $menu-font-color;
+    }
+
+    .more {
+      color: $hoverColorApplication;
+      cursor: pointer;
+      padding: 0 10px;
+    }
+  }
+
+  .table-list {
+    padding: 0 20px;
+  }
+}
+
+/*标题的下划线*/
+@mixin border-style {
+  content: '';
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid $borderApplication;
+  top: 54px;
+  left: 0;
+}
+
+.icon-wrap {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 50%;
+  color: $bg-c-w;
+  margin-right: 7px;
+}
+
+.light-wrap {
+  background-color: $statistics-jointClosure;
+}
+
+.volume-wrap {
+  background-color: $index-facility-selected;
+}
+
+.open-wrap {
+  background-color: $index-facility-selected;
+}
+
+.open-button {
+  @include button-style;
+}

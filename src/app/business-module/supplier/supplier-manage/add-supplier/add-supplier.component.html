@@ -1,0 +1,27 @@
+<div class="add-supplier">
+  <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+  <div class="supplier-form">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-margin"></xc-form>
+    <div class="footer">
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="submit()">
+        {{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+</div>
+<!-- 电话号码 -->
+<ng-template #telephoneTemp let-formGroup="formGroup" let-col="col">
+  <app-telephone-input #telephoneInput
+                       (phoneChange)="getPhone($event)"
+                       [hint]="null"
+                       (telephoneInit)="getPhoneInit($event)"
+                       (inputNumberChange)="inputNumberChange($event)">
+  </app-telephone-input>
+  <span class="hint">{{phoneNumberMsg}}</span>
+</ng-template>

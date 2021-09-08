@@ -1,0 +1,59 @@
+<div class="dynamic-correlation-rule">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  <!-- 启用状态 -->
+  <ng-template #isNoStartTemp let-data="data">
+    <div class="switch-task">
+      <span *ngIf="data.isDisabled" class="switch-over"></span>
+      <nz-switch [ngModel]="data.action === ableStatus.enable"
+                 [nzControl]="true"
+                 [nzDisabled]="data.isDisabled"
+                 (click)="clickSwitch(data)">
+      </nz-switch>
+      <span *ngIf="data.action === ableStatus.enable && data.taskType === taskTypeEnum.onLine" class="open-type" >{{language.start}}</span>
+      <span *ngIf="data.action === ableStatus.disable && data.taskType === taskTypeEnum.onLine" class="open-type" >{{language.stop}}</span>
+    </div>
+  </ng-template>
+</div>
+<!--进度-->
+<ng-template #completeSchedule let-data="data">
+  <div title="{{data.completeProgress}}%">
+    <nz-progress [nzPercent]="data.completeProgress" nzSize="small"></nz-progress>
+  </div>
+</ng-template>
+<!--周期执行时间点-->
+<ng-template #periodTimeQueryTemp let-filterValue="filterValue">
+  <nz-time-picker class="time-input" [(ngModel)]="filterValue.filterValue"></nz-time-picker>
+</ng-template>
+<!--任务周期-->
+<ng-template #taskPeriodTemp let-filterValue="filterValue">
+    <div class="input-box">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)"
+             [placeholder]="language.pleaseEnter" [(ngModel)]="filterValue.filterValue" />
+    </div>
+</ng-template>
+<!--时间窗口-->
+<ng-template #timeWindowTemp let-filterValue="filterValue">
+    <div class="input-box">
+      <input type="text" class="area-name" oninput="value=value.replace(/[^\d]/g,'');if(value.length>5)value=value.slice(0,5)"
+             [placeholder]="language.pleaseEnter" [(ngModel)]="filterValue.filterValue" />
+    </div>
+</ng-template>
+<!--最小支持度-->
+<ng-template #minSupTemp let-filterValue="filterValue">
+    <div class="input-box">
+      <input type="text" class="area-name" (keyup)="checkInputValue(filterValue, $event)"
+             [placeholder]="language.pleaseEnter" [(ngModel)]="filterValue.filterValue" />
+    </div>
+</ng-template>
+<!--最小置信度-->
+<ng-template #minConfTemp let-filterValue="filterValue">
+    <div class="input-box">
+      <input type="text" class="area-name" (keyup)="checkInputValue(filterValue, $event)"
+             [placeholder]="language.pleaseEnter" [(ngModel)]="filterValue.filterValue" />
+    </div>
+</ng-template>

@@ -1,0 +1,40 @@
+.content-title{
+  color: #35cfc9;
+  padding-left: 50px;
+}
+.options-body {
+  width: 420px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  .options-button {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 14px;
+    border-color: #36cfc9;
+    min-width: 80px;
+
+    .common-each-button {
+
+      color: #36cfc9;
+      border-color: #36cfc9;
+
+      &:hover {
+        color: white;
+        background-color: #36cfc9;
+      }
+    }
+  }
+}
+
+.audio-btn-group{
+  text-align: center;
+  .start{
+    //margin-right: 30px;
+  }
+  .btn-size{
+    line-height: 30px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,13 @@
+<div class="select-alarm">
+  <xc-form [column]="formColumn"
+           (formInstance)="formInstance($event)">
+  </xc-form>
+  <!-- 根告警原因 -->
+  <ng-template #alarmReasonTemp let-formGroup="formGroup" let-col="col">
+    <app-alarm-name [isFilter]="false" [isRadio]="true" [alarmNameConfig]='alarmReasonConfig'></app-alarm-name>
+  </ng-template>
+  <!-- 相关告警 -->
+  <ng-template #alarmCorrelationTemp let-formGroup="formGroup" let-col="col">
+    <app-alarm-name [isFilter]="false" [alarmNameConfig]='alarmCorrelationConfig'></app-alarm-name>
+  </ng-template>
+</div>

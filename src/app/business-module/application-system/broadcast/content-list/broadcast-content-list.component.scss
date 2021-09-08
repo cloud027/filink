@@ -1,0 +1,41 @@
+// 审核人样式
+.examine {
+  margin-right: 24px;
+}
+
+// 节目文件  超过div长度隐藏显示省略号
+.program-files {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+// 选择审核人
+.select-user {
+  width: 300px;
+}
+// 预览图片
+.preview-img {
+  width: 475px;
+  height: 300px
+}
+.audio-box{
+  width:440px;
+  height: 130px;
+  background: rgba(43,51,63,0.70);
+  .slide-box{
+    height: 98px;
+    text-align: center;
+    .slide{
+      margin: 43px auto;
+      width: 400px;
+      color: #FFFFFF;
+      padding-top: 30px;
+    }
+  }
+  .control-box{
+    height: 32px;
+    background: rgba(43,51,63,0.70);
+  }
+}

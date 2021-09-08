@@ -1,0 +1,16 @@
+@import "../../../../../../style-module/config";
+
+.allocation-warp {
+  .gutter-box {
+    background: $bg-c-w;
+    height: 100%;
+    padding: 10px 16px 20px 16px;
+
+    .allocation-text{
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+}

@@ -1,0 +1,253 @@
+<!--回路新增、编辑组件-->
+<div class="detail-title">{{assetsLanguage.configGateway}}</div>
+<div class="space-backGround"></div>
+<div id="content-screen" class="config-content">
+  <!--打印按钮-->
+  <div class="before-content">
+    <span class="gateway-title">
+      <img class="gateway-image" src="../../../../assets/img/gateway-config/gateway.png" alt="">
+      <span>{{gatewayName}}</span>
+    </span>
+    <span class="stamp-lay" (click)="onStamp()"><i class="iconfont icon-fiLink fiLink-stamp"></i></span>
+  </div>
+  <!--网关配置-->
+  <div id="gateway-canvas" class="graph-size">
+    <!--  端口点击出现按钮-->
+    <div class="button-box" id="buttonMenu">
+      <!--  未占用端口点击出现 已有设备 和 新增设备 按钮组-->
+      <ul class="button-ul" *ngIf="addButtonPart">
+        <li class="button-li" (click)="existEquipment()">{{assetsLanguage.existingEquipment}}</li>
+        <li class="button-li" (click)="addEquipment()">{{assetsLanguage.addEquipment}}</li>
+        <li class="button-li" (click)="addSensor()">{{assetsLanguage.addSensor}}</li>
+      </ul>
+      <!--  占用端口点击出现 修改当前配置 和 清除当前配置 按钮组-->
+      <ul class="button-ul" *ngIf="editButtonPart">
+        <!--修改设备配置-->
+        <li class="button-li" *ngIf="!isSenor"
+            (click)="editConfig()">{{assetsLanguage.modifyTheCurrentConfiguration}}</li>
+        <!--修改传感器-->
+        <li class="button-li" *ngIf="isSenor" (click)="editSensorConfig()">{{assetsLanguage.modifySensor}}</li>
+        <!--删除传感器或解除设备连接关系-->
+        <li class="button-li"
+            (click)="clearConfigTip(showType)">{{showType}}</li>
+      <li class="button-li"
+            (click)="openRemark()">{{assetsLanguage.enterNote}}</li>
+      </ul>
+    </div>
+    <!--设备显示浮窗信息-->
+    <div class="float-window-body"
+         *ngIf="isShow"
+         [style.left.px]="left"
+         [style.top.px]="top"
+    >
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentName}}：</span><span>{{floatWindowEquipmentName}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentTypeTitle}}：</span>
+        <span class="icon" [class]="getEquipmentIconStyle(floatWindowEquipmentType, floatWindowEquipmentModelType)">  </span>
+        {{commonUtil.codeTranslate(indexEquipmentTypeEnum, $nzI18n, floatWindowEquipmentType, languageEnum.facility)}}
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentStatus}}：</span>
+        <span class="equipmentStatus" [ngClass]="commonUtil.getEquipmentStatusIconClass(floatWindowEquipmentStatus).bgColor">
+          {{commonUtil.codeTranslate(equipmentStatusEnum, $nzI18n, floatWindowEquipmentStatus, languageEnum.facility)}}
+        </span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentModel}}：</span><span>{{floatWindowEquipmentModel}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.facilityNumber}}：</span><span>{{floatWindowEquipmentNo}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.installationTime}}：</span><span>{{floatWindowEquipmentInstallationTime | dynamic: 'dateDay' : null}}</span>
+      </div>
+    </div>
+    <!--传感器信息悬浮显示-->
+    <div class="float-window-body"
+         [ngStyle]="{'height': '100px'}"
+         *ngIf="isShowSenor"
+         [style.left.px]="left"
+         [style.top.px]="top"
+    >
+      <div class="font-type">
+        <span class="font-type-margin">{{assetsLanguage.sensorName}}：</span><span>{{floatWindowSenorName}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{assetsLanguage.sensorType}}：</span><span>{{floatWindowSenorType}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{assetsLanguage.sensorModel}}：</span><span>{{floatWindowSenorModel}}</span>
+      </div>
+    </div>
+    <!--传感器信息悬浮显示-->
+    <div class="float-window-body"
+         [ngStyle]="{'height': '60px','text-align': 'center','line-height': '4'}"
+         *ngIf="noIsEquipmentCode"
+         [style.left.px]="left"
+         [style.top.px]="top"
+    >
+      没有该设备权限
+    </div>
+  </div>
+  <!--底部按钮-->
+  <div class="page-footer">
+    <button class="footer-button link-button" nz-button nzType="primary" type="button"
+            (click)="save()">{{language.handleOk}}</button>
+    <button class="footer-button link-button" nz-button nzType="danger" type="button"
+            (click)="goBack()">{{language.handleCancel}}</button>
+  </div>
+</div>
+
+
+<!--已有设备弹框-->
+<equipment-list-selector-component *ngIf="existEquipmentVisible"
+                                   [(equipmentVisible)]="existEquipmentVisible"
+                                   [isFilterEquipmentType]="true"
+                                   [filterConditions]="equipmentFilter"
+                                   [isGatewayConfig]="true"
+                                   (selectDataChange)="equipmentDataChange($event)">
+</equipment-list-selector-component>
+
+<!--新增设备弹框-->
+<nz-modal *ngIf="xcVisible"
+          [(nzVisible)]="xcVisible"
+          nzTitle="{{assetsLanguage.addEquipment}}"
+          [nzMask]="true"
+          nzWidth="55%"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="xcVisible=false"
+          [nzFooter]="footer">
+
+  <nz-tabset [nzSelectedIndex]="initTabNum">
+    <nz-tab nzTitle="{{assetsLanguage.deviceInformation}}" [nzDisabled]="!isShowAddTab"
+            (nzClick)="changeTab(operateType.add)">
+      <!--  新增设备表单-->
+      <div class="overview-slide">
+        <app-equipment-detail #addEquipment
+                              *ngIf="xcVisible"
+                              [isHasTitle]="false"
+                              [isHasButton]="false"
+                              [isAddOperate]="true"
+                              [gatewayName]="gatewayName"
+                              [gatewayPort]="portType+','+portNo"
+                              [gatewayPortTypeList]="portType"
+                              [gatewayPortFlagList]="portFlag"
+                              [gatewayNameDisabled]="false"
+                              [isGateway]="true"
+                              (getExtraRequest)="getExtraRequest($event)"
+                              (getFormStatus)="getFormStatus($event)"
+                              (getFormDisabled)="getFormDisabled($event)"
+        ></app-equipment-detail>
+      </div>
+    </nz-tab>
+    <div *ngIf="isShowConfigPart">
+      <nz-tab nzTitle="{{assetsLanguage.configurationInformation}}" [nzDisabled]="!isShowConfigTab"
+              (nzClick)="changeTab(operateType.config)">
+        <!--设备配置-->
+        <div class="overview-slide">
+          <app-equipment-config-common *ngIf="isShowConfigContent"
+                                       [centerControlId]="centerControlId"
+                                       [equipmentConfigContent]="equipmentConfigContent"
+                                       (buttonStatus)="getConfigButtonStatus($event)"
+                                       (getFormStatus)="getConfigFormValue($event)"
+                                       (getCurrentTabIndex)=getCurrentTabIndex($event)>
+          </app-equipment-config-common>
+        </div>
+      </nz-tab>
+    </div>
+  </nz-tabset>
+  <!-- 底部按钮-->
+  <ng-template #footer let-data="data">
+    <!-- 新增设备表单确定按钮-->
+    <button class="link-button margin-right20" *ngIf="isAddOrConfig"
+            nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="addOkDisabled"
+            (click)="handleAddOk()">
+      {{language.handleOk}}
+    </button>
+    <button class="link-button" *ngIf="!isAddOrConfig"
+            nz-button
+            nzType="primary"
+            type="button"
+            [disabled]="configOkDisabled[currentIndex]"
+            (click)="handleAddConfigOk(currentIndex) ">{{language.handleOk}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="xcVisible=false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--修改设备配置弹框-->
+<app-equipment-config
+  *ngIf="editXcVisible"
+  [(xcVisible)]="editXcVisible"
+  [equipmentConfigContent]="equipmentConfigContent"
+  [centerControlId]="configEquipmentId"
+  [configValueParam]="configValueParam">
+</app-equipment-config>
+
+<!--编辑节点名称弹框-->
+<nz-modal *ngIf="editNodeNameXcVisible"
+          [(nzVisible)]="editNodeNameXcVisible"
+          nzTitle="{{assetsLanguage.enterNote}}"
+          [nzWidth]="500"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="editNodeNameXcVisible=false"
+          [nzFooter]="EditNodeNameFooter">
+  <xc-form *ngIf="editNodeNameXcVisible"
+           [column]="editNodeNameFormColumn"
+           (formInstance)="editNodeNameFormInstance($event)">
+  </xc-form>
+  <!-- 底部按钮-->
+  <ng-template #EditNodeNameFooter let-data='data'>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="saveEditNodeName()">{{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="editNodeNameXcVisible=false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+
+
+<!--编辑连线名称弹框-->
+<nz-modal *ngIf="editLineNameXcVisible"
+          [(nzVisible)]="editLineNameXcVisible"
+          nzTitle="{{assetsLanguage.enterNote}}"
+          [nzWidth]="500"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="editLineNameXcVisible=false"
+          [nzFooter]="EditLineNameFooter">
+  <xc-form *ngIf="editLineNameXcVisible"
+           [column]="editLineNameFormColumn"
+           (formInstance)="editLineNameFormInstance($event)"></xc-form>
+  <!-- 底部按钮-->
+  <ng-template #EditLineNameFooter let-data='data'>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="saveEditLineName()">{{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="editLineNameXcVisible=false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--新增传感器弹窗-->
+<nz-modal *ngIf="addSensorXcVisible"
+          [(nzVisible)]="addSensorXcVisible"
+          nzTitle="{{senSorWindowTitle}}"
+          [nzWidth]="500"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="addSensorXcVisible=false"
+          [nzFooter]="SensorFooter">
+  <xc-form [column]="sensorFormColumn"
+           (formInstance)="formInstance($event)"></xc-form>
+  <!-- 底部按钮-->
+  <ng-template #SensorFooter let-data='data'>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            [nzLoading]="isLoading"
+            [disabled]="!sensorFormStatus.getValid()"
+            (click)="saveSensorInfo()">{{language.handleOk}}</button>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="addSensorXcVisible=false">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

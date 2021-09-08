@@ -1,0 +1,101 @@
+.step-modal-box{
+  display: flex;
+  min-height: 300px;
+  max-height: 400px;
+  .steps-box{
+    width: 186px;
+    min-height: 300px;
+    max-height: 400px;
+    border-right: 1px solid #e8e8e8;
+    .step-item{
+      display: flex;
+      height: 144px;
+      position: relative;
+      padding-left: 20px;
+      .step-num{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background: #e8e8e8;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1px solid #e8e8e8;
+        color: #ababab;
+      }
+      .step-title{
+        height: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 10px;
+        color: #ababab;
+      }
+      .step-finish{
+        display: none;
+      }
+      &:after{
+        display: block;
+        content: '';
+        height: 100px;
+        border-left: 1px solid #36cfc9;
+        position: absolute;
+        top: 42px;
+        left: 40px;
+      }
+      &:first-child{
+        margin-top: 30%;
+      }
+      &:last-child{
+        height: 40px;
+        &:after{
+          display: none;
+        }
+      }
+    }
+    /*选中时*/
+    .step-item.active{
+      .step-num{
+        color: #ffffff;
+        background: #36cfc9;
+        border-color: #36cfc9;
+      }
+      .step-title{
+        font-size: 14px;
+        color: #333;
+        font-weight: bold;
+      }
+    }
+    /*完成时*/
+    .step-item.finish{
+      .step-num{
+        display: none;
+      }
+      .step-finish{
+        display: block;
+        color: #36cfc9;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        .icon-fiLink{
+          font-size: 38px;
+        }
+      }
+    }
+  }
+  .step-warp{
+    width: calc(100% - 185px);
+    min-height: 300px;
+    max-height: 400px;
+    padding-left: 40px;
+    overflow-y: auto;
+    .page-detail-title{
+      margin: 8px 0 15px;
+    }
+  }
+}
+.steps-button{
+  text-align: right !important;
+}

@@ -1,0 +1,76 @@
+@import "../config";
+
+// 分页样式变量
+$table-pagination-hover-color: $color;
+$table-pagination-height: 25px;
+.ant-pagination {
+  .ant-pagination-item-active {
+    border-color: $table-pagination-hover-color;
+    background-color: #f6f6f6;
+  }
+  .ant-pagination-item-active a {
+    color: $table-pagination-hover-color;
+  }
+  .ant-pagination-item,
+  .ant-pagination-prev,
+  .ant-pagination-next,
+  .ant-pagination-jump-prev,
+  .ant-pagination-jump-next {
+    min-width: $table-pagination-height;
+    height: $table-pagination-height;
+    line-height: $table-pagination-height;
+  }
+  .ant-pagination-next, .ant-pagination-prev {
+    a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .ant-pagination {
+    line-height: $table-pagination-height;
+  }
+
+  .ant-pagination-options-quick-jumper, .ant-select-selection__rendered {
+    line-height: $table-pagination-height;
+    height: $table-pagination-height;
+  }
+  .ant-select-selection--single, .ant-pagination-options-quick-jumper input {
+    height: $table-pagination-height;
+    &::selection {
+      background: $table-pagination-hover-color !important;
+      color: #fff;
+    }
+  }
+  .ant-pagination-total-text {
+    margin-right: 20px;
+    height: $table-pagination-height;
+    line-height: $table-pagination-height;
+  }
+  .ant-select-open .ant-select-selection, .ant-select-selection:hover {
+    border-color: $table-pagination-hover-color;
+  }
+  .ant-pagination-item:focus, .ant-pagination-item:hover {
+    transition: all 0.3s;
+    border-color: $table-pagination-hover-color;
+  }
+  .ant-pagination-item:focus a, .ant-pagination-item:hover a {
+    color: $table-pagination-hover-color;
+  }
+  .ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: $table-pagination-hover-color;
+    color: $table-pagination-hover-color;
+  }
+  .ant-pagination-options-quick-jumper input:focus {
+    border-color: $table-pagination-hover-color;
+    outline: 0;
+    box-shadow: none;
+    border-right-width: 1px !important;
+  }
+  .ant-pagination-options-quick-jumper input:hover {
+    border-color: $table-pagination-hover-color;
+    border-right-width: 1px !important;
+  }
+}
+
+

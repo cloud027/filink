@@ -1,0 +1,55 @@
+<!--关联用户-->
+<div class="user-link">
+  <!--标题 在新增/编辑人员第二步中隐藏-->
+  <app-detail-title [pageTitle]="scheduleLanguage.associatedUsers" [hidden]="notShowStepSecond"></app-detail-title>
+  <div>
+    <!--关联用户表单-->
+    <xc-form [column]="formColumn"
+             (formInstance)="formInstance($event)">
+    </xc-form>
+    <!--确认、取消按钮 在新增/编辑人员第二步中隐藏-->
+    <div class="content-link" [hidden]="notShowStepSecond">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="isDisabled">{{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 关联用户 -->
+<ng-template #associatedUsers let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <input nz-input type="text" readonly formControlName="associatedUser">
+    <button type="button" class="open-button" (click)="userModalVisible=true">
+      <i class="icon-l icon-search"></i></button>
+  </form>
+</ng-template>
+<!--用户列表选择器-->
+<app-user-list-selector *ngIf="userModalVisible"
+                        [(userVisible)]="userModalVisible"
+                        (userVisibleChange)="userModalVisible=false"
+                        [stepsFirstParams]="stepsFirstParams"
+                        [selectedUserId]="selectAssociatedUserId"
+                        [currentUserId]="currentUserId"
+                        [currentDeptCode]="personInfo.deptCode"
+                        (selectUserDataChange)="selectDataChange($event)">
+</app-user-list-selector>
+<!--账户有效期-->
+<ng-template #accountLimit let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <div class="flex-minx">
+      <nz-input-group nzCompact>
+        <input type="text" nz-input
+               formControlName="countValidityTime" class="width-50" placeholder="1-999">
+        <nz-select [(ngModel)]="timeType" [ngModelOptions]="{standalone: true}" (ngModelChange)="timeTypeChange()">
+          <nz-option [nzLabel]="userLanguage.year" [nzValue]="'year'"></nz-option>
+          <nz-option [nzLabel]="userLanguage.month" [nzValue]="'month'"></nz-option>
+          <nz-option [nzLabel]="userLanguage.day" [nzValue]="'day'"></nz-option>
+        </nz-select>
+      </nz-input-group>
+      <label class="width-px-210">({{userLanguage.tips}})</label>
+    </div>
+  </form>
+</ng-template>

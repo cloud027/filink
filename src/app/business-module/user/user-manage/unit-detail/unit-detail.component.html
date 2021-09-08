@@ -1,0 +1,36 @@
+<div class="user-detail">
+  <div>
+    <span class="page-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="content-link">
+      <button class="link-button mr-r-20" nz-button nzType="primary" (click)="submit()" [nzLoading]="isLoading" [disabled]="!formStatus.getValid()">{{language.okText}}</button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 部门选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div>
+    <input nz-input type="text" readonly [disabled]="pageType === OperateTypeEnum.update" [(ngModel)]="selectUnitName" [title]="selectUnitName">
+    <button type="button" [disabled]="pageType === 'update'" class="open-button" (click)="showDeptSelectorModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+<!--单位选择器-->
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [pageType]="pageType"
+  [level]="unitInfo.deptLevel"
+  [hasChild]="unitInfo.childDepartmentList&&unitInfo.childDepartmentList.length>0"
+  [treeSelectorConfig]="areaSelectorConfig"
+  [isUnitSelector]="true"
+  (selectDataChange)="deptSelectChange($event)"
+>
+</xc-tree-area-selector>
+

@@ -1,0 +1,170 @@
+<!--批量控制设备组件-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzTitle]="title"
+          [nzWidth]="480"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleCancel()"
+          [nzFooter]="footer">
+
+
+  <nz-spin [nzSpinning]="isShowOver">
+    <div class="outer-box">
+      <!--  公共操作-->
+      <div class="content">
+        <p class="part-title">{{commonLanguage.publicOperation}}</p>
+        <div class="common-button-content">
+          <button [disabled]="commonDisableFlag"
+                  nz-button
+                  [ngClass]="!commonDisableFlag?'common-each-button': ''"
+                  class="link-button  button-right "
+                  (click)="commonSwitchChange(bulkOperateTypeEnum.commonOperate,controlInstructEnum.turnOn)">
+              <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-open"></i>{{commonLanguage.open}}
+              </span>
+          </button>
+          <button [disabled]="commonDisableFlag"
+                  nz-button
+                  [ngClass]="!commonDisableFlag?'common-each-button': ''"
+                  class="link-button  button-right"
+                  (click)="commonSwitchChange(bulkOperateTypeEnum.commonOperate,controlInstructEnum.turnOff)">
+               <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-shut-off"></i>{{commonLanguage.close}}
+              </span>
+          </button>
+          <button [disabled]="true"
+                  nz-button
+                  type="button" class="link-button  button-right"
+                  (click)="commonSwitchChange(bulkOperateTypeEnum.commonOperate,controlInstructEnum.up)">
+              <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-up-electric"></i>{{commonLanguage.powerOn}}
+              </span>
+          </button>
+          <button [disabled]="true"
+                  nz-button type="button" class="link-button power-off-btn"
+                  (click)="commonSwitchChange(bulkOperateTypeEnum.commonOperate,controlInstructEnum.down)">
+               <span class="common-detail">
+                <i class="iconfont common-button-icon fiLink-down-electric"></i>{{commonLanguage.powerOff}}
+              </span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- 照明控制-->
+      <div class="content" *ngIf="isHasLight && equipmentTypeCodes.includes(equipmentTypeEnum.singleLightController)">
+        <p class="part-title">{{commonLanguage.illumination}}</p>
+        <div class="detail-content">
+          <div class="content-left">
+            <span class="content-left-icon-box">
+               <i class="content-left-icon iconfont fiLink-light"></i>
+            </span>
+            <span>{{commonLanguage.brightness}}</span>
+          </div>
+          <nz-row class="content-right">
+            <nz-col nzSpan="21">
+              <nz-slider [disabled]="checkHasRole(batchOperatePermission.lightChange)"
+                         [nzMin]="0"
+                         [nzMax]="100"
+                         [(ngModel)]="lightValue"
+                         (nzOnAfterChange)="slideChange(bulkOperateTypeEnum.lightChange,$event)"
+              ></nz-slider>
+            </nz-col>
+            <span class="detail-num">{{lightValue}}</span>
+          </nz-row>
+        </div>
+      </div>
+
+      <!--  信息屏控制-->
+      <div class="content" *ngIf="isHasScreen && equipmentTypeCodes.includes(equipmentTypeEnum.informationScreen)">
+        <!-- 信息屏-->
+        <p class="part-title">{{commonLanguage.informationScreen}}</p>
+        <div class="detail-content">
+          <div class="content-left">
+            <span class="content-left-icon-box">
+              <i class="iconfont content-left-icon fiLink-light"></i>
+            </span>
+            <span>{{commonLanguage.brightness}}</span>
+          </div>
+          <nz-row class="content-right">
+            <nz-col nzSpan="21">
+              <nz-slider [disabled]="checkHasRole(batchOperatePermission.screenLight)"
+                         [nzMin]="0"
+                         [nzMax]="255"
+                         [(ngModel)]="screenLightValue"
+                         (nzOnAfterChange)="slideChange(bulkOperateTypeEnum.screenLight,$event)"
+              ></nz-slider>
+            </nz-col>
+            <span class="detail-num">{{screenLightValue}}</span>
+          </nz-row>
+        </div>
+        <!-- 音量-->
+        <div class="detail-content">
+          <div class="content-left">
+            <span class="content-left-icon-box control-special-volume">
+               <i class="iconfont content-left-special-icon fiLink-filink-yinliang-icon"></i>
+            </span>
+            <span>{{commonLanguage.volume}}</span>
+          </div>
+          <nz-row class="content-right">
+            <nz-col nzSpan="21">
+              <nz-slider [disabled]="checkHasRole(batchOperatePermission.screenVolume)"
+                         [nzMin]="0"
+                         [nzMax]="15"
+                         [(ngModel)]="screenVolumeValue"
+                         (nzOnAfterChange)="slideChange(bulkOperateTypeEnum.screenVolume,$event)"
+              ></nz-slider>
+            </nz-col>
+            <span class="detail-num">{{screenVolumeValue}}</span>
+          </nz-row>
+        </div>
+        <div *ngIf="screenPlayShow" class="footer">
+          <span class="footer-operate" (mouseover)="initIcon = false" (mouseout)="initIcon = true">
+            <!--同步播放现在注释掉，后期再开放-->
+            <span class="not-use">
+                    <i class="iconfont icon-right icon-size  special-icon-right fiLink-pic-tongbu-selected"
+                       title="{{commonLanguage.playContentSimultaneously}}"></i>
+                <i class="iconfont icon-size special-icon-right  fiLink-pic-left1"></i>
+               <i class="iconfont icon-size  special-icon-right  fiLink-pic-bofang1"></i>
+               <i class="iconfont icon-size special-icon-right  fiLink-pause--outline"></i>
+               <i class="iconfont icon-size  special-icon-right   fiLink-pic-right1"></i>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <!--广播控制-->
+      <div class="content" *ngIf="isHasBroadcast && equipmentTypeCodes.includes(equipmentTypeEnum.broadcast)">
+        <p class="part-title">{{commonLanguage.broadcast}}</p>
+        <div class="detail-content">
+          <div class="content-left">{{commonLanguage.volume}}</div>
+          <nz-row class="content-right">
+            <nz-col nzSpan="22">
+              <nz-slider
+                [nzMin]="1"
+                [nzMax]="100"
+                [(ngModel)]="broadcastValue"
+                (ngModelChange)="slideChange(bulkOperateTypeEnum.broadcastVolume,$event)"
+              ></nz-slider>
+            </nz-col>
+          </nz-row>
+        </div>
+        <div class="footer">
+          <span class="footer-content">{{broadcastContent}}</span>
+          <button nz-button nzType="primary" type="button"
+                  (click)="broadcastPlayChange(bulkOperateTypeEnum.broadcastSynchronization)">
+            {{commonLanguage.playContentSimultaneously}}
+          </button>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nz-spin>
+
+  <!-- 底部按钮-->
+  <ng-template #footer>
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+

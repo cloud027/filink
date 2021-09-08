@@ -1,0 +1,94 @@
+<div class="alarm-remote-box">
+  <div class="alarm-common-title">{{language.alarmRemoteNotification}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+  </div>
+  <!-- 启用状态 -->
+  <ng-template #isNoStartTemp let-data="data">
+    <nz-switch [ngModel]="data.status === isStatus.enable" [appAccessPermission]="data.appAccessPermission"
+               [nzControl]="true"
+               (click)="clickSwitch(data)">
+    </nz-switch>
+    <span class="no-start-temp">{{data.statusName}}</span>
+  </ng-template>
+
+  <!-- 告警级别 -->
+  <ng-template #alarmDefaultLevelTemp let-data="data">
+    <div *ngFor="let item of data.alarmForwardRuleLevels" class="alarm-levels">
+      <div class="level-flex">
+        <div class="box-icon" [ngStyle]="item.defaultStyle"></div>
+        <span class="level-margin-left">{{item.name}}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- 设施类型 -->
+  <ng-template #deviceTypeTemp let-data="data">
+    <div class="one-text" [title]="data.deviceTypeNames">
+       <span *ngFor="let type of data.deviceTypeArr" class="device-type">
+          <i [ngClass]="type.picture" class="device-type-icon"></i>
+          <span class="status-text">{{type.typeName}}</span>
+      </span>
+    </div>
+  </ng-template>
+
+  <!-- 设施对象-->
+  <ng-template #deviceNameTemp let-data="data">
+      <span class="one-text" [title]="data.deviceNames">{{data.deviceNames}}</span>
+  </ng-template>
+
+  <!-- 设备对象-->
+  <ng-template #equipmentNameTemp let-data="data">
+    <span class="one-text" [title]="data.equipmentNames">{{data.equipmentNames}}</span>
+  </ng-template>
+
+  <!-- 设备对象 -->
+  <ng-template #equipmentObjectTemp let-filterValue = "filterValue">
+    <input type="text" nz-input placeholder="{{language.clickSelect}}" readonly
+           (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkTroubleObject.name" />
+  </ng-template>
+  <equipment-list-selector-component
+    *ngIf="equipmentVisible"
+    [(equipmentVisible)]="equipmentVisible"
+    [multiple]="true"
+    [showSelectedCount]="true"
+    [showCleanBtn]="true"
+    [selectEquipments]="selectEquipments"
+    (selectDataChange)="onSelectEquipment($event)">
+  </equipment-list-selector-component>
+
+  <!-- 设备类型 -->
+  <ng-template #equipmentTypeTemp let-data="data">
+    <div class="one-text" [title]="data.equipmentTypeNames">
+      <span *ngFor="let type of data.equipmentTypeArr" class="device-type">
+          <i [ngClass]="type.picture" class="device-type-icon"></i>
+          <span class="status-text">{{type.typeName}}</span>
+      </span>
+    </div>
+  </ng-template>
+  <!-- 区域 -->
+  <ng-template #areaSelector let-data="data"  let-filterValue = "filterValue" >
+    <app-area [areaConfig]='areaConfig' [filterValue]="filterValue" ></app-area>
+  </ng-template>
+
+  <!-- 通知人 -->
+  <ng-template #notifierTemp let-filterValue = "filterValue" let-data="data">
+    <xc-app-user [alarmUserConfig]="alarmUserConfig" [filterValue]="filterValue"></xc-app-user>
+  </ng-template>
+
+  <!--设施对象弹框-->
+  <ng-template #alarmDeviceObject let-filterValue="filterValue">
+    <app-alarm-object class="pic-device-selector"
+                      [placeholder]="language.pleaseChoose"
+                      [alarmObjectConfig]="deviceObjectConfig"
+                      [title]="language.deviceObject"
+                      [filterValue]="filterValue"></app-alarm-object>
+  </ng-template>
+</div>

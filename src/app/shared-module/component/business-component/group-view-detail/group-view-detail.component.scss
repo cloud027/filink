@@ -1,0 +1,25 @@
+@import "../../../../style-module/config";
+// 分组详情样式
+.detail-container {
+  .group-detail-info {
+    margin-left: 16px;
+    .group-name{
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .group-remark{
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: $sp-icon-color-7;
+    }
+  }
+}
+// 状态文字和图标之间的样式
+.status-text {
+  margin-left: 6px;
+}
+// 选择副过滤符号
+.filter-operate-select{
+  width: 110px;
+}

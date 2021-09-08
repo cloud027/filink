@@ -1,0 +1,30 @@
+<div class="group-select">
+  <div (click)="showGroup(groupTypeEnum.allGroup)" class="group-style"
+       [ngClass]="{'click-active' : active === groupTypeEnum.allGroup}">{{indexLanguage.allGroup}}</div>
+  <div class="segmentation">|</div>
+  <div (click)="showGroup(groupTypeEnum.selectedGroup)" class="group-style"
+       [ngClass]="{'click-active' : active === groupTypeEnum.selectedGroup}">{{indexLanguage.selectedGroup}}</div>
+  <!--搜索框-->
+  <div class="search search-style">
+    <xc-search-input
+      [selectInfo]="selectInfo"
+      [searchValue]="searchKey"
+      (modelChange)="modelChange($event)"
+      (inputChange)="inputChange($event)"
+      [inputStyle]="{height:'24px',borderRadius:'10px',fontSize:'12px'}"
+    ></xc-search-input>
+  </div>
+  <div class="no-data" *ngIf="!groupNoData">{{indexLanguage.noData}}</div>
+  <div *ngIf="showAllGroup && groupNoData">
+    <div class="group-border"
+                              (click)="groupChange()"
+                              [ngClass]="{'group-border-active' : isGroupAllChecked}">{{indexLanguage.allGroup}}</div>
+    <div class="group-border" [id]="item.value"
+                              (click)="itemChange(item)" [ngClass]="{'group-border-active' : item.check}"
+                              *ngFor="let item of selectGroupItem">{{item.label}}</div>
+  </div>
+  <div *ngIf="!showAllGroup && groupNoData">
+    <div class="group-border" [ngClass]="{'group-border-active' : true}"
+         *ngFor="let item of groupSelectList">{{item.label}}</div>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="order-box-warp">
+  <div class="table-common-title"><span>{{inspectionLanguage.installOrderView}}</span></div>
+  <!--详情3等分-->
+  <div class="detail-box" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box bg" [ngClass]="{'box-height': !isWisdomDevice, 'finish-box-height': (isWisdomDevice && pageType === pageTypeEnum.finished)}">
+        <div class="box-info" [ngClass]="{'box-height': !isWisdomDevice, 'finish-box-height': (isWisdomDevice && pageType === pageTypeEnum.finished)}">
+          <div class="title">
+            <span class="order-title hidden" [title]="resultData.title">{{resultData.title}}</span>
+            <span class="order-status-color status-box" [ngClass]="resultData.statusClass">
+              <i class="icon-fiLink iconfont" [ngClass]="resultData.statusClass"></i>{{resultData.statusName}}
+            </span>
+            <span class="auto-dispatch status-box" *ngIf="resultData.autoDispatch === '1'">{{inspectionLanguage.autoDispatchStr}}</span>
+          </div>
+          <div class="ctime" [ngClass]="(isWisdomDevice && pageType === pageTypeEnum.finished) ? 'ctime-height' : ''">{{inspectionLanguage.creationTime}}：{{resultData.createTime}}</div>
+          <div class="user-dept">
+            <i nz-tooltip [nzTitle]="inspectionLanguage.responsible" class="icon-fiLink iconfont fiLink-user-menu"></i>
+            {{resultData.assignName}}
+          </div>
+          <div class="user-dept">
+            <i nz-tooltip [nzTitle]="inspectionLanguage.responsibleUnit" class="icon-fiLink iconfont fiLink-departments"></i>
+            {{resultData.accountabilityDeptName}}
+          </div>
+          <!--剩余天数-->
+          <div class="last-days order-img" *ngIf="pageType === pageTypeEnum.unfinished">
+            <div class="lastDay" [ngClass]="resultData.latsDayClass">{{resultData.lastDays}}</div>
+            <div class="day-label">{{inspectionLanguage.daysRemaining}}</div>
+          </div>
+          <!--工单评价-->
+          <div class="appraise order-img" *ngIf="pageType === pageTypeEnum.finished">
+            <div class="lastDay eval"></div>
+            <div class="day-label">{{inspectionLanguage.orderEvaluation}}</div>
+          </div>
+        </div>
+        <div class="box-time text-area" *ngIf="isWisdomDevice" [ngClass]="(isWisdomDevice && pageType === pageTypeEnum.finished) ? 'time-height' : ''">
+          <div class="order-text">
+            <div class="text-label">{{inspectionLanguage.startTime}}：</div>
+            <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.startTime}}</div>
+          </div>
+          <div class="order-text">
+            <div class="text-label">{{inspectionLanguage.inspectionEndTime}}：</div>
+            <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.planCompletedTime}}</div>
+          </div>
+          <div class="order-text" *ngIf="pageType === pageTypeEnum.finished">
+            <div class="text-label">{{inspectionLanguage.realityCompletedTime}}：</div>
+            <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.realityCompletedTime}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box bg" [ngClass]="!isWisdomDevice ? 'box-height' : ''">
+        <div class="box-m-info" [ngClass]="!isWisdomDevice ? 'box-height' : ''">
+          <div class="title-info">
+            <span class="title hidden">{{resultData.deviceAreaName}}</span>
+            <span class="dev-icon">
+              <i class="icon-fiLink iconfont" nz-tooltip [nzTitle]="resultData.deviceTypeName" [ngClass]="resultData.deviceClass"></i>{{resultData.deviceTypeName}}
+            </span>
+          </div>
+          <div class="device" [ngClass]="{'device-un-height': (!isWisdomDevice && pageType === pageTypeEnum.unfinished), 'device-height': (!isWisdomDevice && pageType === pageTypeEnum.finished)}">
+            <span class="dev-name">{{resultData.deviceName}}</span>
+            <span class="box" nz-tooltip [nzTitle]="inspectionLanguage.deviceModel">{{resultData.deviceModel}}</span>
+          </div>
+          <div class="text-info" [ngClass]="{'lh36': isWisdomDevice, 'lh30': isWisdomDevice && pageType === pageTypeEnum.finished}">
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.equipmentName}}：</div>
+              <div class="text-value hidden" [title]="resultData.equipmentName">
+                <i class="icon-fiLink iconfont" nz-tooltip [nzTitle]="resultData.equipmentTypeName" [ngClass]="resultData.equipmentTypeClass"></i>{{resultData.equipmentName}}
+              </div>
+            </div>
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.carInfo}}：</div>
+              <div class="text-value hidden">{{resultData.carInfo}}</div>
+            </div>
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.materielInfo}}：</div>
+              <div class="text-value hidden">{{resultData.materialsInformation}}</div>
+            </div>
+            <div class="order-text"  *ngIf="pageType === pageTypeEnum.finished">
+              <div class="text-label">{{inspectionLanguage.feeInformation}}：</div>
+              <div class="text-value hidden">{{resultData.costInfo}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="box-m-type text-info" *ngIf="isWisdomDevice">
+          <!--退单原因-->
+          <div class="order-text">
+            <div class="text-label">{{inspectionLanguage.retreatSingleReason}}：</div>
+            <div class="text-value hidden" [title]="resultData.singleBackUserDefinedReason">{{resultData.singleBackUserDefinedReason}}</div>
+          </div>
+          <!--转派原因-->
+          <div class="order-text">
+            <div class="text-label">{{inspectionLanguage.reasonsForTransfer}}：</div>
+            <div class="text-value hidden" [title]="resultData.turnReason">{{resultData.turnReason}}</div>
+          </div>
+          <!--备注-->
+          <div class="order-text">
+            <div class="text-label">{{inspectionLanguage.remark}}：</div>
+            <div class="text-value hidden" [title]="resultData.remark">{{resultData.remark}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--第三列-->
+    <div nz-col class="gutter-row" nzSpan="8">
+      <div class="gutter-box" [ngClass]="!isWisdomDevice ? 'bg box-height' : ''">
+        <app-real-picture *ngIf="isWisdomDevice"
+                          #editPicture
+                          [isShowPoint]="'1'"
+                          [deviceId]="deviceId"
+                          [isShowRoundPoint]="false"
+                          [isOpenUpData]="false"
+                          [isExport]=true
+                          [isUpData]="false"
+                          [canvasHeight]="350">
+        </app-real-picture>
+        <div class="not-wisdom" *ngIf="!isWisdomDevice">
+          <div class="text-area" [ngClass]="(pageType === pageTypeEnum.finished) ? 'text-height' : 'notWisdom'">
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.startTime}}：</div>
+              <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.startTime}}</div>
+            </div>
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.inspectionEndTime}}：</div>
+              <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.planCompletedTime}}</div>
+            </div>
+            <div class="order-text" *ngIf="pageType === pageTypeEnum.finished">
+              <div class="text-label">{{inspectionLanguage.realityCompletedTime}}：</div>
+              <div class="text-value hidden"><i class="icon-fiLink iconfont fiLink-time"></i>{{resultData.realityCompletedTime}}</div>
+            </div>
+          </div>
+          <div class="box-m-type" [ngClass]="(pageType === pageTypeEnum.finished) ? 'text-height' : ''">
+            <!--退单原因-->
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.retreatSingleReason}}：</div>
+              <div class="text-value hidden" [title]="resultData.singleBackUserDefinedReason">{{resultData.singleBackUserDefinedReason}}</div>
+            </div>
+            <!--转派原因-->
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.reasonsForTransfer}}：</div>
+              <div class="text-value hidden" [title]="resultData.turnReason">{{resultData.turnReason}}</div>
+            </div>
+            <!--备注-->
+            <div class="order-text">
+              <div class="text-label">{{inspectionLanguage.remark}}：</div>
+              <div class="text-value hidden" [title]="resultData.remark">{{resultData.remark}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="split-line"></div>
+  <!--任务描述-->
+  <div class="task-text">
+    <div class="title">{{inspectionLanguage.taskDesc}}</div>
+    <div class="value">{{resultData.describe}}</div>
+  </div>
+  <!--设备列表-->
+  <div class="split-line"></div>
+  <div class="equip-table">
+    <div class="tab-title">{{inspectionLanguage.installEquipInfo}}</div>
+    <div class="no-checkbox-table">
+      <xc-table #tablesComponent
+                [dataSet]="installEquipmentData"
+                [tableConfig]="tableConfig">
+      </xc-table>
+    </div>
+  </div>
+  <!--设备状态模板展示-->
+  <ng-template #equipmentStatusTemplate let-data="data">
+    <div class="area-level">
+      <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+      <span class="status-temp"
+            title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipTemp let-data="data">
+    <div class="hidden" title="{{data.equipmentTypeName}}">
+      <i class="status-temp" [ngClass]="data.iconClass"></i>{{data.equipmentTypeName}}
+    </div>
+  </ng-template>
+  <!--业务状态-->
+  <ng-template #equipmentBusinessTemp let-data="data">
+    <div class="area-level">
+    <span class="status-text"
+          title="{{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}">
+          {{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}
+    </span>
+    </div>
+  </ng-template>
+</div>
+

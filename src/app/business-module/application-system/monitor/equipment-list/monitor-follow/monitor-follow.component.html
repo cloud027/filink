@@ -1,0 +1,17 @@
+<xc-table
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)"
+>
+</xc-table>
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+    <i [ngClass]="data.iconClass" class="device-type-icon"></i>
+    <span
+        class="status-text"
+        title=" {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}"
+    >
+        {{ data.equipmentType | translate: equipmentTypeEnum:languageEnum.facility }}
+    </span>
+</ng-template>

@@ -1,0 +1,81 @@
+<!--查看结果-->
+<div class="view-result">
+  <div class="table-common-title"><span>{{alarmLanguage.viewResults}}</span></div>
+  <!-- 表格 -->
+  <div class="table-wrapper">
+    <xc-table [dataSet]="resultDataSet" #rulesTable
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!--查看详情-->
+<nz-modal *ngIf="showResult"
+          [(nzVisible)]="showResult"
+          [nzWidth]="1000"
+          [nzTitle]="alarmLanguage.particulars"
+          [nzContent]="resultTemps"
+          [nzFooter]="footerTemp"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleCancel()">
+  <div #resultTemps class="view-body">
+    <div class="view-details">
+      <div class="view-item">
+        <label class="view-label">{{alarmLanguage.alarmReason}}：</label>
+        <span class="view-text">{{viewData.rootAlarmName}}</span>
+      </div>
+      <div class="view-item">
+        <label class="view-label">{{alarmLanguage.analysePeriod}}：</label>
+        <span class="view-text">{{viewData.analysisCycle}}</span>
+      </div>
+      <div class="view-item">
+        <label class="view-label">{{alarmLanguage.alarmCorrelation}}：</label>
+        <span class="view-text" [title]="detailRelativityAlarmName">{{detailRelativityAlarmName}}</span>
+      </div>
+      <div class="view-item">
+        <label class="view-label">{{alarmLanguage.ruleCondition}}：</label>
+        <span class="view-text">{{viewData.ruleConditionName}}</span>
+      </div>
+    </div>
+    <xc-table #tableTemp [dataSet]="detailDataSet"
+              [pageBean]="detailPageBean" class="view-table"
+              (pageChange)="detailPageChange($event)"
+              [tableConfig]="detailTableConfig" >
+    </xc-table>
+  </div>
+  <ng-template #footerTemp>
+    <button class="link-button" [nzLoading]="isLoading" appAccessPermission="02-3-7-1-8" nz-button nzType="primary" [disabled]="!isViewSave" (click)="saveRules()">{{alarmLanguage.save}}</button>
+  </ng-template>
+</nz-modal>
+<!--告警等级-->
+<ng-template #alarmLevelTemp let-data="data">
+  <div class="hidden" title="{{data.levelName}}">
+    <span class="alarmLevel" [ngStyle]="{background: data.levelStyle}"> </span>
+    {{data.levelName}}
+  </div>
+</ng-template>
+
+<!--设施类型-->
+<ng-template #deviceTemp let-data="data">
+  <div class="hidden" title="{{data.deviceTypeName}}">
+    <span class="status-temp" [ngClass]="data.deviceClass"> </span>{{data.deviceTypeName}}
+  </div>
+</ng-template>
+<!--设备类型-->
+<ng-template #equipmentTemp let-data="data">
+  <div class="hidden" title="{{data.equipmentTypeName}}">
+    <span class="status-temp" [ngClass]="data.equipmentClass"></span>{{data.equipmentTypeName}}
+  </div>
+</ng-template>
+
+<!-- 根告警名称 -->
+<ng-template #rootAlarmTemp let-data="data" let-filterValue="filterValue">
+  <app-alarm-name [alarmNameConfig]='rootAlarmNameSelectConfig' [filterCondition]=filterValue></app-alarm-name>
+</ng-template>
+
+<!-- 相关告警名称 -->
+<ng-template #relativityAlarmTemp let-data="data" let-filterValue="filterValue">
+  <app-alarm-name [alarmNameConfig]='relativityAlarmNameSelectConfig' [filterCondition]=filterValue></app-alarm-name>
+</ng-template>

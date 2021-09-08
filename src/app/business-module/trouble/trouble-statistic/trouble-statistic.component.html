@@ -1,0 +1,70 @@
+<div class="trouble-statistic-box">
+  <div class="trouble-statistic-container">
+    <div class="select-box">
+      <nz-select
+        class="select-item"
+        nzPlaceHolder="{{ language.faultStatisticsType }}"
+        [(ngModel)]="statisticsTypeValue"
+        (ngModelChange)="selectChange($event)"
+      >
+        <nz-option
+          *ngFor="let option of statisticsTypeList"
+          [nzLabel]="option.label"
+          [nzValue]="option.code"
+        ></nz-option>
+      </nz-select>
+      <check-select-input
+        style="display: inline-block; margin-right: 10px"
+        [isAllChecked]="true"
+        [placeholder]="language.pleaseChoose"
+        [checkList]="checkSelectList"
+        [(ngModel)]="checkSelectModel"
+        [isTrouble]="true"
+      >
+      </check-select-input>
+      <nz-range-picker [(ngModel)]="rangePickerModel" style="margin-right: 10px"></nz-range-picker>
+      <!--统计-->
+      <button
+        style="margin-right: 10px"
+        type="button"
+        class="link-button"
+        nz-button
+        nzType="primary"
+        (click)="statisticBtn()"
+        [nzLoading]="btnLoading"
+      >
+        {{ language.statistic }}
+      </button>
+    </div>
+    <div class="echrts-box">
+      <div class="bar-echarts echarts-item">
+        <app-echart-column
+          (chartInstance)="getBarChartInstance($event)"
+          *ngIf="barEchartsFlag"
+        ></app-echart-column>
+        <div *ngIf="!barEchartsFlag" class="empty-container">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+      <div class="ring-echarts echarts-item">
+        <app-echart-column
+          (chartInstance)="getRingChartInstance($event)"
+          *ngIf="barEchartsFlag"
+        ></app-echart-column>
+        <div *ngIf="!barEchartsFlag" class="empty-container">
+          <nz-empty></nz-empty>
+        </div>
+      </div>
+    </div>
+    <div class="table-box">
+      <xc-table
+        class="alarmStatistical"
+        [dataSet]="__dataset"
+        [pageBean]="pageBean"
+        [tableConfig]="tableConfig"
+      >
+      </xc-table>
+    </div>
+  </div>
+</div>
+

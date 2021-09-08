@@ -1,0 +1,15 @@
+<ng-template #exportOkTemp let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-message">{{options.title}}</div>
+      <div class="ant-notification-notice-description">
+        {{options.msg}}
+      </div>
+      <span class="ant-notification-notice-btn">
+            <button class="notification-button" *ngFor="let item of options.button let index = index" nz-button nzType="primary" nzSize="small" (click)="click(item)">
+              <span>{{item.text}}</span>
+            </button>
+          </span>
+    </div>
+  </div>
+</ng-template>

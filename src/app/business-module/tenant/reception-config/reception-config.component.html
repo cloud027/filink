@@ -1,0 +1,43 @@
+<div class="template-warp">
+  <!--title:租户前台配置-->
+  <div class="table-common-title"><span>{{this.language.tenantDeskConfig}}</span></div>
+
+  <!--主体内容-->
+  <div class="reception-config">
+
+    <!--tab页title-->
+    <div class="index-tabs-title-box">
+      <div class="index-tabs-title" *ngFor="let item of tabTitle"
+           [ngClass]="{'tab-left-selected': item.index === selectedIndex}">
+        <span (click)="titleClick(item.index)">{{item.title}}</span>
+      </div>
+    </div>
+    <!--tab页切换内容-->
+    <div class="tabs-box">
+      <!--系统菜单-->
+      <app-menu-config #menu
+                       *ngIf="this.menuConfig === selectedIndex">
+      </app-menu-config>
+
+      <!--设施与权限集-->
+      <app-role-config #role
+                       *ngIf="this.roleConfig === selectedIndex">
+      </app-role-config>
+
+      <!--首页元素-->
+      <app-index-config #index
+                        *ngIf="this.indexConfig === selectedIndex">
+      </app-index-config>
+
+      <!--设施列表元素-->
+      <app-device-config #device
+                         *ngIf="this.deviceConfig === selectedIndex">
+      </app-device-config>
+
+      <!--告警元素-->
+      <app-alarm-config #alarm
+                        *ngIf="this.alarmConfig === selectedIndex">
+      </app-alarm-config>
+    </div>
+  </div>
+</div>

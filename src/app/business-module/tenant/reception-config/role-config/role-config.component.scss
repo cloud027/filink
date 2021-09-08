@@ -1,0 +1,39 @@
+.tree-select-role-box {
+  margin: 30px 0px 20px 30px;
+  position: relative;
+  display: flex;
+  width: 800px;
+
+  .tree-select-role-card {
+    height: 400px;
+    flex: 1;
+    margin-right: 10px;
+
+    .role-title-box {
+      background-color: #EAEDF1;
+      height: 40px;
+      font-weight: bold;
+
+      .role-title {
+        padding-top: 10px;
+        padding-left: 10px;
+      }
+    }
+
+    .tree-box {
+      height: 350px;
+
+      overflow: auto
+    }
+  }
+
+  .tree-select-role-card-left {
+    margin-right: 50px;
+  }
+}
+
+.button-group {
+  margin-left: 30px;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}

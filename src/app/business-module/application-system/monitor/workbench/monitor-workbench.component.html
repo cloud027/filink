@@ -1,0 +1,266 @@
+<div class="monitor-box">
+  <!--  信息发布工作台-->
+  <div *ngIf="page.Total">
+    <div class="workbench-header">
+      <h4 class="title">{{ language.MonitorWorkbench.workbench }}</h4>
+      <div class="equipment-box">
+        <!--环境监测仪数量-->
+        <div class="equipment-right">
+          <div class="number single">{{ equipmentCountList.numberMonitors }}</div>
+          <div class="content">{{ language.MonitorWorkbench.numberMonitors }}</div>
+        </div>
+        <!--智慧杆数量-->
+        <div class="equipment-right border-none">
+          <div class="number">{{ equipmentCountList.wisdomPoles }}</div>
+          <div class="content">{{ language.strategyList.wisdomPoles }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- 策略列表 -->
+    <div class="strategy">
+      <!--使用中的策略列表-->
+      <div class="use-strategies">
+        <!--标题  按钮-->
+        <div nz-row class="line">
+          <!-- 使用中的策略-->
+          <div nz-col nzSpan="12" class="strategies-title">
+            <div class="title">{{ language.MonitorWorkbench.basicInformation }}</div>
+            <!-- 当前第几页-->
+            <div class="title-page">
+              {{ language.frequentlyUsed.currentNo
+              }}<span class="page-num">{{ page.pageIndex }}</span
+              >{{ language.frequentlyUsed.page }},
+            </div>
+            <!-- 共多少页-->
+            <div class="title-page">
+              {{ language.frequentlyUsed.common }}<span class="page-num">{{ page.totalPage }}</span
+              >{{ language.frequentlyUsed.page }},
+            </div>
+            <!-- 共计多少条-->
+            <div class="title-page">
+              {{ language.frequentlyUsed.total }}<span class="page-num">{{ page.Total }}</span
+              >{{ language.frequentlyUsed.strip }}
+            </div>
+          </div>
+          <div nz-col nzSpan="12" class="right-btn">
+            <!--全部设备-->
+            <span
+              [appAccessPermission]="monitorWorkBenchEnum.primaryKey"
+              class="all-strategy"
+              (click)="onGoStrategyList()"
+              >{{ language.MonitorWorkbench.allEquipment }}</span
+            >
+          </div>
+        </div>
+        <!--列表内容-->
+        <div class="list-content">
+          <nz-row class="content-card">
+            <i
+              class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-last icon-left"
+              [ngClass]="{ 'not-allowed': page.pageIndex <= 1 }"
+              (click)="onPagingChange('left')"
+            ></i>
+            <nz-col
+              nzSpan="12"
+              class="content-space"
+              *ngFor="let data of listData; let i = index"
+              (click)="handShowConvenient($event, data, i)"
+            >
+              <div [ngClass]="{ 'card-content': true, 'be-selected': data.state }">
+                <div class="top-title">
+                  <div class="titles">
+                    <i class="iconfont fiLink-weather-instrument title-icon"></i>
+                    <div>
+                      <p
+                        [appAccessPermission]="monitorWorkBenchEnum.primaryDetailsKey"
+                        class="strategy-title"
+                        (click)="strategyDetails(data)"
+                      >
+                        {{ data.equipmentName }}
+                      </p>
+                      <p class="content-strategyType">
+                        {{ language.MonitorWorkbench.monitor }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="refresh-box" (click)="refreshIcon($event, data, i)">
+                    <i class="icon-fiLink-l iconfont fiLink-refresh-index"></i>
+                  </div>
+                </div>
+                <!-- 所属区域-->
+                <nz-row class="execType">
+                  <nz-col nzSpan="6" class="content-strategyType"
+                    >{{ language.MonitorWorkbench.region }}:</nz-col
+                  >
+                  <nz-col nzSpan="18">
+                    <i class="iconfont fiLink-view-area execType-icon"></i>
+                    {{ data.areaName }}
+                  </nz-col>
+                </nz-row>
+                <!-- 所属设施 -->
+                <nz-row class="effectivePeriodTime">
+                  <nz-col nzSpan="6" class="content-strategyType"
+                    >{{ language.MonitorWorkbench.facilities }}:</nz-col
+                  >
+                  <nz-col nzSpan="18">
+                    <i [ngClass]="data['iconClass']"></i>
+                    {{ data.deviceName }}
+                  </nz-col>
+                </nz-row>
+              </div>
+            </nz-col>
+
+            <nz-col
+              nzSpan="12"
+              class="content-space"
+              *ngIf="listData.length > 0 && listData.length < 6"
+            >
+              <div class="card-content">
+                <div class="available-img">
+                  <img src="../../../../../assets/img/application-system/defect.png" />
+                </div>
+                <div class="available-text">
+                  {{ language.strategyList.information }}
+                </div>
+              </div>
+            </nz-col>
+
+            <i
+              class="icon-fiLink-l paging-icon iconfont fiLink-pic-view-next icon-right"
+              [ngClass]="{ 'not-allowed': page.pageIndex >= page.totalPage }"
+              (click)="onPagingChange('right')"
+            ></i>
+          </nz-row>
+        </div>
+      </div>
+      <!--便捷入口-->
+      <div class="convenient-entrance">
+        <nz-spin [nzSpinning]="convenientLoading">
+          <!--标题 便捷入口-->
+          <div class="title line">{{ language.frequentlyUsed.convenientEntrance }}</div>
+          <div class="content-box">
+            <div *ngIf="convenientData.equipmentId && isConvenient">
+              <div class="convenient-title">{{ convenientData.equipmentName }}</div>
+              <!-- 地理位置 -->
+              <div class="geo-position">
+                <span class="label-title">{{
+                  language.MonitorWorkbench.geographicalPosition
+                }}</span>
+                <span class="content">{{ convenientData.areaInfo.address }}</span>
+              </div>
+              <app-meteorological-info
+                [MonitorConvenientEntranceList]="MonitorConvenientEntranceList"
+              ></app-meteorological-info>
+            </div>
+            <div class="convenient" *ngIf="!convenientData.equipmentId || !isConvenient">
+              {{ language.callWorkbench.noEquipmentSelected }}
+            </div>
+          </div>
+        </nz-spin>
+      </div>
+    </div>
+    <!-- 监测点数据 -->
+    <div class="monitoring-point-box">
+      <app-monitor-point [equipmentId]="pointEquipmentId"></app-monitor-point>
+    </div>
+    <!-- 设备状态 告警分类 工单增量 -->
+    <div class="echarts-box">
+      <!--设备状态统计-->
+      <div class="echarts-item-box">
+        <div class="echart-item">
+          <div class="statistics-box">
+            <div
+              class="statistics-title"
+              style="color: #333"
+              [title]="language.frequentlyUsed.equipmentStatus"
+            >
+              {{ language.frequentlyUsed.equipmentStatus }}
+            </div>
+          </div>
+          <div
+            *ngIf="isShowEquipmentStatus"
+            echarts
+            [options]="equipmentStatusData"
+            class="chart"
+          ></div>
+          <div *ngIf="!isShowEquipmentStatus" class="empty-container">
+            <nz-empty></nz-empty>
+          </div>
+        </div>
+      </div>
+      <!--告警分类数量统计-->
+      <div class="echarts-item-box">
+        <div class="echart-item">
+          <div class="statistics-box bottom-line alarm-box">
+            <div class="alarm-title">
+              <div
+                class="statistics-title"
+                [title]="language.informationWorkbench.quantityStatistics"
+              >
+                {{ language.informationWorkbench.quantityStatistics }}
+              </div>
+              <div
+                [appAccessPermission]="informationWorkBenchEnum.currentAlarm"
+                class="statistics-title all-strategy"
+                (click)="goToAlarm()"
+              >
+                {{ language.frequentlyUsed.viewDetails }}
+              </div>
+            </div>
+            <nz-range-picker
+              class="select-time"
+              [(ngModel)]="alarmClassificationTime.startAndEndTime"
+              [nzAllowClear]="false"
+              (ngModelChange)="statisticsAlarmLevelType()"
+            ></nz-range-picker>
+          </div>
+          <div
+            *ngIf="isShowAlarmClassification"
+            echarts
+            [options]="alarmClassification"
+            class="chart"
+          ></div>
+          <div *ngIf="!isShowAlarmClassification" class="empty-container">
+            <nz-empty></nz-empty>
+          </div>
+        </div>
+      </div>
+      <!-- 工单增量 -->
+      <div class="echarts-item-box">
+        <div class="echart-item">
+          <div class="statistics-box bottom-line work-statistics">
+            <div class="statistics-title" [title]="language.frequentlyUsed.workOrder">
+              {{ language.frequentlyUsed.workOrder }}
+            </div>
+            <div>
+              <span
+                class="work-title"
+                (click)="handleChangeWorkOrder(item.id)"
+                *ngFor="let item of workOrderList"
+                [ngClass]="workOrderQueryType === item.id ? OperationButtonEnum.active : ''"
+              >
+                {{ item.name }}
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!isWorkOrder" echarts [options]="workOrderData" class="chart"></div>
+          <div *ngIf="isWorkOrder" class="empty-container">
+            <nz-empty></nz-empty>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--缺省页-->
+  <div *ngIf="!page.Total" class="overall-background">
+    <!--  信息发布工作台-->
+    <div class="box-title">
+      {{ language.MonitorWorkbench.workbench }}
+    </div>
+    <div class="default-page">
+      <img src="../../../../../assets/img/application-system/available.png" />
+      <!-- 还没有发布信息哦,快去创建吧 -->
+      <p class="default-p">{{ language.MonitorWorkbench.tipInfo }}~</p>
+    </div>
+  </div>
+</div>

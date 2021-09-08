@@ -1,0 +1,180 @@
+@import "../../../../style-module/config";
+
+.mar-l16 {
+  margin-left: 16px;
+}
+
+.fz-19 {
+  font-size: 19px;
+}
+
+.button-box {
+  margin-bottom: 10px;
+}
+
+.planning-point-container {
+  padding: 0 16px;
+  position: relative;
+
+  .project-detail {
+    padding: 0 16px 20px 0;
+
+    .page-title {
+      border-left: 2px solid $detail-title-color;
+      padding-left: 18px;
+      color: $title-color;
+      font-size: 16px;
+      font-weight: 900;
+    }
+  }
+
+  .map-container {
+    position: relative;
+    border: 1px solid #e8e8e8;
+    margin: 18px;
+    padding: 10px;
+
+    // 地图
+    #planningPointMap {
+      width: 100%;
+      height: calc(100vh + 60px);
+    }
+
+    //地图上操作按钮
+    .map-button-box {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+
+      .map-button {
+        width: 34px;
+        height: 34px;
+        text-align: center;
+        background: $bg-c-w;
+        font-size: 16px;
+        line-height: 34px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        box-sizing: border-box;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+
+        &:hover {
+          border: 1px solid $operational-button-background-color;
+          box-shadow: 0 0 3px $color;
+        }
+      }
+
+      .add-point-tip {
+        position: absolute;
+        top:0;
+        left: -30px;
+        padding: 5px 10px;
+        width: 100px;
+        background: #fff;
+        color: $color;
+        font-size: 12px;
+        line-height: 18px;
+        border-radius: 5px;
+        box-shadow: 0 1px 10px rgba(0, 0, 0, .2);
+      }
+      .add-point-tip::after {
+        content: ' ';
+        display: block;
+        border-top:4px solid #fff;
+        border-left:4px solid  transparent;
+        border-bottom:4px solid  transparent;
+        border-right: 4px solid  transparent;
+        width: 0;
+        height: 0;
+        position: absolute;
+        bottom: -7px;
+        right: 50px;
+        z-index: 999;
+      }
+    }
+
+    // 地图右侧悬浮列表
+    .right-suspension-box {
+      width: 554px;
+      position: absolute;
+      right: 65px;
+      top: 20px;
+      z-index: 998;
+      background: #fff;
+      padding: 5px 20px;
+
+      .moder-preset-container {
+        position: relative;
+        .set-model-tip {
+          position: absolute;
+          padding: 5px 10px;
+          top: 42px;
+          right: 33px;
+          z-index: 999;
+          background: #fff;
+          color: $color;
+          font-size: 12px;
+          width: 103px;
+          box-shadow: 0 1px 10px rgba(0, 0, 0, .2);
+          border-radius: 5px;
+        }
+      }
+      // tip提示的小三角
+      .set-model-tip::after {
+        content: ' ';
+        display: block;
+        border-top:4px solid #fff;
+        border-left:4px solid  transparent;
+        border-bottom:4px solid  transparent;
+        border-right: 4px solid  transparent;
+        width: 0;
+        height: 0;
+        position: absolute;
+        bottom: -7px;
+        right: 50px;
+        z-index: 999;
+      }
+      .table-box {
+        position: relative;
+        margin-bottom: 20px;
+        //&:last-child {
+        //  margin-top: 20px;
+        //}
+
+        .table-title {
+          position: absolute;
+          top: 5px;
+          font-weight: bold;
+          font-size: 14px;
+          height: 30px;
+          line-height: 30px;
+        }
+      }
+    }
+
+    .point-status {
+      position: absolute;
+      right: 65px;
+      top: 152px;
+      background: #ffff;
+      padding: 7px 12px;
+    }
+
+    // 地图上的浮窗
+    .info-window-container {
+      position: absolute;
+      z-index: 100;
+      transform: translate(-50%, -100%);
+      margin-top: -10px;
+      white-space: nowrap;
+    }
+  }
+
+  .footer-button {
+    margin-top: 20px;
+  }
+}
+.no-highlighting {
+  color: $button-danger-font-color !important;
+}

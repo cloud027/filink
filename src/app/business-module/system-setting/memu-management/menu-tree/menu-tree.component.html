@@ -1,0 +1,19 @@
+<!--菜单树-->
+<div class="menu-tree">
+  <nz-tree
+    [nzData]="nodes"
+    nzDraggable="true"
+  >
+    <ng-template #nzTreeTemplate let-node>
+        <span class="custom-node">
+          <span class="folder-name">{{node.origin.menuName}}</span>
+        </span>
+      <span class="operate">
+            <i class="icon fiLink-overview iconfont" (click)="isShow(node)"  title="{{indexLanguage.operate.hidden}}" *ngIf="node.origin.isShow === '1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont" (click)="isShow(node)" title="{{indexLanguage.operate.show}}" *ngIf="node.origin.isShow === '0'"></i>
+            <i class="icon  fiLink-move-up iconfont" (click)="moveUp(node)" title="{{indexLanguage.operate.moveUp}}"></i>
+            <i class="icon fiLink-move-down iconfont" (click)="moveDown(node)" title="{{indexLanguage.operate.moveDown}}"></i>
+        </span>
+    </ng-template>
+  </nz-tree>
+</div>

@@ -1,0 +1,63 @@
+@import "../../../../../../style-module/config";
+
+.link-button:last-child{
+  width: auto !important;
+}
+.alarmLevel{
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+  top: 2px;
+}
+.status-temp{
+  margin-right: 6px;
+}
+.view-result{
+  .table-wrapper{
+    position: relative;
+  }
+  .save-btn{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $color;
+    border-color: $color;
+    .icon-fiLink{
+      position: relative;
+      top: -2px;
+      margin-right: 6px;
+    }
+  }
+}
+.view-body{
+  max-height: 485px;
+  overflow: hidden;
+  .view-details{
+    width: 100%;
+    .view-item{
+      display: inline-block;
+      height: 26px;
+      line-height: 26px;
+      width: 50%;
+      margin-top: 10px;
+      .view-label{
+        display: inline-block;
+        width: 92px;
+        color: $order-title-color;
+      }
+      .view-text{
+        display: inline-block;
+        width: calc(100% - 95px);
+        color: $title-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: top;
+      }
+    }
+  }
+}

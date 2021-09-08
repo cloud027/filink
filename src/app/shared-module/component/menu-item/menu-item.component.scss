@@ -1,0 +1,98 @@
+@import "../../../style-module/config";
+
+.first-menu-bg {
+  background: $menu-bg-color !important;
+}
+
+.menu-wrap {
+  background: $menu-second-color;
+  color: $menu-font-color;
+  line-height: 50px;
+  overflow: hidden;
+
+
+  .menu-item {
+    position: relative;
+    height: 50px;
+    padding-left: 30px;
+    cursor: pointer;
+
+    &:hover {
+      color: $menu-active-font-color;
+
+      .menu-icon-first {
+        color: $menu-font-color;
+      }
+    }
+
+    .menu-icon-first {
+      height: 50px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: $menu-font-color;
+      vertical-align: middle;
+    }
+
+
+    .up-down {
+      position: absolute;
+      top: 50%;
+      font-size: 10px;
+      transform: translateY(-50%);
+      right: 16px;
+    }
+  }
+
+  // 悬浮色
+  .menu-icon-active {
+    color: $menu-active-font-color;
+
+    .iconfont.menu-icon-first, .menu-transition {
+      color: $menu-active-font-color;
+    }
+  }
+
+  // 点击色
+  .menu-icon-selected {
+    background-color: $menu-select-color;
+    color: $menu-font-color;
+
+    .iconfont.menu-icon-first, .menu-transition {
+      color: $menu-font-color;
+    }
+  }
+}
+
+.menu-transition {
+  display: block;
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.menu-item-display {
+  opacity: 0;
+  z-index: -1;
+}
+
+.menu-text-display {
+  display: none !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+  animation: none !important;
+}
+
+.menu-item-first {
+  padding-left: 50px !important;
+}
+
+.overlay-position {
+  position: relative;
+  left: 1px
+}
+
+.panel-class {
+  max-height: 600px;
+  overflow: auto;
+}

@@ -1,0 +1,87 @@
+<div class="box-warp">
+  <div class="pageTitle">
+      {{ pageTitle }}
+  </div>
+  <div class="trouble-wrap">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div class="trouble-btn-box">
+      <button class="link-button" nz-button nzType="primary" [nzLoading]="isLoading"
+              (click)="submit()" [disabled]="!isDisabled">{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+  <!-- 设备-->
+  <ng-template #getEquipmentTemp let-col="col">
+    <div class="custom-template">
+      <label>
+        <input readonly="readonly"
+               class="area-name"
+               nz-input
+               [disabled]="!formItemDisable"
+               [title]="equipmentName"
+               [(ngModel)]="equipmentName">
+      </label>
+      <button type="button" [disabled]="equipmentNameDisable"
+         class="open-button"
+         (click)="equipmentVisible = true">
+        <i class="icon-fiLink fiLink-search-index iconfont">
+        </i>
+      </button>
+    </div>
+  </ng-template>
+  <!--故障设备选择器-->
+  <equipment-list-selector-component *ngIf="equipmentVisible"
+                                     [(equipmentVisible)]="equipmentVisible"
+                                     [filterConditions]="equipmentFilter"
+                                     [multiple]="true"
+                                     [isTrouble]="true"
+                                     [showCleanBtn]="true"
+                                     [showSelectedCount]="true"
+                                     [isCheckOkBtn]="false"
+                                     [selectEquipments]="selectEquipments"
+                                     (selectDataChange)="onEquipmentDataChange($event)">
+  </equipment-list-selector-component>
+  <!-- 故障设施 -->
+  <ng-template #facilityTemp let-filterValue="filterValue">
+    <app-alarm-object [alarmObjectConfig]="troubleFacilityConfig"
+                      [filterValue]="filterValue"
+                      [isRadio]="isRadio"
+                      [isTrouble]="isTrouble"
+                      [isClick]="isFacility"
+                      [title]="language.troubleFacility"></app-alarm-object>
+  </ng-template>
+
+  <!--发生时间-->
+  <ng-template #happenDate let-formGroup="formGroup" let-col="col">
+    <form [formGroup]="formGroup">
+      <nz-date-picker [nzDisabledDate]="disabledDate" nzShowTime formControlName="happenDate"></nz-date-picker>
+    </form>
+  </ng-template>
+
+  <!-- 责任单位 -->
+  <ng-template #department let-formGroup="formGroup" let-col="col">
+    <div>
+      <span class="area-name" [title]="deptName">{{deptName}}</span>
+      <button type="button" class="open-button"
+              (click)="showUnitSelectorModal()" [disabled]="isUnit"><i
+        class="icon-fiLink fiLink-search-index iconfont" ></i></button>
+    </div>
+  </ng-template>
+
+  <!--单位选择器-->
+  <xc-tree-area-selector
+    [(xcVisible)]="unitSelectVisible"
+    [treeSelectorConfig]="unitSelectorConfig"
+    [canClear]="false"
+    (selectDataChange)="unitSelectChange($event)"
+  >
+  </xc-tree-area-selector>
+</div>
+
+<!--加载-->
+<nz-spin [nzSimple]="true"
+         *ngIf="ifSpin"
+         class="loading"
+         [nzSpinning]="true"
+></nz-spin>

@@ -1,0 +1,31 @@
+@import "../../../../style-module/config";
+.area-level {
+  display: inline-block;
+  width: 48px;
+  height: 20px;
+  text-align: center;
+  color: $button-danger-color;
+}
+
+.level-one {
+  background: $level-one;
+}
+
+.level-two {
+  background-color: $level-two;
+}
+
+.level-three {
+  background-color: $level-three;
+}
+
+.level-four {
+  background-color: $level-four;
+}
+
+.level-five {
+  background-color: $level-five;
+}
+.box-warp{
+  padding: 10px;
+}

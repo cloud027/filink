@@ -1,0 +1,69 @@
+<div class="applied">
+  <h4 class="title">{{languageTable.strategyList.applicationScope}}</h4>
+  <!--应用范围-->
+  <nz-tabset>
+    <nz-tab *ngIf="equipmentIds&&equipmentIds.length" [nzTitle]="languageTable.equipmentTable.equipmentList">
+      <xc-table
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        (pageChange)="pageChange($event)"
+        [tableConfig]="tableConfig">
+      </xc-table>
+    </nz-tab>
+    <nz-tab *ngIf="groupIds&&groupIds.length" [nzTitle]="languageTable.equipmentTable.groupList">
+      <xc-table
+        [dataSet]="groupSet"
+        [pageBean]="groupPageBean"
+        (pageChange)="groupPageChange($event)"
+        [tableConfig]="tableGroupConfig">
+      </xc-table>
+    </nz-tab>
+    <nz-tab
+      *ngIf="isShow&&loopIds&&loopIds.length"
+      [nzTitle]="languageTable.equipmentTable.loopList">
+      <xc-table
+        [dataSet]="loopSet"
+        [pageBean]="loopPageBean"
+        (pageChange)="loopPageChange($event)"
+        [tableConfig]="tableLoopConfig">
+      </xc-table>
+    </nz-tab>
+  </nz-tabset>
+</div>
+
+<!--设备类型模板-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <span class="status-text" title="{{data.equipmentType}}">
+    {{data.equipmentType}}
+  </span>
+</ng-template>
+
+<!--设备状态模板-->
+<ng-template #equipmentStatusTemp let-data="data">
+  <div class="area-level">
+    <span class="status-text"
+          title="{{data.equipmentStatus}}">
+          {{data.equipmentStatus}}
+    </span>
+  </div>
+</ng-template>
+
+<!-- 分组详情-->
+<nz-modal *ngIf="showGroupViewDetail"
+          [(nzVisible)]="showGroupViewDetail"
+          nzTitle="{{languageTable.frequentlyUsed.groupDetail}}"
+          nzWidth="70%"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="showGroupViewDetail = false;">
+  <app-group-view-detail [groupModel]="currentGroup"></app-group-view-detail>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button"
+            nzType="primary"
+            (click)="showGroupViewDetail = false;">
+      {{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button"
+            nzType="danger"
+            (click)="showGroupViewDetail = false;">
+      {{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

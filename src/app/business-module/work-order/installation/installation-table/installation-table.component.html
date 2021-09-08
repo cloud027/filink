@@ -1,0 +1,102 @@
+<div>
+  <xc-table #workOrderTable
+            [dataSet]="installTableData"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <div>
+    <!-- 状态模板 -->
+    <ng-template #statusTemp let-data="data">
+      <div class="hidden" title="{{data.statusName}}" [ngStyle]="data.rowStyle">
+        <span [ngClass]="data.statusClass" class="status-temp"></span>{{data.statusName}}
+      </div>
+    </ng-template>
+    <!--设施类型图标-->
+    <ng-template #deviceTemp let-data="data">
+      <div class="hidden" title="{{data.deviceTypeName}}" [ngStyle]="data.rowStyle">
+        <i class="status-temp" [ngClass]="data.deviceClass"></i>{{data.deviceTypeName}}
+      </div>
+    </ng-template>
+    <!--设备类型-->
+    <ng-template #equipTemp let-data="data">
+      <div class="hidden" title="{{data.equipmentTypeName}}" [ngStyle]="data.rowStyle">
+        <i class="status-temp" [ngClass]="data.equipmentTypeClass"></i>{{data.equipmentTypeName}}
+      </div>
+    </ng-template>
+    <!--筛选部门-->
+    <ng-template #unitNameSearch let-filterValue="filterValue">
+      <input type="text" class="cursor-pointer" nz-input placeholder="{{inspectionLanguage.pleaseChoose}}" readonly
+             (click)="showModal(filterValue)" [(ngModel)]="departFilterValue.filterName || filterValue.filterName" />
+    </ng-template>
+    <!--列表中单位选择-->
+    <xc-tree-area-selector
+      [(xcVisible)]="isShowDept"
+      (selectDataChange)="departmentSelectDataChange($event)"
+      [treeSelectorConfig]="treeSelectorConfig">
+    </xc-tree-area-selector>
+    <!--巡检区域弹框-->
+    <ng-template #areaSearch let-filterValue="filterValue">
+      <input type="text" class="cursor-pointer" nz-input placeholder="{{inspectionLanguage.pleaseChoose}}" readonly
+             (click)="showArea(filterValue)" [(ngModel)]="filterValue.filterName || areaFilterValue.filterName" />
+    </ng-template>
+    <!--区域选择-->
+    <xc-tree-area-selector
+      [(xcVisible)]="areaSelectVisible"
+      [pageType]="inspectionLanguage.area"
+      [treeSelectorConfig]="areaSelectorConfig"
+      (selectDataChange)="areaSelectChange($event)">
+    </xc-tree-area-selector>
+    <!--用户列表-->
+    <ng-template #userSearchTemp let-filterValue="filterValue">
+      <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+             (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+    </ng-template>
+    <app-select-user
+      *ngIf="isShowUserTemp"
+      [(xcVisible)]="isShowUserTemp"
+      [selectUserList]="selectUserList"
+      (selectDataChange)="onSelectUser($event)">
+    </app-select-user>
+    <!--退单确认-->
+    <app-chargeback-work-order *ngIf="isChargeback"
+                               [(xcVisible)]="isChargeback"
+                               [permissionCode]="'06-4-1-4'"
+                               (selectDataChange)="chargebackOrder($event)">
+    </app-chargeback-work-order>
+    <!--工单转派-->
+    <app-transfer-worker-order *ngIf="isShowTransModal"
+                               [(xcVisible)]="isShowTransModal"
+                               [modalData]="transModalData"
+                               (selectDataChange)="transferOrders($event)">
+    </app-transfer-worker-order>
+    <!--指派单位树配置-->
+    <xc-tree-area-selector
+      [(xcVisible)]="assignVisible"
+      (selectDataChange)="selectAssignDataChange($event)"
+      [treeSelectorConfig]="assignTreeSelectorConfig">
+    </xc-tree-area-selector>
+    <!--设施名称选择弹框-->
+    <ng-template #deviceNameSearch let-filterValue="filterValue">
+      <app-alarm-object class="pic-selector"
+                        [placeholder]="workOrderLanguage.pleaseSelect"
+                        [alarmObjectConfig]="deviceObjectConfig"
+                        [filterValue]="filterValue" [title]="workOrderLanguage.selectDevice">
+      </app-alarm-object>
+    </ng-template>
+    <!-- 设备名称 -->
+    <ng-template #equipmentSearch let-filterValue = "filterValue">
+      <input type="text" nz-input placeholder="{{workOrderLanguage.pleaseSelect}}" readonly class="cursor-pointer"
+             (click)="openEquipmentSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkEquipmentObject.name" />
+    </ng-template>
+    <equipment-list-selector-component
+      *ngIf="equipmentVisible"
+      [(equipmentVisible)]="equipmentVisible"
+      [multiple]="true"
+      [showSelectedCount]="true"
+      [showCleanBtn]="false"
+      [selectEquipments]="selectEquipments"
+      (selectDataChange)="onSelectEquipment($event)">
+    </equipment-list-selector-component>
+  </div>
+</div>

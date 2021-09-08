@@ -1,0 +1,93 @@
+<!--工单-->
+<nz-card nzTitle="{{language.picInfo.worker}}" [nzExtra]="extraTemplate">
+  <div class="equipment-tabs">
+    <nz-card-tab>
+      <nz-tabset>
+        <nz-tab *ngIf="checkHasRole('06-1-1')" nzTitle="{{workOrderLanguage.inspectionWorkOrder}}"
+                (nzClick)="onClickTab(workOrderTypeEnum.inspection)">
+          <!--巡检工单-->
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="dataSet"
+              [pageBean]="inspectionPageBean"
+              [tableConfig]="tableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+        <!--消障工单-->
+        <nz-tab *ngIf="checkHasRole('06-2-1')" nzTitle="{{workOrderLanguage.clearBarrierWorkOrder}}"
+                (nzClick)="onClickTab(workOrderTypeEnum.clear)">
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="clearBarrierDataSet"
+              [pageBean]="clearPageBean"
+              [tableConfig]="clearBarrierTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+
+        <!--安装工单-->
+        <nz-tab *ngIf="checkHasRole('06-4-1')" nzTitle="{{workOrderLanguage.installWorkOrder}}"
+                 (nzClick)="onClickTab(workOrderTypeEnum.install)">
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="installDataSet"
+              [pageBean]="installPageBean"
+              [tableConfig]="installTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+        <!--告警确认工单-->
+        <nz-tab *ngIf="checkHasRole('06-5-1')" nzTitle="{{workOrderLanguage.alarmConfirmWorkOrder}}"
+                 (nzClick)="onClickTab(workOrderTypeEnum.alarmConfirm)">
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="alarmConfirmDataSet"
+              [pageBean]="alarmConfirmPageBean"
+              [tableConfig]="alarmConfirmTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+        <!--拆除工单-->
+        <nz-tab *ngIf="checkHasRole('06-6-1')" nzTitle="{{workOrderLanguage.dismantleBarrierWorkOrder}}"
+                (nzClick)="onClickTab(workOrderTypeEnum.remove)">
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="removeDataSet"
+              [pageBean]="removePageBean"
+              [tableConfig]="removeTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+  </div>
+</nz-card>
+<!--工单状态模版-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.status | translate: equipWorkOrderStatusEnum: languageEnum.workOrder}}">
+    <span [ngClass]="data.statusClass">
+    </span>
+    {{data.status | translate: equipWorkOrderStatusEnum: languageEnum.workOrder}}
+  </div>
+</ng-template>
+
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMoreWorkOrder()"><span>{{language.more}} >></span></a>
+</ng-template>
+<!--消障工单数据来源-->
+<ng-template #dataResource let-data="data">
+  <div title="{{data.dataResourceType | translate: dataSourceEnum}}">
+    {{data.dataResourceType | translate: dataSourceEnum}}
+  </div>
+</ng-template>
+<!--描述-->
+<ng-template #refAlarmTemplate let-data="data">
+  <div  class="alarm-model one-text" [title]="data.troubleDescribe"
+        *ngIf="data.troubleSourceCode === troubleSourceEnum.alarm; else noModel" [title]="data.troubleDescribe"
+  >{{data.troubleDescribe}}</div>
+  <ng-template #noModel>
+    <div class="one-text" [title]="data.troubleDescribe">{{data.troubleDescribe}}</div>
+  </ng-template>
+</ng-template>

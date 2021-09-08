@@ -1,0 +1,15 @@
+export default {
+  '2100904': 'You have one export task completed',
+  '2400101': 'Unlocking result',
+  '0': 'Succeeded',
+  '1': 'Key not configured',
+  '2': 'parameter error',
+  '3': 'Unlocked',
+  '4': 'Activation code error',
+  '5': 'Lock not configured',
+  '6': 'Other',
+  '7': 'Repeated order',
+  '8': 'facility out of use',
+  '2500004': 'Unlocking result: succeeded',
+  '2100211': 'The menu template being used has been updated',
+};

@@ -1,0 +1,34 @@
+<div class="monitor-point">
+  <div class="statistics-box">
+    <div class="statistics-title" [title]="language.MonitorWorkbench.monitoringPointData">
+      {{ language.MonitorWorkbench.monitoringPointData }}
+    </div>
+    <div class="select-box">
+      <div class="statistics-date">
+        <nz-date-picker
+          [(ngModel)]="dateRange"
+          (ngModelChange)="onDateChange($event)"
+        ></nz-date-picker>
+      </div>
+    </div>
+  </div>
+  <ng-template [ngIf]="equipmentId">
+    <div class="tab-box">
+      <nz-tabset (nzSelectChange)="nzSelectChange($event)" [(nzSelectedIndex)]="tabIndex">
+        <nz-tab *ngFor="let tabItem of monitorPointTabList" [nzTitle]="tabItem.tabTitle"></nz-tab>
+      </nz-tabset>
+    </div>
+    <div
+      *ngIf="isShowMonitorPointStatus"
+      echarts
+      [options]="monitorPointEchartsData"
+      class="chart"
+    ></div>
+    <div *ngIf="!isShowMonitorPointStatus" class="empty-container">
+      <nz-empty></nz-empty>
+    </div>
+  </ng-template>
+  <div class="convenient" *ngIf="!equipmentId">
+    {{ language.callWorkbench.noEquipmentSelected }}
+  </div>
+</div>

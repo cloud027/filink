@@ -1,0 +1,21 @@
+@import "../../../style-module/config";
+
+// 系统租户列表
+.template-warp {
+
+
+  // 列表上方title
+  .table-common-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #333;
+    padding-bottom: 20px;
+    background-color: $bg-c-w;
+    position: relative;
+  }
+}
+
+.mr-l-15{
+  margin-left: 15px
+}
+

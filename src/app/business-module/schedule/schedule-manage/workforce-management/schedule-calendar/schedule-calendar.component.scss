@@ -1,0 +1,80 @@
+@import "../../../../../style-module/config";
+.schedule-calendar-wrap {
+  padding: 20px 40px;
+  .schedule-calendar-top {
+    margin-bottom: 20px;
+
+    .auto-schedule {
+      display: inline-block;
+      cursor: pointer;
+      color: $color;
+      .auto-schedule-text {
+        font-weight: 200;
+        margin-left: 5px;
+        font-size: 13px;
+      }
+    }
+
+    .search-member-wrap {
+      text-align: right;
+      .search-member {
+        width: 200px;
+        margin-right: 10px;
+      }
+      .search-btn {
+        font-size: 18px;
+        cursor: pointer;
+        color: #36cfc9;
+        margin-right: 10px;
+      }
+      .icon-fiLink {
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .member-calendar-wrap {
+    width: 100%;
+    padding: 10px 10%;
+    border: 1px solid $border-color;
+  }
+
+  .date-cell {
+    width: 100%;
+    height: 100%;
+    padding: 4px 8px;
+    padding-right: 2px;
+
+    .date-text {
+      margin-bottom: 10px;
+    }
+
+    .date-content {
+      overflow-y: auto;
+      height: 70px;
+    }
+
+    .date-content::-webkit-scrollbar-track-piece {
+      background-color: unset;
+    }
+
+    .date-content::-webkit-scrollbar {
+      width: 4px;
+    }
+  }
+  .select-date-cell {
+    background-color: $color;
+    .date-text {
+      font-size: 16px;
+      color: $calendar-date-selected;
+      font-weight: bold;
+    }
+    .member-name-wrap {
+      color: $calendar-date-selected;
+      .prefix-name {
+        background-color: $calendar-date-selected;
+      }
+    }
+  }
+}

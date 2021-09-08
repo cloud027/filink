@@ -1,0 +1,181 @@
+<div class="history-table">
+  <!-- 表格 -->
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="historyTableData"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)"
+    >
+    </xc-table>
+  </div>
+  <!-- 状态模板 -->
+  <ng-template #statusTemp let-data="data">
+    <div class="hidden" title="{{ data.statusName }}">
+      <span [ngClass]="data.statusClass" class="status-temp"></span>
+      {{ data.statusName }}
+    </div>
+  </ng-template>
+  <!--设施类型图标-->
+  <ng-template #deviceTemp let-data="data">
+    <div class="hidden" title="{{ data.deviceTypeName }}">
+      <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+      {{ data.deviceTypeName }}
+    </div>
+  </ng-template>
+  <!--设备类型-->
+  <ng-template #equipmentTemp let-data="data">
+    <div class="tab-text-over">
+      <span
+        *ngFor="let item of data.equipmentTypeList"
+        class="over-type"
+        title="{{ data.equipmentTypeName }}"
+      >
+        <span class="status-temp" [ngClass]="item.iconClass"></span>{{ item.name }}
+      </span>
+    </div>
+  </ng-template>
+  <!-- 单位模板 -->
+  <ng-template #unitNameSearch let-filterValue="filterValue">
+    <input
+      type="text"
+      nz-input
+      placeholder="{{ workOrderLanguage.pleaseSelect }}"
+      readonly
+      (click)="showModal(filterValue)"
+      [(ngModel)]="selectUnitName"
+    />
+  </ng-template>
+  <!-- 单位 树选择 -->
+  <xc-tree-area-selector
+    [(xcVisible)]="isVisible"
+    (selectDataChange)="selectDataChange($event)"
+    [treeSelectorConfig]="treeSelectorConfig"
+  >
+  </xc-tree-area-selector>
+
+  <!--关联告警模板-->
+  <ng-template #refAlarmTemp let-data="data">
+    <div (click)="showRefAlarmModal(data)" class="hidden cursor-pointer ref-color">
+      {{ data.dataResourceName }}
+    </div>
+  </ng-template>
+
+  <!--设施名称弹框-->
+  <!--  <ng-template #DeviceNameSearch let-filterValue="filterValue">
+      <app-alarm-object
+        class="pic-device-selector"
+        [placeholder]="workOrderLanguage.pleaseSelect"
+        [alarmObjectConfig]="deviceObjectConfig"
+        [filterValue]="filterValue"
+      ></app-alarm-object>
+    </ng-template>-->
+  <!--设施过滤输入框-->
+  <ng-template #DeviceNameSearch let-filterValue="filterValue">
+    <input
+      nz-input
+      type="text"
+      [placeholder]="workOrderLanguage.pleaseSelect"
+      [ngModel]="filterValue.filterName || filterDeviceName"
+      (click)="onShowFacility(filterValue)"
+    />
+  </ng-template>
+  <!--设施过滤选择器-->
+  <facility-list-selector-component
+    *ngIf="facilityVisible"
+    [(facilityVisible)]="facilityVisible"
+    [multiple]="true"
+    [selectFacilityIds]="selectFacility"
+    title="{{ workOrderLanguage.selectDevice }}"
+    (selectDataChange)="onFacilityChange($event)"
+  >
+  </facility-list-selector-component>
+  <!--设施区域弹框-->
+  <ng-template #AreaSearch let-filterValue="filterValue">
+    <input
+      type="text"
+      nz-input
+      placeholder="{{ workOrderLanguage.pleaseSelect }}"
+      readonly
+      (click)="showArea(filterValue)"
+      [(ngModel)]="filterObj.areaName"
+    />
+  </ng-template>
+  <!-- 区域树选择 -->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [pageType]="inspectionLanguage.area"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="areaSelectChange($event)"
+  >
+  </xc-tree-area-selector>
+</div>
+
+<!-- 设备名称 -->
+<ng-template #equipmentSearch let-filterValue="filterValue">
+  <span
+    class="equipment-name area-name"
+    [title]="checkEquipmentObject.name"
+    (click)="openEquipmentSelector(filterValue)"
+  >
+    <span class="title" *ngIf="!checkEquipmentObject.name">{{ alarmLanguage.clickSelect }}</span>
+    {{ checkEquipmentObject.name }}</span
+  >
+</ng-template>
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [multiple]="true"
+  [showSelectedCount]="true"
+  [showCleanBtn]="true"
+  [selectEquipments]="selectEquipments"
+  (selectDataChange)="onSelectEquipment($event)"
+>
+</equipment-list-selector-component>
+
+<!--关联告警-->
+<app-relevance-alarm
+  *ngIf="isShowRefAlarm"
+  [(xcVisible)]="isShowRefAlarm"
+  [modalData]="alarmData"
+  (selectDataChange)="closeRefAlarm()"
+>
+</app-relevance-alarm>
+
+<!--关联故障-->
+<app-relevance-fault
+  *ngIf="isShowRefFault"
+  [faultId]="faultData"
+  (selectDataChange)="closeRefFault()"
+>
+</app-relevance-fault>
+
+<!-- 设施 设备 类型 -->
+<ng-template #deviceTypeTemp let-data="data">
+  <span
+    class="status-text"
+    [ngStyle]="data.rowStyle"
+    title="{{ data.removeType | translate: dismantleTypeEnum:languageEnum.workOrder }}"
+  >
+    {{ data.removeType | translate: dismantleTypeEnum:languageEnum.workOrder }}
+  </span>
+</ng-template>
+
+<!--单位查询-->
+<ng-template #UnitNameSearch let-filterValue="filterValue">
+  <input
+    type="text"
+    nz-input
+    placeholder="{{ workOrderLanguage.pleaseSelect }}"
+    readonly
+    (click)="showModal(filterValue)"
+    [(ngModel)]="selectUnitName"
+  />
+</ng-template>
+<!--单位树组件-->
+<xc-tree-area-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig"
+>
+</xc-tree-area-selector>

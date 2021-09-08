@@ -1,0 +1,80 @@
+<!-- 分组列表-->
+<div class="group-warp">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--亮度调整-->
+<nz-modal
+  *ngIf="isBrightness"
+  [(nzVisible)]="isBrightness"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="isBrightness=false;dimmingLightValue=0"
+  [nzFooter]="scheduleModalFooter"
+  [nzTitle]="languageTable.equipmentTable.light"
+  nzWidth="500">
+  <app-slider-model [dimmingLightValue]="dimmingLightValue"  (sliderNotify)="handleSlider($event)"></app-slider-model>
+  <ng-template #scheduleModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="handleOk()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!--音量调整-->
+<nz-modal
+  *ngIf="isVolume"
+  [(nzVisible)]="isVolume"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="isVolume=false"
+  [nzTitle]="languageTable.equipmentTable.volume"
+  [nzFooter]="volumeModalFooter"
+  nzWidth="500">
+  <app-volume-slider-model [volumeValue]="volumeValue" (sliderNotify)="handleVolumeSlider($event, 0)"></app-volume-slider-model>
+  <ng-template #volumeModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="confirmVolume()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!--现场广播-->
+<nz-modal
+  *ngIf="isOnline"
+  [(nzVisible)]="isOnline"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="handleCloseOnline()"
+  [nzTitle]="languageTable.equipmentTable.onlineBroadcast"
+  [nzFooter]="onlineModalFooter"
+  nzWidth="500">
+  <app-online-broadcast-model [sourceId]="sourceId" [onlineVolumeValue]="onlineVolumeValue"
+                              [equipmentList] = "recordEquipmentList"
+                              (sliderNotify)="handleVolumeSlider($event, 1)" (sourceNotify)="handleSource($event)"></app-online-broadcast-model>
+  <ng-template #onlineModalFooter>
+    <div class="audio-btn-group">
+      <span (click)="switchOnlineOperate('0')" *ngIf="!isStop">
+        <i class="iconfont fiLink-pic-bofang1 btn-size"></i>
+      </span>
+      <span (click)="switchOnlineOperate('1')" *ngIf="isStop">
+        <i class="icon-fiLink-l iconfont fiLink-video-tingzhibofang btn-size"></i>
+      </span>
+    </div>
+  </ng-template>
+</nz-modal>
+<!--插播-->
+<app-insert-broadcast-model *ngIf="isInsert"
+                            [title]="languageTable.equipmentTable.insertBroadcast"
+                            [insertVolumeValue]="insertVolumeValue"
+                            [insertType]="insertType"
+                            [(xcVisible)]="isInsert"
+                            [equipmentList]="selectedEquipmentData"
+></app-insert-broadcast-model>
+
+

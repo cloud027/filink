@@ -1,0 +1,24 @@
+<!--告警列表-->
+<div class="alarm-list">
+  <div class="alarm-title">
+    <div class="alarm-title-text">{{alarmName}}</div>
+    <div class="alarm-title-more" (click)="handleMoreButton()">{{commonLanguage.more}}>></div>
+  </div>
+  <div>
+    <xc-table [dataSet]="alarmDataSet"
+              [tableConfig]="alarmTableConfig">
+    </xc-table>
+  </div>
+</div>
+
+<!--告警名称模板-->
+  <ng-template #alarmNameTemp let-data="data">
+  <div class="hidden" title="{{data.alarmName}}">
+       <span class="box-color-icon"
+             [ngStyle]="data.style">
+    </span>
+    {{data.alarmName}}
+  </div>
+</ng-template>
+
+

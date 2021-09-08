@@ -1,0 +1,100 @@
+@import "../../../../../style-module/config";
+
+.steps-box {
+  padding: 20px;
+  /*步骤条*/
+  .steps-list {
+    display: flex;
+    position: relative;
+    padding-left: 20px;
+    width: 186px;
+    height: 130px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      left: 40px;
+      top: 40px;
+      height: 90px;
+      background: $border-color;
+    }
+
+    /*去掉最后一个样式*/
+    &:last-child:after {
+      width: 0;
+      height: 0;
+    }
+
+    .finish-style {
+      margin-top: -8px;
+      .iconfont {
+        font-size: 38px;
+        cursor: pointer;
+      }
+    }
+
+    .steps-number {
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid $border-color;
+      color: $border-color;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .steps-title {
+      height: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 10px 10px;
+      color: #ccc;
+    }
+
+    /*步骤条线*/
+    .steps-border {
+      width: 100px;
+      background: $border-color;
+      height: 1px;
+      margin-right: 20px;
+    }
+  }
+
+  /*激活状态的样式*/
+  .active {
+    .steps-number {
+      background: $color;
+      color: $bg-c-w;
+      border-color: $color;
+    }
+
+    .steps-title {
+      font-size: 14px;
+      color: #333333;
+      font-weight: bold;
+    }
+
+    .steps-border {
+      background: $color;
+    }
+  }
+
+  /*完成状态的样式*/
+  .finish {
+    .steps-number {
+      border-color: $color;
+      color: $color;
+    }
+
+    .steps-title {
+      font-size: 14px;
+      color: $equipment-status-lost;
+    }
+
+    .steps-border {
+      background: $color;
+    }
+  }
+}

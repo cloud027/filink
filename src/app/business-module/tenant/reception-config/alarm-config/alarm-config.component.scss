@@ -1,0 +1,48 @@
+@import "../../../../style-module/config";
+
+.alarm-box {
+  overflow-x:scroll;
+  margin: 20px 0px 20px 30px;
+
+  .alarm-select-box {
+    min-width: 1400px;
+    min-height: 50px;
+
+    .alarm-select-title {
+      width: 110px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .alarm-select-all {
+      width: 90px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .alarm-select-type {
+      width: 1200px;
+      display: inline-block;
+
+
+      .alarm-select-check-box {
+        display: flex;
+        flex-wrap: wrap;
+
+        .alarm-select-check-label {
+          flex: 1;
+          width: 200px;
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+
+}
+
+
+// 配置按钮
+.button-group {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}

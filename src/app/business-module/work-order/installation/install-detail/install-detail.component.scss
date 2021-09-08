@@ -1,0 +1,52 @@
+@import "../../../../style-module/config.scss";
+.in-container{
+  padding: 0 20px;
+  .area-name {
+    outline: none;
+    cursor: default;
+    &:hover{
+      border-color: $color;
+    }
+    &::-webkit-input-placeholder {
+      color: #bfbfbf;
+    }
+    &:-moz-placeholder {
+      color: #bfbfbf;
+    }
+    &::-moz-placeholder {
+      color: #bfbfbf;
+    }
+    &:disabled:hover {
+      border-color: $button-disable-bg-color;
+    }
+  }
+  .open-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $bg-c-w;
+  }
+  .order-btn {
+    padding-bottom: 20px;
+    margin-top: 20px;
+    .link-button{
+      margin-right: 20px;
+    }
+  }
+  .temps {
+    height: 0;
+  }
+
+  .custom-template{
+    position: relative;
+    .error-ck{
+      color: #e60000;
+      border-color: #e60000;
+    }
+    .spin-ck{
+      position: absolute;
+      top: 2px;
+      right: 8px;
+    }
+  }
+}

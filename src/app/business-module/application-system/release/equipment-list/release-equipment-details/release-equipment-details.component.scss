@@ -1,0 +1,118 @@
+@import "../../../../../shared-module/component/business-component/equipment-detail-view/appliction-operate/style/operation";
+@import "../../../share/style/common-style";
+
+.application-operate {
+  padding: 10px;
+  background: $bg-c-w;
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .application-list {
+
+    .button-groups {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        width: 80px;
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.application-content {
+  display: flex;
+
+  .content-left {
+    width: 50%;
+    background: #fff;
+    position: relative;
+    padding: 10px;
+  }
+
+  .content-right {
+    width: 50%;
+    background: #fff;
+
+    .screen {
+      width: 500px;
+      padding: 20px;
+      margin: 30px 20px;
+      border-radius: 3px;
+      border-top: none;
+
+      .information-screen {
+        position: absolute;
+        color: #35cfc9;
+        top: -12px;
+        left: 50px;
+      }
+
+      .program-select {
+        display: flex;
+        align-items: center;
+
+        .program-title {
+          width: 100px;
+        }
+
+        .area-name {
+          @include input-style;
+        }
+
+        .open-button {
+          @include button-style;
+        }
+      }
+
+      .instruct-list {
+        display: flex;
+        align-items: center;
+
+        .light {
+          background: #f1c620;
+          border-radius: 100%;
+          width: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 5px;
+
+          .icon-fiLink {
+            color: #fff;
+          }
+        }
+
+        .volume {
+          background: #9186e0;
+        }
+
+        .instruct-title {
+          width: 80px;
+        }
+
+        .instruct-volume {
+          width: 60%;
+          margin: 20px 20px 20px 0;
+        }
+      }
+    }
+  }
+}
+
+.btn {
+  color: #35cfc9;
+
+  &:hover {
+    background: #35cfc9;
+    color: #fff;
+
+    i {
+      color: #fff;
+    }
+  }
+}

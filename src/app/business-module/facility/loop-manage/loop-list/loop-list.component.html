@@ -1,0 +1,81 @@
+<!--回路列表页面-->
+<div class="table-wrapper">
+  <div id="drag-box" (drop)="dropHandle($event)" (dragover)="dragoverHandle($event)">
+    <!--地图部分-->
+    <div id="drag-content">
+      <loop-map #mainMap
+              [hidden]="!isShowUpIcon"
+              class="map-content"
+              [mapConfig]="mapConfig"
+              [data]="data"
+              [iconSize]="iconSize"
+              [selectedLoop]="loopSelectedData"
+              [centerPoint]="centerPoint"
+              (mapEvent)="mapEvent($event)">
+      </loop-map>
+      <!-- 框选图标-->
+      <div class="zoom-control-item iconfont icon-fiLink-2 fiLink-map-selection"
+           title="{{assetLanguage.frameSelection}}"
+           (click)="mapSelectData()">
+      </div>
+      <!--地图右下角移入移出按钮 -->
+      <div class="map-right-button" *ngIf="isShowButton">
+        <ul class="button-ul">
+          <li class="button-li" (click)="moveIntoOrOutLoop(false)" [appAccessPermission]="'03-10-7'">
+            <span class="button-icon-right"><i class="iconfont icon-fiLink fiLink-move-into"></i></span>
+            <span>{{assetLanguage.moveIntoLoop}}</span>
+          </li>
+          <li class="button-li" (click)="moveIntoOrOutLoop(true)" [appAccessPermission]="'03-10-8'">
+            <span class="button-icon-right"><i class="iconfont icon-fiLink fiLink-move-out"></i></span>
+            <span>{{assetLanguage.moveOutTheLoop}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 拖拽触发处-->
+    <div *ngIf="isShowUpIcon" [draggable]="true" id="drag-start" (dragstart)="dragstartHandle($event)"></div>
+    <!-- 地图大小变化的触发图标按钮-->
+    <div class="map-icon-part">
+      <div *ngIf="isShowUpIcon">
+        <i nz-icon nzType="double-left" nzTheme="outline" class="up-icon" (click)="mapMinHeightChange()"></i>
+      </div>
+      <div *ngIf="isShowDownIcon">
+        <i nz-icon nzType="double-left" nzTheme="outline" class="down-icon" (click)="mapBigHeightChange()"></i>
+      </div>
+    </div>
+  </div>
+  <!--回路列表弹框-->
+  <app-loop-list-selector *ngIf="isVisible"
+                          [title]="loopModalTitle"
+                          [tableData]="loopChangeDataSet"
+                          [(xcVisible)]="isVisible"
+                          [isOkChange] = "false"
+                          [filterConditions]="filterConditions"
+                          (selectListDataChange)="selectLoopData($event)">
+  </app-loop-list-selector>
+  <!--回路列表部分-->
+  <div [ngClass]="isShowUpIcon?'table-top':'table-container'"  *ngIf="isShowTable">
+    <xc-table #tableComponent
+              *ngIf="isShowTable"
+              [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+
+</div>
+<ng-template #loopStatusRef let-data="data">
+   <span title="{{data.loopStatus | translate: loopStatusEnum: languageEnum.facility}}">
+          {{data.loopStatus | translate: loopStatusEnum: languageEnum.facility}}
+    </span>
+</ng-template>
+<!--回路类型模版-->
+<ng-template #loopTypeRef let-data="data">
+  <span *ngIf="data.loopType === loopTypeEnum.customize" title="{{data.customizeLoopType}}">
+     {{data.customizeLoopType}}
+  </span>
+  <span *ngIf="data.loopType !== loopTypeEnum.customize" title="{{data.loopType | translate: loopTypeEnum: languageEnum.facility}}">
+          {{data.loopType | translate: loopTypeEnum: languageEnum.facility}}
+ </span>
+</ng-template>

@@ -1,0 +1,107 @@
+@import "../../../../style-module/config";
+
+.product-detail {
+  // 标题样式
+  .product-detail-title {
+    margin-left: 10px;
+    padding-left: 18px;
+    font-size: 16px;
+    font-weight: 900;
+    color: $title-color;
+    border-left: 2px solid $detail-title-color;
+  }
+
+  .button-container {
+    margin-top: 40px;
+  }
+}
+
+.select-container {
+  display: flex;
+
+  .mount-type-select {
+    margin-right: 10px;
+    width: 100px;
+  }
+
+  .product-model-select {
+    width: 190px;
+  }
+}
+
+.port-info-container {
+  margin-bottom: 20px;
+  width: 500px;
+  // 端口样式
+  .port-add {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .add-title {
+      padding-left: 10px;
+      color: $color;
+    }
+  }
+
+  // 端口内容样式
+  .port-info-border {
+    border: 1px dashed $border-color;
+    border-radius: 3px;
+    padding: 10px;
+
+    .port-info-btn {
+      display: flex;
+      justify-content: flex-end;
+
+      .button-save {
+        padding-right: 10px;
+        color: $color;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .button-close {
+        color: $color;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    }
+    // 添加端口信息
+    .add-port-info {
+      .program-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .program-left {
+          width: 100px;
+        }
+
+        .program-right {
+          .port-type-select {
+            width: 300px;
+          }
+        }
+      }
+    }
+  }
+  // 端口表格
+  .port-table{
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+.port-flag{
+  width: 300px;
+}
+
+.open-button {
+  position: absolute;
+  top: 3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #fff;
+}

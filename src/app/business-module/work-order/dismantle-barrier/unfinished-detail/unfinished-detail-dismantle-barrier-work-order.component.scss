@@ -1,0 +1,493 @@
+@import "../../share/style/common-picture.scss";
+
+.work-order-detail {
+  background-color: $bg-c;
+  .label-width {
+    width: 110px;
+  }
+  .value-width {
+    width: calc(100% - 110px);
+  }
+  .margin-bottom-row {
+    margin-bottom: 10px;
+    &.gutter-row {
+      height: 45px;
+      width: 100%;
+      background-color: $menu-font-color;
+    }
+    .work-order-detail-title {
+      display: inline-block;
+      margin: 15px 0 0 10px;
+      color: $title-color;
+      font-weight: 900;
+      background-color: $menu-font-color;
+    }
+    // 关联故障盒子
+    .gutter-box {
+      background-color: $menu-font-color;
+      height: 200px;
+      &.gutter-box-unfinished {
+        height: 200px;
+      }
+      .status {
+        color: $menu-font-color;
+        font-size: $eCharts-font-size;
+        vertical-align: middle;
+        margin-left: 10px;
+        padding: 2px 5px;
+        border-radius: 2px;
+        .status-color {
+          color: $menu-font-color;
+          font-weight: bold;
+          padding-right: 5px;
+          height: 20px;
+          line-height: 22px;
+          vertical-align: top;
+          display: inline-block;
+        }
+      }
+      .name-margin {
+        // margin-top: 115px;
+        margin-top: 50px;
+        padding-bottom: 15px;
+        &.name-margin-unfinished {
+          margin-top: 50px;
+        }
+      }
+      .comment-margin-bottom-ex {
+        margin-top: 10px;
+        // margin-bottom: 90px;
+        margin-bottom: 60px;
+        &.comment-margin-bottom-unfinished {
+          margin-bottom: 60px;
+        }
+      }
+    }
+    // 资产编号
+    .assets-number {
+      margin: 10px 0;
+      height: 90px;
+      background-color: $bg-c-w;
+      padding: 26px 16px;
+      .assets-title {
+        color: #a6a6a6;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      > div {
+        &:first-of-type {
+          margin-bottom: 16px;
+        }
+      }
+    }
+    // 完工时间
+    .end-time-box {
+      background-color: $bg-c-w;
+    }
+    // 关联故障第三列平分
+    .gutter-box-half {
+      background-color: $bg-c;
+      height: 290px;
+      &.gutter-box-half-unfinished {
+        height: 245px;
+      }
+      .box-half-height {
+        background-color: $menu-font-color;
+        height: 140px;
+        &.box-half-height-unfinished-down {
+          height: 140px;
+        }
+        &.box-half-height-unfinished-up {
+          height: 110px;
+        }
+        &.bottom-box-half {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    // 告警/故障盒子
+    .gutter-box1 {
+      background-color: $menu-font-color;
+      height: 310px;
+      &.trouble-box-height {
+        height: 280px;
+      }
+      .alarm-box {
+        margin-top: 20px;
+        .alarm-span {
+          margin-right: 10px;
+          padding: 3px 5px;
+          font-size: 12px;
+          border-radius: 2px;
+          color: $menu-font-color;
+        }
+      }
+      // 频次展示
+      .circle {
+        width: 80px;
+        height: 80px;
+        border: 1px solid $sp-icon-color-8;
+        box-sizing: border-box;
+        border-radius: 50%;
+        padding: 10px;
+        position: absolute;
+        right: 73px;
+        bottom: 40px;
+        .circle-child {
+          width: 100%;
+          height: 100%;
+          line-height: 60px;
+          text-align: center;
+          border-radius: 50%;
+          background-color: $sp-icon-color-8;
+          font-weight: 700;
+          color: $menu-font-color;
+        }
+      }
+    }
+    .gutter-box2 {
+      background-color: $menu-font-color;
+      height: 345px;
+      .detail-suggest {
+        margin-left: -14px;
+        margin-top: 10px;
+      }
+    }
+    // 中间区域
+    .area-middle-box {
+      .device-base-info-box {
+        height: 250px;
+        padding: 24px 16px;
+        background-color: #fff;
+        .device-header-box {
+          .device-model-box {
+            font-size: 12px;
+            color: #fff;
+            background-color: #67a8f7;
+            padding: 2px 10px;
+            margin-left: 10px;
+          }
+        }
+        .comment-margin-bottom-ex {
+          margin: 20px 0 40px 0;
+        }
+      }
+      .other-middle-box {
+        background-color: $bg-c-w;
+        margin-top: 10px;
+        .box-half-height-finished-down {
+          padding-bottom: 50px;
+        }
+      }
+    }
+  }
+  .block-pad {
+    padding: 15px 0 0 16px;
+    position: relative;
+    &.work-order-block-pad {
+      padding: 26px 16px;
+      padding-bottom: 16px;
+    }
+    &.column-two {
+      margin-left: -21px;
+    }
+    &.column-three {
+      padding-left: 44px;
+    }
+  }
+  .equal-height {
+    height: 110px;
+    &.pad-top {
+      padding: 15px 0 0 0;
+    }
+  }
+  .comment-margin-bottom {
+    margin-bottom: 10px;
+    .comment-margin-bottom-text-color {
+      color: $sp-icon-color-7;
+    }
+    &.equipment-name {
+      // white-space: pre-wrap;
+      .equipment-name-box {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  .line-limit-length {
+    display: block; //块状显示
+  }
+  .alarm-font {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  // 时间样式
+  .time-comment {
+    padding: 5px 0;
+    display: inline-block;
+    color: $sp-icon-color-7;
+    font-size: 14px;
+    &.time-comment-width {
+      width: 120px;
+    }
+    &.alarm-count {
+      width: 100%;
+      margin-top: 15px;
+      text-align: center;
+    }
+  }
+  .detail-row-top {
+    display: inline-block;
+    color: #333;
+    font-size: $primary-title-size;
+    max-width: 150px;
+    vertical-align: top;
+    &.column-top {
+      font-weight: 900;
+    }
+    &.column-top1 {
+      font-weight: 400;
+    }
+  }
+  .alarm-row {
+    padding-left: 15px;
+    color: $title-color;
+    font-size: $page-font-size;
+    font-weight: 400;
+    &.alarm-name {
+      color: #36cfc9;
+    }
+  }
+  // 设施/设备icon
+  .icon-span {
+    margin-right: 5px;
+    font-weight: bold;
+    &.icon-span-color-01 {
+      color: #fad707;
+    }
+    &.icon-span-color-02 {
+      color: $frequency-color;
+    }
+    &.icon-span-color-03 {
+      color: $sp-icon-color-3;
+    }
+    &.icon-span-color-04 {
+      .iconfont {
+        color: $color;
+      }
+    }
+    .text {
+      font-weight: normal;
+    }
+  }
+  .device-margin {
+    margin-top: 10px;
+    height: 23px;
+  }
+  .cate-margin {
+    margin-top: 38px;
+    &.cate-margin-trobule {
+      margin-top: 30px;
+    }
+    &.cate-margin-bottom {
+      margin-bottom: 10px;
+    }
+  }
+  .link-top {
+    width: 100%;
+    height: 2px;
+    border-top: solid $bg-c 2px;
+    margin-top: 15px;
+  }
+  .fontsize-sixteen {
+    font-size: $primary-title-size;
+  }
+  .fontsize-fourteen {
+    font-size: $page-font-size;
+  }
+
+  .font-color-content {
+    color: $sp-icon-color-7;
+  }
+  .fault-device {
+    color: #333;
+  }
+  // 评价/故障节点
+  .image-box {
+    position: absolute;
+    width: 107px;
+    height: 76px;
+    right: 10px;
+    bottom: 110px;
+    &.image-box-position {
+      width: 76px;
+      height: 82px;
+      right: 110px;
+      bottom: 60px;
+    }
+    .image-evaluate {
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      height: 100%;
+      .text-position {
+        color: #29d9a5;
+        font-size: $primary-title-size;
+        display: block;
+        font-weight: 300;
+        line-height: 82px;
+        text-align: center;
+      }
+      // 0星评价
+      &.zeroStar {
+        background: url($star0) no-repeat;
+      }
+      // 1星评价
+      &.oneStar {
+        background: url($star1) no-repeat;
+      }
+      // 2星评价
+      &.twoStar {
+        background: url($star2) no-repeat;
+      }
+      // 3星评价
+      &.threeStar {
+        background: url($star3) no-repeat;
+      }
+      // 4星评价
+      &.fourStar {
+        background: url($star4) no-repeat;
+      }
+      // 5星评价
+      &.fiveStar {
+        background: url($star5) no-repeat;
+      }
+      // 关联故障
+      &.trouble-node {
+        background: url($circles) no-repeat;
+      }
+    }
+    .image-node {
+      width: 100px;
+      margin-left: -12px;
+    }
+    .image-text {
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  // 剩余天数
+  .image-days {
+    position: absolute;
+    width: 100px;
+    height: 200px;
+    right: 10px;
+    top: 26px;
+    color: $sp-icon-color-7;
+    text-align: center;
+    .image-position {
+      margin: 0 auto;
+      width: 76px;
+      height: 76px;
+      .remain-days-center {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        line-height: 106px;
+        text-align: center;
+        color: $menu-font-color;
+      }
+      // 剩余天数小于1的状态
+      &.lessThanOneDays {
+        background: url($progress2) no-repeat;
+      }
+      // 剩余天数小于1～3的状态
+      &.lessThanThreeDays {
+        background: url($progress3) no-repeat;
+      }
+      // 剩余天数大于3的状态
+      &.moreThreeDays {
+        background: url($progress1) no-repeat;
+      }
+    }
+    .image-days-text {
+      margin-top: 15px;
+      font-size: $page-font-size;
+    }
+    .image-days-progress {
+      margin-top: 30px;
+      .image-days-progress-block {
+        display: inline-block;
+        &.image-days-progress-block-width {
+          width: 30%;
+        }
+        &.image-days-progress-block-width1 {
+          width: 70%;
+        }
+      }
+    }
+  }
+  // 文字过长处理
+  .comment-text-property {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .operate-text {
+    vertical-align: middle;
+    margin-right: 16px;
+    &.remark {
+      display: inline-block;
+      width: 100%;
+      padding-right: 16px;
+    }
+  }
+  .fault-progress .iconfont {
+    color: $color;
+  }
+  /*现场处理*/
+  .site-handle {
+    min-height: 130px;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px 16px;
+    .title {
+      height: 32px;
+      line-height: 32px;
+      color: #333;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// 拆除点位
+.remove-ponit-box {
+  margin-top: 10px;
+  padding: 20px 16px;
+  background-color: #fff;
+  .remove-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+}
+// 右边图片
+.remove-barrier-device-point-img {
+  height: 430px;
+  background-color: #fff;
+  text-align: center;
+  &.remove-barrier-device-finished-img {
+    height: 460px;
+  }
+}
+
+// 超出部分隐藏
+.text-overflow-hidden {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

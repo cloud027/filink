@@ -1,0 +1,160 @@
+<!--顶部标题-->
+<div class="template-warp">
+  <div class="table-common-title"><span>{{productLanguage.productList}}</span></div>
+  <!--产品列表-->
+  <div class="table-wrapper">
+    <xc-table [dataSet]="productList" [pageBean]="pageBean" [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+    title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+    title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.other" class="status-text"
+    title="{{productLanguage.other}}">{{productLanguage.other}}</span>
+</ng-template>
+<!--批量上传大文件-->
+<nz-modal *ngIf="batchUploadVisible" [nzVisible]="batchUploadVisible" [nzFooter]="batchModalFooter"
+  [nzTitle]="modalTitle" (nzOnCancel)="batchUploadVisible=false">
+  <nz-upload nzType="drag" [nzMultiple]="false" [nzBeforeUpload]="onBeforeUpload" nzAction="">
+    <div class="ant-upload-drag-icon upload-icon-s batch-upload-icon">
+      <i class="fiLink-upload-file iconfont batch-upload-product-zip"></i>
+    </div>
+    <p class="ant-upload-text click-upload-msg">{{productLanguage.clickUpload}}</p>
+    <p class="ant-upload-hint product-batch-hint">
+      {{productLanguage.modelImageRule}}
+    </p>
+  </nz-upload>
+  <p class="upload-msg">
+    {{uploadType === uploadFileEnum.pole ? productLanguage.uploadWisdomImg : productLanguage.uploadGatewayImage}}
+  </p>
+  <p class="upload-template-btn" (click)="downTemplate()">
+    <i class="fiLink-download-file iconfont upload-icon"></i>{{productLanguage.templateDownload}}
+  </p>
+  <!--自定义标题-->
+  <ng-template #modalTitle>
+    <span>{{productLanguage.uploadFile}}
+      <i nz-tooltip [nzTitle]="productLanguage.batchUploadTip" nz-icon
+        class="anticon anticon-question-circle upload-tip-circle" ng-reflect-type="question-circle">
+        <svg viewBox="64 64 896 896" fill="currentColor" width="0.5em" height="0.5em" data-icon="question-circle"
+          aria-hidden="true">
+          <path
+            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z">
+          </path>
+          <path
+            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0 1 30.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1 0 80 0 40 40 0 1 0-80 0z">
+          </path>
+        </svg>
+      </i>
+    </span>
+  </ng-template>
+  <!--自定义按钮-->
+  <ng-template #batchModalFooter>
+    <button nz-button nzType="primary" class="link-button"
+      (click)="onConfirmUploadFile()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+      (click)="batchUploadVisible=false">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+
+<!-- 编码设置 -->
+  <nz-modal [(nzVisible)]="isShowEncodingSetting" [nzTitle]="productLanguage.EncodingSetting"
+  [nzFooter]="EncodingModalFooter" (nzOnCancel)="isShowEncodingSetting=false" [nzWidth]="900">
+    <div style="margin-bottom: 10px;">
+      <span style="margin-right: 30px;">{{productLanguage.codeExamples}}:</span><span>{{ encodingExample }}</span>
+    </div>
+
+    <nz-table [nzData]="EncodingList.materialRuleBeanList" [nzFrontPagination]="false" [nzShowPagination]="false">
+      <thead>
+      <tr>
+        <th>{{productLanguage.serialNum}}</th>
+        <th>{{productLanguage.materialCodeName}}</th>
+        <th>{{productLanguage.materialCodeLength}}</th>
+        <th>{{productLanguage.materialCodeStatus}}</th>
+      </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      <tr *ngFor="let data of EncodingList.materialRuleBeanList; let i = index" cdkDrag>
+        <td>{{ i+1 }}</td>
+        <td>{{ presentLanguage === 'CN' ? data.zhName : data.enName }}</td>
+        <td>{{ data.length }}</td>
+        <td>
+          <nz-switch [ngModel]="data.isUsed=== EncodingStatusEnum.enable" [nzDisabled]="data.isEdit== '0'? true : false"
+                     (click)="clickSwitch(data,i)">
+          </nz-switch>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+  <!--自定义按钮-->
+  <ng-template #EncodingModalFooter>
+    <button nz-button nzType="primary" class="link-button"
+      (click)="onConfirmCodeSetting()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+      (click)="isShowEncodingSetting=false">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--计量单位的模版-->
+<ng-template #unitTemplate let-data="data">
+  <span>{{data.unit | translate: productUnitEnum:  languageEnum.product}}</span>
+</ng-template>
+<!--云平台类型-->
+<ng-template #cloudPlatformTemp let-data="data">
+  <span>{{data.platformType | translate: cloudPlatformEnum: languageEnum.product}}</span>
+</ng-template>
+<!--导入产品-->
+<ng-template #importProductTemp>
+  <nz-upload [(nzFileList)]="productFileList" [nzBeforeUpload]="beforeUploadProduct">
+    <button nz-button><i nz-icon type="upload"></i><span>{{productLanguage.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>
+<!--大文件上传-->
+<app-web-upload #webUploader [(xcVisible)]="isShowWisdomUpload"
+  [businessId]="uploadType === uploadFileEnum.pole ? productUploadEnum.productWisdom : productUploadEnum.productGateway"
+  [callBakUrl]="callBakUrl" [callBakParams]="''"
+  [uploadTitle]="uploadType === uploadFileEnum.pole ? productLanguage.uploadWisdomImg : productLanguage.uploadGatewayImage"
+  [uploadMsg]="uploadType === uploadFileEnum.pole ? productLanguage.batchUploadTip : productLanguage.gatewayTip"
+  [defaultAccepts]="defaultAccepts" [isNeedBtn]="false" (outputFiles)="getFilesMsg($event)">
+</app-web-upload>
+<!--责任单位模板-->
+<ng-template #UnitNameSearch let-filterValue="filterValue">
+  <span class="dept-name-select hidden" (click)="showModal(filterValue, 'deptCode')"
+    [class.placeholder]="!selectUnitName&&!filterValue.filterName"
+    [title]="selectUnitName">{{(filterValue.filterName||selectUnitName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--责任单选选择器-->
+<xc-tree-selector [(xcVisible)]="isVisible" (selectDataChange)="selectDataChange($event,true)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!--用户列表-->
+<ng-template #userSearchTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+    (click)="openUserSelector(filterValue)" [(ngModel)]="filterValue.filterName || checkUserObject.name" />
+</ng-template>
+<app-select-user *ngIf="isShowUserTemp" [(xcVisible)]="isShowUserTemp" [selectUserList]="selectUserList"
+  (selectDataChange)="onSelectUser($event)">
+</app-select-user>
+
+<!--供应商列表-->
+<ng-template #supplierTemp let-filterValue="filterValue">
+  <input type="text" nz-input placeholder="{{commonLanguage.clickSelect}}" readonly class="cursor-pointer"
+    (click)="openSupplierSelector(filterValue)" [(ngModel)]="filterValue.filterName || selectSupplierObject.name" />
+</ng-template>
+
+<app-select-supplier *ngIf="isShowSupplier" [(isVisible)]="isShowSupplier" [selectSupplierList]="selectSupplierList"
+  (isVisibleChange)="isShowSupplier=false" (selectDataChange)="onSelectSupplier($event)">
+</app-select-supplier>

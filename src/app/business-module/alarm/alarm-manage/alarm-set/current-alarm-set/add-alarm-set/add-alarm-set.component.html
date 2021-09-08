@@ -1,0 +1,13 @@
+<div class="add-alarm-set">
+  <div class="page-title">{{pageTitle}}</div>
+  <div>
+    <xc-form [column]="tableColumn" (formInstance)="formInstanceSecond($event)"></xc-form>
+    <div class="set-btn-box">
+      <button class="link-button submit-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading" (click)="submit()" [disabled]="!isDisabled"
+      >{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>

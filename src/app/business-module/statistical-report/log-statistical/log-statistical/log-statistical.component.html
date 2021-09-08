@@ -1,0 +1,72 @@
+<div class="logBox" [appBarProgress]="ProgressShow">
+  <div class="top">
+    <div class="logType">
+      <span class="margin-right10">{{language.logStatisticalType}}</span>
+      <nz-select
+                 class="margin-right10 select-log"
+                 nzPlaceHolder="{{language.pleaseSelectType}}"
+                 nzAllowClear
+                 [(ngModel)]="logStatisticalData"
+                 (ngModelChange)="logChange($event)">
+        <nz-option *ngFor="let option of logStatisticalList" [nzLabel]="option.label"
+                   [nzValue]="option.code"></nz-option>
+      </nz-select>
+
+
+      <nz-range-picker class="margin-right10" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"
+                       nzShowTime></nz-range-picker>
+      <input nz-input class="margin-right10 input-log-top" placeholder="{{language.operationalUser}}"
+             nzSize="default" [(ngModel)]="optUser" (input)="inputValue($event, 1)" />
+      <input nz-input class="margin-right10 input-log-top" placeholder="{{language.operationalTerminal}}"
+             nzSize="default" [(ngModel)]="optTerminal" (input)="inputValue($event, 2)"/>
+      <input nz-input class="margin-right10 input-log-top" placeholder="{{language.operationalObject}}"
+             nzSize="default" [(ngModel)]="optObject" (input)="inputValue($event, 3)"/>
+      <!--按模板统计-->
+      <button type="button" class="link-button margin-right10 log-statistical-btn" nz-button nzType="primary"
+              (click)="templateHandle()"
+              >{{language.statisticsByTemplate}}</button>
+      <!--统计-->
+      <button type="button" class="link-button" nz-button nzType="primary"
+              [disabled]="!logStatisticalData||(!(dateRange.length>0))"
+              (click)="statistical()">{{language.statistical}}</button>
+    </div>
+  </div>
+  <!-- 统计区域 -->
+  <div *ngIf="!hide">
+    <div class="barChart">
+      <app-echart-column class="chart-log-column margin-right10"
+                         (chartInstance)="getRingChartInstance($event)">
+      </app-echart-column>
+      <app-echart-column class="chart-log-column"
+                         (chartInstance)="getBarChartInstance($event)">
+      </app-echart-column>
+    </div>
+    <br>
+    <xc-table
+      [dataSet]="_dataList"
+      [pageBean]="logPageBean"
+      [tableConfig]="logTableConfig"
+      (pageChange)="logPageChange($event)">
+    </xc-table>
+  </div>
+</div>
+
+<!-- 日志统计模板 -->
+<ng-template #logTemplate>
+  <div>
+    <xc-table
+      [dataSet]="_dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+
+<!-- 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedTempId" (ngModelChange)="selectedTempChange($event, data)">
+    <label nz-radio [nzValue]="data.id"></label>
+  </nz-radio-group>
+</ng-template>

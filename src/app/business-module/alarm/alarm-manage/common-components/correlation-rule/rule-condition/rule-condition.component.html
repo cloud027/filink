@@ -1,0 +1,80 @@
+<div class="rule-condition-warp">
+  <div class="add-condition">
+    <span (click)="isShowAddCondition = true">
+      <i class="icon-fiLink fiLink-pic-to-big iconfont add-icon"></i>
+      <span class="text">{{language.addCondition}}</span>
+    </span>
+  </div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="ensure()" class="rule-condition-form" *ngIf="isShowAddCondition">
+    <div class="item-display form-border">
+      <div style="min-width: 1018px;display: flex;">
+      <div class="btn-box">
+        <button class="link-buttons" type="submit" >
+          <i class="icon-fiLink fiLink-filink-save-icon iconfont"></i>
+        </button>
+        <button class="link-buttons" type='button' (click)="cancel()">
+          <i class="icon-fiLink fiLink-close iconfont"></i>
+        </button>
+      </div>
+      <div class="form-item">
+        <!--属性-->
+        <nz-form-item class="item-display">
+          <nz-form-label class="item-label">{{language.property}}</nz-form-label>
+          <nz-form-control class="item-value">
+            <nz-select  formControlName="property" nzPlaceHolder="{{language.pleaseChoose}}">
+              <nz-option [nzValue]="alarmPropertyEnum.reasonAlarm" [nzLabel]="language.reasonAlarm"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <!--根原因告警属性-->
+        <nz-form-item class="item-display">
+          <nz-form-label class="item-label">{{language.alarmReasonProperty}}</nz-form-label>
+          <nz-form-control class="item-value">
+            <nz-select formControlName="rootCauseAlarmAttribute" (ngModelChange)="selectRootCause($event)">
+              <nz-option [nzValue]="item.code" [nzLabel]="item.label" *ngFor="let item of alarmReasonProperty"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="form-radio">
+        <!--操作符-->
+        <nz-form-item>
+          <nz-form-control class="radio-box">
+            <nz-radio-group formControlName="operator">
+              <label nz-radio [nzValue]="item.code" [nzDisabled]="item['disable']" *ngFor="let item of alarmOperatorData" class="item-radio">{{item.label}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="form-item">
+          <!--值-->
+          <nz-form-item class="item-display">
+            <nz-form-label class="item-label">{{language.propertyValue}}</nz-form-label>
+            <nz-form-control class="item-value">
+              <nz-select formControlName="propertyValue">
+                <nz-option [nzValue]="correlationPropertyEnum.correlationProperty" [nzLabel]="language.correlationProperty"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <!--相关告警属性-->
+          <nz-form-item class="item-display">
+            <nz-form-label class="item-label">{{language.correlationProperty}}</nz-form-label>
+            <nz-form-control class="item-value">
+              <nz-select formControlName="relevanceAlarmProperties" (ngModelChange)="selectRelevanceAlarm($event)">
+                <nz-option [nzValue]="item.code" [nzLabel]="item.label" *ngFor="let item of alarmReasonProperty"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="view-warp">
+    <xc-table
+      [dataSet]="resultViewData"
+      [pageBean]="pageBean"
+      (pageChange)="pageChange($event)"
+      [tableConfig]="tableConfig">
+    </xc-table>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<!--form表单-->
+<div class="asset-failure-distribution-condition">
+  <div class="asset-failure-distribution-form">
+    <xc-form [column]="formColumn"
+             (formInstance)="formInstance($event)">
+    </xc-form>
+  </div>
+</div>
+
+<!-- 资产类别选择模板 -->
+<ng-template #selectAssetType let-formGroup="formGroup">
+    <nz-select
+               [nzMaxTagCount]="0"
+               [nzShowSearch]="false"
+               class="form-search"
+               nzMode="multiple"
+               [nzMaxTagPlaceholder]="tagContent"
+               nzPlaceHolder="{{language.assetAnalysis.pleaseChoose}}"
+               [nzAllowClear]="true"
+               (ngModelChange)="onChangeAssetType($event)"
+               [(ngModel)]="assetTypeSelectData">
+      <nz-option *ngFor="let option of assetTypeData" [nzLabel]="option.label"
+                 [nzValue]="option.code"></nz-option>
+    </nz-select>
+    <ng-template #tagContent let-selectedList>
+        <span [title]="selectedList | selectValue : {selectInfo: assetTypeData, value: 'code'}">
+          {{selectedList | selectValue : {selectInfo: assetTypeData, value: 'code'} }}
+        </span>
+    </ng-template>
+</ng-template>
+
+<!--区域选择器模板-->
+<ng-template #AreaSelectRef let-formGroup="formGroup" let-col="col">
+  <input nz-input type="text" class="area-box" readonly [(ngModel)]="areaName" [title]="areaName">
+  <button type="button" class="search" (click)="showAreaSelect()"><i class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--项目选择器点击按钮-->
+<ng-template #ProjectSelectRef let-formGroup="formGroup" let-col="col">
+  <input nz-input type="text" class="area-box" readonly [(ngModel)]="projectName" [title]="projectName">
+  <button type="button" class="search" (click)="showProjectSelect()"><i
+    class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--  型号选择 -->
+<ng-template #chooseTypeRef let-formGroup="formGroup" let-col="col">
+    <input nz-input type="text" class="area-box" readonly  [(ngModel)]="productName" [title]="productName">
+    <button type="button" class="search" (click)="showProductSelectorModal()"><i
+            class="icon-l icon-search"></i></button>
+</ng-template>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+        title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--日增长率时间选择-->
+<ng-template #dailySelectTime>
+  <div>
+    <nz-range-picker [(ngModel)]="date"
+                     (ngModelChange)="onChange($event)"
+                     [nzDisabledDate]="disabledEndDate">
+    </nz-range-picker>
+  </div>
+</ng-template>
+
+<!--月增长率时间选择-->
+<ng-template #SelectTime>
+  <div>
+    <nz-month-picker [(ngModel)]="date[0]"
+                     (ngModelChange)="onChange($event)"
+                     [nzDisabledDate]="disabledEndDate"></nz-month-picker>
+    <span class="time-space">~</span>
+    <nz-month-picker [(ngModel)]="date[1]"
+                     (ngModelChange)="onChange($event)"
+                     [nzDisabledDate]="disabledEndDate"></nz-month-picker>
+  </div>
+</ng-template>
+
+<!--年增长率时间选择-->
+<ng-template #yearSelectTime>
+  <div>
+    <nz-year-picker [(ngModel)]="date[0]"
+                    (ngModelChange)="onChange($event)"
+                    [nzDisabledDate]="disabledEndDate"></nz-year-picker>
+    <span class="time-space">~</span>
+    <nz-year-picker [(ngModel)]="date[1]"
+                    (ngModelChange)="onChange($event)"
+                    [nzDisabledDate]="disabledEndDate"></nz-year-picker>
+  </div>
+</ng-template>
+
+<ng-template #buttonTemplate>
+  <div class="asset-failure-distribution-button">
+    <button nz-button nzType="primary" class="operation-button-size" (click)="assetFailureDistributionAnalysis()" [disabled]="isClick">{{language.assetAnalysis.analysis}}</button>
+    <button nz-button nzType="danger"  class="operation-button" (click)="reset()">{{language.assetAnalysis.reset}}</button>
+  </div>
+</ng-template>
+
+<!--计量单位的模版-->
+<ng-template #unitTemplate let-data="data">
+  <span>{{data.unit | translate: productUnitEnum:  languageEnum.product}}</span>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-selector
+        [(xcVisible)]="isVisible"
+        (selectDataChange)="selectDataChange($event)"
+        [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<app-select-project *ngIf="isShowProjectList" [multiple]="true" [selectList]="selectData"
+                    [(isVisible)]="isShowProjectList"
+                    (selectDataChange)="projectSelectChange($event)"></app-select-project>
+
+<!--型号选择模板-->
+<nz-modal
+        [(nzVisible)]="isShow"
+        [nzTitle]="modalTitle"
+        [nzContent]="modalContent"
+        [nzFooter]="modalFooter"
+        [nzClosable]= "true"
+        [nzKeyboard]="false"
+        [nzMaskClosable]="false"
+        (nzOnCancel)= "handleCancel()"
+        [nzWidth]="900">
+  <ng-template #modalTitle>
+    <div>{{this.language.assetAnalysis.chooseType}}</div>
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table #productListTable
+              [dataSet] ="_dataSet"
+              [selectedData]="selectProductInformation"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="productPageChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleOk()">{{this.language.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{this.language.cancelText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearAll()">{{this.language.clearAll}}</button>
+  </ng-template>
+</nz-modal>

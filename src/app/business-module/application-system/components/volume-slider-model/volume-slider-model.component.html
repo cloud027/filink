@@ -1,0 +1,20 @@
+<!--亮度调节-->
+<div class="instruct-list">
+  <div class="instruct-title">
+    <span class="light">
+      <i class="icon-fiLink-l iconfont fiLink-filink-yinliang-icon volume"></i>
+    </span>
+    <span>
+      {{languageTable.equipmentTable.volume}}
+    </span>
+  </div>
+  <div class="instruct-volume">
+    <nz-slider
+      [nzMin]="sliderValue.min"
+      (nzOnAfterChange)="handleConvenientChange()"
+      [nzMax]="volumeMax"
+      [(ngModel)]="volumeValue">
+    </nz-slider>
+  </div>
+  <div>{{volumeValue}}</div>
+</div>

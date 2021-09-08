@@ -1,0 +1,43 @@
+<!--人员信息列表-->
+<div class="person-information">
+  <div class="table-common-title">
+    <span>{{scheduleLanguage.personInformation}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="personPageChange($event)">
+    </xc-table>
+  </div>
+</div>
+<!--导入-->
+<ng-template #importTemp>
+  <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <button nz-button><i nz-icon type="upload"></i><span>{{commonLanguage.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>
+<!--责任单位模板-->
+<ng-template #unitNameSearch let-filterValue="filterValue">
+  <span class="dept-name-select hidden" (click)="showModal(filterValue, 'deptCode')" [class.placeholder]="!selectUnitName&&!filterValue.filterName"
+        [title]="selectUnitName">{{(filterValue.filterName||selectUnitName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--责任单选选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event,true)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+<!--在职状态-->
+<ng-template #jobStatusTemp let-data="data">
+  <nz-switch [ngModel]="data.onJobStatus === jobStatusEnum.work"
+             [nzLoading]="data.clicked"
+             [nzControl]="true"
+             [nzDisabled]="data.isDisabled"
+             [appAccessPermission]="'17-1-8'"
+             (click)="clickSwitch(data)">
+  </nz-switch>
+  <span *ngIf="data.onJobStatus === jobStatusEnum.resign" class="mr-l-15">{{scheduleLanguage.resign}}</span>
+  <span *ngIf="data.onJobStatus === jobStatusEnum.work" class="mr-l-15">{{scheduleLanguage.work}}</span>
+</ng-template>

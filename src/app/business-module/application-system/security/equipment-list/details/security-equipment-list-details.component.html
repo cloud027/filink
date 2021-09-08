@@ -1,0 +1,43 @@
+<app-equipment-details
+  [securityClass]="securityClass"
+  [isShow]="isShow">
+  <div class="application-operate">
+    <h4 class="title">{{languageTable.controlType.equipment}}</h4>
+    <div class="application-list">
+      <div *ngIf="operationList && operationList.length" class="button-groups">
+        <div *ngFor="let item of operationList">
+          <button
+            *ngIf="item.type === 'button'"
+            class="btn"
+            [ngClass]="{'btn-hover':!item.disable}"
+            [disabled]="item.disable"
+            (click)="handleEquipmentOperation(item)"
+            nz-button nzType="default">
+            <i class="icon-fiLink iconfont" [ngClass]="item.icon"></i>
+            {{item.name}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="equipment-list-wrap" *ngIf="isOperationSecurity">
+    <!--分屏设置-->
+    <div class="screen-setting">
+      <app-split-screen
+        #splitScreen
+        [selectedList]="passagewayList"
+        [isWorkbench]="false"></app-split-screen>
+    </div>
+    <!-- 调整摄像头设置-->
+    <div class="camera-settings">
+      <app-camera-settings
+        [isWorkbench]="false"
+        [equipmentId]="splitScreen.equipmentId"
+        [params]="splitScreen.params"
+        [lRealHandle]="splitScreen.lRealHandle"
+        [channelId]="splitScreen.channelId"
+        ></app-camera-settings>
+    </div>
+  </div>
+</app-equipment-details>
+

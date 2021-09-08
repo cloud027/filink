@@ -1,0 +1,18 @@
+<div class="add-alarm-warning-set">
+  <div class="page-title">{{ pageTitle }}</div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstanceSecond($event)"></xc-form>
+    <div class="set-btn-box">
+      <button class="link-button submit-btn" nz-button nzType="primary"
+              [nzLoading]="isLoading" (click)="saveData()" [disabled]="!isDisabled"
+      >{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- 告警名称 -->
+<ng-template #alarmWarmingTemp let-data="data">
+  <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]=filterCondition></app-alarm-name>
+</ng-template>

@@ -1,0 +1,35 @@
+@import '../../../../style-module/config';
+.asset-type-condition {
+  width: 100%;
+  .asset-type-form {
+    width: 100%;
+  }
+  .asset-type-button {
+    margin: 10px 20px;
+    .operation-button {
+      width: 100px;
+      height: 35px;
+      margin-left: 30px;
+    }
+    .operation-button-size {
+      width: 100px;
+      height: 35px;
+    }
+  }
+  .search {
+    position: absolute;
+    top:3px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: $button-danger-color;
+  }
+}
+
+.area-box {
+  width: 90%;
+  margin-right: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}

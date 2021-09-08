@@ -1,0 +1,26 @@
+@import "../../../../style-module/config";
+
+.menu-tree {
+  height: 380px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  overflow: auto;
+
+  nz-tree {
+    .custom-node {
+      .folder-name {
+        font-size: 12px;
+      }
+    }
+
+    .operate {
+      float: right;
+      position: relative;
+      top: -3px;
+      i {
+        margin: 0 5px;
+        font-size: 15px;
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<!--授权列表-->
+<div class="table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+<!-- 授权用户 -->
+<ng-template #authUserTemp let-data="data">
+  <span>{{data.authUserName}}</span>
+</ng-template>
+
+<!-- 被授权用户 -->
+<ng-template #userTemp let-data="data">
+  <span>{{data.userName}}</span>
+</ng-template>
+
+<!-- 权限状态 -->
+<ng-template #authStatusTemp let-data="data">
+  <span *ngIf="data.authStatus === authorityStatusEnum.disable">{{language.prohibit}}</span>
+  <span *ngIf="data.authStatus === authorityStatusEnum.enable">{{language.takeEffect}}</span>
+</ng-template>
+
+
+<!-- 授权范围列表 -->
+<ng-template #facilityListTemp>
+  <div>
+    <xc-table [dataSet]="facilityDataSet"
+              [pageBean]="facilityPageBean"
+              [tableConfig]="facilityTableConfig"
+              (pageChange)="facilityPageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--设施状态-->
+<ng-template #deviceStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'icon-fiLink-l iconfont '+data['deviceStatusIconClass']+' '+data['deviceStatusColorClass']"
+    ></i>
+    <span class="status-text" [title]="data['deviceStatus']">{{data['deviceStatus']}}</span>
+  </div>
+</ng-template>
+
+<!--设施类型-->
+<ng-template #deviceTypeTemp let-data="data">
+  <i [ngClass]="data['iconClass']" class="device-type-icon"></i>
+  <span class="status-text" [title]="data['deviceType']">{{data['deviceType']}}</span>
+</ng-template>
+
+<!-- 门锁 -->
+<ng-template #thTemplate>
+  <p class="door-lock">{{language.doorLock}}</p>
+  <span class="door">{{language.one}}</span>
+  <span class="door">{{language.two}}</span>
+  <span class="door">{{language.three}}</span>
+  <span class="door">{{language.four}}</span>
+</ng-template>
+
+<!-- 门锁 -->
+<ng-template #doorLocksTemp let-data="data">
+    <div *ngFor="let item of data._lockList">
+      <label nz-checkbox [(ngModel)]="item.checked" [title]="item.value"  class="label-style float-l">{{item.label}}</label>
+    </div>
+</ng-template>
+
+
+<!-- 期限 -->
+<ng-template #termTemp let-data="data">
+  <span class="term"
+    [class.unexpired]="authorizationUtil.unexpiredCheck(data.authExpirationTime)"
+    [class.expired]="authorizationUtil.expiredCheck(data.authExpirationTime)"
+    [class.longTerm]="authorizationUtil.longTermCheck(data.authExpirationTime)">
+    {{authorizationUtil.checkExpirationTime(data.authExpirationTime,language.config.unexpired,language.config.expired)}}
+  </span>
+</ng-template>

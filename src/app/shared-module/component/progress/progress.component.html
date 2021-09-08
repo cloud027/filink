@@ -1,0 +1,5 @@
+<!--进度条-->
+<div class="progress-bar" *ngIf="isShowProgressBar">
+  <p>{{commonLanguage.loading}}...</p>
+  <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+</div>

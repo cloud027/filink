@@ -1,0 +1,39 @@
+.auto-wrapper {
+    display: flex;
+
+    .auto-icon {
+        position: absolute;
+        left: 103%;
+        cursor: pointer;
+    }
+}
+.area-detail-title {
+    align-items: center;
+    border-left: 2px solid #7cb0dd;
+    margin-left: 16px;
+    padding-left: 16px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 900;
+}
+.redio-box {
+    margin: 5px 0 0 10px;
+} 
+// 自定义样式
+.custom-template {
+    display: flex;
+    align-items: center;
+    .input-name {
+        width: 300px;
+    }
+    .icon-template {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+}
+.form-box {
+    margin-bottom: 20px;
+}
+.margin-left20 {
+    margin-left: 20px;
+}

@@ -1,0 +1,49 @@
+<nz-modal
+  nzWidth="80%"
+  *ngIf="dismantleTypeVisible"
+  [(nzVisible)]="dismantleTypeVisible"
+  [nzContent]="modalContent"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="dismantleTypeVisible = false"
+>
+  <ng-template #modalContent>
+    <nz-tabset>
+      <!-- 关联告警-->
+        <nz-tab [nzTitle]="language.relevancyAlarm" (nzClick)="listTypeChange(DismantleWarnTroubleEnum.warn)">
+        <app-warn-tab
+          #warnTab
+          [selectedAlarmId]="selectDataId"
+          [selectDataName]="selectDataName"
+          [selectDataType]="selectDataType"
+          [filterData]="filterData"
+          (radioClickChange)="radioClickChange(DismantleWarnTroubleEnum.warn)"
+        >
+        </app-warn-tab>
+      </nz-tab>
+      <!-- 关联故障-->
+      <nz-tab [nzTitle]="language.relevancyFault" (nzClick)="listTypeChange(DismantleWarnTroubleEnum.trouble)">
+        <app-trouble-tab
+          #troubleTab
+          [selectedTroubldId]="selectDataId"
+          [selectedTroubldName]="selectDataName"
+          [selectDataType]="selectDataType"
+          [filterData]="filterData"
+          (radioClickChange)="radioClickChange(DismantleWarnTroubleEnum.trouble)"
+        >
+        </app-trouble-tab>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="Confirm()">
+      {{ commonLanguage.okText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="dismantleTypeVisible = false">
+      {{ commonLanguage.cancelText }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="clearSelectData()">
+      {{ commonLanguage.cleanUp }}
+    </button>
+  </ng-template>
+</nz-modal>

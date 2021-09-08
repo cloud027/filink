@@ -1,0 +1,61 @@
+<!--预览杆型图-->
+<div class="no-upload-container">
+  <div class="tip-container">
+    <!--按钮-->
+    <div class="btn-container">
+      <button class="link-button position-config wisdom-operate" nz-button type="button" (click)="uploadIsVisible=true">
+        <i class=" iconfont fiLink-upload"></i>
+        {{productLanguage.uploadFile}}
+      </button>
+      <button class="link-button position-config wisdom-operate" nz-button type="button" (click)="onClickPreview()">
+        <i class=" iconfont fiLink-preview"></i>
+        {{productLanguage.preview}}
+      </button>
+      <button class="link-button position-config wisdom-operate" nz-button type="button" (click)="onSaveWisdom()">
+        <i class=" iconfont fiLink-save"></i>
+        {{productLanguage.saveWisdomImg}}
+      </button>
+    </div>
+    <div class="position-info">
+      <!--导出qunee-->
+      <div class="no-model" id="wisdom-position">
+        <div class="export-qunee"><i (click)="onPrint()" class="iconfont icon-l  fiLink-export"
+                                     nz-tooltip="{{productLanguage.exportImage}}"></i></div>
+      </div>
+      <div class="no-position">
+        <!--点位配置信息-->
+        <div class="position-container" *ngFor="let v of productPositionDetail.pointConfigList">
+          <div class="container">
+            <div class="left" [ngClass]="'left '+ 'left-'+v.pointType">
+              <div class="content">{{v.pointType | translate: positionTypeEnum: languageEnum.product}}</div>
+            </div>
+            <div [ngClass]="'right ' + 'right-' + v.pointType">
+              <div class="line-top"></div>
+              <div class="line-bottom"></div>
+            </div>
+          </div>
+          <!--点位号-->
+          <span class="position-num">{{v.configSort}}{{productLanguage.pointName}}</span>
+          <!--设备类型下拉选-->
+          <div>
+            <nz-select [nzSize]="'large'"
+                       [(ngModel)]="v.selectEquipment"
+                       [nzPlaceHolder]="productLanguage.pleaseSelect"
+                       nzMode="multiple"
+                       [nzMaxTagCount]="3"
+                       class="equipment-select">
+              <nz-option *ngFor="let item of v.canSelectEquipment" [nzValue]="item.code"
+                         [nzLabel]="item.label"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-batch-upload-file #batchUploadTemp *ngIf="uploadIsVisible"
+                       [(uploadVisible)]="uploadIsVisible"
+                       [(pageLoading)]="pageLoading"
+                       [uploadFileType]="uploadFileTypeEnum.pole"
+                       (uploadSuccess)="onClickDoUpload($event)">
+</app-batch-upload-file>

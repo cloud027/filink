@@ -1,0 +1,32 @@
+<!--控制列表-->
+<div class="table-wrapper">
+  <div class="table-container">
+    <xc-table [dataSet]="dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+<ng-template #simPackageTypeTemp let-data="data">
+  <span class="status-text" [title]="data['simPackage']">{{data['simPackage']}}</span>
+</ng-template>
+<!--变更套餐弹框-->
+<nz-modal *ngIf="isVisible"
+          [(nzVisible)]="isVisible"
+          [nzTitle]="modalTitle"
+          [nzContent]="modalContent"
+          [nzMaskClosable]="false"
+          [nzFooter]="modalFooter"
+          (nzOnCancel)="editHandleCancel()">
+  <ng-template #modalTitle>
+    {{language.updatePackage}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleUpdate()" [nzLoading]="isLoading" class="link-button">{{language.okText}}</button>
+    <button nz-button nzType="danger" (click)="editHandleCancel()" class="link-button">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>

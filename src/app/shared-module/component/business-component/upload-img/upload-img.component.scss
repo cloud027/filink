@@ -1,0 +1,13 @@
+@import "../../../../style-module/config";
+.upload-img-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  width: 504px;
+  height: 104px;
+  .upload-img-text {
+    width: 205px;
+    margin-top: 70px;
+    color: $upload-color;
+    font-size: 12px;
+  }
+}

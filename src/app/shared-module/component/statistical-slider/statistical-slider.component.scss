@@ -1,0 +1,76 @@
+@import "../../../style-module/config";
+.xc-swiper-container {
+  > i {
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .slider-container {
+    background: #f0f2f5;
+    height: 108px;
+    padding: 8px 0;
+    .slide-item {
+      height: 92px;
+      .item-container {
+        background: $bg-c-w;
+        height: 100%;
+        border-radius: 4px;
+        display: flex;
+        padding: 0 50px 0 28px;
+        justify-content: space-between;
+        div {
+          i {
+            font-size: 45px !important;
+          }
+        }
+        .icon-c {
+          line-height: 92px;
+        }
+        .text-c {
+          line-height: 40px;
+          text-align: center;
+          min-width: 70px;
+          p.number {
+            font-size: 26px;
+            line-height: 60px;
+          }
+          p.text {
+            line-height: normal;
+          }
+        }
+      }
+    }
+    .slide-item:nth-last-of-type(1) {
+      padding-right: 0;
+    }
+  }
+}
+
+.swiper-hidden {
+  height: 10px;
+  background: #f0f2f5;
+  > i {
+    position: absolute;
+    left: 50%;
+    bottom: -2;
+    z-index: 99;
+    transform: translateX(-50%) rotate(-90deg);
+  }
+  > div {
+    display: none;
+  }
+}
+
+.swiper-show {
+  height: 108px;
+  > i {
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    z-index: 99;
+    transform: translateX(-50%) rotate(90deg);
+  }
+  > div {
+    display: block;
+  }
+
+}

@@ -1,0 +1,636 @@
+@import "../config";
+
+.icon {
+  width: 15px;
+  height: 15px;
+  color: $color;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.anticon {
+  display: inline-block;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: middle;
+  /* vertical-align: -0.125em; */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ant-select-selection__clear {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  z-index: 1;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-top: -8px;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 12px;
+  text-align: center;
+  text-transform: none;
+  background: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: color 0.3s ease, opacity 0.15s ease;
+  text-rendering: auto;
+}
+
+.icon-l {
+  width: 20px;
+  height: 20px;
+  color: $color;
+  font-size: 20px !important;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.icon-fiLink {
+  font-size: 16px;
+  color: $color;
+  vertical-align: middle;
+}
+
+.icon-fiLink-1 {
+  font-size: 20px !important;
+  color: $color;
+  vertical-align: middle;
+}
+
+.icon-fiLink-font {
+  font-size: 13px !important;
+}
+
+.icon-fiLink-2 {
+  font-size: 16px !important;
+  color: $sp-icon-color-1;
+}
+
+.icon-fiLink-3 {
+  font-size: 16px !important;
+  color: $sp-icon-color-2;
+}
+
+.icon-fiLink-4 {
+  font-size: 14px !important;
+  color: $color;
+}
+
+.icon-fiLink-s {
+  font-size: 12px !important;
+  color: $color;
+  vertical-align: middle;
+}
+
+.icon-fiLink-5 {
+  font-size: 12px !important;
+  color: $sp-icon-color-4;
+}
+
+.icon-fiLink-6 {
+  font-size: 14px !important;
+  color: $sp-icon-color-3;
+}
+
+.icon-fiLink-7 {
+  font-size: 14px !important;
+  color: $sp-icon-color-5;
+}
+
+.icon-fiLink-8 {
+  font-size: 12px !important;
+  color: $sp-icon-color-5;
+}
+
+.icon-fiLink-9 {
+  font-size: 14px !important;
+  color: $sp-icon-color-6;
+}
+
+.detail-operate-btn {
+  font-size: 18px !important;
+  color: $page-font-color
+}
+
+.red-icon {
+  color: $error-color !important;
+}
+
+.disabled-icon {
+  color: $disabled-font-color !important;
+  cursor: default;
+}
+
+.disabled-red-icon {
+  color: $disabled-font-color !important;
+  cursor: default;
+}
+
+.icon-communication-model {
+  font-size: 16px;
+  color: $communication-model-color;
+  vertical-align: middle;
+}
+
+.statistics-size {
+  font-size: 40px !important;
+  vertical-align: middle;
+}
+
+.statistics-all-color {
+  color: $statistics-all;
+}
+
+.statistics-turnProcess-color {
+  color: $statistics-turnProcessing;
+}
+
+.statistics-assigned-color {
+  color: $statistics-assigned;
+}
+
+.statistics-add-color {
+  color: $statistics-add;
+}
+
+.statistics-pending-color {
+  color: $statistics-pending;
+}
+
+.statistics-processing-color {
+  color: $statistics-processing;
+}
+
+.statistics-completed-color {
+  color: $statistics-completed;
+}
+
+.statistics-singleBack-color {
+  color: $statistics-singleBack;
+}
+
+.statistics-urgencyAlarm-color {
+  color: $status-alarm;
+}
+
+.statistics-mainAlarm-color {
+  color: $status-prompt;
+}
+
+.statistics-minorAlarm-color {
+  color: $status-unknown;
+}
+
+.statistics-hintAlarm-color {
+  color: $status-common;
+}
+// 智慧杆总数
+.wisdom-sum {
+  color: $wisdomSum;
+}
+// 待建
+.to-be-built {
+  color: $toBeBuilt;
+}
+// 在建
+.under-construction {
+  color: $underConstruction;
+}
+// 已建
+.has-been-built {
+  color: $hasBeenBuilt;
+}
+
+
+// 项目未启动
+.no-start {
+  color: $notStarted;
+}
+// 项目进行中
+.project-working {
+  color: $working;
+}
+// 项目延期
+.project-delayed {
+  color: $delayed;
+}
+// 项目已结束
+.project-finished {
+  color: $finished;
+}
+.icon-tilt {
+  font-size: 16px;
+  color: $tilt-color !important;
+  vertical-align: middle;
+}
+
+.icon-collection-color {
+  color: $collection-color;
+}
+
+.control-special-volume {
+  background-color: $volume-icon-bg !important;
+}
+
+.special-icon-color {
+  background-color: $communication-model-color !important;
+}
+
+// 删除
+.icon-delete {
+  background-image: url("assets/img/common-icon/icon_delete.png")
+}
+
+// 查看详情
+.icon_view_detail {
+  background-image: url("assets/img/common-icon/icon_view_detail.png")
+}
+
+// 更新
+.icon-update {
+  background-image: url("assets/img/common-icon/icon_update.png")
+}
+
+// 搜索
+.icon-search {
+  background-image: url("assets/img/common-icon/icon_search.png")
+}
+
+// 重置
+.icon-reset {
+  background-image: url("assets/img/common-icon/icon_reset.png")
+}
+
+// 过滤
+.icon-filter {
+  background-image: url("assets/img/common-icon/icon_filter.png")
+}
+
+//
+.icon-fail {
+  background-image: url("assets/img/common-icon/icon_fail.png")
+}
+
+// 关联设施
+.icon-set-area-device {
+  background-image: url("assets/img/common-icon/icon_set_area_device.png")
+}
+
+.icon-layout-user {
+  background-image: url("assets/img/common-icon/icon_user_pic.png")
+}
+
+.icon-menu-up {
+  background-image: url("assets/img/common-icon/icon_menu_up.png")
+}
+
+.icon-menu-down {
+  background-image: url("assets/img/common-icon/icon_menu_down.png")
+}
+
+.icon-menu-disable {
+  background-image: url("assets/img/common-icon/icon_menu_disable.png")
+}
+
+.icon-menu-show {
+  background-image: url("assets/img/common-icon/icon_menu_show.png")
+}
+
+// 定位
+.icon-location {
+  background-image: url("assets/img/common-icon/icon_location.png")
+}
+
+// 操作
+.icon-operation {
+  background-image: url("assets/img/common-icon/icon_operation.png")
+}
+
+// 统计
+.icon-statistical {
+  background-image: url("assets/img/common-icon/icon_statistical.png")
+}
+
+// 设置列
+.icon-set-column {
+  background-image: url("assets/img/common-icon/icon_set_column.png")
+}
+
+// 查看图片
+.icon_view {
+  background-image: url("assets/img/common-icon/icon_view.png")
+}
+
+// 翻转箭头
+.icon-arrow {
+  background-image: url("assets/img/common-icon/icon_arrow.png")
+}
+
+// 创建工单
+.icon_build_order {
+  background-image: url("assets/img/common-icon/icon_build_order.png")
+}
+
+// 工单
+.icon_order {
+  background-image: url("assets/img/common-icon/icon_order.png")
+}
+
+// 告警
+.icon_alarm {
+  background-image: url("assets/img/common-icon/icon_alarm.png")
+}
+
+// 首页告警
+.icon_index_alarm {
+  background-image: url("assets/img/index/icon-index-alarm.png")
+}
+
+// 首页日志
+.icon_index_log {
+  background-image: url("assets/img/index/icon-index-log.png")
+}
+
+// 角色权集
+.icon_role_set {
+  background-image: url("assets/img/common-icon/icon_role_set.png")
+}
+
+// 下属人员
+.icon_staff {
+  background-image: url("assets/img/common-icon/icon_staff.png")
+}
+
+// 强制下线
+.icon_offlines {
+  background-image: url("assets/img/common-icon/icon_offline.png")
+}
+
+// 清除告警
+.icon_clean_alarm {
+  background: url("assets/img/common-icon/icon_clean_alarm.png") no-repeat center;
+}
+
+// 危险级别 提示
+.icon_log_hint {
+  background-image: url("assets/img/log/icon_hint.png")
+}
+
+// 危险级别 一般
+.icon_log_general {
+  background-image: url("assets/img/log/icon_general.png")
+}
+
+// 危险级别 危险
+.icon_log_danger {
+  background-image: url("assets/img/log/icon_danger.png")
+}
+
+// 操作结果
+.icon_log_success {
+  background-image: url("assets/img/log/icon_success.png")
+}
+
+.icon_log_defeated {
+  background-image: url("assets/img/log/icon_defeated.png")
+}
+
+// 紧急
+.icon_alarm_urgent {
+  background-image: url("assets/img/alarm/icon_urgent.png")
+}
+
+// 主要
+.icon_alarm_main {
+  background-image: url("assets/img/alarm/icon_main.png")
+}
+
+// 次要
+.icon_alarm_secondary {
+  background-image: url("assets/img/alarm/icon_secondary.png")
+}
+
+// 提示
+.icon_alarm_prompt {
+  background-image: url("assets/img/alarm/icon_prompt.png")
+}
+
+// 音乐播放按钮
+.icon_alarm_play {
+  background-image: url("assets/img/alarm/icon_play.png")
+}
+
+//播放+
+.icon_plus {
+  background-image: url("assets/img/alarm/icon_plus.png")
+}
+
+//播放-
+.icon_minus {
+  background-image: url("assets/img/alarm/icon_minus.png")
+}
+
+// 在线
+.icon-online {
+  background: url("assets/img/index/icon-online.png") no-repeat center;
+}
+
+// 离线
+.icon-offline {
+  background: url("assets/img/index/icon-offline.png") no-repeat center;
+}
+
+// 布防
+.icon-vector-object {
+  background: url("assets/img/index/icon-vector-object.png") no-repeat center;
+}
+
+// 未布防
+.icon-vector-object-u {
+  background: url("assets/img/index/icon-vector-object-u.png") no-repeat center;
+}
+
+// 收藏
+.icon-collection {
+  background: url("assets/img/index/icon-collection.png") no-repeat center;
+}
+
+// 已收藏
+.icon-collection-o {
+  background: url("assets/img/index/icon-collection-o.png") no-repeat center;
+}
+
+// 信号强度
+.icon-signal-intensity {
+  background: url("assets/img/index/icon-signal-intensity.png") no-repeat center;
+}
+
+// 0%信号强度
+.icon-signal-intensity-0 {
+  background: url("assets/img/index/icon-signal-intensity-0.png") no-repeat center;
+}
+
+// 20%信号强度
+.icon-signal-intensity-20 {
+  background: url("assets/img/index/icon-signal-intensity-20.png") no-repeat center;
+}
+
+// 40%信号强度
+.icon-signal-intensity-40 {
+  background: url("assets/img/index/icon-signal-intensity-40.png") no-repeat center;
+}
+
+// 60%信号强度
+.icon-signal-intensity-60 {
+  background: url("assets/img/index/icon-signal-intensity-60.png") no-repeat center;
+}
+
+// 80%信号强度
+.icon-signal-intensity-80 {
+  background: url("assets/img/index/icon-signal-intensity-80.png") no-repeat center;
+}
+
+// 100%信号强度
+.icon-signal-intensity-100 {
+  background: url("assets/img/index/icon-signal-intensity-100.png") no-repeat center;
+}
+
+// 电量
+.icon-electric-quantity {
+  background: url("assets/img/index/icon-electric-quantity.png") no-repeat center;
+}
+
+// 0%电量
+.icon-electric-quantity-0 {
+  background: url("assets/img/index/icon-electric-quantity-0.png") no-repeat center;
+}
+
+// 20%电量
+.icon-electric-quantity-20 {
+  background: url("assets/img/index/icon-electric-quantity-20.png") no-repeat center;
+}
+
+// 40%电量
+.icon-electric-quantity-40 {
+  background: url("assets/img/index/icon-electric-quantity-40.png") no-repeat center;
+}
+
+// 60%电量
+.icon-electric-quantity-60 {
+  background: url("assets/img/index/icon-electric-quantity-60.png") no-repeat center;
+}
+
+// 80%电量
+.icon-electric-quantity-80 {
+  background: url("assets/img/index/icon-electric-quantity-80.png") no-repeat center;
+}
+
+// 100%电量
+.icon-electric-quantity-100 {
+  background: url("assets/img/index/icon-electric-quantity-100.png") no-repeat center;
+}
+
+// 充电（太阳能板）
+.icon-charging {
+  background: url("assets/img/index/icon-charging.gif") no-repeat center;
+}
+
+// 放电（太阳能板）
+.icon-discharge {
+  background: url("assets/img/index/icon-discharging.gif") no-repeat center;
+}
+
+// 门正常
+.icon-door-normal {
+  background: url("assets/img/index/icon-door-normal.png") no-repeat center;
+}
+
+// 门异常
+.icon-door-opening {
+  background: url("assets/img/index/icon-door-opening.gif") no-repeat center;
+}
+
+// 锁正常
+.icon-lock-normal {
+  background: url("assets/img/index/icon-lock-normal.png") no-repeat center;
+}
+
+// 锁异常
+.icon-lock-opening {
+  background: url("assets/img/index/icon-lock-opening.gif") no-repeat center;
+}
+
+// 锁无效
+.icon-lock-invalid {
+  background: url("assets/img/index/icon-lock-invalid.png") no-repeat center;
+}
+
+// 心跳
+.icon-heartbeat {
+  background: url("assets/img/index/icon-heartbeat.png") no-repeat center;
+}
+
+.icon-box-select {
+  background: url("assets/img/common-icon/icon_box_select.png") no-repeat center;
+}
+
+.icon-arrow-select {
+  background: url("assets/img/common-icon/icon_arrow_select.png") no-repeat center;
+}
+
+// 左侧导航图标
+.icon-navigation-alarm {
+  background: url("assets/img/navigation/icon_alarm.png") no-repeat center;
+}
+
+.icon-navigation-count {
+  background: url("assets/img/navigation/icon_count.png") no-repeat center;
+}
+
+.icon-navigation-facility {
+  background: url("assets/img/navigation/icon_facility.png") no-repeat center;
+}
+
+.icon-navigation-index {
+  background: url("assets/img/navigation/icon_index.png") no-repeat center;
+}
+
+.icon-navigation-system {
+  background: url("assets/img/navigation/icon_system.png") no-repeat center;
+}
+
+.icon-navigation-user {
+  background: url("assets/img/navigation/icon_user.png") no-repeat center;
+}
+
+.icon-navigation-work-order {
+  background: url("assets/img/navigation/icon_work_order.png") no-repeat center;
+}
+
+.icon_facility_config {
+  background: url("assets/img/facility/icon_facility_config.png") no-repeat center;
+}
+
+// 重置密码
+.icon-reset-password {
+  background: url("assets/img/common-icon/icon_reset_password.png")
+}
+
+.icon-position-choose {
+  background: url("assets/img/index/icon-map-setting.png") no-repeat center;
+}
+
+.ant-dropdown-menu-submenu-arrow-icon {
+  color: #36cfc9 !important;
+}

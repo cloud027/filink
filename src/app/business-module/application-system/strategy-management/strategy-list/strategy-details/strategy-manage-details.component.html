@@ -1,0 +1,90 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="lighting-details"
+       [ngClass]="isOperation ? classStatus.detailsActive: ''">
+    <h4 class="title lighting-active">
+      {{isOperation ? languageTable.strategyList.strategyDetails : languageTable.strategyList.basicInformation}}
+    </h4>
+    <!--策略基本信息-->
+    <div class="policy-details">
+      <app-policy-details
+        [lightingData]="lightingData"
+      ></app-policy-details>
+    </div>
+    <!--策略操作按钮-->
+    <div class="policy-basic lighting-active" *ngIf="isOperation">
+      <app-policy-basic-operation
+        [operatePermissionEnum]="linkagePolicyEnum"
+        (operationNotify)="handleOperation($event)"
+      ></app-policy-basic-operation>
+    </div>
+    <div class="details"
+         [ngClass]="!isOperation ? 'finish-details': ''"
+         *ngIf="strategyType===policyTypeEnum.linkage">
+      <h3 class="title"
+          [ngClass]="!isOperation ? 'finish-title': ''">{{languageTable.strategyList.strategyDetails}}</h3>
+      <div class="details-content">
+        <app-finish-details
+          [programName]="lightingData.linkageStrategyInfo.instructInfoBase?.programName"
+          [lightingData]="lightingData">
+        </app-finish-details>
+      </div>
+    </div>
+    <div class="lighting-container" *ngIf="strategyType === policyTypeEnum.lighting">
+      <!--应用范围-->
+      <div class="applied lighting-active"
+           *ngIf="lightingData.strategyRefList&&lightingData.strategyRefList.length">
+        <app-applied-range
+          [lightingData]="lightingData"
+          [isDetail]="isOperation"
+        ></app-applied-range>
+      </div>
+      <!--策略列表-->
+      <div class="details">
+        <h3 class="title">{{languageTable.strategyList.strategyDetails}}</h3>
+        <div class="details-content">
+          <xc-table [dataSet]="lightingData.instructLightList"
+                    [tableConfig]="strategyTableConfig">
+          </xc-table>
+        </div>
+      </div>
+    </div>
+    <div class="lighting-container" *ngIf="strategyType === policyTypeEnum.information">
+      <!--应用范围-->
+      <div class="applied lighting-active"
+           *ngIf="lightingData.strategyRefList&&lightingData.strategyRefList.length">
+        <app-applied-range
+          [lightingData]="lightingData"
+          [isDetail]="isOperation"
+        ></app-applied-range>
+      </div>
+      <!--策略列表-->
+      <div class="details">
+        <h3 class="details-title">{{languageTable.strategyList.strategyDetails}}</h3>
+        <div class="details-content">
+          <div class="program-list">
+            <span class="content-left">{{languageTable.strategyList.timeSlot}}:</span>
+            <span>{{timeFmt(lightingData.strategyPlayPeriodRefList)}}</span>
+          </div>
+          <div class="program-list">
+            <span class="content-left">{{languageTable.strategyList.cycleMode}}:</span>
+            <span>{{lightingData.instructInfo.playType === policyTypeEnum.lighting ?
+              languageTable.strategyList.loop :
+              languageTable.strategyList.noLoop}}</span>
+          </div>
+          <div class="program-list">
+            <span class="content-left">{{languageTable.strategyList.volume}}:</span>
+            <span>{{lightingData.instructInfo.volume}}</span>
+          </div>
+          <div class="program-list">
+            <span class="content-left">{{languageTable.equipmentTable.light}}:</span>
+            <span>{{lightingData.instructInfo.light}}</span>
+          </div>
+          <h4 class="title">{{languageTable.strategyList.playProgramList}}</h4>
+          <xc-table [dataSet]="playProgramList"
+                    [tableConfig]="programTable">
+          </xc-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-spin>

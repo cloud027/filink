@@ -1,0 +1,35 @@
+<!--供应商选择-->
+<nz-modal [(nzVisible)]="isVisible"
+          [nzWidth]="1000"
+          [nzTitle]="supplierLanguage.selectSupplier"
+          [nzContent]="transTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #transTemp>
+    <div class="trans-box">
+      <xc-table #tableComponent
+                [dataSet]="tableDataSet"
+                [pageBean]="pageBean"
+                [selectedData]="selectSupplierList"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" (click)="selectData()">{{commonLanguage.okText}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{commonLanguage.cancelText}}</button>
+    <button *ngIf="multiple" nz-button nzType="danger" class="link-button" (click)="clearSelectData()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+<!--供应商资质-->
+<ng-template #supplierAptitudesTemp let-data="data">
+  <span title="{{data.supplierAptitudes | translate: supplierAptitudesEnum : languageEnum.supplier}}">{{data.supplierAptitudes | translate: supplierAptitudesEnum : languageEnum.supplier}}</span>
+</ng-template>
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="supplierId" (ngModelChange)="onSupplierChange($event, data)">
+    <label nz-radio [nzValue]="data.supplierId"></label>
+  </nz-radio-group>
+</ng-template>

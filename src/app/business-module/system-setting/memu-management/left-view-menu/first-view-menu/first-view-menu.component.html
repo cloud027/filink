@@ -1,0 +1,32 @@
+<!--一级菜单-->
+<div class="first-menu">
+  <ul class="first-ul">
+    <ng-container *ngFor="let item of menuList">
+      <li *ngIf="!(item.children && item.children.length > 0) && item.isShow!=='0' "
+          (click)="itemClick(item, '')"
+          [ngClass]="{'bgc':item.menuName === menuName}">
+        <p>
+          <span>{{item.menuName}}</span>
+          <i [ngClass]="['icon','menu-icon','iconfont', item.imageUrl]"></i>
+        </p>
+      </li>
+
+      <li *ngIf="item.children && item.children.length > 0 && item.isShow !== '0'" (mouseenter)="expandItem(item)">
+        <p>
+          <span>{{item.menuName}}</span>
+          <i [ngClass]="['icon','menu-icon', 'iconfont',item.imageUrl]"></i>
+          <i *ngIf="!item.expand" nz-icon type="up" theme="outline" class="up-down"></i>
+          <i *ngIf="item.expand" nz-icon type="down" theme="outline" class="up-down"></i>
+        </p>
+        <ul class="second-ul" *ngIf="item.expand" @fadeIn>
+          <li *ngFor="let el of item.children let i=index"
+              (click)="itemClick(el, item.menuName)"
+              [ngClass]="{'bgc':el.menuName === menuName, 'disLi':el.isShow==='0'}">
+            <p>{{el.menuName}}</p>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+

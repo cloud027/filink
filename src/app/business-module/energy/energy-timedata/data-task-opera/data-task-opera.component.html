@@ -1,0 +1,197 @@
+<nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+  <div class="data-task-opear-box">
+    <p class="title">{{ pageTitle }}</p>
+    <div class="form-box">
+      <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    </div>
+    <div class="table-box">
+      <nz-tabset>
+        <!--区域列表-->
+        <nz-tab
+          *ngIf="dataTaskInsertData.areaList.length > 0 || (areaIds && areaIds.length)"
+          [nzTitle]="language.tabConfig.areaList"
+        >
+          <app-tab-areaor
+            #areaTableTemp
+            [isVisible]="isVisible"
+            [selectedData]="areaSelectedData"
+            [switchPageToTable]="operateType"
+            [filterIds]="areaIds"
+            (tableDeleteItem)="tableDeleteItem($event)"
+            (editPageChangeData)="editPageChangeData($event)"
+          >
+          </app-tab-areaor>
+        </nz-tab>
+        <!--分组列表-->
+        <nz-tab
+          *ngIf="dataTaskInsertData.groupList.length > 0 || (groupIds && groupIds.length)"
+          [nzTitle]="language.tabConfig.groupList"
+        >
+          <app-group
+            #groupTableTemp
+            [isVisible]="isVisible"
+            [selectedData]="groupSelectedData"
+            [switchPageToTable]="operateType"
+            [filterIds]="groupIds"
+            (tableDeleteItem)="tableDeleteItem($event)"
+            (editPageChangeData)="editPageChangeData($event)"
+          ></app-group>
+        </nz-tab>
+        <!--设备列表-->
+        <nz-tab
+          *ngIf="
+            dataTaskInsertData.equipmentList.length > 0 || (equipmentIds && equipmentIds.length)
+          "
+          [nzTitle]="language.tabConfig.equipmentList"
+        >
+          <app-equipment
+            #equipmentTableTemp
+            [isVisible]="isVisible"
+            [selectedData]="equipmentSelectedData"
+            [switchPageToTable]="operateType"
+            [filterIds]="equipmentIds"
+            (tableDeleteItem)="tableDeleteItem($event)"
+            (editPageChangeData)="editPageChangeData($event)"
+          ></app-equipment>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+    <div class="margin-top20" style="margin-left: 16px; margin-bottom: 20px">
+      <button
+        class="link-button margin-right20"
+        nz-button
+        nzType="primary"
+        (click)="addFacility()"
+        [disabled]="isDisabled"
+      >
+        {{ language.handleOk }}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">
+        {{ language.handleCancel }}
+      </button>
+    </div>
+  </div>
+</nz-spin>
+<!-- 采集时间 -->
+<ng-template #collectionTime let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup" class="collectionTime-box">
+    <!-- 逐时选择 -->
+    <nz-time-picker
+      *ngIf="acquisitionCycleValue === collectionTaskCycleEnum.hourly"
+      formControlName="execTime"
+      class="installation-date"
+      style="width: 300px"
+      nzFormat="mm:ss"
+    ></nz-time-picker>
+    <!-- 逐天选择 -->
+    <nz-time-picker
+      *ngIf="acquisitionCycleValue === collectionTaskCycleEnum.dayByDay"
+      formControlName="execTime"
+      class="installation-date"
+      style="width: 300px"
+      nzFormat="HH:mm:ss"
+    ></nz-time-picker>
+    <!-- 逐月选择 -->
+    <nz-date-picker
+      *ngIf="acquisitionCycleValue === collectionTaskCycleEnum.monthByMonth"
+      formControlName="execTime"
+      class="installation-date"
+      nzFormat="dd HH:mm:ss"
+      style="width: 300px"
+      [nzDisabledDate]="MonthDisabledEndDate"
+      [nzShowTime]="{ nzFormat: 'HH:mm:ss' }"
+    ></nz-date-picker>
+  </form>
+</ng-template>
+
+<!--有效期-->
+<ng-template #startEndTime let-col="col">
+  <div>
+    <nz-range-picker
+      [(ngModel)]="dateRange"
+      [nzDisabledDate]="disabledEndDate"
+      (ngModelChange)="onDateChange($event)"
+    >
+    </nz-range-picker>
+  </div>
+</ng-template>
+
+<!-- 应用范围 -->
+<ng-template #scopeOfApplication let-col="col">
+  <div class="scopeOfApplication-box" (click)="chooseApplication()">
+    <i class="iconfont fiLink-search icon-box"></i>
+    <span>{{ language.picInfo.selectContent }}</span>
+  </div>
+</ng-template>
+
+<!-- 启用状态 -->
+<ng-template #enableStatus let-col="col">
+  <nz-radio-group [(ngModel)]="strategyStatus" (ngModelChange)="radioChange($event)">
+    <label nz-radio [nzValue]="'1'">{{ language.Enable }}</label>
+    <label nz-radio [nzValue]="'0'">{{ language.Disable }}</label>
+  </nz-radio-group>
+</ng-template>
+
+<!--应用范围 弹出框-->
+<nz-modal
+  *ngIf="isVisible"
+  [(nzVisible)]="isVisible"
+  [nzTitle]="language.scopeOfApplication"
+  (nzOnCancel)="isVisible = false"
+  (nzOnOk)="handleTableOk()"
+  [nzFooter]="modalFooter"
+  nzWidth="70%"
+>
+  <nz-tabset [(nzSelectedIndex)]="selectedTab">
+    <!--区域列表-->
+    <nz-tab [nzTitle]="language.tabConfig.areaList">
+      <app-tab-areaor #areaTableModelTemp [selectedData]="areaSelectedData" [isVisible]="isVisible">
+      </app-tab-areaor>
+    </nz-tab>
+    <!--分组列表-->
+    <nz-tab [nzTitle]="language.tabConfig.groupList">
+      <!-- <xc-table
+                [dataSet]="dataSetGroup"
+                #group
+                [selectedData]="selectedGroup"
+                [pageBean]="pageBeanGroup"
+                [tableConfig]="tableConfigGroup"
+                (pageChange)="pageGroupChange($event)"
+            >
+            </xc-table> -->
+      <app-group
+        #groupTableModelTemp
+        [isVisible]="isVisible"
+        [selectedData]="groupSelectedData"
+      ></app-group>
+    </nz-tab>
+    <!--设备列表-->
+    <nz-tab [nzTitle]="language.tabConfig.equipmentList">
+      <!-- <xc-table
+                [dataSet]="dataSetEquipment"
+                #equipment
+                [selectedData]="selectedEquipment"
+                [pageBean]="pageBeanEquipment"
+                [tableConfig]="tableConfigEquipment"
+                (pageChange)="pageChangeEquipment($event)"
+            >
+            </xc-table> -->
+      <app-equipment
+        #equipmentTableModelTemp
+        [isVisible]="isVisible"
+        [selectedData]="equipmentSelectedData"
+      ></app-equipment>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleTableOk()">
+      {{ commonLanguage.confirm }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="isVisible = false">
+      {{ commonLanguage.cancel }}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCleanUp()">
+      {{ commonLanguage.cleanUp }}
+    </button>
+  </ng-template>
+</nz-modal>

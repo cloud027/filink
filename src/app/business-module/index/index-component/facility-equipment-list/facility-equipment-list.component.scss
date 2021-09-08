@@ -1,0 +1,81 @@
+@import "../../../../style-module/config";
+//设施设备列表样式
+.facility-list-container {
+  background-color: $bg-c-w;
+  $text-margin: 0 5px;
+
+  .facility-table {
+    padding: 5px 10px 20px 10px;
+    font-size: 12px;
+  }
+
+  //设施设备列表tab选择
+  .left-panel-tabs {
+    display: flex;
+    background-color: $bg-c-w;
+    margin-bottom: -5px;
+    padding: 5px 10px 0 0;
+    .click-area {
+      flex: 1;
+      display: flex;
+      //tap分割样式
+      .segmentation {
+        font-size: 12px;
+        margin: 4px 5px;
+        color: #cccccc;
+        display: inline-block;
+      }
+
+      .left-panel-border {
+        border-right: 1px solid $border-color;
+      }
+
+      //tapTitle样式
+      .left-panel-tab {
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        display: inline-block;
+
+        //tapFont样式
+        .text-content {
+          cursor: pointer;
+          float: left;
+          width: 70px;
+        }
+      }
+    }
+
+  }
+
+  //批量操作按钮按钮和文字样式
+  .facility-list-title {
+    display: flex;
+    height: 30px;
+    align-items: center;
+
+    .text {
+      margin: $text-margin;
+      color: $index-card-title-color;
+      flex: 1;
+    }
+
+    //更多按钮和文字样式
+    .facility-list-title-more {
+      cursor: pointer;
+      color: $index-card-more;
+      margin-left: 5px;
+      font-size: 14px;
+    }
+
+    .batch-handle-button {
+      margin-left: 5px;
+    }
+  }
+}
+
+//tab切换表样式
+.tab-selected {
+  color: $color;
+}
+

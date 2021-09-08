@@ -1,0 +1,131 @@
+@import "../../style-module/config";
+
+.login-container {
+  width: 100%;
+  height: 100%;
+  min-height: 550px;
+  min-width: 1031px;
+  background: $login-bg url("../../../assets/img/login/icon_bg.png") no-repeat;
+  overflow: auto;
+  .login {
+    width: 100%;
+    height: calc(100% - 40px);
+    display: flex;
+    justify-content: center;
+
+    .login-form {
+      width: 1031px;
+      height: 510px;
+      display: flex;
+      align-self: center;
+      justify-content: center;
+
+      .login-form-left {
+        width: 641px;
+        height: 100%;
+        margin-right: 50px;
+        img {
+          width: 641px;
+          height: 510px;
+        }
+      }
+
+      .login-form-right {
+        width: 340px;
+        height: 500px;
+        position: relative;
+        background-color: $login-form-bg;
+        border-radius: 2px;
+        .show-btn {
+          color: #36cfc9;
+          padding-left: 20px;
+          cursor: pointer;
+        }
+        .login-tab {
+          display: flex;
+          justify-content: flex-end;
+          height: 50px;
+
+          div {
+            font-size: 12px;
+            color: $login-toggle-color;
+            height: 26px;
+            line-height: 26px;
+            border: 1px solid $login-toggle-color;
+            border-radius: 3px;
+            margin-top: 12px;
+            padding: 0 10px;
+            position: relative;
+          }
+
+          div:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-left-color: $login-toggle-color;
+            position: absolute;
+            top: 35%;
+            left: 100%;
+          }
+
+          div:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-left-color: $login-form-bg;
+            position: absolute;
+            left: 99%;
+            top: 35%;
+          }
+
+          img {
+            margin: 10px 10px 0 0;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        .login-title {
+          display: flex;
+          height: 60px;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 37px;
+          img {
+            margin-right: 20px;
+          }
+          i {
+            font-style: normal;
+            color: $bg-c-w;
+            font-size: 32px;
+          }
+        }
+      }
+    }
+  }
+  .login-footer {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $login-footer-bg;
+    line-height: 21px;
+    text-align: center;
+    p {
+      font-size: 14px;
+      color: $bg-c-w;
+      opacity: 0.2;
+      .link-to-gov {
+        margin-left: 15px;
+      }
+      .link-to-gov:hover {
+        cursor: pointer;
+        color: $input-hover-color;
+      }
+    }
+  }
+}

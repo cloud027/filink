@@ -1,0 +1,39 @@
+.facility-port-info {
+  width: 100%;
+
+  .facility-port-item {
+    display: flex;
+    margin: 20px 0 40px 20px;
+
+    li {
+      margin: 10px 0 0 40px;
+      white-space: nowrap;
+    }
+
+    .port-label {
+      width: 150px;
+      display: inline-block;
+      line-height: 34px;
+    }
+
+    .port-value {
+      min-width: 150px;
+      line-height: 34px;
+    }
+  }
+
+  .facility-port-chart {
+
+
+    p {
+      margin-left: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    div {
+      margin-left: 40px;
+      height: 200px
+    }
+  }
+}

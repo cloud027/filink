@@ -1,0 +1,161 @@
+<!--数据大屏-->
+<div class="float-bg-screen" id="bg-screen" *ngIf='viewScreen'>
+  <div class="screen-head-title">
+    <div class="title">
+      <span>{{language.screenTitle}}</span>
+    </div>
+    <!--时间-->
+    <div class="time">
+      <div class="iconTime">
+        <span>
+           <i  class="icon-l iconfont fiLink-time icon-cursor l-height"></i>
+          {{time | dynamic: 'date' : null}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <!--大屏内容-->
+  <div class="screen-content">
+    <div class="content-left">
+      <!--大屏当前告警chat-->
+      <div class="screen-alarm">
+        <div class="title">
+          <span>{{language.currentAlarm}}</span>
+          <i class="icon-l iconfont fiLink-alarm-current icon-cursor"></i>
+        </div>
+        <div class="screen-charts-nowAlarm">
+          <div echarts [options]="nowAlarm" class="nowAlarm"></div>
+        </div>
+      </div>
+      <!--大屏告警数量chat-->
+      <div class="alarm-top">
+        <div class="title">
+          <span>{{language.alarmCountTopN}}</span>
+          <i class="icon-l iconfont fiLink-topn-alarm-count icon-cursor"></i>
+        </div>
+        <!--选择日期范围-->
+        <div class="select-date">
+          <div class="p-left">
+            <span class="day" [ngClass]="{'text-success':showAlarmDay}" (click)="topAlarmDay()">{{language.day}}</span>
+            <span class="week" [ngClass]="{'text-success':showAlarmWeek}"
+                  (click)="topAlarmWeek()">{{language.week}}</span>
+            <span class="mouth" [ngClass]="{'text-success':showAlarmMouth}"
+                  (click)="topAlarmMouth()">{{language.month}}</span>
+          </div>
+        </div>
+        <div class="screen-charts-nAlarm">
+          <div echarts [options]="numAlarm" class="numAlarm"></div>
+        </div>
+      </div>
+    </div>
+    <div class="content-center">
+      <!--大屏统计-->
+      <div class="screen-total">
+        <div class="total-facilities">
+          <div class="facilities">{{language.currentDeviceTotal}}</div>
+          <div id="facilities-num-ta" class="facilities-num-ta ">
+          </div>
+        </div>
+        <div class="total-alarm">
+          <div class="facilities">{{language.alarmDeveiceTotal}}</div>
+          <div id="facilities-num-tas" class="facilities-num">
+          </div>
+        </div>
+      </div>
+      <!--大屏地图-->
+      <div class="content-map">
+        <div id="map" class="p-events">
+
+        </div>
+        <!--提示框-->
+        <div *ngIf="isShowInfoWindow" class="info-window-container" [ngStyle]="{left: infoWindowLeft, top: infoWindowTop}">
+          <div class="info-box">
+            <p>{{language.deviceCode}}：{{infoContent.deviceCode}}</p>
+            <p>{{language.alarmName}}：{{infoContent.name}}</p>
+            <p>{{language.alarmLevel}}：{{infoContent.LevelName}}</p>
+            <p>{{language.happenedTime}}：{{infoContent.time | dynamic: 'date' : null}}</p>
+          </div>
+        </div>
+      </div>
+      <!--大屏告警增量-->
+      <div class="alarm-increment">
+        <div class="increment">
+          <div class="increment-name">
+            <span>{{language.alarmIncrement}}</span>
+            <i class="icon-l iconfont fiLink-increase icon-cursor"></i>
+          </div>
+          <div class="increment-date">
+            <div  [ngClass]="{'text-success':showDay}" class="incre-comms"
+                 (click)="showDayData()">
+              <span>{{language.day}}</span>
+              <span *ngIf="showDay"></span>
+            </div>
+            <div  [ngClass]="{'text-success':showWeek}" class="incre-comms"
+                 (click)="showWeekData()">
+              <span>{{language.week}}</span>
+              <span *ngIf="showWeek"></span>
+            </div>
+            <div [ngClass]="{'text-success':showMonth}" class="incre-comms"
+                 (click)="showMouthData()">
+              <span>{{language.month}}</span>
+              <span *ngIf="showMonth"></span>
+            </div>
+          </div>
+        </div>
+        <div class="increment-chart">
+          <div echarts [options]="incrementAlarm" class="incrementNum"></div>
+        </div>
+      </div>
+    </div>
+    <div class="content-right">
+      <!--大屏告警类型-->
+      <div class="screen-alarm">
+        <div class="title">
+          <span>{{language.facilityType}}</span>
+          <i class="icon-l iconfont fiLink-types icon-cursor"></i>
+        </div>
+        <div class="screen-charts">
+          <div echarts [options]="typeAlarm" class="typeAlarm"></div>
+        </div>
+      </div>
+      <!--大屏告警状态-->
+      <div class="screen-alarm">
+        <div class="title">
+          <span>{{language.facilityStatus}}</span>
+          <i class="icon-l iconfont fiLink-status icon-cursor"></i>
+        </div>
+        <div class="screen-charts">
+          <div echarts [options]="deviceStatusAlarm" class="typeAlarm"></div>
+        </div>
+      </div>
+      <!--大屏当前告警列表-->
+      <div class="screen-alarm">
+        <div class="title">
+          <span>{{language.realTimeAlarm}}</span>
+          <i class="icon-l iconfont fiLink-alarm-real-time icon-cursor"></i>
+        </div>
+        <div class="screen-charts">
+          <ul #scroller>
+            <li *ngFor="let item of alarmCurrentList">
+              <div class="name">
+                {{item.name}}
+              </div>
+              <div class="describe">{{item.LevelName}}</div>
+              <div class="time">{{item.time | dynamic: 'date' : null }}</div>
+              <div class="icon-alarm">
+                <i *ngIf="item.level === alarmLevelCode.urgent"
+                   class="icon-l iconfont fiLink-gaojinglingdang- icon-cursor urgent"></i>
+                <i *ngIf="item.level === alarmLevelCode.main"
+                   class="icon-l iconfont fiLink-gaojinglingdang- icon-cursor main"></i>
+                <i *ngIf="item.level === alarmLevelCode.secondary"
+                   class="icon-l iconfont fiLink-gaojinglingdang- icon-cursor secondary"></i>
+                <i *ngIf="item.level === alarmLevelCode.prompt"
+                   class="icon-l iconfont fiLink-gaojinglingdang- icon-cursor prompt"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

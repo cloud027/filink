@@ -1,0 +1,20 @@
+<div class="download">
+  <div>
+    <div>
+      <xc-breadcrumb></xc-breadcrumb>
+    </div>
+  </div>
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #progress let-data="data">
+    <div style="width: 98%">
+      <nz-progress [nzPercent]="data.progress" nzSize="small"
+                   [nzStatus]="data.nzStatus"></nz-progress>
+    </div>
+  </ng-template>
+</div>
+
+

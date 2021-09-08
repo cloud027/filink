@@ -1,0 +1,46 @@
+@import "../../../../../style-module/config";
+.batch-coding-container {
+  .batch-coding-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .batch-coding-content {
+    display: flex;
+    margin-top: 20px;
+    border-top: 1px solid $border-color;
+
+    .xc-steps {
+      padding-top: 80px;
+      width: 186px;
+      border-right: 1px solid $border-color;
+    }
+
+    .assembly {
+      width: calc(100% - 186px);
+      .coding-btn {
+        margin: 20px;
+        padding-bottom: 30px;
+        .next-step {
+          margin: 0 10px 0 20px;
+        }
+        .ok-step {
+          margin-right: 10px;
+        }
+      }
+      .assetType-table,.box-table {
+        margin: 0 40px;
+      }
+      .facility-or-equipment-table {
+        margin: 20px 40px 0;
+      }
+      .facility-table {
+        margin-left: 40px;
+        margin-top: 20px;
+      }
+    }
+  }
+}

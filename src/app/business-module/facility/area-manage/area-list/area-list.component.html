@@ -1,0 +1,26 @@
+<!--新增区域table-->
+<div class="table-wrapper">
+  <xc-table-virtual [dataSet]="dataSet"
+                    [selectedOption]="selectedOption"
+                    [selectedPlaceHolder]="language.selectedPlaceHolder"
+                    [tableConfig]="tableConfig"
+  ></xc-table-virtual>
+</div>
+<!--区域级别模板-->
+<ng-template #areaLevelTemp let-data="data">
+  <span class="area-level" [ngClass]="data.level|areaStyle"
+        [ngStyle]="{'display': isEn ? 'inline' : 'inline-block'}">
+    {{data.level | translate:areaLevelEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+<!--责任单位模板-->
+<ng-template #UnitNameSearch let-filterValue="filterValue">
+  <span class="dept-name-select hidden" (click)="showModal(filterValue)" [class.placeholder]="!selectUnitName&&!filterValue.filterName"
+        [title]="selectUnitName">{{(filterValue.filterName||selectUnitName)||commonLanguage.clickSelect}}</span>
+</ng-template>
+<!--责任单选选择器-->
+<xc-tree-selector
+  [(xcVisible)]="isVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

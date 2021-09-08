@@ -1,0 +1,39 @@
+@import "../../../../style-module/config";
+// 工单表格表头样式
+.order-list-title-text {
+  display: flex;
+  margin: 0 5px;
+  height: 30px;
+  line-height: 30px;
+  color: $index-card-title-color;
+
+  .select {
+    flex: 1;
+    margin-bottom: 3px;
+    .select-option {
+      color:$index-order-select;
+      font-size: 12px;
+    }
+  }
+
+  .text-more {
+    cursor: pointer;
+    color: $index-card-more;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  .batch-handle-button {
+    margin-left: 5px;
+  }
+}
+
+// 表格padding
+.work-order-table {
+  padding: 5px 10px 20px 10px;
+}
+
+.no-role{
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}

@@ -1,0 +1,67 @@
+@import "./style/operation";
+
+.application-operate {
+  padding: 10px;
+  background: #fff;
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .application-list {
+
+    .button-groups {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        min-width: 80px;
+        margin-right: 15px;
+      }
+
+      .instruct-slider {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+
+        .instruct-title {
+          display: flex;
+          margin-right: 20px;
+
+          .light {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100%;
+            width: 24px;
+            background: #f1c620;
+            margin-right: 10px;
+
+            .fiLink-light {
+              color: #fff;
+            }
+          }
+        }
+
+        .instruct-volume {
+          width: 290px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+.btn-hover {
+  color: #35cfc9;
+
+  &:hover {
+    background: #35cfc9;
+    color: #fff;
+
+    i {
+      color: #fff;
+    }
+  }
+}

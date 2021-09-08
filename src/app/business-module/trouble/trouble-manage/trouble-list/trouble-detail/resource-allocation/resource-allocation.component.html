@@ -1,0 +1,23 @@
+<div class="allocation-warp" nz-row nzGutter="10">
+  <!--第一列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box">
+      <p class="allocation-text">{{language.personnelAssignment}}</p>
+      <app-material-list [spreadData] = "personData" [columnConfig]="columnPersonConfig"></app-material-list>
+    </div>
+  </div>
+  <!--第二列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box">
+      <p class="allocation-text">{{language.carAllocate}}</p>
+      <app-material-list [spreadData] = "carData" [columnConfig]="columnCarConfig"></app-material-list>
+    </div>
+  </div>
+  <!--第三列-->
+  <div nz-col class="gutter-row" nzSpan="8">
+    <div class="gutter-box">
+      <p class="allocation-text">{{language.applyEquipment}}</p>
+      <app-material-list [spreadData] = "applyData" [columnConfig]="columnApplyConfig"></app-material-list>
+    </div>
+  </div>
+</div>

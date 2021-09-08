@@ -1,0 +1,41 @@
+@import "../../../../../style-module/config";
+
+.area-detail-title {
+  border-left: 2px solid $detail-title-color;
+  margin-left: 16px;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.strategy-add {
+  display: flex;
+  margin-top: 20px;
+  border-top: 1px solid $border-color;
+
+  .xc-steps {
+    padding-top: 80px;
+    width: 186px;
+    border-right: 1px solid $border-color;
+  }
+
+  .assembly {
+    width: calc(100% - 186px);
+
+    .strategy-btn {
+      padding: 20px;
+      text-align: left;
+
+      .prev-step {
+        margin-right: 10px;
+      }
+
+      .next-step {
+        margin-right: 10px;
+      }
+    }
+    .finish-details{
+      padding: 10px;
+    }
+  }
+}

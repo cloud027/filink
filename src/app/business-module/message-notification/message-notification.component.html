@@ -1,0 +1,80 @@
+<!--消息通知-->
+<div class="message-wrap">
+  <div>
+    <div>
+      <xc-breadcrumb></xc-breadcrumb>
+    </div>
+  </div>
+  <div class="message-header">
+    <h4 class="title">{{language.messageNotification}}</h4>
+    <div class="message-box">
+      <div class="message-top">
+        <!--搜索框-->
+        <nz-input-group class="input-group" [nzSuffix]="suffixIconSearch">
+          <label>
+            <input type="text" nz-input [(ngModel)]="searchValue">
+          </label>
+        </nz-input-group>
+        <!--搜索按钮-->
+        <ng-template #suffixIconSearch>
+          <i nz-icon class="icon" type="search" (click)="searchChange()"></i>
+        </ng-template>
+        <!--消息类型单选钮-->
+        <nz-radio-group [(ngModel)]="radioValue"
+                        (ngModelChange)="searchChange()">
+          <label nz-radio class="radio-message" nzValue="2">{{language.allNotification}}</label>
+          <label nz-radio class="radio-message" nzValue="1">{{language.person}}</label>
+          <label nz-radio class="radio-message" nzValue="0">{{language.system}}</label>
+        </nz-radio-group>
+        <!--日期选择框-->
+        <div class="range-date">
+          <app-alarm-time-selector [dateType]="dateType"
+                                   [allowClear]="true"
+                                   (changeFilter)="timeChangeFilter($event)">
+          </app-alarm-time-selector>
+        </div>
+      </div>
+      <!--消息内容-->
+      <div class="message-content">
+        <ul>
+          <li *ngFor="let data of messageData">
+            <div>
+              <!--消息类型-->
+              <span class="message-type">{{data.type | translate: messageTypeEnum : languageEnum.user}}</span>
+              <!--创建时间-->
+              <span class="time">{{data.createTime | dynamic: 'date' : null}}</span>
+              <!--内容-->
+              <p [ngClass]="{'content-style': data.type === messageTypeEnum.system}"
+                 class="content">{{data.content}}</p>
+              <!--确认接受/不接受按钮-->
+              <div *ngIf="data.url !== null">
+                <button class="button" nz-button nzType="default" *ngIf="data.noAcceptUrl"
+                        (click)="confirmData(data.noAcceptUrl)"
+                        [disabled]="data.isReceive === isReceiveEnum.isReceive">{{language.confirmNoAccept}}</button>
+                <button class="button" nz-button nzType="primary"
+                        (click)="confirmData(data.acceptUrl)" [disabled]="data.isReceive === isReceiveEnum.isReceive">{{language.confirmAccept}}</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--分页-->
+      <div class="es-pagination">
+        <nz-pagination [nzPageIndex]="pageBean.pageIndex"
+                       [nzTotal]="pageBean.Total"
+                       [nzPageSize]="pageBean.pageSize"
+                       [nzShowTotal]="totalTemplate"
+                       nzShowSizeChanger
+                       nzShowQuickJumper
+                       (nzPageIndexChange)="pageIndexChange($event)"
+                       (nzPageSizeChange)="pageSizeChange($event)"
+        ></nz-pagination>
+        <!--分总条数模板-->
+        <ng-template #totalTemplate let-total>
+          {{language.total}} <span class="page-total-color">{{total}}</span> {{language.items}}
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+

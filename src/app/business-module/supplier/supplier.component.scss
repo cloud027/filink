@@ -1,0 +1,7 @@
+@import 'src/app/style-module/config';
+.supplier {
+  background: $bg-c-w;
+  > div {
+    background: $bg-c-w;
+  }
+}

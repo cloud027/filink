@@ -1,0 +1,86 @@
+@import "../../../style-module/config";
+
+@mixin login-input {
+  font-size: 13px;
+  color: $prompt-font-color;
+  border: 0;
+  border-bottom: 1px solid $table-border-color;
+  border-radius: 0;
+}
+
+.phone-login-form {
+  width: 100%;
+  padding: 0 20px;
+
+  .auth-code-item {
+    margin-bottom: 45px;
+  }
+
+  nz-form-item {
+
+    ::ng-deep .intl-tel-input {
+      width: 300px;
+      background-color: $bg-c-w;
+      border-radius: 2px;
+    }
+
+    nz-form-control {
+
+      .auth-code {
+        width: 171px;
+        height: 40px;
+        margin-right: 20px;
+        border-radius: 2px;
+        border: 0;
+      }
+
+      .timer {
+        font-size: 13px;
+        line-height: 17px;
+        color: $prompt-font-color;
+        padding: 10px;
+        width: 108px;
+        outline: none;
+        display: inline-block;
+        background-color: white;
+        border: 1px solid $table-border-color;
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:disabled {
+          cursor: no-drop;
+        }
+      }
+
+      .login-button {
+        width: 300px;
+        height: 40px;
+        font-size: 12px;
+        border: 0;
+        border-radius: 2px;
+        color: $bg-c-w;
+        background-color: $color;
+        cursor: pointer;
+        outline: 0;
+
+        &:disabled {
+          cursor: no-drop;
+        }
+      }
+    }
+  }
+
+}
+
+:host ::ng-deep .phone-login-form {
+  .ant-select-selection {
+    border: 0;
+    border-bottom: 1px solid $table-border-color;
+    border-radius: 0;
+  }
+
+  input.ant-input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

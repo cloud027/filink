@@ -1,0 +1,79 @@
+<!--插播-->
+<nz-modal
+  [(nzVisible)]="xcVisible"
+  (nzOnCancel)="xcVisible = false"
+  [nzTitle]="title"
+  [nzFooter]="insertModalFooter"
+  nzWidth="982">
+  <div>
+    <div>
+      <div nz-col nzSpan="3" class="title-label">
+        <p class="strategy-title">{{languageTable.equipmentTable.insertBroadcastName}}</p>
+      </div>
+      <div nz-col nzSpan="8" class="title-label">
+        <input type="text" nz-input [(ngModel)]="playCutInName">
+      </div>
+      <div nz-col nzSpan="13">
+        <div class="instruct-list">
+          <div class="instruct-title">
+            <span class="light">
+              <i class="icon-fiLink-l iconfont fiLink-filink-yinliang-icon volume"></i>
+            </span>
+            <span>
+              {{languageTable.equipmentTable.volume}}
+            </span>
+          </div>
+          <div class="instruct-volume">
+            <nz-slider
+              [nzMin]="sliderValue.min"
+              (nzOnAfterChange)="handleConvenientChange()"
+              [nzMax]="volumeMax"
+              [(ngModel)]="insertVolumeValue">
+            </nz-slider>
+          </div>
+          <div>{{insertVolumeValue}}</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <xc-table #contentTemp
+        [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+  <ng-template #insertModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="handleOk()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>
+<!-- 责任人 -->
+<ng-template #roleTemp let-data="data">
+  <span class="widthStyle" title="{{data.assign?.userName}}">{{data.assign?.userName}}</span>
+</ng-template>
+
+<!--节目文件-->
+<ng-template #programFiles let-data="data">
+  <div (click)="downloadFile(data)" [title]="data.programFileName" class="program-files">{{data.programFileName}}</div>
+</ng-template>
+
+<!--备注换行处理-->
+<ng-template #remarksTable let-data="data">
+  <div class="program-files"
+       [title]="data.remark">
+    {{data.remark}}
+  </div>
+</ng-template>
+
+<!--预览框-->
+<nz-modal *ngIf="isPreview" [(nzVisible)]="isPreview" [nzTitle]="language.contentList.preview"
+          (nzOnCancel)="onPreviewCancel()" (nzOnOk)="onPreviewOk()">
+  <app-audio-preview [src]="filePath"></app-audio-preview>
+</nz-modal>
+

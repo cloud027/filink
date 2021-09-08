@@ -1,0 +1,117 @@
+<!--筛选条件-->
+<div class="condition-box">
+  <div class="form-box">
+    <form nz-form [nzLayout]="'inline'">
+
+      <!--  设备类型-->
+      <nz-form-item>
+        <div class="form-item-box">
+          <div class="label-box">
+            <span class="form-label"><em class="form-required">*</em></span>
+            {{applicationLanguage.reportAnalysis.equipmentType}}
+          </div>
+          <nz-select class="wid-300" nzPlaceHolder="{{applicationLanguage.frequentlyUsed.pleaseChoose}}"
+                     [(ngModel)]="selectEquipmentType" name="selectEquipmentType"
+                     (ngModelChange)="changeEquipmentType()">
+            <nz-option *ngFor="let option of equipmentType"
+                       [nzLabel]="option.label"
+                       [nzValue]="option.code"></nz-option>
+          </nz-select>
+        </div>
+      </nz-form-item>
+
+      <!--    统计维度-->
+      <nz-form-item>
+        <div class="form-item-box">
+          <div class="label-box">
+            <span class="form-label"><em class="form-required">*</em></span>
+            {{applicationLanguage.reportAnalysis.statisticalDimension}}
+          </div>
+          <nz-select class="wid-300" nzPlaceHolder="{{applicationLanguage.frequentlyUsed.pleaseChoose}}"
+                     [(ngModel)]="selectStatisticalDimension" name="selectStatisticalDimension"
+                     (ngModelChange)="changeStatisticalDimension()">
+            <nz-option *ngFor="let option of statisticalDimensionList"
+                       [nzLabel]="option.label"
+                       [nzValue]="option.code"></nz-option>
+          </nz-select>
+        </div>
+      </nz-form-item>
+
+      <!--    统计范围-->
+      <nz-form-item>
+        <div class="form-item-box mar-r-minus-4">
+          <div class="label-box">
+            <span class="form-label"><em class="form-required">*</em></span>
+            {{applicationLanguage.reportAnalysis.statisticalScope}}
+          </div>
+          <span class="select-statisticalScope wid-300"
+                title="{{selectStatisticsScopeName}}">{{selectStatisticsScopeName}}</span>
+          <button type="button" class="search-button">
+            <i class="icon-fiLink fiLink-search-index iconfont" (click)="openStatisticalScopeWindow()"></i></button>
+        </div>
+      </nz-form-item>
+
+      <!--  时间类型-->
+      <nz-form-item>
+        <div class="form-item-box">
+          <div class="label-box">
+            <span class="form-label"><em class="form-required">*</em></span>
+            {{applicationLanguage.reportAnalysis.timeType}}
+          </div>
+          <nz-select class="time-select" nzPlaceHolder="{{applicationLanguage.frequentlyUsed.pleaseChoose}}"
+                     [(ngModel)]="selectTimeType"
+                     name="selectTimeType">
+            <nz-option *ngFor="let option of timeTypeList"
+                       [nzLabel]="option.label"
+                       [nzValue]="option.code"></nz-option>
+          </nz-select>
+          <nz-date-picker class="time-picker" [nzStyle]="{width: '208px'}"
+                          *ngIf="selectTimeType === dateTypeEnum.day" [(ngModel)]="date"
+                          name="date"></nz-date-picker>
+          <nz-week-picker #weekPicker class="time-picker" [nzStyle]="{width: '208px'}"
+                          [hidden]="selectTimeType !== dateTypeEnum.week" [(ngModel)]="date"
+                          nzPlaceHolder="{{applicationLanguage.reportAnalysis.pleaseChooseWeek}}"
+                          name="date"></nz-week-picker>
+          <nz-month-picker class="time-picker" [nzStyle]="{width: '208px'}"
+                           *ngIf="selectTimeType === dateTypeEnum.month" [(ngModel)]="date"
+                           nzPlaceHolder="{{applicationLanguage.reportAnalysis.pleaseChooseMonth}}"
+                           name="date"></nz-month-picker>
+          <nz-year-picker class="time-picker" [nzStyle]="{width: '208px'}"
+                          *ngIf="selectTimeType === dateTypeEnum.year" [(ngModel)]="date"
+                          nzPlaceHolder="{{applicationLanguage.reportAnalysis.pleaseChooseYear}}"
+                          name="date"></nz-year-picker>
+        </div>
+      </nz-form-item>
+
+      <!--    生成统计-->
+      <button type="button" nz-button nzType="primary" [disabled]="disabledGenerateResults()"
+              (click)="generateResults()">{{applicationLanguage.reportAnalysis.generate}}
+      </button>
+    </form>
+  </div>
+</div>
+
+<!--设备选择弹窗-->
+<equipment-list-selector-component
+  *ngIf="equipmentVisible"
+  [(equipmentVisible)]="equipmentVisible"
+  [selectEquipmentId]="selectEquipmentId"
+  (selectDataChange)="onSelectEquipment($event)"
+  [filterConditions]="equipmentFilterCondition"
+  [isHideOperateItem]="isHideOperateItem">
+</equipment-list-selector-component>
+
+<!--分组选择弹窗-->
+<app-group-list-selector *ngIf="showGroupInfo"
+                         [(groupVisible)]="showGroupInfo"
+                         (selectDataChange)="onSelectGroup($event)"
+                         [selectGroupIds]="selectGroupIds"
+                         [equipmentId]="null"
+></app-group-list-selector>
+
+<!--区域选择器弹窗-->
+<xc-tree-selector [modalClassName]="'report-area-tree-selector'"
+  [(xcVisible)]="showAreaIsVisible"
+  (selectDataChange)="selectAreaDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

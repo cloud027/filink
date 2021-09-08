@@ -1,0 +1,55 @@
+<!--设备配置动态表单-->
+<nz-tabset [nzSelectedIndex]="0">
+  <nz-tab  *ngFor="let tab of formColumnData;let index = index" nzTitle="{{tab.name}}" (nzClick)="changeTab(index)">
+    <div class="tab-container" nz-row>
+      <!--设备网关配置-->
+      <div *ngIf="!deviceConfiguration"  class="config-tab-box">
+        <div *ngFor="let gatewayItem of tab.configurationsList;">
+          <app-equipment-config-gateway [tabId]="tab.tabId" [equipmentContent]="gatewayItem" [equipmentId]="centerControlId"></app-equipment-config-gateway>
+        </div>
+      </div>
+      <!--设备其他配置-->
+      <div *ngIf="deviceConfiguration">
+        <!--渲染第三方自定义组件-->
+        <div *ngIf="tab.type==='component';else elseTemplate" >
+          <ng-container *ngFor="let item of tab.configurationsList;">
+            <ng-container *ngFor="let configuration of item.configurationList">
+              <ng-container [ngSwitch]="tab.tabId">
+                <div *ngSwitchCase="'threshold'"   class="config-tab-box">
+                  <app-equipment-bind [centerControlId]="centerControlId"></app-equipment-bind>
+                </div>
+                <div *ngSwitchCase="'cableSetting'"  nz-row class="config-cable">
+                  <!--线缆设置组件引用-->
+                  <app-cable-setting [centerControlId]="centerControlId"
+                                     [cableSettingConfigInfo]="cableSettingConfigInfo"
+                                     (handleOkEvent)="handleOkEvent($event)"></app-cable-setting>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+        <!--渲染默认的form-->
+        <ng-template #elseTemplate>
+          <div class="config-s"  nz-col [nzSpan]="item.col||24"  *ngFor="let item of tab.configurationsList;let formIndex = index">
+            <div>
+              <div *ngFor="let configuration of item.configurationList">
+                <div class="config-item-container" *ngIf="configuration.name">
+                  <span class="config-item-title">{{configuration.name}}</span>
+                </div>
+                <xc-form  [column]="configuration.formColumn" (formInstance)="formInstance($event,configuration)"></xc-form>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      </div>
+  </nz-tab>
+</nz-tabset>
+
+
+<!--配置table模板-->
+<ng-template #showConfigTableTemp let-col="col">
+  <div class="config-tab-box">
+    <app-equipment-bind [centerControlId]="centerControlId"></app-equipment-bind>
+  </div>
+</ng-template>

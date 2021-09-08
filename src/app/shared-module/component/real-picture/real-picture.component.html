@@ -1,0 +1,43 @@
+<div class="float-window">
+  <div class="export-qunee" *ngIf="isExport"><i (click)="onExport()" class="iconfont icon-l  fiLink-export"
+                                                nz-tooltip="{{commonLanguage.exportImage}}"></i></div>
+  <div [id]="canvasId" class="canvas-container" #canvas>
+    <div class="float-window-body"
+         *ngIf="isShow"
+         [style.left.px]="left"
+         [style.top.px]="top"
+    >
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentName}}：</span><span>{{floatWindowEquipmentName}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentTypeTitle}}：</span>
+        <span class="icon" [class]="getEquipmentIconStyle(floatWindowEquipmentType, floatWindowEquipmentModelType)">  </span>
+        {{commonUtil.codeTranslate(indexEquipmentTypeEnum, $nzI18n, floatWindowEquipmentType, languageEnum.facility)}}
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentStatus}}：</span>
+        <span class="equipmentStatus" [ngClass]="commonUtil.getEquipmentStatusIconClass(floatWindowEquipmentStatus).bgColor">
+          {{commonUtil.codeTranslate(equipmentStatusEnum, $nzI18n, floatWindowEquipmentStatus, languageEnum.facility)}}
+        </span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.equipmentModel}}：</span><span>{{floatWindowEquipmentModel}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.facilityNumber}}：</span><span>{{floatWindowEquipmentNo}}</span>
+      </div>
+      <div class="font-type">
+        <span class="font-type-margin">{{indexLanguage.installationTime}}：</span><span>{{floatWindowEquipmentInstallationTime | dynamic: 'dateDay' : null}}</span>
+      </div>
+    </div>
+
+    <div class="float-window-equipment"
+         *ngIf="isShowClick && isOpenUpData"
+         [style.left.px]="clickLeft"
+         [style.top.px]="clickTop">
+      <div class="float-window-equipment-children" (click)="haveEquipment()">{{language.existingEquipment}}</div>
+      <div class="float-window-equipment-children" *ngIf="isAddEquip" (click)="createEquipment()">{{language.addEquipment}}</div>
+    </div>
+  </div>
+</div>

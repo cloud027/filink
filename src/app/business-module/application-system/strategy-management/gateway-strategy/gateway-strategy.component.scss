@@ -1,0 +1,147 @@
+@import "../../share/style/common-style";
+@import "../../../../style-module/config";
+
+.application {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+
+  .application-title {
+    width: 140px;
+    position: relative;
+
+    &:after {
+      content: '*';
+      color: red;
+      position: absolute;
+      top: -2px;
+      left: -5px;
+    }
+  }
+
+  .trigger-type-select {
+    width: 300px;
+  }
+}
+
+/*触发条件*/
+.trigger-add, .action-add {
+  height: 40px;
+  display: flex;
+  align-items: center;
+
+  .text {
+    color: $color;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+
+  .label-left {
+    width: 140px;
+  }
+}
+
+.trigger-condition, .action-condition {
+  padding: 20px;
+  border-radius: 3px;
+  border: 1px dashed $border-color;
+  margin-bottom: 10px;
+  width: 600px;
+  /*关闭操作*/
+  .strategy-close {
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: $color;
+    font-size: 16px;
+
+    .button-save {
+      margin-right: 10px;
+    }
+  }
+  .strategy-add{
+    margin-bottom: 10px;
+  }
+
+  .strategy-condition {
+    font-weight: bold;
+    padding-left: 10px;
+    height: 30px;
+  }
+
+  .condition-form-row {
+    display: flex;
+    margin-bottom: 20px;
+    .required-title{
+      position: relative;
+      &:after {
+        content: '*';
+        color: red;
+        position: absolute;
+        top: 7px;
+        left: 4px;
+      }
+    }
+    .label-left {
+      width: 140px;
+    }
+
+    .padding-left10 {
+      padding-left: 10px;
+      padding-top: 7px;
+    }
+
+    .form-right {
+      width: 400px;
+
+      .trigger-type-select, .input-number {
+        width: 300px;
+      }
+
+      .trigger-facility {
+        .area-name {
+          width: 300px;
+        }
+      }
+
+      .threshold-select {
+        width: 60px;
+      }
+    }
+  }
+}
+
+.action-condition {
+  width: 800px;
+}
+
+/*信息屏*/
+.screen {
+  @include screen-style;
+}
+
+.trigger-selected, .action-selected {
+  width: 607px;
+}
+
+.perform-title {
+  margin-top: 20px;
+  font-weight: bold;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    width: 100%;
+    border-bottom: 1px solid $button-danger-hover-color;
+  }
+}
+
+:host ::ng-deep .trigger-condition {
+  .form-row {
+    padding: 0;
+  }
+}

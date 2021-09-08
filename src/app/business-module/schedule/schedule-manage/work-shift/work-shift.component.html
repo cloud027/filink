@@ -1,0 +1,56 @@
+<div class="work-shift">
+  <div class="table-common-title">
+    <span>{{scheduleLanguage.workShift}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+<!--开始时间选择-->
+<ng-template #startTimeSearchTemp let-filterValue="filterValue">
+    <div class="time-filter">
+      <div  class="table-top-button-flex">
+        <nz-time-picker class="check-box-set-column"  [(ngModel)]="filterValue.filterValue"
+                        [nzFormat]="format"
+                        [nzDefaultOpenValue]="defaultOpenValue"
+                        [ngModelOptions]="{standalone: true}"
+                        [nzPlaceHolder]="scheduleLanguage.pleaseChoose"
+                        (ngModelChange)="timeSelectChange($event, filterValue, true)"></nz-time-picker>
+      </div>
+      <div class="date-filter-operator">
+        <override-nz-select class="check-box-set-column"  [(ngModel)]="timeOperator"
+                   [nzDisabled]="!filterValue.filterValue"
+                   [ngModelOptions]="{standalone: true}">
+          <override-nz-option nzValue="gt" nzLabel="{{tableLanguage.gt}}"></override-nz-option>
+          <override-nz-option nzValue="lt" nzLabel="{{tableLanguage.lt}}"></override-nz-option>
+          <override-nz-option nzValue="eq" nzLabel="{{tableLanguage.eq}}"></override-nz-option>
+        </override-nz-select>
+      </div>
+    </div>
+</ng-template>
+<!--结束时间选择-->
+<ng-template #endTimeSearchTemp let-filterValue="filterValue">
+  <div class="time-filter">
+    <div  class="table-top-button-flex">
+      <nz-time-picker class="check-box-set-column"  [(ngModel)]="filterValue.filterValue"
+                      [nzFormat]="format"
+                      [nzDefaultOpenValue]="defaultOpenValue"
+                      [nzPlaceHolder]="scheduleLanguage.pleaseChoose"
+                      (ngModelChange)="timeSelectChange($event, filterValue, false)"></nz-time-picker>
+    </div>
+    <div class="date-filter-operator">
+      <override-nz-select class="check-box-set-column"  [(ngModel)]="endTimeOperator"
+                 [nzDisabled]="!filterValue.filterValue"
+                 [ngModelOptions]="{standalone: true}">
+        <override-nz-option nzValue="gt" nzLabel="{{tableLanguage.gt}}"></override-nz-option>
+        <override-nz-option nzValue="lt" nzLabel="{{tableLanguage.lt}}"></override-nz-option>
+        <override-nz-option nzValue="eq" nzLabel="{{tableLanguage.eq}}"></override-nz-option>
+      </override-nz-select>
+    </div>
+  </div>
+</ng-template>

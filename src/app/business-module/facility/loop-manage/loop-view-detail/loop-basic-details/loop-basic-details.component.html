@@ -1,0 +1,56 @@
+<div class="detail-container">
+  <!--基本信息-->
+  <nz-card nz-col nzSpan="8" class="device-detail-info">
+    <ul class="loop-info-container">
+      <!-- 回路名称 回路类型(判断是否自定义)-->
+      <li class="facility-item">
+        <span class="hidden special-row special-row-start" title="{{loopViewDetailInfo.loopName}}">{{loopViewDetailInfo.loopName}}</span>
+        <span class="hidden special-row special-row-type special-color" title="{{loopViewDetailInfo.loopType | translate: loopTypeEnum: languageEnum.facility}}"
+              *ngIf="!loopViewDetailInfo.customizeLoopType">{{loopViewDetailInfo.loopType | translate: loopTypeEnum: languageEnum.facility}}</span>
+        <span class="hidden special-row special-row-type special-color" title="{{loopViewDetailInfo.customizeLoopType}}"
+              *ngIf="loopViewDetailInfo.customizeLoopType">{{loopViewDetailInfo.customizeLoopType}}
+          </span>
+        <span class="hidden special-row special-row-code special-color" title="{{loopViewDetailInfo.loopCode}}"
+              *ngIf="loopViewDetailInfo.loopCode">{{loopViewDetailInfo.loopCode}}</span>
+      </li>
+      <!-- 创建时间-->
+      <li class="facility-item create-time-row">
+          <span class="value hidden" title="{{loopViewDetailInfo.ctime}}">{{language.creationTime}}:
+            {{loopViewDetailInfo.ctime | dynamic: 'date' : null}}</span>
+      </li>
+      <!-- 用户-->
+      <li class="facility-item user-bottom">
+          <span class="user-icon">
+            <i [nz-tooltip]="assetLanguage.createUser" class="iconfont fiLink-user-menu"></i>
+          </span>
+        <span class="value hidden" title="{{loopViewDetailInfo.createUser}}">{{loopViewDetailInfo.createUser}}</span>
+      </li>
+      <!-- 所属配电箱-->
+      <li class="facility-item">
+        <span class="label">{{language.distributionBox}}：</span>
+        <span class="value hidden"
+              title="{{loopViewDetailInfo.distributionBoxName}}">{{loopViewDetailInfo.distributionBoxName}}</span>
+      </li>
+      <!-- 控制对象-->
+      <li class="facility-item">
+        <span class="label">{{language.controlledObject}}：</span>
+        <span class="value hidden"
+              title="{{loopViewDetailInfo.centralizedControlName}}">{{loopViewDetailInfo.centralizedControlName}}</span>
+      </li>
+      <!-- 备注-->
+      <li class="facility-item">
+        <span class="label">{{language.remarks}}：</span>
+        <span class="value hidden" title="{{loopViewDetailInfo.remark}}">{{loopViewDetailInfo.remark}}</span>
+      </li>
+    </ul>
+  </nz-card>
+  <!--缩略图-->
+  <nz-card  nz-col nzSpan="16">
+    <div class="thumbnail-box">
+      <app-thumbnail #thumbnail [mapType]="mapType"></app-thumbnail>
+    </div>
+  </nz-card>
+</div>
+
+
+

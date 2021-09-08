@@ -1,0 +1,24 @@
+<nz-card nzTitle="{{language.basicOperation}}" class="common-card">
+  <div class="trouble-btn-warp">
+    <!--编辑-->
+    <button (click)="clickUpdate()" *ngIf="isEditFlag" appAccessPermission="14-1-2" class="operate-btn">
+      <i class="icon-fiLink-l iconfont fiLink-edit-facility"></i>
+      <p class="operate-text">{{language.update}}</p>
+    </button>
+    <!--删除-->
+    <button (click)="clickDelete()" *ngIf="isDeleteFlag" appAccessPermission="14-1-3" class="operate-btn">
+      <i class="icon-fiLink-l iconfont fiLink-delete-facility"></i>
+      <p class="operate-text">{{language.deleteHandle}}</p>
+    </button>
+    <!--指派-->
+    <button (click)="clickAssign()" *ngIf="isShowAssignFlag" appAccessPermission="14-1-4" class="operate-btn">
+      <i class="icon-fiLink-l iconfont fiLink-trouble-assign"></i>
+      <p class="operate-text">{{language.designate}}</p>
+    </button>
+    <!--流程-->
+    <button (click)="clickFlow()" *ngIf="isViewFlowFlag" appAccessPermission="14-1-8" class="operate-btn">
+      <i class="icon-fiLink-l iconfont fiLink-trouble-flow"></i>
+      <p class="operate-text">{{language.flow}}</p>
+    </button>
+  </div>
+</nz-card>

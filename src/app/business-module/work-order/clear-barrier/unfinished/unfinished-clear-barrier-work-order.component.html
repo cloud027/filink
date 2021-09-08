@@ -1,0 +1,14 @@
+<!--卡片-->
+<xc-statistical-slider class="not-click-slider"  [sliderConfig]="sliderConfig" (selectChange)="sliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)"></xc-statistical-slider>
+<!--表格-->
+<div class="order-box-warp bg-c">
+  <div class="table-container bg-c-w">
+    <app-unfinished-clear-barrier-work-order-table #table (workOrderEvent)="workOrderEvent($event)"
+                                                   [slideShowChangeData]="slideShowChangeData">
+    </app-unfinished-clear-barrier-work-order-table>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,131 @@
+@import "../../../../../style-module/config";
+// 标题
+.detail-title {
+  padding: 0 0 16px 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.space-backGround {
+  width: 100%;
+  height: 10px;
+  background-color: $border-color;
+}
+
+.config-content {
+  // 内容上面的打印和网关样式
+  .before-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 30px 0 20px;
+    // 网关图片名称样式
+    .gateway-title {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      // 网关图片样式
+      .gateway-image {
+        width: 90px;
+        height: 35px;
+        margin-left: 20px
+      }
+    }
+
+    // 打印
+    .stamp-lay {
+      margin: 5px 20px 0 0;
+      cursor: pointer;
+    }
+
+  }
+
+  // 拓扑画布大小
+  .graph-size {
+    width: 90%;
+    height: 390px;
+    margin: 0 20px;
+
+    //点击端口按钮样式
+    .button-box {
+      position: absolute;
+      z-index: 10;
+      display: none;
+
+      .button-ul {
+        display: inline-block;
+
+        .button-li {
+          padding: 5px 15px;
+          background-color: white;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+        }
+
+        .button-li:hover {
+          cursor: pointer;
+        }
+
+      }
+    }
+
+    //悬浮窗主体
+    .float-window-body {
+      height: 200px;
+      width: 200px;
+      background-color: #FFFFFF;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px #888888;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 999;
+
+      //悬浮窗字段
+      .font-type {
+        width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        margin: 12px 0 0 10px;
+
+        //悬浮窗字段内边距
+        .font-type-margin {
+          color: #808080;
+          margin-right: 15px;
+        }
+
+        .equipmentStatus {
+          height: 20px;
+          padding: 0 9px;
+          color: white;
+          border-radius: 2px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  //页面底部按钮
+  .page-footer {
+    margin: 5px;
+
+    .footer-button {
+      margin-right: 20px;
+    }
+
+  }
+
+}
+
+//弹框内容出现滚动条
+.overview-slide {
+  height: 500px;
+  overflow: auto;
+}
+
+
+

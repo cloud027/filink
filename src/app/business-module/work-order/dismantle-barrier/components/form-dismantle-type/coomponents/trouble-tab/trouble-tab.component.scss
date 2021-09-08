@@ -1,0 +1,10 @@
+.one-text {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: top;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,122 @@
+<nz-spin [nzSpinning]="btnLoading">
+  <div class="Echarts-box">
+    <!-- Ecahrts 图表 能耗统计 -->
+    <div class="echarts-item">
+      <div class="echarts-select-box">
+        <p class="echarts-title">{{ language.energyStatistics }}</p>
+        <div class="time-picker-select-box">
+          <!-- 时间范围 -->
+          <nz-select
+            style="width: 80px; margin-right: 10px"
+            [(ngModel)]="statisticsSubmitForm.frequency"
+            [nzPlaceHolder]="language.picInfo.pleaseChooseTimeStatis"
+            (ngModelChange)="selectTimeChange($event, StatisticORRank.statistic)"
+          >
+            <nz-option
+              *ngFor="let option of statisticsSelectTimeList"
+              [nzLabel]="option.label"
+              [nzValue]="option.code"
+            ></nz-option>
+          </nz-select>
+          <div class="time-picker-select">
+            <nz-date-picker
+              *ngIf="statisticsSubmitForm.frequency === energyStatisticsTime.statisticsHour"
+              [(ngModel)]="statisticsSubmitForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange(
+                  $event,
+                  energyStatisticsTime.statisticsHour,
+                  StatisticORRank.statistic
+                )
+              "
+            ></nz-date-picker>
+            <nz-month-picker
+              *ngIf="statisticsSubmitForm.frequency === energyStatisticsTime.statisticsDay"
+              [nzPlaceHolder]="language.picInfo.chooseMonth"
+              [(ngModel)]="statisticsSubmitForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange(
+                  $event,
+                  energyStatisticsTime.statisticsDay,
+                  StatisticORRank.statistic
+                )
+              "
+            ></nz-month-picker>
+            <nz-year-picker
+              *ngIf="statisticsSubmitForm.frequency === energyStatisticsTime.statisticsMonth"
+              [nzPlaceHolder]="language.picInfo.chooseYear"
+              [(ngModel)]="statisticsSubmitForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange(
+                  $event,
+                  energyStatisticsTime.statisticsMonth,
+                  StatisticORRank.statistic
+                )
+              "
+            ></nz-year-picker>
+          </div>
+        </div>
+      </div>
+      <energy-echart-column
+        (chartInstance)="getTimeSlotChartInstance($event)"
+        *ngIf="statisticFlag"
+      ></energy-echart-column>
+      <div *ngIf="!statisticFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+    <!-- Ecahrts 图表 电费排名 -->
+    <div class="echarts-item">
+      <div class="echarts-select-box">
+        <p class="echarts-title">{{ language.statisticRanking }}(TOP10)</p>
+        <div class="time-picker-select-box">
+          <!-- 时间范围 -->
+          <nz-select
+            style="width: 80px; margin-right: 10px"
+            [(ngModel)]="statisticRankForm.frequency"
+            [nzPlaceHolder]="language.picInfo.pleaseChooseTimeStatis"
+            (ngModelChange)="selectTimeChange($event, StatisticORRank.rank)"
+          >
+            <nz-option
+              *ngFor="let option of statisticsSelectTimeList"
+              [nzLabel]="option.label"
+              [nzValue]="option.code"
+            ></nz-option>
+          </nz-select>
+          <div class="time-picker-select">
+            <nz-date-picker
+              *ngIf="statisticRankForm.frequency === energyStatisticsTime.statisticsHour"
+              [(ngModel)]="statisticRankForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange($event, energyStatisticsTime.statisticsHour, StatisticORRank.rank)
+              "
+            ></nz-date-picker>
+            <nz-month-picker
+              *ngIf="statisticRankForm.frequency === energyStatisticsTime.statisticsDay"
+              [nzPlaceHolder]="language.picInfo.chooseMonth"
+              [(ngModel)]="statisticRankForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange($event, energyStatisticsTime.statisticsDay, StatisticORRank.rank)
+              "
+            ></nz-month-picker>
+            <nz-year-picker
+              *ngIf="statisticRankForm.frequency === energyStatisticsTime.statisticsMonth"
+              [nzPlaceHolder]="language.picInfo.chooseYear"
+              [(ngModel)]="statisticRankForm.selectTimeValue"
+              (ngModelChange)="
+                timeSelectChange($event, energyStatisticsTime.statisticsMonth, StatisticORRank.rank)
+              "
+            ></nz-year-picker>
+          </div>
+        </div>
+      </div>
+      <energy-echart-column
+        (chartInstance)="getElectricityTariffRankChartInstance($event)"
+        *ngIf="rankFlag"
+      ></energy-echart-column>
+      <div *ngIf="!rankFlag" class="empty-container">
+        <nz-empty></nz-empty>
+      </div>
+    </div>
+  </div>
+</nz-spin>

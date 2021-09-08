@@ -1,0 +1,87 @@
+<!--巡检模板弹窗-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="800"
+          [nzTitle]="modalTitle"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleCancel()">
+  <!--标题-->
+  <ng-template #modalTitle>
+    {{language.selectTemplate}}
+  </ng-template>
+  <!--弹窗主体-->
+  <div class="tempTop" [ngStyle]="{height: boxHeight}">
+    <!--左侧巡检模板列表-->
+    <div class="tempLeft">
+      <ul class="temp-ul">
+        <li class="liItem first">{{language.existingTemplate}}</li>
+        <ul class="item-ul">
+          <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="selectValue()">
+            <li class="liItem"
+                *ngFor="let item of templateList; let i = index;"
+                [ngClass]="(i == templateList.length-1) ? 'last' : ''">
+              <label nz-radio [nzValue]="item.templateId" >{{item.templateName}}</label>
+            </li>
+          </nz-radio-group>
+        </ul>
+      </ul>
+      <nz-spin class="spins" [nzSpinning]="isTempSpinning" *ngIf="isTempSpinning"></nz-spin>
+      <div class="temp-nodata" *ngIf="templateList.length === 0">{{language.noData}}</div>
+    </div>
+    <!--右侧巡检项-->
+    <div class="tempRight select-inspection">
+      <nz-spin class="spins" [nzSpinning]="isItemSpinning" *ngIf="isItemSpinning"></nz-spin>
+      <ul class="li-warp">
+        <li class="temp-li first">
+          <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()" [nzIndeterminate]="indeterminate"></label>
+          <span class="names">{{language.inspectionItem}}</span>
+          <span class="remark">{{language.remarks}}</span>
+        </li>
+        <ul class="item-box">
+          <li *ngFor="let item of listData" class="temp-li">
+            <i><label nz-checkbox [(ngModel)]="item.checked" (ngModelChange)="updateSingleChecked(item)"></label></i>
+            <span class="names ml8">
+              <span [title]="item.templateItemName">{{item.templateItemName}}</span>
+            </span>
+            <span class="remark" (click)="editTemplate(item)">
+              <span [title]="item.remark">{{item.remark}}</span>
+            </span>
+            <a  *ngIf="item.isAdd" class="temp-delete" nz-tooltip [nzTitle]="language.delete" (click)="deleteRow(item.templateItemId)">
+              <i class="icon-fiLink iconfont fiLink-delete red-icon"></i>
+            </a>
+          </li>
+        </ul>
+      </ul>
+      <div class="temp-nodata" *ngIf="listData.length === 0">{{language.noData}}</div>
+    </div>
+  </div>
+  <!--当前巡检项-->
+  <div class="tempBottom">
+    <div class="last-edit">{{language.lastEdit}}</div>
+    <div class="temp-bot">
+      <span class="item-inspect" *ngFor="let item of lastInspection; let i = index;">
+        {{item.templateItemName}}<i (click)="deleteItem(item, i)" class="icon-fiLink fiLink-close iconfont"></i>
+      </span>
+    </div>
+  </div>
+  <!--新增填写巡检项-->
+  <div class="temp-add">
+    <div class="add-btn">
+      <button nz-button (click)="saveRow()" class="temp-btn-add" [disabled]="isAddTemp">
+        <i class="icon-fiLink fiLink-pic-to-big iconfont"></i> {{language.addInspectItem}}
+      </button>
+    </div>
+    <div class="add-form" *ngIf="isCreat">
+      <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="template inspection"></xc-form>
+      <div class="temp-add-btn">
+        <span (click)="addTemplateRow()" class="icon-fiLink fiLink-filink-save-icon iconfont"></span>
+        <span (click)="closeAdd()" class="icon-fiLink fiLink-close iconfont"></span>
+      </div>
+    </div>
+  </div>
+</nz-modal>
+<!--弹窗按钮-->
+<ng-template #modalFooter>
+  <button nz-button class="link-button" nzType="primary" [disabled]="!isSave" (click)="handleOk()">{{language.handleOk}}</button>
+  <button nz-button class="link-button" nzType="danger" (click)="handleCancel()">{{language.handleCancel}}</button>
+</ng-template>

@@ -1,0 +1,64 @@
+<div class="team-add-wrap">
+  <div class="table-common-title">
+    <span>{{pageTitle}}</span>
+  </div>
+  <div class="team-add-content">
+    <!--基本信息-->
+    <div class="team-basic-info">
+      <p class="secondary-title">{{scheduleLanguage.basicInformation}}</p>
+      <xc-form [column]="formColumn" (formInstance)="formInit($event)"></xc-form>
+    </div>
+    <!--班组成员-->
+    <div class="team-member-container">
+      <p class="secondary-title">{{scheduleLanguage.teamMember}}</p>
+      <div class="table-wrapper">
+        <xc-table
+          [dataSet]="selectPersonDataSet"
+          [tableConfig]="selectTableConfig">
+        </xc-table>
+      </div>
+    </div>
+    <div class="footer" >
+      <button class="link-button submit-btn"
+              nz-button
+              nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled || !selectPersonDataSet.length"
+              (click)="submit()">
+        {{commonLanguage.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+    </div>
+  </div>
+
+  <!-- 单位选择 -->
+  <ng-template #department let-formGroup="formGroup" let-col="col">
+    <div>
+      <input nz-input type="text" class="dept-name" readonly [(ngModel)]="deptName" [title]="deptName" [disabled]="pageType === operateTypeEnum.update">
+      <button type="button" class="open-button" [disabled]="teamId" (click)="showDeptSelectorModal()">
+        <i class="icon-fiLink fiLink-search-index iconfont"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <!--单位选择器-->
+  <xc-tree-area-selector
+    [(xcVisible)]="areaSelectVisible"
+    [treeSelectorConfig]="areaSelectorConfig"
+    (selectDataChange)="deptSelectChange($event)"
+  >
+  </xc-tree-area-selector>
+
+  <!--班组成员列表中在职状态-->
+  <ng-template #jobStatusTemp let-data="data">
+    <span>{{data.onJobStatus | translate : jobStatusEnum : 'schedule'}}</span>
+  </ng-template>
+
+  <!-- 待选择的班组成员 -->
+  <app-team-members *ngIf="isShowPersonModal"
+                     [(isVisible)]="isShowPersonModal"
+                     [selectMemberList]="selectPersonDataSet"
+                     [deptCode]="formStatus.getData('deptCode')"
+                     [teamIdList]="[teamId]"
+                     (handleOkEvent)="handlePersonOk($event)"></app-team-members>
+</div>

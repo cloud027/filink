@@ -1,0 +1,72 @@
+<div class="facility-list-panel">
+  <!--选择区域-->
+  <div class="app-logic-area">
+    <div class="logic-left">
+      <app-index-left-tab
+        [tabList]="deviceTabList"
+        [active]="deviceActive"
+        (tabChange)="tabChange($event)"
+        [AreaType]="'deviceArea'"></app-index-left-tab>
+    </div>
+    <div class="logic-right">
+      <!--选择区域-->
+      <app-logical-area [appTenantPermission]="'1-1-1-1'"
+                        [hidden]="deviceActive !== deviceTabListEnum.tabArea || polymerizationChange!=='1'"
+                        *ngIf="isProjectOrArea"
+                        (areaDataEvent)="areaDataChange($event)"
+                        [treeName]="'zTree'"></app-logical-area>
+      <!--选择项目 planning-->
+      <app-planning-tree [appTenantPermission]="'1-1-1-1'"
+                         [hidden]="deviceActive !== deviceTabListEnum.project || polymerizationChange!=='2'"
+                         *ngIf="!isProjectOrArea"
+                         [isProjectOrPlanning]="true"
+                         (planningDataEvent)="projectDataChange($event)"
+                         [treeName]="'zTree'"></app-planning-tree>
+      <!--公共选择-->
+      <app-tab-device
+        [firstClick]="firstClick"
+        [setFacilityData]="facilityTypeList"
+        [setEquipmentData]="equipmentTypeList"
+        [facilityEquipmentConfig]="facilityEquipmentComponent"
+        (facilitiesData)="facilitiesSelect($event)"
+        (equipmentData)="equipmentSelect($event)"
+        [hidden]="deviceActive !== deviceTabListEnum.facilityTypeTitle && deviceActive !== deviceTabListEnum.equipmentTypeTitle">
+      </app-tab-device>
+      <!--选择分组-->
+      <app-facility-group [appTenantPermission]="'1-1-1-4'"
+                          [hidden]="deviceActive !== deviceTabListEnum.group && this.groupListRole"
+                          (selectGroupItemEmit)="selectGroupItem($event)"></app-facility-group>
+    </div>
+  </div>
+  <!--设施和设备列表-->
+  <div class="app-facility-list">
+    <app-facility-equipment-list
+      [polymerizationChange]="polymerizationChange"
+      [areaData]="areaData"
+      [projectData]="projectData"
+      [groupData]="groupList"
+      [facilityData]="facilityData"
+      [equipmentData]="equipmentData"
+      (FacilityEquipmentListEvent)="facilityEquipmentListEvent($event)"
+    ></app-facility-equipment-list>
+  </div>
+</div>
+<!--批量操作弹窗-->
+<app-equipment-bulk-operations
+  *ngIf="isVisible"
+  [title]="indexLanguage.batchOperation"
+  [xcVisible]="isVisible"
+  [isHasBroadcast]="false"
+  [screenContent]="program.programName"
+  [isHasLight]="true"
+  [isShowOver]="false"
+  [program]="program"
+  [equipmentTypeCodes]="equipmentTypes"
+  (xcVisibleChange)="visibleChange($event)"
+  (commonSwitchValue)="commonSwitchValue($event)"
+  (lightChangeValue)="lightChangeValue($event)"
+  (screenLightChangeValue)="informationScreenChangeValue($event)"
+  (screenVolumeChangeValue)="screenVolumeChangeValue($event)"
+  (screenPlay)="screenPlay($event)"
+></app-equipment-bulk-operations>
+

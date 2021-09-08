@@ -1,0 +1,37 @@
+<nz-modal [nzWidth]="treeSelectorConfig.width"
+          [(nzVisible)]="xcVisible"
+          [nzTitle]="modalTitle"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    {{treeSelectorConfig.title}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <div>
+      <div>
+        <xc-search-input
+          [selectInfo]="selectInfo"
+          [searchValue] = "searchValue"
+          (modelChange)="modelChange($event)"
+          (inputChange)="inputChange($event)"
+        ></xc-search-input>
+      </div>
+      <nz-card class="select-area-card">
+        <div *ngIf="treeSelectorConfig.treeNodes.length===0">{{commonLanguage.noData}}</div>
+        <div>
+          <ul [id]="treeId" class="ztree link-tree selector-table-tree"></ul>
+        </div>
+      </nz-card>
+    </div>
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="danger" (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+    <button [hidden]="isHiddenButton" nz-button class="link-button" nzType="danger" (click)="restSelectData()">{{commonLanguage.reset}}</button>
+  </ng-template>
+</nz-modal>

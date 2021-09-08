@@ -1,0 +1,71 @@
+<div class="policy-box">
+  <div class="policy-card">
+    <!--策略基本信息-->
+    <nz-card class="card-list">
+      <div class="details-info">
+        <span class="title" [title]="lightingData.strategyName">{{lightingData.strategyName}}</span>
+        <!-- 启用 -->
+        <span class="status"
+              [ngClass]="lightingData.strategyStatus === languageTable.strategyStatus.close ? 'disable-status': ''">
+          <i class="iconfont fiLink-enable status-icon"
+             *ngIf="lightingData.strategyStatus === languageTable.strategyStatus.open"></i>
+          <i class="iconfont fiLink-disable-o status-icon"
+             *ngIf="lightingData.strategyStatus === languageTable.strategyStatus.close"></i>
+          <span class="status-text">{{lightingData.strategyStatus}}</span>
+        </span>
+        <!-- 执行状态 -->
+        <span class="status exec-status">
+          <span>{{lightingData.execStatus}}</span>
+        </span>
+        <!--策略类型-->
+        <span class="status exec-type">
+          <span>{{lightingData.strategyType}}</span>
+        </span>
+      </div>
+      <div class="details-info create">
+        <span class="create-time">{{languageTable.strategyList.createTime}}:</span>
+        <span>{{lightingData.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+      </div>
+      <div class="details-info">
+        <i nz-icon nzType="user" nzTheme="outline" class="iconfont create-user"></i>
+        <span>{{lightingData.createUser}}</span>
+      </div>
+      <div class="details-info">
+        <i nz-icon nzType="clock-circle" nzTheme="outline" class="iconfont clock-circle"></i>
+        <span>{{lightingData.effectivePeriodStart | date : 'yyyy-MM-dd'}}
+          ~{{lightingData.effectivePeriodEnd | date : 'yyyy-MM-dd'}}</span>
+      </div>
+    </nz-card>
+    <!--策略基本信息-->
+    <nz-card class="card-list">
+      <!--执行周期-->
+      <div class="details-info">
+        <span class="info-title">{{languageTable.strategyList.execCron}}:</span>
+        <span class="info-content">{{lightingData.execType | execTypeTranslate}}</span>
+        <span class="info-right" *ngIf="lightingData.execTime && lightingData.execType ==='6'">
+          {{lightingData.execTime | date : 'yyyy-MM-dd'}}
+        </span>
+        <span class="info-right" *ngIf="lightingData.execType ==='5'">
+          {{lightingData.intervalTime}}{{languageTable.strategyList.day}}
+        </span>
+      </div>
+      <div class="details-info">
+        <span class="info-title">{{languageTable.strategyList.controlType}}:</span>
+        <span class="info-content">{{lightingData.controlType}}</span>
+      </div>
+      <div class="details-info">
+        <span class="info-title">{{languageTable.strategyList.applyUser}}:</span>
+        <span class="info-content">{{lightingData.applyUser}}</span>
+      </div>
+      <div class="details-info">
+        <span class="info-title">{{languageTable.strategyList.remark}}:</span>
+        <span class="info-content remark-text"
+              [nzTitle]="lightingData.remark" nzPlacement="bottomLeft" nz-tooltip
+        >{{lightingData.remark}}</span>
+      </div>
+    </nz-card>
+    <nz-card class="card-list display-border">
+      <app-details-map [sourceDataList]="lightingData"></app-details-map>
+    </nz-card>
+  </div>
+</div>

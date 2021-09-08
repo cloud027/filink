@@ -1,0 +1,30 @@
+<nz-modal [(nzVisible)]="isVisible"
+          [nzWidth]="1100"
+          [nzTitle]="scheduleLanguage.personInformation"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="isVisibleChange.emit(false)">
+  <ng-template #modalContent>
+    <div>
+      <xc-table
+        #tableTpl
+        [dataSet]="personDataSet"
+        [tableConfig]="tableConfig"
+        [selectedData]="selectMemberList"
+        [pageBean]="pageBean"
+        (pageChange)="personPageChange($event)">
+      </xc-table>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="isVisibleChange.emit(false)">{{commonLanguage.cancel}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="cleanUpPerson()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--班组成员列表中在职状态-->
+<ng-template #jobStatusTemp let-data="data">
+  <span>{{data.onJobStatus | translate : jobStatusEnum : 'schedule'}}</span>
+</ng-template>

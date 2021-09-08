@@ -1,0 +1,270 @@
+<div class="strategy-details-box">
+    <!-- 基础电价(元/kW·h) -->
+    <div class="basicElectricityPrice-box">
+        <h4 class="title-left">
+            <span class="title-required">*</span>
+            <span>{{ language.electricStrategy.basicElectricityPrice }}</span>
+        </h4>
+        <div class="input-number-box">
+            <nz-input-number [nzMin]="1" [(ngModel)]="electricityPrice"></nz-input-number>
+        </div>
+    </div>
+    <!-- 添加策略 -->
+    <div class="add-policy-box">
+        <div class="select-box">
+            <!-- 添加策略 -->
+            <div
+                class="add-policy"
+                [ngClass]="{
+                    'disabled-insert':
+                        disabledInsertBtn !== StepSecondInsertStrategyTypeEnum.insertStrategy
+                }"
+                (click)="handleAddProgram(StepSecondInsertStrategyTypeEnum.insertStrategy)"
+            >
+                <span><i class="icon-fiLink fiLink-pic-to-big iconfont"></i></span>
+                <span class="title">{{ language.electricStrategy.addPolicy }}</span>
+            </div>
+            <!-- 添加月策略 -->
+            <div
+                class="add-policy"
+                [ngClass]="{
+                    'disabled-insert':
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertStrategy ||
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertHoursStrategy
+                }"
+                (click)="handleAddProgram(StepSecondInsertStrategyTypeEnum.insertMonthStrategy)"
+            >
+                <span><i class="icon-fiLink fiLink-pic-to-big iconfont"></i></span>
+                <span class="title">{{ language.electricStrategy.addMonthPolicy }}</span>
+            </div>
+            <!-- 添加小时策略 -->
+            <div
+                class="add-policy"
+                [ngClass]="{
+                    'disabled-insert':
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertStrategy ||
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertMonthStrategy
+                }"
+                (click)="handleAddProgram(StepSecondInsertStrategyTypeEnum.insertHoursStrategy)"
+            >
+                <span><i class="icon-fiLink fiLink-pic-to-big iconfont"></i></span>
+                <span class="title">{{ language.electricStrategy.addHourPolicy }}</span>
+            </div>
+        </div>
+
+        <div class="program-border" *ngIf="isAddPolicy">
+            <div class="strategy-close">
+                <i
+                    nz-icon
+                    nzType="save"
+                    nzTheme="outline"
+                    class="button-save"
+                    [title]="commonLanguage.save"
+                    (click)="handleSave()"
+                ></i>
+                <i
+                    nz-icon
+                    nzType="close"
+                    nzTheme="outline"
+                    class="button-close"
+                    (click)="isAddPolicy = false"
+                ></i>
+            </div>
+            <!--策略列表-->
+            <div class="program-list">
+                <!-- 添加电费策略 -->
+                <div *ngIf="disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertStrategy">
+                    <!-- 起始电量(kWh) -->
+                    <div class="program-title">
+                        <div class="program-left">
+                            {{ language.electricStrategy.startingPower }}
+                        </div>
+                        <div class="program-right input-number-box">
+                            <nz-input-number
+                                [nzMin]="0"
+                                [(ngModel)]="insertPolicy.startPower"
+                            ></nz-input-number>
+                        </div>
+                    </div>
+                    <!-- 终止电量(kWh) -->
+                    <div class="program-title">
+                        <div class="program-left">{{ language.electricStrategy.endOfCharge }}</div>
+                        <div class="program-right input-number-box">
+                            <nz-input-number
+                                [nzMin]="0"
+                                [(ngModel)]="insertPolicy.endPower"
+                            ></nz-input-number>
+                        </div>
+                    </div>
+                </div>
+                <!-- 添加月策略 -->
+                <div
+                    *ngIf="
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertMonthStrategy
+                    "
+                >
+                    <div class="program-title">
+                        <div class="program-left">
+                            {{ language.electricStrategy.monthRange }}
+                        </div>
+                        <div class="program-right input-number-box">
+                            <app-date-picker
+                                (selectedTimeValue)="selectedTimeValue($event)"
+                                [pickType]="timeSelectType.month"
+                            ></app-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <!-- 添加小时策略 -->
+                <div
+                    *ngIf="
+                        disabledInsertBtn === StepSecondInsertStrategyTypeEnum.insertHoursStrategy
+                    "
+                >
+                    <div class="program-title">
+                        <div class="program-left">
+                            {{ language.electricStrategy.timeRange }}
+                        </div>
+                        <div class="program-right input-number-box">
+                            <app-date-picker
+                                (selectedTimeValue)="selectedTimeValue($event)"
+                                [pickType]="timeSelectType.time"
+                            ></app-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <!-- 电费单价 -->
+                <div class="program-title">
+                    <div class="program-left">
+                        {{ language.electricStrategy.unitPriceOfElectricity }}
+                    </div>
+                    <div class="program-right input-number-box">
+                        <nz-input-number
+                            [nzMin]="0"
+                            [nzStep]="0.1"
+                            [(ngModel)]="insertPolicy.price"
+                        ></nz-input-number>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 策略列表 -->
+    <div class="policy-list-box">
+        <ng-template
+            ngFor
+            let-tableData
+            let-tableIndex="index"
+            [ngForOf]="setpsComponentInfo.listOfData"
+        >
+            <nz-table #nzTable [(nzData)]="tableData" [nzShowPagination]="false">
+                <tbody>
+                    <ng-template ngFor let-data let-index="index" [ngForOf]="nzTable.data">
+                        <tr>
+                            <td
+                                nzShowCheckbox
+                                nzShowExpand
+                                style="width: 100px"
+                                [(nzExpand)]="mapOfExpandData[data.id]"
+                                (nzCheckedChange)="nzCheckedChange($event, data)"
+                            ></td>
+                            <td style="width: 200px">
+                                {{ language.electricStrategy[data.range] }}
+                            </td>
+                            <td style="width: 400px">
+                                <!-- 电量范围 -->
+                                <nz-input-group *ngIf="!data.monthRange">
+                                    <nz-input-number
+                                        [(ngModel)]="data.startPower"
+                                        [nzMin]="0"
+                                        [nzStep]="1"
+                                        style="width: 160px"
+                                    ></nz-input-number>
+                                    -
+                                    <nz-input-number
+                                        [(ngModel)]="data.endPower"
+                                        [nzMin]="0"
+                                        [nzStep]="1"
+                                        style="width: 160px"
+                                        (ngModelChange)="rangeChange($event, data.startPower)"
+                                    ></nz-input-number>
+                                </nz-input-group>
+                                <!-- 月份范围 -->
+                                <div *ngIf="data.monthRange">
+                                    <nz-month-picker
+                                        [(ngModel)]="data.startMonth"
+                                        style="width: 160px"
+                                    ></nz-month-picker>
+                                    -
+                                    <nz-month-picker
+                                        [(ngModel)]="data.endMonth"
+                                        style="width: 160px"
+                                    ></nz-month-picker>
+                                </div>
+                            </td>
+                            <td style="width: 200px">
+                                {{ language.electricStrategy.unitPriceOfElectricity }}
+                            </td>
+                            <td style="width: 200px">
+                                <nz-input-number
+                                    [(ngModel)]="data.price"
+                                    [nzMin]="0"
+                                    [nzMax]="100"
+                                    [nzStep]="0.1"
+                                    style="width: 160px"
+                                ></nz-input-number>
+                            </td>
+                            <td (click)="tableDeleteClick(1, data, index, tableIndex)">
+                                <i class="icon-fiLink fiLink-pic-to-small iconfont"></i>
+                            </td>
+                        </tr>
+                        <!-- 时间范围 -->
+                        <ng-template
+                            ngFor
+                            let-dataItem
+                            let-indexItem="index"
+                            [ngForOf]="data.children"
+                        >
+                            <tr [nzExpand]="mapOfExpandData[data.id]">
+                                <td colspan="1"></td>
+                                <td>
+                                    {{ language.electricStrategy[dataItem.range]
+                                    }}{{ indexItem > 0 ? indexItem : '' }}
+                                </td>
+                                <td>
+                                    <nz-time-picker
+                                        [(ngModel)]="dataItem.startTime"
+                                        style="width: 160px"
+                                        nzFormat="HH:mm"
+                                    ></nz-time-picker>
+                                    -
+                                    <nz-time-picker
+                                        [(ngModel)]="dataItem.endTime"
+                                        style="width: 160px"
+                                        nzFormat="HH:mm"
+                                    ></nz-time-picker>
+                                </td>
+                                <td>
+                                    {{ language.electricStrategy.unitPriceOfElectricity }}
+                                </td>
+                                <td>
+                                    <nz-input-number
+                                        [(ngModel)]="dataItem.price"
+                                        [nzMin]="0"
+                                        [nzMax]="100"
+                                        [nzStep]="0.1"
+                                        style="width: 160px"
+                                    ></nz-input-number>
+                                </td>
+                                <td (click)="tableDeleteClick(2, dataItem, indexItem, tableIndex)">
+                                    <i class="icon-fiLink fiLink-pic-to-small iconfont"></i>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </ng-template>
+                </tbody>
+            </nz-table>
+        </ng-template>
+    </div>
+</div>

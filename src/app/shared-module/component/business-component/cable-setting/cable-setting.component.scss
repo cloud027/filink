@@ -1,0 +1,67 @@
+.cable-container {
+  width: 100%;
+  min-width: 676px;
+  .cable-num {
+    margin: 20px;
+    .label {
+      display: inline-block;
+      padding-right: 65px;
+    }
+  }
+  .first-row, .second-row {
+    margin-top: 20px;
+  }
+  .second-row{
+    margin-left: 100px;
+  }
+  .cable {
+    display: inline-block;
+    padding:0 20px;
+    .label {
+      display: inline-block;
+      padding-right: 20px;
+    }
+  }
+
+  .control-loop {
+    display: inline-block;
+    .label {
+      display: inline-block;
+      padding-right: 50px;
+    }
+  }
+
+  .broken-wire {
+    display: inline-block;
+}
+
+  .label {
+    display: inline-block;
+    padding-right: 40px;
+  }
+
+  .check-box{
+    display: inline-block;
+  }
+
+  .select {
+    display: inline-block;
+    padding-right: 20px;
+  }
+
+  .input-box{
+    display: inline-block;
+  }
+
+  .setting {
+    display: inline-block;
+    padding-left: 40px;
+  }
+
+  .b-label{
+    display: inline-block;
+    padding-right: 52px;
+  }
+}
+
+

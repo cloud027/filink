@@ -1,0 +1,57 @@
+@import "../../../../../style-module/config";
+.alarm-work-order-box{
+  .area-name {
+    height: 22px;
+    line-height: 22px;
+    padding: 0 11px;
+    width: 100%;
+  }
+
+  .status-text {
+    margin: 0 6px;
+  }
+
+  // 给多个设施或设备加‘，’隔开
+  .one-text > .device-type:not(:last-child) > .status-text:after {
+    position: relative;
+    content: ',';
+    left: 3px;
+  }
+
+  .alarm-work-order-box{
+    background: $bg-c;
+
+    .box-wrap {
+      background: $bg-c-w;
+      overflow: hidden;
+    }
+  }
+
+  .one-text {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+  }
+}
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
+  .width-style {
+    line-height: 22px;
+    outline: none;
+    cursor: default;
+    &:hover{
+      border-color: $color;
+    }
+
+    &:disabled{
+      cursor: no-drop;
+      background-color: $bg-c;
+      color: rgba(0,0,0,0.25);
+    }
+  }
+}

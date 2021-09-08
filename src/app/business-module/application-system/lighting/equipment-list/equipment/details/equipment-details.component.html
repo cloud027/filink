@@ -1,0 +1,30 @@
+<app-equipment-view-detail
+  [isShow]="isShow"
+  [securityClass]="securityClass"
+  [operationList]="operationList"
+  [equipmentId]="equipmentId"
+  (operationNotify)="handleEquipmentOperation($event)"
+  (equipmentDetailsNotify)="handleEquipmentDetails($event)"
+  [isShowApplication] = "isShowApplication"
+>
+  <ng-content></ng-content>
+</app-equipment-view-detail>
+<!--亮度调整-->
+<nz-modal
+  *ngIf="isBrightness"
+  [(nzVisible)]="isBrightness"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="isBrightness=false"
+  [nzTitle]="languageTable.equipmentTable.light"
+  [nzFooter]="scheduleModalFooter"
+  nzWidth="500">
+  <app-slider-model (sliderNotify)="handleSlider($event)"></app-slider-model>
+  <ng-template #scheduleModalFooter>
+    <button class="link-button" nz-button nzType="primary" (click)="handleOk()">
+      {{languageTable.strategyList.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">
+      {{languageTable.strategyList.cancel}}
+    </button>
+  </ng-template>
+</nz-modal>

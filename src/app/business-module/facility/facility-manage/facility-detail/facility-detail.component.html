@@ -1,0 +1,144 @@
+<!--表单-->
+<nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="margin-top20">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="!isDisabled"
+              (click)="addFacility()">{{language.handleOk}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+<!--城市选取器模板-->
+<ng-template #customTemplate let-formGroup="formGroup" let-col="col">
+  <div class="xc-city-picker">
+    <input class="city-input margin-right10" type="text" [placeholder]="formLanguage.inputPlaceholder"
+           nz-input [(ngModel)]="cityInfo.province" [disabled]="true">
+    <input class="city-input margin-right10" type="text" [placeholder]="formLanguage.inputPlaceholder"
+           nz-input [(ngModel)]="cityInfo.city" [disabled]="true">
+    <input class="city-input" type="text" nz-input [placeholder]="formLanguage.inputPlaceholder"
+           [(ngModel)]="cityInfo.district" [disabled]="true">
+  </div>
+</ng-template>
+<!--名称自动生成模板-->
+<ng-template #autoNameTemplate let-formGroup="formGroup" let-col="col">
+  <!--名称自动生成-->
+  <form [formGroup]="formGroup">
+    <div class="auto-wrapper">
+      <input nz-input [placeholder]="formLanguage.inputPlaceholder" (blur)="inputDebounce($event)" type="text"
+             formControlName="deviceName"/>
+      <i nz-tooltip="{{language.autoGenerate}}" *ngIf="pageType===operateTypeEnum.add" class="auto-icon">
+        <span class="icon-fiLink fiLink-auto iconfont" (click)="getAutoName()"></span>
+      </i>
+    </div>
+  </form>
+</ng-template>
+
+<!--地理位置选择模板-->
+<ng-template #positionTemplate let-formGroup="formGroup" let-col="col">
+  <button type="button" class="address-p" [disabled]="positionDisabled" nz-button (click)="isVisible = true">
+    <i class="icon-fiLink-l iconfont fiLink-position"></i>
+    <span class="position-address">{{language.position}}</span></button>
+</ng-template>
+<xc-map-component
+  [(xcVisible)]="isVisible"
+  [point]="selectPoint"
+  [facilityAddress]="facilityAddress"
+  (selectDataChange)="selectDataChange($event)">
+</xc-map-component>
+
+<!--区域选择模板-->
+<ng-template #areaSelector>
+  <div class="auto-wrapper">
+    <input nz-input [(ngModel)]="areaName" onfocus="blur()" readonly="readonly">
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" nz-tooltip="{{language.selectArea}}"
+       (click)="showAreaSelectorModal()"></i>
+  </div>
+</ng-template>
+
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  [canClear]="false"
+  (selectDataChange)="areaSelectChange($event)">
+</xc-tree-area-selector>
+
+
+<!--安装时间-->
+<ng-template #installationDate let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="installationDate" class="installation-date"></nz-date-picker>
+  </form>
+</ng-template>
+
+<!--上传图片组件-->
+<ng-template #uploadImgTemp>
+  <app-upload-img
+    [url]="devicePicUrl"
+    (getUploadList)="getUploadList($event)">
+  </app-upload-img>
+</ng-template>
+
+<!--型号-->
+<ng-template #productTemp let-formGroup="formGroup" let-col="col">
+  <div class="custom-template">
+    <input [disabled]="pageType !== 'add'" class="input-name" nz-input [title]="productName?productName:''"
+           readonly [(ngModel)]="productName">
+    <span *ngIf="pageType === 'add'" class="icon-template open-button" (click)="showProductSelectorModal()"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></span>
+  </div>
+</ng-template>
+
+<ng-template #equipmentSelect>
+  <div class="alarm-tab">
+    <xc-table #tableCom [dataSet]="_dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--设备单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedProductId" (ngModelChange)="selectedProductChange($event, data)">
+    <label nz-radio [nzValue]="data.productId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+        title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--区域选择模板-->
+<ng-template #projectSelector>
+  <div class="auto-wrapper">
+    <input nz-input [ngModel]="selectSelectProject.projectName" onfocus="blur()" readonly="readonly"
+           [placeholder]="commonLanguage.clickSelect">
+    <i class="icon-fiLink fiLink-search-index iconfont auto-icon" (click)="showProjectSelectorModal()"></i>
+  </div>
+</ng-template>
+<app-select-project *ngIf="projectSelectVisible" [multiple]="false" [selectList]="[selectSelectProject]"
+                    [(isVisible)]="projectSelectVisible"
+                    [showCleanBtn]="true"
+                    (selectDataChange)="projectSelectChange($event)"></app-select-project>

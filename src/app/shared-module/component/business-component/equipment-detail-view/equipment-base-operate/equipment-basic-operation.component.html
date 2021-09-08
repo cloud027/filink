@@ -1,0 +1,49 @@
+<!--设备操作-->
+<nz-spin [nzSpinning]="loading">
+  <nz-card nzTitle="{{language.equipmentBasicOperation}}">
+    <!--编辑设备-->
+    <div class="operate-container">
+      <div [appAccessPermission]="'03-8-2'" class="operate-item" (click)="onClickEditButton()">
+        <i class="iconfont fiLink-edit-facility operate-icon detail-operate-btn"></i>
+        <span class="btn-name">{{language.editEquipment}}</span>
+      </div>
+      <!--删除设备-->
+      <div  [appAccessPermission]="'03-8-7'" class="operate-item" (click)="onClickDelete()">
+        <i class="iconfont fiLink-delete-facility operate-icon detail-operate-btn"></i>
+        <span class="btn-name">{{language.deleteEquipment}}</span>
+      </div>
+      <!--配置-->
+      <div [appAccessPermission]="'03-8-4'" [hidden]="isPassiveLock" class="operate-item" (click)="onClickEquipmentConfig()">
+        <i class="iconfont  fiLink-peizhi operate-icon equip-opt detail-operate-btn"></i>
+        <span class="btn-name">{{language.configuration}}</span>
+      </div>
+      <!--网关配置-->
+      <div [appAccessPermission]="'03-8-3-3'"  *ngIf="isShowGatewayConfig"  class="operate-item"
+           (click)="onClickGatewayConfig()">
+        <i class="iconfont  fiLink-peizhi operate-icon equip-opt detail-operate-btn"></i>
+        <span class="btn-name">{{language.gatewayConfig}}</span>
+      </div>
+      <!--上传图片-->
+      <nz-upload [appAccessPermission]="'03-8-3-2'"
+                 [nzDisabled]="canUpload"
+                 [nzShowUploadList]="false"
+                 [nzCustomRequest]="uploadImg"
+                 [nzBeforeUpload]="beforeUpload">
+        <div class="operate-item">
+          <i class="iconfont fiLink-upload-img operate-icon detail-operate-btn"></i>
+          <span class="btn-name">{{language.uploadImg}}</span>
+        </div>
+      </nz-upload>
+    </div>
+  </nz-card>
+</nz-spin>
+
+<!--设备配置弹框-->
+<app-equipment-config
+  *ngIf="equipmentConfigShow"
+  [(xcVisible)]="equipmentConfigShow"
+  [equipmentConfigContent]="equipmentConfigContent"
+  [deviceConfiguration] = "deviceConfiguration"
+  [centerControlId]="configEquipmentId"
+  [configValueParam]="equipmentConfigParam">
+</app-equipment-config>

@@ -1,0 +1,48 @@
+@import '../../../../style-module/config.scss';
+.data-task-opear-box {
+    background-color: #fff;
+    .title {
+        border-left: 2px solid #7cb0dd;
+        margin-left: 16px;
+        padding-left: 16px;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 900;
+    }
+    .litter-title {
+        font-size: 14px;
+        font-weight: 900;
+        color: #333;
+        margin-left: 16px;
+    }
+    .table-box {
+        margin-top: 10px;
+        padding: 16px;
+    }
+}
+.collectionTime-box {
+    width: 100%;
+    ::ng-deep .ant-calendar-picker-input {
+        width: 300px;
+    }
+}
+.scopeOfApplication-box {
+    cursor: pointer;
+    width: 115px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #626262;
+    .icon-box {
+        margin-right: 5px;
+    }
+}
+.installation-date {
+    ::ng-deep .ant-calendar-picker {
+        width: 300px !important;
+    }
+}

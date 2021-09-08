@@ -1,0 +1,34 @@
+<!--回路列表弹框-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzTitle]="title"
+          nzWidth="70%"
+          (nzOnCancel)="onCloseModal()"
+          [nzFooter]="footer">
+
+  <div class="overview-slide">
+    <!--设备配置-->
+    <app-equipment-config-common
+      *ngIf="xcVisible"
+      #equipmentConfigTemp
+      [equipmentConfigContent]="equipmentConfigContent"
+      [centerControlId]="centerControlId"
+      [configValueParam]="configValueParam"
+      [deviceConfiguration]="deviceConfiguration"
+      (buttonStatus)="getConfigButtonStatus($event)"
+      (getFormStatus)="getConfigFormValue($event)"
+      (okEvent)="subOkEvent($event)"
+      (getCurrentTabIndex)=getCurrentTabIndex($event)>
+    </app-equipment-config-common>
+  </div>
+  <!-- 底部按钮-->
+  <ng-template #footer>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            *ngIf="deviceConfiguration&&showOkButton"
+            [disabled]="configOkDisabled[currentIndex]&&!subOkEventFunc"
+            (click)="handleOk(currentIndex)">{{language.handleOk}}
+    </button>
+
+    <button class="link-button" nz-button nzType="danger" type="button"
+            (click)="onCloseModal()">{{language.handleCancel}}</button>
+  </ng-template>
+</nz-modal>

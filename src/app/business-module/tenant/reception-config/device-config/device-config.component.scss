@@ -1,0 +1,69 @@
+@import "../../../../style-module/config";
+
+.device-box {
+
+  margin: 20px 0px 20px 20px;
+
+  .device-select-box {
+    width: 970px;
+    height: 100%;
+    margin-bottom: 20px;
+
+    .device-select-title {
+      width: 170px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .index-title-box-list {
+      float: left;
+    }
+
+    .device-select-radio {
+      margin-right: 20px;
+    }
+
+    .device-select-check {
+      display: inline-block;
+      width: 800px;
+
+      .device-select-check-box {
+        display: flex;
+        flex-wrap: wrap;
+
+        .device-select-check-label {
+          flex: 1;
+          width: 120px;
+          margin-bottom: 20px;
+        }
+      }
+
+      .index-title-box {
+        width: 600px;
+        height: 70px;
+        line-height: 20px;
+        padding: 10px;
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        margin-bottom: 10px;
+
+        .index-title {
+          float: left;
+        }
+
+        .index-title-icon {
+          float: right;
+        }
+
+      }
+
+    }
+  }
+
+}
+
+// 配置按钮
+.button-group {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}

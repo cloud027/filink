@@ -1,0 +1,108 @@
+@import "../config";
+
+.link-button {
+  min-width: 90px;
+  vertical-align: bottom;
+  overflow: hidden;
+  span {
+    //vertical-align: middle;
+  }
+}
+
+.small-button {
+  width: auto !important;
+}
+
+.link-button-normal {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  border-radius: 4px;
+}
+
+// 使用于 保存 确定 下一步等
+.ant-btn-primary {
+  color: #fff;
+  background-color: $button-color;
+  border-color: $button-color;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.ant-btn-primary:active, .ant-btn-primary.active {
+  color: #fff;
+  background-color: $button-color;
+  border-color: $button-color;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  color: #fff;
+  background-color: $button-hover-color;
+  border-color: $button-hover-color;
+}
+
+// 使用于 取消 重置 返回
+.ant-btn-danger {
+  color: $button-danger-font-color;
+  background-color: $button-danger-color;
+  border-color: $button-danger-hover-color;
+}
+// 白色背景、主题色线条
+.ant-btn-special{
+  color: $button-color;
+  background-color: $button-danger-color;
+  border-color: $button-color;
+  &:hover{
+    color: $button-danger-color;
+    background-color: $color;
+  }
+}
+.ant-btn-danger:hover, .ant-btn-danger:focus {
+  background-color: $button-danger-color;
+  color: $button-color;
+  border-color: $button-color;
+}
+
+// 使用于没有填充背景颜色
+.ant-btn-background-ghost.ant-btn-primary,
+.ant-btn-background-ghost.ant-btn-primary:hover,
+.ant-btn-background-ghost.ant-btn-primary:focus {
+  color: $button-color;
+  background-color: transparent;
+  border-color: $button-color;
+}
+
+.table-top-delete-btn {
+  > span {
+    color: $error-color;
+  }
+}
+
+.open-button[disabled] > i {
+  color: #ccc;
+  cursor: not-allowed;
+}
+// 控制按钮
+.table-top-control-btn{
+  // 解决英文环境按钮宽度不够
+  width: auto;
+  min-width: 110px;
+  background-color: $button-danger-color;
+  color: $button-color;
+  text-shadow: none;
+  box-shadow: none;
+}
+// 设备配置
+.equipment-batch-config-btn{
+  background-color: $button-danger-color;
+  color: $color;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+// 编码标准查看可选字段按钮
+.batch-coding-field-btn {
+  background-color: $bg-c-w;
+  color: $color;
+  text-shadow: none;
+  box-shadow: none;
+}

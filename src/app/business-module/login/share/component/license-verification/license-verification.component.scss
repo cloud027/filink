@@ -1,0 +1,38 @@
+@import "../../../../../style-module/config";
+.license-verification {
+  width: 300px;
+  height: 160px;
+  .count-position {
+    float: right;
+    width: 100px;
+    height: 25px;
+    background-color: $license-count-bg;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: center;
+    border: 1px solid $license-border-color;
+    color: $license-font-color;
+  }
+  .alert {
+    display: inline-block;
+    padding: 0 10px 0 30px;
+    .iconfont {
+      font-size: 26px;
+      vertical-align: sub;
+      color: $bg-c-w;
+      background-color: $error-color;
+      border-radius: 50%;
+    }
+  }
+  .font-size {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .hint-font-size {
+    font-size: 12px;
+    color: $license-font-color;
+    padding-left: 65px;
+  }
+}
+

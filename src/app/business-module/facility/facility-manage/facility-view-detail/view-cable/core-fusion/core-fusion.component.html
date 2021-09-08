@@ -1,0 +1,95 @@
+<!--纤芯熔接弹框-->
+<nz-modal [(nzVisible)]="isCoreVisible"
+          [nzTitle]="coreCoreTitle"
+          [nzMaskClosable]="false"
+          [nzWidth]="1200"
+          (nzOnCancel)="handleCancel()"
+          [nzFooter]="footer">
+  <div class="leftStepDirectory">
+    <!--左侧步骤目录-->
+    <div class="terminationStep">
+      <nz-steps class="nz-steps" [nzCurrent]="currentSteps" nzDirection="vertical" style="">
+        <nz-step class="nz-step" [nzTitle]="stepOneTitle"></nz-step>
+        <nz-step class="nz-step" [nzTitle]="stepTwoTitle"></nz-step>
+        <nz-step class="nz-step" [nzTitle]="stepThreeTitle"></nz-step>
+      </nz-steps>
+    </div>
+    <!--右侧具体步骤内容-->
+    <div class="terminationStepRight" *ngIf="stepOneContent">
+      <div class="stepTitle">
+        <span>{{language.stepOneChooseAFacilityOrConnectorBox}}</span>
+      </div>
+      <div class="stepTitleTwo">
+        <xc-form (formInstance)="formInstance($event)" [column]="formColumn"></xc-form>
+      </div>
+    </div>
+    <div class="terminationStepRight" *ngIf="stepTwoContent">
+      <div class="stepTitle">
+        <span>
+          {{language.stepTwoSelectTheTwoCableSegmentsThatPassThroughTheFacility}}</span>
+      </div>
+      <div>
+        <!--要选择的光缆段列表-->
+        <xc-table #cableSegmentTable [dataSet]="section_dataSet"
+                  [pageBean]="section_pageBean"
+                  [tableConfig]="section_tableConfig"
+                  (pageChange)="section_pageChange($event)">
+        </xc-table>
+      </div>
+
+    </div>
+    <div class="terminationStepRight" *ngIf="stepThreeContent">
+      <div class="stepTitle terminationStepRightDiv">
+        <span>{{stepThreeUpTitle}}</span>
+        <div *ngIf=!viewCoreFusion>
+          <i class="map-util icon-fiLink-l iconfont fiLink-arrow-select terminationStepRightDivI"
+             (click)="chooseUtil(selectionMode.arrow)" [class.background]="drawType===selectionMode.arrow" ></i>
+          <i class="map-util icon-fiLink-l iconfont fiLink-box-select"
+             [hidden]="mapBoxSelect"
+             (click)="chooseUtil(selectionMode.rectangle)" [class.background]="drawType===selectionMode.rectangle"></i>
+        </div>
+      </div>
+      <div id = "pic-canvas">
+        <ul [hidden]="!showRightMenu" id="right-menu" class="right-menu">
+          <li (click)="deleteLine()"><a>{{language.deleteConnection}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <ng-template #footer>
+      <button class="link-button" nz-button nzType="danger" type="button" (click)="pre()"
+              *ngIf="currentSteps > 0">{{language.previous}}</button>
+      <button class="link-button" nz-button nzType="primary" type="button" (click)="next()"
+              *ngIf="currentSteps < 2">{{language.nextStep}}</button>
+      <button class="link-button" nz-button nzType="primary" type="button" (click)="done()"
+              *ngIf="currentSteps === 2">
+        {{determine}}</button>
+      <button class="link-button" nz-button nzType="danger" type="button" (click)="handleCancel()">
+        {{language.handleCancel}}</button>
+    </ng-template>
+  </div>
+
+</nz-modal>
+
+<!-- 光缆芯数筛选带操作符模板 -->
+<ng-template #cableCoreNumTemp let-filterValue = "filterValue">
+  <span class="inputBox">
+    <input type="text" class="width-style" class = "numberInput"
+           [placeholder]="InspectionLanguage.pleaseEnter"
+           [(ngModel)]="filterValue.filterValue" oninput="value=value.replace(/\D/g,'')">
+    <xc-nz-select style="width: 110px;" [(ngModel)]="coreNumSelectValue" [disabled]="!filterValue.filterValue">
+       <xc-nz-option nzValue="gt" [nzLabel]="'>'"></xc-nz-option>
+       <xc-nz-option nzValue="eq" [nzLabel]="'='"></xc-nz-option>
+       <xc-nz-option nzValue="lt" [nzLabel]="'<'"></xc-nz-option>
+    </xc-nz-select>
+  </span>
+</ng-template>
+
+<!--光缆段单选按钮-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="peerCableId" (ngModelChange)="selectedCableChange($event, data)">
+    <label nz-radio [nzValue]="data.opticCableSectionId "
+           [nzDisabled]="data.disable"></label>
+  </nz-radio-group>
+</ng-template>
+
+

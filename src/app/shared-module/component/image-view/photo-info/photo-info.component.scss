@@ -1,0 +1,30 @@
+@import "../../../../style-module/config";
+.photo-info {
+  .photo-info-title {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  p {
+    padding: 12px 10px;
+    display: inline-flex;
+
+    .label {
+      display: inline-block;
+      width: 60px;
+    }
+
+    .value {
+      margin-left: 20px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      width: 150px;
+    }
+
+    .selected {
+      color: $menu-hover-color;
+      cursor: pointer;
+    }
+  }
+}

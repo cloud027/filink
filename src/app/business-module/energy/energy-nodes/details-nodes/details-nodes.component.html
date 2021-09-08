@@ -1,0 +1,157 @@
+<nz-spin class="nodes-details-box" [nzSpinning]="pageLoading">
+  <!-- 策略详情 -->
+  <p class="nodes-details-title">{{ language.nodesDetails.nodesDetails }}</p>
+  <div nz-row nzGutter="10" class="card-box">
+    <div nz-col nzSpan="12">
+      <nz-card class="card-item">
+        <div class="title">
+          {{ energyDetailsModel.equipmentName }}
+          <!--设施状态-->
+          <span
+            *ngIf="equipmentDetailInfo.equipmentStatus"
+            [class]="'status ' + getEquipmentStatusBg(equipmentDetailInfo.equipmentStatus)"
+          >
+            <i [class]="getEquipmentStatusIconClass(equipmentDetailInfo.equipmentStatus)"></i>
+            {{
+              equipmentDetailInfo.equipmentStatus
+                | translate: equipmentStatusEnum:languageEnum.facility
+            }}
+          </span>
+        </div>
+        <div class="creationTime-box">
+          <span class="span-title" style="margin-right: 10px"
+            >{{ language.nodesDetails.creationTime }}:</span
+          >
+          <span class="container-span">{{ energyDetailsModel.ctime | dynamic: "date":null }}</span>
+        </div>
+        <div class="card-list-box">
+          <!-- 型号 -->
+          <div class="device-type equipment-type list-item">
+            <span *ngIf="equipmentDetailInfo.equipmentType" class="type-span">
+              <i [class]="getEquipmentIconClass(equipmentDetailInfo.equipmentType)"></i>
+              {{
+                equipmentDetailInfo.equipmentType
+                  | translate: equipmentTypeEnum:languageEnum.facility
+              }}
+            </span>
+            <span class="equipment-model">
+              {{ equipmentDetailInfo.equipmentModel }}
+            </span>
+          </div>
+
+          <!-- 项目： -->
+          <div class="project-box list-item">
+            <span class="title-icon">{{ language.nodesDetails.project }}</span>
+            <span class="container-span"
+              >{{ energyDetailsModel.projectName}}
+            </span>
+          </div>
+          <!--资产编码-->
+          <div class="code-width list-item">
+            <i
+              class="title-icon icon-fiLink-7 icon-item iconfont fiLink-asset-number"
+              [nz-tooltip]="language.nodesDetails.deviceCode"
+            >
+            </i>
+            <span class="container-span">{{ energyDetailsModel.equipmentCode }}</span>
+          </div>
+          <!-- 区域： -->
+          <div class="region-box list-item">
+            <span class="title-icon">{{ language.nodesDetails.region }}</span>
+            <span class="container-span">{{ energyDetailsModel.areaName }}</span>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-card class="card-item right-container">
+        <!-- 通信设备: -->
+        <div class="item">
+          <span class="span-title">{{ language.nodesDetails.communicationEquipment }}:</span>
+          <span class="container-span">{{ energyDetailsModel.gatewayName }}</span>
+        </div>
+        <!-- 能耗目标值(kW·h)： -->
+        <div class="item">
+          <span class="span-title">{{ language.nodesDetails.energyConsumptionTarget }}:</span>
+          <span class="container-span">{{ energyDetailsModel.energyConsumptionTarget }}</span>
+        </div>
+        <!-- 详细地址： -->
+        <div class="item">
+          <span class="span-title">{{ language.nodesDetails.detailedAddress }}:</span>
+          <span class="container-span">{{ energyDetailsModel.address }}</span>
+        </div>
+        <div class="remarks-box">
+          <span class="span-title">{{ language.nodesDetails.remarks }}:</span>
+          <span class="container-span">{{ energyDetailsModel.remarks }}</span>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <!-- 节点操作 -->
+  <div nz-row class="basic-operation-box">
+    <div nz-col nzSpan="24">
+      <p class="title">{{ language.nodesDetails.nodeOperation }}</p>
+      <div class="operation-icon">
+        <div class="edit" (click)="handleEdit()" [appAccessPermission]="'26-1-3'">
+          <i class="icon-fiLink iconfont fiLink-edit"></i>
+          <span>编辑</span>
+        </div>
+        <div class="delete" (click)="handleDelete()" [appAccessPermission]="'26-1-6'">
+          <i class="icon-fiLink iconfont fiLink-delete"></i>
+          <span>删除</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 节点统计 -->
+  <div class="nodes-statistic-box">
+    <app-nodes-statistic
+      *ngIf="statisticEquipmentId"
+      [nodeEquipmentId]="statisticEquipmentId"
+    ></app-nodes-statistic>
+  </div>
+  <!-- 节点采集 -->
+  <div class="node-con-box">
+    <nz-card nzTitle="{{ language.nodesDetails.nodeAcquisition }}">
+      <div class="equipment-tabs">
+        <nz-tabset>
+          <!-- 采集设施 -->
+          <nz-tab
+            *ngIf="tranDeviceTableData.length > 0"
+            nzTitle="{{ language.nodesDetails.collectDeviceId }}"
+            (nzClick)="onClickTab(1)"
+          >
+            <app-collection-tables
+              [switchPage]="switchPage.energyNodes"
+              [energyConsumptionNodeId]="this.energyDetailsModel.energyConsumptionNodeId"
+              [tableType]="'device'"
+            ></app-collection-tables>
+          </nz-tab>
+          <!--采集设备-->
+          <nz-tab
+            *ngIf="tranEquipmentTableData.length > 0"
+            nzTitle="{{ language.nodesDetails.collectEquipmentId }}"
+            (nzClick)="onClickTab(2)"
+          >
+            <app-collection-tables
+              [switchPage]="switchPage.energyNodes"
+              [energyConsumptionNodeId]="this.energyDetailsModel.energyConsumptionNodeId"
+              [tableType]="'equipment'"
+            ></app-collection-tables>
+          </nz-tab>
+          <!-- 采集回路 -->
+          <nz-tab
+            *ngIf="tranLoopTableData.length > 0"
+            nzTitle="{{ language.nodesDetails.collectLoopId }}"
+            (nzClick)="onClickTab(3)"
+            ><app-collection-tables
+              [switchPage]="switchPage.energyNodes"
+              [energyConsumptionNodeId]="this.energyDetailsModel.energyConsumptionNodeId"
+              [tableType]="'loop'"
+            ></app-collection-tables>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-card>
+  </div>
+</nz-spin>

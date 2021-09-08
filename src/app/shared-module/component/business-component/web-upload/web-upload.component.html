@@ -1,0 +1,53 @@
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzMaskClosable]="false"
+          [nzTitle]="uploadTitle"
+          [nzWidth]="520"
+          [nzContent]="uploadBody"
+          [nzFooter]="isNeedBtn ? footerBtn : null"
+          (nzOnCancel)="handleCancel()">
+  <!--文件上传弹窗-->
+  <ng-template #uploadBody>
+    <div class="upload-box">
+      <!--文件队列容器-->
+      <div class="user_other_documents" [id]="uploadDomId" data-zw-upload-name="user_other_documents"
+            data-zw-upload-preview=""
+            data-zw-upload-preview-names="">
+      </div>
+    </div>
+    <!--文件上传进度条-->
+    <div *ngIf="hasFile" class="progress-box">
+      <div class="progress-warp">
+        <nz-progress class="progress-main" [nzWidth]="'70%'" [nzPercent]="filePercent" ></nz-progress>
+      </div>
+      <!--文件上传操作按钮-->
+      <div class="upload-btn" [id]="textDomId">
+        <label class="upload-item-btn pause" *ngIf="uploadStatus" (click)="pauseLoad()">
+          <i class="iconfont common-button-icon fiLink-suspend" id="stop"
+             [title]="language.pause"></i>{{language.pause}}
+        </label>
+        <label class="upload-item-btn" *ngIf="!uploadStatus" (click)="retry()">
+          <i class="iconfont common-button-icon fiLink-reset" id="retry"
+             [title]="language.continueUploading"></i>{{language.continueUploading}}
+        </label>
+        <label class="upload-item-btn" *ngIf="isPaused" (click)="deleteFile()">
+          <i class="iconfont common-button-icon fiLink-delete red-icon" id="delete"
+             [title]="language.deleteBtn"></i>{{language.deleteBtn}}
+        </label>
+      </div>
+    </div>
+    <!--提示信息-->
+    <div class="load-msg text">{{language.prompt}}：{{uploadMsg}}</div>
+    <!--文件名-->
+    <div class="load-msg" *ngIf="fileMsg">{{language.fileNames}}：{{fileMsg.name}}</div>
+    <!--文件上传信息-->
+    <div class="load-msg" [id]="textDomId" *ngIf="fileMsg">
+      {{language.status}}：<span class="text">{{fileMsg.statusText}}</span>
+    </div>
+  </ng-template>
+  <!--底部按钮-->
+  <ng-template #footerBtn>
+    <!--确定-->
+    <button class="link-button" nz-button nzType="primary" type="button" (click)="handleOk()">{{language.confirm}}</button>
+    <!--取消-->
+  </ng-template>
+</nz-modal>

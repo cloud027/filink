@@ -1,0 +1,83 @@
+@import "../../../../style-module/config";
+
+.table-container {
+  .inspect-statistics-item-title {
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 14px;
+    color: $title-color;
+  }
+
+  .inspect-statistics-item-chart {
+    flex: 1;
+    display: flex;
+    background-color: white;
+    min-width: 240px;
+    height: 200px;
+
+    .pie-chart {
+      width: 100%;
+      height: 100%;
+    }
+
+    .no-data {
+      width: 100%;
+      line-height: 140px;
+      text-align: center;
+    }
+  }
+
+  .status-circle {
+    height: 190px;
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    .over-box{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 3;
+    }
+    .ring-chart{
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  .demo-chart {
+    width: 100%;
+    height: 190px;
+  }
+
+  .status-temp {
+    margin-right: 6px;
+  }
+
+  .area-name {
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 11px;
+    cursor: pointer;
+  }
+
+  .see-table {
+    position: relative;
+    top: -25px;
+  }
+}
+
+.order-warp {
+  background: $bg-c;
+  padding: 10px 0;
+
+  .gutter-box {
+    background: $bg-c-w;
+    height: 100%;
+    padding: 0 16px;
+  }
+}
+

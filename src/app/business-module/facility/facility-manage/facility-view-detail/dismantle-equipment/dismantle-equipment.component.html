@@ -1,0 +1,86 @@
+<!--设备统计滑块-->
+<xc-statistical-slider [sliderConfig]="sliderConfig"
+                       [showCardNum]="6"
+                       (selectChange)="onSliderChange($event)"
+                       (slideShowChange)="slideShowChange($event)">
+</xc-statistical-slider>
+
+<!--设备列表-->
+<div class="table-wrapper">
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}"
+          [ngStyle]="data.rowStyle">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i  class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" [ngStyle]="data.rowStyle"
+        title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--设备配置弹框-->
+<app-equipment-config
+  *ngIf="equipmentDeployShow"
+  [(xcVisible)]="equipmentDeployShow"
+  [deviceConfiguration]="deviceConfiguration"
+  [equipmentConfigContent]="equipmentConfigContent"
+  [configValueParam]="configValueParam"
+  [centerControlId]="configEquipmentId">
+</app-equipment-config>
+
+<!--设施过滤选择器-->
+<facility-list-selector-component *ngIf="facilityVisible"
+                                  [(facilityVisible)]="facilityVisible"
+                                  [multiple]="true"
+                                  [selectFacilityIds]="selectFacility"
+                                  title="{{language.facilityList}}"
+                                  (selectDataChange)="onFacilityChange($event)">
+</facility-list-selector-component>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="language.picInfo.pleaseChoose"
+         [ngModel]="filterValue.filterName||filterDeviceName"
+         (click)="onShowFacility(filterValue)">
+</ng-template>
+<!--设施列表展示-->
+<ng-template #deviceNameTemplate let-data="data">
+  <div class="device-name" [title]="data.deviceName">
+    <span [ngStyle]="data.rowStyle">{{data.deviceName}}</span>
+  </div>
+</ng-template>
+<ng-template #equipmentBusinessTemp let-data="data">
+  <div class="area-level">
+    <span class="status-text"
+          [ngStyle]="data.rowStyle"
+          title="{{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}">
+          {{data.businessStatus | translate: businessStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>
+
+<!--导入设备模版-->
+<ng-template #importEquipmentTemp>
+  <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <button nz-button><i nz-icon type="upload"></i><span>{{language.selectFile}}</span></button>
+  </nz-upload>
+</ng-template>

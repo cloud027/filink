@@ -1,0 +1,15 @@
+.menu-list {
+  .operate {
+    button {
+      width: 110px;
+      height: 35px;
+      margin-right: 10px;
+    }
+  }
+}
+:host ::ng-deep  button {
+  opacity: 1!important;
+}
+.space{
+  margin-left: 15px
+}

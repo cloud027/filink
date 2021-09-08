@@ -1,0 +1,43 @@
+<xc-form [column]="formColumn" (formInstance)="formInstance($event)"> </xc-form>
+<!-- 区域 -->
+<ng-template #areaSelector let-col="col">
+    <div class="custom-template">
+        <label>
+            <input
+                readonly="readonly"
+                class="input-name"
+                nz-input
+                placeholder="{{ language.picInfo.pleaseChoose }}"
+                [(ngModel)]="setpsComponentInfo.areaName"
+            />
+        </label>
+        <i nz-tooltip="{{ language.selectArea }}" class="icon-template" (click)="onClickShowArea()">
+            <span class="icon-fiLink fiLink-search-index iconfont"> </span>
+        </i>
+    </div>
+</ng-template>
+<!--区域选择器-->
+<xc-tree-selector
+  [(xcVisible)]="areaSelectVisible"
+  (selectDataChange)="selectDataChange($event)"
+  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>
+
+<!--项目-->
+<ng-template #projectSelect let-formGroup="formGroup">
+    <form [formGroup]="formGroup">
+        <xc-nz-select
+            #nzSelectComponent
+            formControlName="project"
+            (ngModelChange)="onSelectedProjectChange($event)"
+            [nzPlaceHolder]="language.picInfo.pleaseChoose"
+        >
+            <xc-nz-option
+                *ngFor="let item of projectSelectList"
+                [nzLabel]="item.model"
+                [nzValue]="item.model"
+            >
+            </xc-nz-option>
+        </xc-nz-select>
+    </form>
+</ng-template>

@@ -1,0 +1,24 @@
+<app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+<div class="config-agreement-form">
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <div class="button-group">
+    <button class="link-button space-ok"
+            [disabled]="!isSystemDisabled"
+            nz-button nzType="primary"
+            [nzLoading]="submitLoading"
+            (click)="formHandleOk()"
+            [appAccessPermission]="code">{{language.table.okText}}</button>
+    <button class="link-button space-ok"
+            nz-button nzType="danger"
+            (click)="formHandleCancel()">{{language.table.cancelText}}</button>
+    <button class="link-button" nz-button nzType="danger" (click)="formHandleReset()">{{language.form.reset}}</button>
+  </div>
+</div>
+
+<ng-template #certificateTmp>
+  <input type="file" class="file-change" id="file" (change)="fileChange()">
+  <span class="file-name">{{fileName}}</span>
+  <button class="upload" nz-button (click)="upload()">
+    <i nz-icon type="upload"></i><span>{{language.agreement.uploadSecurityCertificate}}</span>
+  </button>
+</ng-template>

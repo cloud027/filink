@@ -1,0 +1,81 @@
+<div class="alarm-confirm-detail">
+  <!--标题-->
+  <div><span class="page-detail-title">{{pageTitle}}</span></div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-column-width"></xc-form>
+    <div  class="tab-area">
+      <button class="link-button" nz-button
+              nzType="primary"
+              [disabled]="!isDisabled"
+              (click)="submitClearData()"
+              type="button"
+              [nzLoading]="isLoading">{{InspectionLanguage.handleOk}}
+      </button>
+      <button type="button" class="link-button" nz-button (click)="cancel()" nzType="danger">{{InspectionLanguage.handleCancel}}</button>
+    </div>
+  </div>
+    <!--告警级别-->
+    <ng-template #alarmLevelTemp let-data="data">
+      <div class="hidden" title="{{data.levelName}}">
+        <span class="status-temp alarmLevel" [ngStyle]="{background: data.levelStyle}"> </span>
+        {{data.levelName}}
+      </div>
+    </ng-template>
+    <!--设施类型图标-->
+    <ng-template #deviceTemp let-data="data">
+      <div class="hidden" title="{{data.deviceTypeName}}">
+        <span class="status-temp" [ngClass]="data.deviceClass"> </span>
+        {{data.deviceTypeName}}
+      </div>
+    </ng-template>
+    <!--设备类型-->
+    <ng-template #equipTemp let-data="data">
+      <div class="tab-text-over" title="{{data.equipmentTypeName}}">
+        <span class="status-temp" [ngClass]="data.equipClass"></span>
+        {{data.equipmentTypeName}}
+      </div>
+    </ng-template>
+    <!--自动派单-->
+    <ng-template #autoDispatch>
+      <nz-radio-group [(ngModel)]="dispatchValue" [nzDisabled]="isDispatch" name="autoDispatch" (ngModelChange)="selectDispatch($event)">
+        <label nz-radio [nzValue]="dispatchEnum.right">{{InspectionLanguage.right}}</label>
+        <label nz-radio [nzValue]="dispatchEnum.deny">{{InspectionLanguage.deny}}</label>
+      </nz-radio-group>
+    </ng-template>
+    <!--单位模板-->
+    <ng-template #accountabilityUnit let-formGroup="formGroup" let-col="col">
+      <div class="unit-width" >
+        <input class="area-name" nz-input [disabled]="isSelectDept" [placeholder]="InspectionLanguage.pleaseChoose" [(ngModel)]="selectDepartName" readonly />
+        <button type="button" class="open-button" [disabled]="isSelectDept" (click)="showSelectorModal()">
+          <i class="icon-fiLink fiLink-search-index iconfont"></i></button>
+      </div>
+    </ng-template>
+    <!--单位选择-->
+    <xc-tree-area-selector
+      [(xcVisible)]="isUnitsVisible"
+      (selectDataChange)="selectUnitDataChange($event)"
+      [treeSelectorConfig]="treeUnitSelectorConfig">
+    </xc-tree-area-selector>
+    <!--期望完工时间-->
+    <ng-template #ecTimeTemp let-formGroup="formGroup" let-col="col">
+      <form [formGroup]="formGroup">
+        <nz-date-picker [nzDisabledDate]="disabledEndDate"  nzShowTime formControlName="expectedCompletedTime"></nz-date-picker>
+      </form>
+    </ng-template>
+  <!-- 关联告警-->
+  <ng-template #relevantAlarm let-col="col">
+    <div class="custom-template">
+      <input readonly class="area-name" nz-input [disabled]="isSelectAlarm" [(ngModel)]="relevancyAlarmName" [placeholder]="InspectionLanguage.pleaseChoose" />
+      <button type="button" class="open-button" [disabled]="isSelectAlarm" (click)="relevancyAlarmVisible = true">
+        <i class="icon-fiLink fiLink-search-index iconfont"></i>
+      </button>
+    </div>
+  </ng-template>
+  <app-relevancy-alarm
+    *ngIf="relevancyAlarmVisible"
+    [(relevancyAlarmVisible)]="relevancyAlarmVisible"
+    [selectAlarmIds]="selectAlarmId"
+    [filterConditions]="alarmFilter"
+    (selectDataChange) = "onRelevancyAlarmChange($event)">
+  </app-relevancy-alarm>
+</div>

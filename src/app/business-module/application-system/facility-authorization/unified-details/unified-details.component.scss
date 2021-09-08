@@ -1,0 +1,132 @@
+@import "../../../../style-module/config";
+@import "../../share/style/common-style";
+
+.pageTitle {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.user-detail {
+  padding: 10px;
+}
+
+.pad-l-20{
+  padding-left: 20px
+}
+.pad-t-20{
+  padding-top: 20px;
+}
+.pad-t-40{
+  padding-top: 40px;
+}
+.pad-b-20{
+  padding-bottom:10px;
+}
+.mar-r-20{
+  margin-right: 20px;
+}
+.mar-t-minus-35{
+  margin-top: -35px;
+}
+.v-middle{
+  vertical-align: middle ;
+}
+.mar-l-5{
+  margin-left: 5px;
+}
+.area-name {
+  display: inline-block;
+  width: 50%;
+  border: 1px solid $borderColorApplication;
+  height: 32px;
+  padding: 4px 11px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.float-l {
+  float: left;
+}
+.open-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $bg-c-w;
+}
+
+.buttonStyle{
+  color: $color;
+  padding: 0 10px;
+  &:hover{
+    border-color: $color;
+  }
+}
+
+.door{
+  margin-right: 24px;
+}
+.lock {
+  margin-right: 22px;
+}
+
+.labelStyle{
+  display: inline-block;
+  width:70px;
+  margin-right:5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.status-text {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.facility-alarm-c {
+  color: $status-alarm;
+}
+
+.facility-normal-c {
+  color: $status-normal;
+
+}
+
+.facility-offline-c {
+  color: $status-offline;
+
+}
+
+.facility-lost-c {
+  color: $status-lost;
+
+}
+
+.facility-unknown-c {
+  color: $status-unknown;
+}
+.device-type-icon{
+  vertical-align: middle;
+  font-size: 19px;
+}
+
+.unit-name {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid #ccc;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 11px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

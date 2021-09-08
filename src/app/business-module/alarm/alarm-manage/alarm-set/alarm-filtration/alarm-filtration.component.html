@@ -1,0 +1,84 @@
+<div class="alarm-filtration-box">
+  <div class="alarm-common-title">{{language.alarmFilter}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table
+        [dataSet]="dataSet"
+        [pageBean]="pageBean"
+        (pageChange)="pageChange($event)"
+        [tableConfig]="tableConfig">
+      </xc-table>
+    </div>
+  </div>
+  <!-- 启用状态 -->
+  <ng-template #isNoStartTemp let-data="data">
+    <nz-switch [ngModel]="data.status === isStatus.enable" [appAccessPermission]="data.appAccessPermission"
+               [nzControl]="true"
+               (click)="clickSwitch(data)">
+    </nz-switch>
+    <span class="no-start-temp">{{data.statusName}}</span>
+  </ng-template>
+
+  <!-- 是否存库 -->
+  <ng-template #isNoStorageTemp let-data="data">
+    <nz-radio-group class="remote-table" [ngModel]="data.storeDatabase ? data.storeDatabase.toString() : ''">
+      <label nz-radio [nzValue]="isInventory.yes"
+             (click)="clickIsNoStorageTemp(data, isInventory.yes)">{{language.yes}}</label>
+      <label nz-radio [nzValue]="isInventory.no"
+             (click)="clickIsNoStorageTemp(data, isInventory.no)">{{language.no}}</label>
+    </nz-radio-group>
+  </ng-template>
+
+  <!-- 查看详情 -->
+  <nz-modal [(nzVisible)]="particulars"
+            [nzTitle]="language.particulars"
+            [nzContent]="modalContent"
+            [nzFooter]="modalFooter"
+            [nzMaskClosable]="false"
+            (nzOnOk)="particulars=false"
+            (nzOnCancel)="particulars=false">
+    <ng-template #modalContent>
+      <!-- 告警过滤详情-->
+      <div class="particulars-pop-up">
+          <div>
+            <span class="group-item">{{language.alarmobject}}:</span>
+            <span class="group-item" (click)="openAlarmObjectDetail()">
+              <i class="icon-fiLink iconfont fiLink-view-detail" [title]="language.particulars"></i>
+            </span>
+          </div>
+       <div>
+         <span class="group-item">{{ language.alarmName }}:</span>
+         <span class="group-item" [title]="alarmFilterRuleName">{{ alarmFilterRuleName }}</span>
+       </div>
+
+      </div>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button nzType="default" (click)="particulars=false;">{{language.cancelText}}</button>
+    </ng-template>
+  </nz-modal>
+
+  <!-- 过滤条件 点击事件 -->
+  <ng-template #filtrationConditionTemp let-data="data">
+    <span class="filtration-condition" [title]="data.alarmName"
+          (click)="clickFiltration(data)">{{data.alarmName}}</span>
+  </ng-template>
+
+  <!-- 告警名称 -->
+  <ng-template #alarmName let-filterValue="filterValue">
+    <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue"></app-alarm-name>
+  </ng-template>
+
+  <!-- 告警对象 -->
+  <equipment-list-selector-component
+    *ngIf="equipmentVisible"
+    [(equipmentVisible)]="equipmentVisible"
+    [multiple]="true"
+    [showSelectedCount]="false"
+    [showCleanBtn]="false"
+    [selectEquipments]="selectEquipments"
+    [tableTitle]="tableTitle"
+    [forbidSelect]="forbidSelect"
+    >
+  </equipment-list-selector-component>
+</div>

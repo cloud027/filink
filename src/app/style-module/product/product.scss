@@ -1,0 +1,281 @@
+@import "../config";
+
+.page-top-title {
+  padding-left: 12px;
+  padding-bottom: 20px;
+  font-size: 16px;
+  font-weight: 900;
+  color: $title-color;
+}
+
+.no-upload-container {
+  padding-top: 10px;
+  height: calc(100vh - 185px);
+  overflow: hidden;
+  background: $bg-c;
+}
+.no-upload-container-no{
+  overflow: hidden;
+  background: $bg-c;
+}
+.tip-container {
+  width: 100%;
+  background-color: $bg-c-w;
+
+  .btn-container {
+    padding: 15px 0 0 20px;
+
+    .position-config {
+      margin-right: 10px;
+    }
+
+    .wisdom-operate {
+      border-color: $color;
+      color: $color;
+
+      &:hover {
+        color: $sp-icon-color-4;
+        border-color: $color;
+        background-color: $handle-done-color;
+      }
+
+      .fiLink-filink-location-icon .fiLink-filink-baocun-icon {
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .position-info {
+    display: flex;
+
+    .no-model {
+      margin: 15px 0 15px 20px;
+      width: 50%;
+      height: calc(100vh - 271px);
+      border: 1px solid $border-color;
+      text-align: center;
+    }
+
+    .no-position {
+      margin: 15px 20px 15px 20px;
+      height: calc(100vh - 271px);
+      width: 50%;
+      border: 1px solid $border-color;
+      text-align: center;
+      overflow: auto;
+
+      .position-table {
+        margin: 10px;
+      }
+    }
+  }
+}
+
+.no-wisdom-model {
+  position: relative;
+  top: 25%;
+  transform: translateY(25%);
+}
+
+// 文件上传样式
+.upload-container {
+  .upload-item {
+    .upload-wisdom-icon {
+      width: 32px;
+      height: 24px;
+      color: $button-disable-bg-color;
+    }
+
+    .click-upload {
+      font-size: 12px;
+      color: $prompt-font-color;
+    }
+
+    .upload-tip {
+      margin-top: 2px;
+      font-size: 12px;
+      color: $switch-bg-color;
+    }
+  }
+}
+
+.no-img-tip {
+  margin-top: 25px;
+  font-size: 16px;
+}
+.no-position{
+  .position-container {
+    display: flex;
+    margin-left: 16px;
+    width: 100%;
+    margin-top:20px;
+    // 点位号样式
+    .position-num{
+      margin-right: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 40px
+    }
+  }
+}
+// 导出图片按钮样式
+.export-qunee{
+  float: right;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.container {
+  display: flex;
+  .left {
+    width: 80px;
+    height: 40px;
+    // background: #0e77ca;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .left-fixedPoint{
+    background: $product-fixed-position-bg;
+  }
+  .left-expandPoint{
+    background: $product-expand-position-bg;
+  }
+  .left .content {
+    margin-left: 3px;
+    width: 80px;
+    height: 34px;
+    border: 1px dashed $product-dashed-color;
+    border-right: none;
+    color: $product-dashed-color;
+    font-weight: 700;
+    line-height: 34px;
+  }
+  .right-fixedPoint{
+    width: 0;
+    height: 0;
+    border: 20px solid;
+    border-color: transparent transparent transparent $product-fixed-position-bg;
+  }
+  .right-expandPoint{
+    width: 0;
+    height: 0;
+    border: 20px solid;
+    border-color: transparent transparent transparent $product-expand-position-bg;
+  }
+
+  .right .line-top, .right .line-bottom {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    border-top: 1px dashed $product-dashed-color;
+  }
+
+  .right .line-top{
+    transform: translate(-26px, -17px) rotate(45deg);
+  }
+
+  .right .line-bottom {
+    transform: translate(-26px, -33px) rotate(135deg);
+  }
+}
+
+
+.equipment-select{
+  width: 240px;
+}
+// 批量上传压缩包，需要覆盖佐罗样式
+.batch-upload-product-zip{
+  font-size: 34px!important;
+  color: $switch-bg-color;
+}
+.ant-divider-horizontal{
+  margin: 5px 0;
+}
+.product-description {
+  margin-right: 10px;
+  overflow: hidden;
+  max-width: 40%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+// 端口
+.equipment-port {
+  margin-right: 10px;
+  padding: 2px 6px;
+  color: $sp-icon-color-4;
+  background-color: $facility-status-outOfContact;
+}
+
+.product-model {
+  padding: 2px 6px;
+  color: $sp-icon-color-4;
+  background-color: $sp-icon-color-3;
+}
+
+// 端口类型
+.port-type {
+  margin: 0 10px;
+  padding: 2px 6px;
+  color: $sp-icon-color-4;
+  background-color: $inspection-equipment-bg;
+}
+
+.unit {
+  margin-right: 10px;
+  padding: 2px 6px;
+  color: $sp-icon-color-4;
+  background-color: $level-two;
+}
+.sp-icon {
+  margin-right: 6px;
+}
+
+.label-name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $sp-icon-color-7;
+}
+.description-label{
+  width: 40%;
+}
+
+// 表单类型字段值
+.label-value {
+  display: block;
+  padding-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// 批量上传文件描述字体样式需要覆盖佐罗
+.click-upload-msg{
+  font-size: 14px!important;
+  color: $color!important;
+  font-weight: bold;
+}
+.product-batch-hint{
+  font-size: 12px!important;
+}
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-center-modal .ant-modal {
+  top: 0;
+}
+.product-equipment-template {
+  .template-tabSet {
+    .tab-container {
+      height: auto;
+      max-height: 2000px !important;
+    }
+  }
+}

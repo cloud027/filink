@@ -1,0 +1,109 @@
+@import "../../../../../style-module/config";
+.port-info-item{
+  margin: 30px 30px 0 30px;
+  // 点位基本信息
+  .port-desc{
+    display: flex;
+    .port-operate-icon{
+      color: $color;
+      cursor: pointer;
+    }
+    // 分隔符
+    .item-separation{
+      color: $separation-color;
+      height: 14px;
+    }
+  }
+  // 操作按钮
+  .operate{
+    padding-top: 15px;
+  }
+  .port-name{
+    margin-right: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .port-type-num{
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+// 通信端口详情
+.communication-port-detail{
+  .communication-port-flag{
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .communication-port-type{
+    padding: 3px 5px;
+    color: $menu-font-color;
+    background-color: $product-expand-position-bg;
+  }
+  // 其他字段
+  .communication-port-field{
+    margin-top: 20px;
+    .field-info{
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0px 16px;
+      .field-info-item{
+        display: flex;
+        margin-bottom: 10px;
+        width: 50%;
+        .field-info-label{
+          width: 40%;
+          line-height: 34px;
+          color: $sp-icon-color-7;
+        }
+        .field-info-value{
+          width: 60%;
+          line-height: 34px;
+        }
+      }
+    }
+  }
+}
+// 端口详情字段
+.port-detail-container{
+  display: none;
+  position: absolute;
+  width: 180px;
+  height: 150px;
+  z-index: 3;
+  border: 1px;
+  border-radius: 4px;
+  background-color: #fff;
+  -moz-box-shadow: 2px 2px 10px $port-detail-bg;
+  -webkit-box-shadow: 2px 2px 10px $port-detail-bg;
+  box-shadow:2px 2px 10px $port-detail-bg;
+  // 浮窗卡片样式
+    .port-item-container{
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 10px;
+      .port-item{
+        display: flex;
+        margin-bottom: 10px;
+        .field-info-label{
+          width: 50%;
+          line-height: 34px;
+          color: $sp-icon-color-7;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .field-info-value{
+          width: 50%;
+          line-height: 34px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+}

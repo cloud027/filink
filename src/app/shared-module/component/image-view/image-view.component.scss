@@ -1,0 +1,131 @@
+@import "../../../style-module/config";
+@mixin icon-center {
+  display: flex;
+  justify-content: center;
+  i {
+    align-self: center;
+    font-size: 25px;
+    cursor: pointer;
+    color: #ccc;
+  }
+}
+.image-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  height: 100%;
+  background-color: rgba(0,0,0,0.65);
+  overflow: hidden;
+  .image-view-center {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    .image-area {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      .image {
+        display: flex;
+        justify-content: center;
+        margin-left: 50px;
+        margin-top: 64px;
+        height: 75%;
+        .image-center {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          overflow: unset;
+
+          img {
+            top: 0;
+            left: 0;
+            height: auto;
+            width: auto;
+            max-width: 50%;
+            max-height: 80%;
+            align-self: center;
+            position: relative;
+            cursor: move;
+          }
+
+        }
+      }
+
+      .image-tool {
+        display: flex;
+        justify-content: center;
+        i {
+          font-size: 25px;
+          margin: 10px;
+          color: #ccc;
+        }
+      }
+      .image-footer {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        height: 100px;
+        margin-top: 20px;
+
+        .image-footer-last {
+          width: 40px;
+          margin-right: 10px;
+          @include icon-center
+        }
+        .image-list {
+          align-self: center;
+          ul {
+            display: flex;
+            li {
+              width: 126px;
+              height: 106px;
+              margin: 5px;
+              cursor: pointer;
+              img {
+                width: 120px;
+                height: 100px;
+              }
+            }
+
+            .active {
+              border: 3px solid $color;
+            }
+          }
+        }
+        .image-footer-next {
+          width: 40px;
+          @include icon-center
+        }
+      }
+    }
+
+    .image-info {
+      width: 20%;
+      margin-top: 64px;
+      padding-left: 20px;
+      border-left: 1px solid white;
+      app-photo-info p {
+        color: white;
+      }
+    }
+  }
+}
+
+.image-view-header {
+  position: fixed;
+  top: 0;
+  right: 35px;
+  z-index: 101;
+  height: 50px;
+  line-height: 50px;
+
+  i {
+    float: right;
+    font-size: 25px;
+  }
+}

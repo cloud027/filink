@@ -1,0 +1,14 @@
+<div class="policy-warp">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+<ng-template #policyStatus let-data="data">
+  <nz-switch
+    (ngModelChange)="switchChange(data,$event)"
+    [ngModel]="data.strategyStatus"
+    nzCheckedChildren="开"
+    nzUnCheckedChildren="关"></nz-switch>
+</ng-template>

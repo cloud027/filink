@@ -1,0 +1,62 @@
+<div class="odn-device-resources" [appBarProgress]="ProgressShow">
+  <span class="select-area" [title]="areaName?areaName:statisticalLanguage.selectArea"
+        [class.placeholder]="areaName?false:true"
+        (click)="showAreaSelect()">{{areaName ? areaName : statisticalLanguage.selectArea}}</span>
+  <app-odn-device-select [placeholder]="statisticalLanguage.selectDevice"
+                         *ngIf="pageTitleType === 'jump'||pageTitleType === 'fused'" #selectOdnDeviceComp
+                         [checkList]="deviceList" [areaName]="areaName"></app-odn-device-select>
+  <span class="select-area" [title]="deviceName?deviceName:statisticalLanguage.selectDevice"
+        [class.placeholder]="deviceName?false:true"
+        (click)="showDeviceSelect()"
+        *ngIf="pageTitleType === 'box'||pageTitleType === 'disc'">{{deviceName ? deviceName : statisticalLanguage.selectDevice}}</span>
+  <check-select-input #checkListComp *ngIf="pageTitleType === 'box'||pageTitleType === 'disc'"
+                      style="display:inline-block;"
+                      [placeholder]="placeHolder" [checkList]="selectInfo"
+                      [isAllChecked]="true"></check-select-input>
+  <button type="button"
+          style="margin-left: 10px"
+          class="link-button" nz-button
+          [disabled]="isDisable()"
+          nzType="primary" (click)="statistical()">{{statisticalLanguage.statistical}}
+  </button>
+  <div *ngIf="hide">
+    <div class="barChart">
+      <app-echart-column style="flex: 1;background-color: #f7f7f7;padding: 10px; margin-right: 10px"
+                         (chartInstance)="getRingChartInstance($event)"></app-echart-column>
+      <app-echart-column style="flex: 1;background-color: #f7f7f7;padding: 10px;"
+                         (chartInstance)="getBarChartInstance($event)"></app-echart-column>
+    </div>
+    <br>
+    <xc-table
+      [dataSet]="__dataset"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+
+  </div>
+</div>
+
+
+<xc-tree-area-selector
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  (selectDataChange)="areaSelectChange($event)"
+>
+</xc-tree-area-selector>
+
+<!--设施选择器-->
+<ng-template #deviceTemp>
+  <xc-table [dataSet]="_deviceDataSet"
+            [pageBean]="devicePageBean"
+            [tableConfig]="deviceTableConfig"
+            (pageChange)="_pageChange($event)">
+  </xc-table>
+</ng-template>
+
+<!--单选-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedDeviceId" (ngModelChange)="selectedDeviceChange($event, data)">
+    <label nz-radio [nzValue]="data.deviceId"></label>
+  </nz-radio-group>
+</ng-template>

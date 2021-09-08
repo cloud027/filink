@@ -1,0 +1,45 @@
+<!--设施协议-->
+<div class="table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+
+  <!-- 文件下载-->
+  <ng-template #fileNameRef let-data="data">
+    <a href="javascript:void (0);" (click)="download(data, 'file')" class="table-text-td">
+      <span [title]="data.fileName">{{data.fileName}}</span>
+    </a>
+  </ng-template>
+  <!--  设备配置文件下载-->
+  <ng-template #equipmentConfigFileNameRef let-data="data">
+    <a href="javascript:void (0);" (click)="download(data, 'equipmentConfig')" class="table-text-td">
+      <span [title]="data.equipmentConfigFileName">{{data.equipmentConfigFileName}}</span>
+    </a>
+  </ng-template>
+  <!--  设备配置文件下载-->
+  <ng-template #sslFileNameRef let-data="data">
+    <a href="javascript:void (0);" (click)="download(data, 'sslFile')" class="table-text-td">
+      <span [title]="data.sslCertificateFileName">{{data.sslCertificateFileName}}</span>
+    </a>
+  </ng-template>
+</div>
+
+<!--设备类型-->
+<ng-template #equipmentTypeTemp let-data="data">
+  <i  class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" [ngStyle]="data.rowStyle"
+        title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+<!--通信协议-->
+<ng-template #communicationProtocolTemp let-data="data">
+  <div class="hidden">{{data.communicationProtocol | translate: protocolTypeEnum : 'systemSetting.protocol'}}</div>
+</ng-template>
+
+<!--接入方式-->
+<ng-template #accessModeTemp let-data="data">
+  <div class="hidden">{{data.accessWay}}</div>
+</ng-template>

@@ -1,0 +1,24 @@
+.telephone-input {
+  position: relative;
+
+  .hint {
+    color: red;
+  }
+
+  .tel-code {
+    position: absolute;
+    top: 0;
+    left: 18px;
+  }
+
+  .tel-code-1 {
+    position: absolute;
+    top: 0;
+    left: 8px;
+  }
+}
+:host ::ng-deep .selected-flag {
+  .iti-flag {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,43 @@
+<div class="photo-view">
+  <nz-spin [nzSpinning]="loading">
+    <div class="photo-view-handle">
+      <!--操作按钮-->
+      <div class="handle-left">
+        <i class="icon fiLink-filter iconfont" (click)="showFilter = !showFilter"  nz-tooltip [nzTitle]="language.table.filter"></i>
+        <button nz-button nzType="primary"
+                class="link-button download"
+                appAccessPermission="03-3-3"
+                (click)="download()"><i class="icon fiLink-download-file iconfont"></i>{{language.facility.picInfo.download}}</button>
+        <button nz-button nzType="danger" [disabled]="deleteDisable()"
+                appAccessPermission="03-3-2"
+                class="link-button delete" (click)="handleDelete()"><i class="icon fiLink-delete iconfont"></i>{{language.facility.picInfo.delete}}</button>
+      </div>
+      <div class="handle-right">
+        <app-alarm-time-selector [timeList]="timeList" [allowClear]="true" (changeFilter)="timeChangeFilter($event)"></app-alarm-time-selector>
+      </div>
+    </div>
+    <!--列表查询条件-->
+    <app-photo-view-filter *ngIf="showFilter" (changeFilter)="changeFilter($event)"></app-photo-view-filter>
+    <div class="img-list-container">
+      <div [ngClass]="{'photo-view-img': true, 'w80': picInfo.devicePicId, 'w95': !picInfo.devicePicId}"
+           #imgView
+      >
+        <div class="img-list"
+             *ngFor="let item of photoList">
+          <!--图片列表-->
+          <app-image-list
+            [photoList]="item.picList"
+            [timeStr]="item.time"
+            (viewLargerImage)="viewLargerImage($event)"
+            (delImg)="delImg($event)"
+            (viewItem)="picInfoChange($event)"
+            (selectChange)="dealSelectPic($event)"></app-image-list>
+        </div>
+        <div *ngIf="photoList.length <= 0" class="no-data"><p>{{language.table.noData}}</p></div>
+      </div>
+      <div class="img-info" *ngIf="picInfo.devicePicId">
+        <app-photo-info [picInfo]="picInfo" ></app-photo-info>
+      </div>
+    </div>
+  </nz-spin>
+</div>

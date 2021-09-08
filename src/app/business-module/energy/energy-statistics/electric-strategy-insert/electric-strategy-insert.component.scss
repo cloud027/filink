@@ -1,0 +1,29 @@
+.insert-box {
+    background-color: #fff;
+    min-height: 700px;
+    .title {
+        align-items: center;
+        border-left: 2px solid #7cb0dd;
+        margin-left: 16px;
+        padding-left: 16px;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 900;
+    }
+    .container-box {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ccc;
+        min-height: 700px;
+        overflow: hidden;
+        .right-container {
+            flex: 1;
+            min-height: 700px;
+            border-left: 1px solid #ccc;
+            .button-box {
+                margin-left: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<nz-card [nzTitle]="language.equipmentPic" [nzExtra]="extraTemplate">
+  <div *ngIf="equipmentPicInfo.length>0" class="device-img-container">
+    <div  class="device-img-item" *ngFor="let item of equipmentPicInfo">
+      <img  class="equipment-pic" [src]="item.picUrlBase" (click)="onClickImage(item)" alt=""/>
+      <div class="info-item">
+        <span>{{language.picDate}}</span>
+        <span>{{item.ctime | dynamic: 'date' : null}}</span>
+      </div>
+      <div class="info-item">
+        <span>{{language.picSize}}</span> <span>{{item.picSize}}</span>
+      </div>
+      <div class="info-item">
+        <span>{{language.picResource}}</span> <span>{{item.resourceName}}</span>
+      </div>
+    </div>
+  </div>
+</nz-card>
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMore()"><span>{{language.more}} >></span></a>
+</ng-template>

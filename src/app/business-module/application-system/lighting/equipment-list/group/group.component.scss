@@ -1,0 +1,18 @@
+.group-warp {
+  padding: 0 10px;
+}
+
+.slide-input {
+  margin-left: 16px;
+}
+.audio-btn-group{
+  text-align: center;
+  .start{
+    margin-right: 30px;
+  }
+  .btn-size{
+    line-height: 30px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+}

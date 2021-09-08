@@ -1,0 +1,81 @@
+<div class="in-container">
+  <div>
+    <span class="area-detail-title"> {{pageTitle}} </span>
+  </div>
+  <!--表单-->
+  <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+  <!--底部按钮-->
+  <div class="temp-button">
+    <button class="link-button mr20" nz-button nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="!idFormDisabled"
+            (click)="saveTemplateData()">{{InspectionLanguage.handleOk}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{InspectionLanguage.handleCancel}}</button>
+  </div>
+  <!--巡检项 -->
+  <ng-template #tempTable>
+    <!--添加巡检项弹窗-->
+    <div class="temp-form" >
+      <div class="form-box">
+        <xc-form [column]="formTemplateColumn" (formInstance)="formTemplateInstance($event)" class="inspect-template"></xc-form>
+      </div>
+      <div class="btn-box">
+        <button class="link-buttons" [disabled]="canCommit" (click)="handleOk()" [title]="InspectionLanguage.saveData">
+          <i class="icon-fiLink fiLink-filink-save-icon iconfont"></i>
+        </button>
+        <button class="link-buttons" (click)="handleCancel()" [title]="InspectionLanguage.closeWin">
+          <i class="icon-fiLink fiLink-close iconfont"></i>
+        </button>
+      </div>
+    </div>
+    <!--巡检项表格-->
+    <nz-table #editRowTable [nzData]="listOfData" [nzShowPagination]="false" class="temp-tab">
+      <thead>
+        <tr>
+          <th nzWidth="30%" class="border-right">{{InspectionLanguage.inspectionItem}}</th>
+          <th nzWidth="58%" class="border-right">{{InspectionLanguage.remark}}</th>
+          <th>{{InspectionLanguage.operate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of listOfData; let i = index;" class="editable-row">
+        <td class="for-text">
+          <div class="editable-cell name" [title]="data.templateItemName" *ngIf="editId !== data.templateItemId; else editName">
+            <div class="editable-cell-value-wrap" (click)="startEdit(data.templateItemId, $event)">
+              {{ data.templateItemName }}
+            </div>
+          </div>
+          <ng-template #editName>
+            <textarea class="text-area" nz-input [(ngModel)]="data.templateItemName" maxlength="32"></textarea>
+          </ng-template>
+        </td>
+        <td class="for-text">
+          <div class="editable-cell remark" [title]="data.remark" *ngIf="editId !== data.templateItemId; else editRemark">
+            <div class="editable-cell-value-wrap" (click)="startEdit(data.templateItemId, $event)">
+              {{ data.remark }}
+            </div>
+          </div>
+          <ng-template #editRemark>
+            <textarea class="text-area" nz-input [(ngModel)]="data.remark" maxlength="255"></textarea>
+          </ng-template>
+        </td>
+        <td>
+          <a class="temp-delete" nz-tooltip [nzTitle]="data.option" (click)="deleteRow(data)">
+            <i class="icon-fiLink iconfont fiLink-delete red-icon"></i>
+          </a>
+        </td>
+      </tr>
+      <tr *ngIf="listOfData.length === 0"><td colspan="4" class="no-data">{{InspectionLanguage.noData}}</td></tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+  <!--添加巡检项-->
+  <ng-template #addTemplate>
+    <div class="add-btn">
+      <span class="cursor" (click)="showAddModel()" [ngClass]="addBtnClass?'':'addBtnClass'">
+        <span class="icon-fiLink fiLink-pic-to-big iconfont"></span>{{InspectionLanguage.addInspectItem}}
+      </span>
+    </div>
+  </ng-template>
+</div>

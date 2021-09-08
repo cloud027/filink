@@ -1,0 +1,49 @@
+@import "../../../../../style-module/config";
+.statistical-chart-wrap {
+  margin-top: 10px;
+  .statistical-search {
+    background-color: $bg-c-w;
+  }
+  .statistical-chart-content {
+    position: relative;
+    padding: 20px;
+    background-color: $bg-c-w;
+    border-top: 10px solid $inspect-template-bg;
+
+    .fiLink-flink_liebiao-icon {
+      position: absolute;
+      right: 20px;
+      top: 80px;
+    }
+
+    .empty-container {
+      height: 320px;
+      padding-top: 80px;
+    }
+  }
+
+  .material-model {
+    width: 300px;
+    margin-right: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    background: $bg-c-w;
+    cursor: pointer;
+    padding: 0;
+    &:disabled > .fiLink-search-index {
+      color: $button-disable-bg-color;
+      cursor: not-allowed;
+    }
+  }
+
+  .time-dropdown-select {
+    width: 80px;
+    margin-right: 10px;
+  }
+}

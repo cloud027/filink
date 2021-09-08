@@ -1,0 +1,37 @@
+<app-equipment-view-detail
+  [isShow]="isShow"
+  [equipmentId]="equipmentId"
+  (operationNotify)="handleEquipmentOperation($event)"
+  (equipmentDetailsNotify)="handleEquipmentDetails($event)"
+  [isShowApplication]="isShowApplication"
+>
+  <div class="info-box">
+    <div class="application-operate">
+      <h4 class="title">{{languageTable.controlType.equipment}}</h4>
+      <div class="application-list">
+        <div *ngIf="operationList && operationList.length" class="button-groups">
+          <div *ngFor="let item of operationList">
+            <button
+              *ngIf="item.type === 'button'"
+              class="btn"
+              [disabled]="item.disable"
+              (click)="handleEquipmentOperation(item.id,item.code)"
+              nz-button nzType="default">
+              <i class="icon-fiLink iconfont" [ngClass]="item.icon"></i>
+              {{item.name}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <screen-program-broadcast
+      *ngIf="equipmentId && equipmentModel"
+      #programBroadcast
+      [operatePermissionEnum]="this.releaseTableEnum"
+      [equipmentId]="equipmentId"
+      [sliderShow]="true"
+      [equipmentModel]="equipmentModel"
+      (operationEvent)="handleOperationEvent($event)"
+    ></screen-program-broadcast>
+  </div>
+</app-equipment-view-detail>

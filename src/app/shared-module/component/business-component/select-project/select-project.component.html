@@ -1,0 +1,47 @@
+<nz-modal
+  *ngIf="isVisible"
+  [nzVisible]="isVisible"
+  (nzVisibleChange)="nzVisibleChange($event)"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  [nzClosable]= "true"
+  [nzKeyboard]="false"
+  [nzMaskClosable]="false"
+  (nzOnCancel)= "handleCancel()"
+  [nzWidth]="900">
+  <ng-template #modalTitle>
+    <div>{{projectLanguage.selectProject}}</div>
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-table #projectListTable
+              [dataSet] ="dataSet"
+              [selectedData]="selectList"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleOk()">{{commonLanguage.okText}}</button>
+    <button nz-button nzType="danger" class="link-button" (click)="handleCancel()">{{commonLanguage.cancelText}}</button>
+    <button *ngIf="showCleanBtn" nz-button nzType="danger" class="link-button" (click)="onClickCleanAll()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--项目状态模板-->
+<ng-template #projectStatusTemp let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass "></i>
+    <span [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.status | translate: projectStatusEnum: languageEnum.planProject}}">
+      {{data.status | translate: projectStatusEnum: languageEnum.planProject}}
+    </span>
+  </div>
+</ng-template>
+<!-- 列表 单选框 -->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="projectId" (ngModelChange)="onSelectChange($event, data)">
+    <label nz-radio [nzValue]="data.projectId"></label>
+  </nz-radio-group>
+</ng-template>

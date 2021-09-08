@@ -1,0 +1,77 @@
+@import "~src/app/style-module/config";
+
+.info-window-m {
+  position: relative;
+  font-size: 12px;
+  padding: 10px 15px 15px 15px;
+  border-radius: 5px;
+  background-color: rgba(256, 256, 256, 0.8);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+
+
+  .info-window-m-name {
+    display: flex;
+    height: 20px;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 14px;
+
+    .info-window-m-name-bottom {
+      margin-bottom: 16px;
+    }
+
+    .info-window-m-icon {
+      width: 20px;
+      height: 20px;
+      margin: 5px 20px 0px 0px;
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    .info-data-w-title {
+      font-size: 14px;
+      color: $index-window-color;
+    }
+
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    margin-left: -4px;
+    border-left: 4px solid transparent;
+    border-top: 6px solid;
+    border-right: 4px solid transparent;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    margin-left: -3px;
+    border-left: 3px solid transparent;
+    border-top: 5px solid $sp-icon-color-4;
+    border-right: 5px solid transparent;
+  }
+}
+
+.info-data-w {
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 10px;
+}
+
+.info-window-m-font {
+  font-family: 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  color: $page-font-color;
+}

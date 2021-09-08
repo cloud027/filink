@@ -1,0 +1,90 @@
+<div class="asset-analysis">
+  <div class="asset-analysis-title">
+    <h4>{{language.assetAnalysis.assetAnalysis}}</h4>
+  </div>
+  <div class="asset-analysis-content">
+    <nz-tabset [(nzSelectedIndex)]="selectedIndex">
+      <!--资产类别-->
+      <nz-tab [nzTitle]="language.assetAnalysis.assetType">
+        <app-asset-type-filter (assetRatioFilterConditionEmit)="assetRatioFilterConditionEmit($event)"></app-asset-type-filter>
+        <div class="margin-color"></div>
+        <div class="asset-ratio" *ngIf="isShowStatisticsPart">
+          <div class="asset-ratio-title">{{language.assetAnalysis.assetRatio}}</div>
+          <div class="asset-ratio-statistics" *ngIf="isNoData">
+            <!--资产占比统计表格-->
+            <div class="asset-ratio-table">
+              <xc-table [tableConfig]="tableConfig"
+                        [dataSet]="assetTypeSelectData"
+                        [pageBean]="pageBean"
+                        (pageChange)="pageChange($event)">
+              </xc-table>
+            </div>
+            <!--资产占比统计图-->
+            <div class="asset-ratio-graph">
+              <div echarts [options]="assetRatioEchartsDataset" class="chart"></div>
+            </div>
+          </div>
+          <div *ngIf="!isNoData"><nz-empty></nz-empty></div>
+        </div>
+      </nz-tab>
+      <!--资产增长率-->
+      <nz-tab [nzTitle]="language.assetAnalysis.assetGrowthRate">
+        <app-asset-growth-rate-filter (assetGrowthRateFilterConditionEmit)="assetGrowthRateFilterConditionEmit($event)" [selectedIndex]="selectedIndex"></app-asset-growth-rate-filter>
+        <div class="margin-color"></div>
+        <div class="asset-growth" *ngIf="isShowGrowthStatisticsPart">
+          <div class="asset-growth-title">{{language.assetAnalysis.assetGrowthRate}}</div>
+          <div class="asset-growth-statistics" *ngIf="isNoGrowthData">
+            <div class="asset-growth-table" *ngIf="isShowTable">
+              <xc-table [tableConfig]="growthRateTableConfig"
+                        [dataSet]="assetGrowthSelectData"
+                        [pageBean]="growthPageBean"
+                        (pageChange)="pageChange($event)">
+              </xc-table>
+            </div>
+            <div class="asset-growth-graph" *ngIf="!isShowTable">
+              <div class="change-to-table" (click)="changeGraph()">
+                <i class="icon-l iconfont  icon-fiLink fiLink-config-template"></i>
+              </div>
+              <div echarts [options]="assetGrowthRateEchartsDataset" class="chart"></div>
+            </div>
+          </div>
+          <div *ngIf="!isNoGrowthData"><nz-empty></nz-empty></div>
+        </div>
+      </nz-tab>
+      <!--资产故障分布-->
+      <nz-tab [nzTitle]="language.assetAnalysis.assetFailureDistribution">
+        <app-asset-failure-distribution-filter (assetFailureDistributionFilterConditionEmit)="assetFailureDistributionFilterConditionEmit($event)" [selectedIndex]="selectedIndex"></app-asset-failure-distribution-filter>
+        <div class="margin-color"></div>
+        <div class="asset-failure" *ngIf="isShowFailureStatisticsPart">
+          <div class="asset-failure-title">{{language.assetAnalysis.assetFailureDistribution}}</div>
+          <div class="asset-failure-statistics" *ngIf="isNoFailureData">
+            <div class="asset-failure-table" *ngIf="isShowFailureTable">
+              <xc-table [tableConfig]="failureDistributionTableConfig"
+                        [dataSet]="assetFailureSelectData"
+                        [pageBean]="failurePageBean"
+                        (pageChange)="pageChange($event)">
+              </xc-table>
+            </div>
+            <div class="asset-failure-graph" *ngIf="!isShowFailureTable">
+              <div class="change-to-table" (click)="changeGraph()">
+                <i class="icon-l iconfont  icon-fiLink fiLink-config-template"></i>
+              </div>
+              <div echarts [options]="failureDistributionEchartsDataset" class="chart"></div>
+            </div>
+          </div>
+          <div *ngIf="!isNoFailureData"><nz-empty></nz-empty></div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>
+<!--设施类型模板-->
+<ng-template #deviceTypeTemp let-data="data">
+  <div class="area-level">
+    <i [ngClass]="data['iconClass']"></i>
+    <span  [ngStyle]="data.rowStyle" class="status-text"
+          title="{{data.typeName}}">
+      {{data.typeName}}
+    </span>
+  </div>
+</ng-template>

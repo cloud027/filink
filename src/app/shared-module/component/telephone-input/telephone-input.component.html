@@ -1,0 +1,7 @@
+<div class="telephone-input">
+  <input type="tel" id="phone" [(ngModel)]="phoneNum">
+  <p *ngIf="isValid&&shouldValid" class="hint">{{hint}}</p>
+  <span [ngClass]="telephoneCode.length < 5 ? 'tel-code' : 'tel-code-1'">{{telephoneCode}}</span>
+</div>
+
+

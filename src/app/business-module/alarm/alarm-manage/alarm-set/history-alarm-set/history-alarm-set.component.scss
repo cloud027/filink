@@ -1,0 +1,16 @@
+@import "../../../../../style-module/config";
+
+.page-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.alarm-detail{
+  padding: 0 16px 20px 16px;
+}
+.save-btn {
+  margin-right: 20px;
+}

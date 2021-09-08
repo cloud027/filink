@@ -1,0 +1,31 @@
+@import "../../../../../style-module/config";
+.equipment-info-container{
+  background-color: $bg-c-w;
+  .eq-info{
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 16px;
+    .info-item{
+      display: flex;
+      margin-bottom: 10px;
+      width: 33.33%;
+      .eq-label{
+        width: 40%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        line-height: 34px;
+        color: $sp-icon-color-7;
+      }
+      .eq-value{
+        width: 60%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        line-height: 34px;
+      }
+    }
+  }
+}

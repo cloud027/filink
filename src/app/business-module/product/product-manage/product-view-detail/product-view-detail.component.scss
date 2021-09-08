@@ -1,0 +1,9 @@
+@import "../../../../style-module/config";
+// 整个详情的高度
+.product-detail-container {
+  overflow: hidden;
+  background: $bg-c;
+  .product-detail-item {
+    margin-top: 10px;
+  }
+}

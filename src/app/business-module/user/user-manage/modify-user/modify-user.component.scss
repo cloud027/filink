@@ -1,0 +1,45 @@
+@import "../../../../style-module/config";
+
+.page-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: $title-color;
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+}
+
+.content-link {
+  padding-left: 20px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+
+.mr-r-20 {
+  margin-right: 20px
+}
+
+.width-px-210 {
+  width: 220px;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.user-detail {
+  padding: 10px;
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  background: $bg-c-w;
+}
+
+.hint {
+  color: $error-color;
+}

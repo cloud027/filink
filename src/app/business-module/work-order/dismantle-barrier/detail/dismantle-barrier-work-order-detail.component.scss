@@ -1,0 +1,143 @@
+@import "../../share/style/common-picture.scss";
+.work-order-detail {
+  padding: 0 0 20px 16px;
+
+  .link-button {
+    margin-right: 20px;
+  }
+
+  .area-name {
+    outline: none;
+    cursor: default;
+
+    &:hover {
+      border-color: $color;
+    }
+  }
+
+  .unit-width {
+    width: 300px;
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .alarm-tab {
+    margin-top: -35px;
+  }
+
+  .btn-disabled {
+    cursor: no-drop;
+  }
+
+  .open-button[disabled] {
+    cursor: no-drop;
+  }
+
+  .tab-area {
+    margin-top: 20px;
+  }
+}
+.facility-type-config-box {
+  border: 1px solid #e7e8ec;
+
+  .facility-type-config-item {
+    display: flex;
+    height: 35px;
+
+    .text {
+      flex: 1;
+      line-height: 35px;
+      padding-left: 10px;
+      display: inline-block;
+    }
+
+    .level {
+      width: 80px;
+      line-height: 35px;
+      padding-left: 10px;
+    }
+
+    .checkbox {
+      width: 40px;
+      padding: 6px 9px;
+      margin-left: 10px;
+    }
+  }
+
+  .accountabilityUnit-list {
+    max-height: 350px;
+    overflow: auto;
+    padding: 5px 0;
+
+    .config-item-content {
+      padding-left: 17px;
+
+      .text {
+        padding-left: 15px;
+      }
+    }
+  }
+
+  .facility-type-config-title {
+    background-color: #eaedf2;
+
+    .split-line {
+      width: 1px;
+      height: 20px;
+      margin-top: 8px;
+      background-color: #dbdbdb;
+    }
+  }
+}
+.alarmLevel {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+  top: 2px;
+}
+
+.area-name-other {
+  display: inline-block;
+  padding: 4px 11px;
+  height: 22px;
+  width: 100%;
+  line-height: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.equipment-name {
+  .title {
+    color: rgb(191, 191, 191);
+  }
+  &:hover {
+    border-color: $color;
+  }
+}
+
+// 自定义样式
+.custom-template {
+  display: flex;
+  align-items: center;
+  .input-name {
+    width: 300px;
+  }
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+    &.btn-disabled {
+      cursor: no-drop;
+    }
+  }
+}

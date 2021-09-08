@@ -1,0 +1,28 @@
+<!--权限与设施集-->
+<div class="tree-select-role-box">
+  <div class="tree-select-role-card tree-select-role-card-left">
+    <div class="role-title-box">
+      <p class="role-title">{{language.operatePermission}}</p>
+    </div>
+    <nz-card>
+      <div class="tree-box">
+        <ul id="roleLeft" class="ztree link-tree"></ul>
+      </div>
+    </nz-card>
+  </div>
+  <div class="tree-select-role-card">
+    <div class="role-title-box">
+      <p class="role-title">{{language.facilities}}</p>
+    </div>
+    <nz-card>
+      <div class="tree-box">
+        <ul id="roleRight" class="ztree link-tree"></ul>
+      </div>
+    </nz-card>
+  </div>
+</div>
+<div class="button-group">
+  <button class="link-button  margin-right20" [nzLoading]="submitLoading"
+          nz-button nzType="primary" (click)="updateMenuTemplate()">{{this.tenantLanguage.config}}</button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+</div>

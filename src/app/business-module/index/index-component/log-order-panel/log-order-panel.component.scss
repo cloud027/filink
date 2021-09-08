@@ -1,0 +1,28 @@
+@import "~src/app/style-module/config";
+
+.log-order-panel-container {
+  font-size: 12px;
+  padding: 0 15px;
+  overflow: auto;
+  max-height: calc(100vh - 175px);
+
+  .facility-log {
+    margin-bottom: 15px;
+
+    .facility-log-title {
+      display: flex;
+      height: 30px;
+      align-items: center;
+
+      .facility-log-title-text {
+        flex: 1;
+      }
+
+      .facility-log-title-more {
+        margin-right: 5px;
+        cursor: pointer;
+        color: $index-alarm-title;
+      }
+    }
+  }
+}

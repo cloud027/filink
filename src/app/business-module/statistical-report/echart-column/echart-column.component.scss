@@ -1,0 +1,7 @@
+@import '../../../style-module/config';
+.chart-column {
+  width: 100%;
+  background-color: $eCharts-bg-color;
+  min-height: 400px;
+  padding: 10px
+}

@@ -1,0 +1,58 @@
+<!--Build3代码-->
+<!--配置纤芯成端弹窗-->
+<nz-modal
+  [(nzVisible)]="viewCoreEndIsVisible"
+  [nzMaskClosable]="false"
+  [nzFooter]="modalFooter"
+  [nzTitle]="title"
+  [nzWidth]="1100"
+  (nzAfterClose)="close()"
+  (nzOnCancel)="modalCancel()">
+  <!--左侧步骤条-->
+  <div class="leftStepBar">
+    <div class="configureTheCoreToEnd">{{language.viewCoreEnd}}</div>
+    <div class="terminationStep">
+      <nz-steps [nzCurrent]="numberOfSteps"
+                nzDirection="vertical"
+      >
+        <nz-step class="nz-step" nzTitle='{{language.selectFacilitiesAndCableSegment}}'></nz-step>
+        <nz-step nzTitle='{{language.viewCoreEnd}}'></nz-step>
+      </nz-steps>
+    </div>
+    <!--右侧第一步  -->
+    <div class="terminationStepRight" [hidden]="!stepDiagramSwitchingOne()">
+      <div class="stepTitle"><span>{{stepTitle}}</span></div>
+      <div class="strpTitleTwo">
+        <xc-form [column]="formColumn"
+                 (formInstance)="formInstance($event)">
+        </xc-form>
+      </div>
+    </div>
+    <!--右侧第二步-->
+    <div class="terminationStepRight" [hidden]="!stepDiagramSwitchingTwo()">
+      <div class="stepTitle">
+        <span class="stepTitleSpan">{{stepTitle}}</span>
+        <div class="stepTitleDiv">
+          <i class="map-util icon-fiLink-l iconfont fiLink-arrow-select stepTitleDivI"
+             [class.background]="drawType==='arrow'"
+             (click)="chooseUtil('arrow')"></i>
+          <i class="map-util icon-fiLink-l iconfont fiLink-box-select"
+             [hidden]="mapBoxSelect"
+             [class.background]="drawType==='rectangle'"
+             (click)="chooseUtil('rectangle')"></i>
+        </div>
+      </div>
+      <div class="quneeMap" id="ViewCanvas">
+
+      </div>
+    </div>
+  </div>
+  <!--底部按钮-->
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="primary"[disabled]="!checkData()" (click)="stepNext()" [hidden]="!stepDiagramSwitchingOne()">{{language.nextStep}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="Previous()" [hidden]="!stepDiagramSwitchingTwo()">{{language.previous}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="close()">{{language.end}}</button>
+  </ng-template>
+</nz-modal>

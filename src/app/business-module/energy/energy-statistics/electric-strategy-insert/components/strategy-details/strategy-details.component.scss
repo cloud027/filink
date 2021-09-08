@@ -1,0 +1,92 @@
+@import '../../../../../../style-module/config';
+
+.strategy-details-box {
+    padding: 40px;
+
+    .title-required {
+        color: $error-color;
+        margin-right: 3px;
+    }
+    .input-number-box {
+        width: 300px;
+        .ant-input-number {
+            width: 100%;
+        }
+    }
+    .basicElectricityPrice-box {
+        display: flex;
+        margin-bottom: 40px;
+
+        .title-left {
+            width: 150px;
+        }
+    }
+
+    .add-policy-box {
+        margin-bottom: 40px;
+
+        .select-box {
+            display: flex;
+            .add-policy {
+                margin-bottom: 10px;
+                margin-right: 40px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                .title {
+                    padding-left: 10px;
+                    color: #35cfc9;
+                }
+                &.disabled-insert {
+                    cursor: not-allowed;
+                    .title {
+                        padding-left: 10px;
+                        color: #ccc;
+                    }
+                }
+            }
+        }
+
+        .program-border {
+            width: 600px;
+            border: 1px dashed $border-color;
+            border-radius: 3px;
+            padding: 10px;
+
+            .strategy-close {
+                display: flex;
+                justify-content: flex-end;
+
+                .button-save {
+                    padding-right: 10px;
+                    color: $color;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+
+                .button-close {
+                    color: $color;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+            }
+
+            .program-list {
+                .program-title {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    margin-left: 20px;
+
+                    .program-left {
+                        width: 150px;
+                    }
+                }
+            }
+        }
+    }
+}
+.fiLink-pic-to-small {
+    cursor: pointer;
+}

@@ -1,0 +1,33 @@
+<!--手机登录-->
+<form class="phone-login-form" nz-form [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-control class="tel">
+      <app-telephone-input (phoneChange)="getPhone()" [shouldValid]="true"
+                           (telephoneInit)="getPhoneInit($event)"></app-telephone-input>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="auth-code-item">
+    <nz-form-control>
+      <input class="auth-code" formControlName="authCode" nz-input [placeholder]="language.login.codePlaceholder">
+      <button  class="timer" id="timer" (click)="getValidationCode()" type="button"
+              [disabled]="bol">{{verificationCode}}
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <button class="login-button"
+              (click)="submit()"
+              nz-button
+              nzType="primary"
+              [disabled]="!validateForm.valid || loginLoading"
+              [nzLoading]="isLoginLoading">{{language.login.login}}</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<!--登录时license无效弹出license无效弹窗-->
+<app-license-verification [(isVisible)]="isVisible" ></app-license-verification>
+

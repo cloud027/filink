@@ -1,0 +1,282 @@
+<!--新增或编辑设备信息表单-->
+<nz-spin class="equipment-detail" [nzSpinning]="pageLoading">
+  <div *ngIf="isHasTitle">
+    <span class="equipment-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn"
+             (formInstance)="formInstance($event)">
+    </xc-form>
+    <div class="button-container" *ngIf="isHasButton">
+      <button class="link-button margin-right20"
+              nz-button nzType="primary"
+              [disabled]="isDisabled"
+              (click)="onClickSaveEquipment()">
+        {{commonLanguage.confirm}}
+      </button>
+      <button class="link-button"
+              nz-button nzType="danger"
+              (click)="onClickCancel()">
+        {{commonLanguage.cancel}}
+      </button>
+    </div>
+  </div>
+</nz-spin>
+<!--上传图片-->
+<ng-template #uploadImgTemp>
+  <app-upload-img [url]="equipmentPic" (getUploadList)="getFileList($event)"></app-upload-img>
+</ng-template>
+
+<!--设备名称表单模版-->
+<ng-template #equipmentNameTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <div class="custom-template">
+      <label>
+        <input class="input-name"
+               nz-input
+               placeholder="{{language.pleaseEnter}}"
+               type="text"
+               (blur)="inputDebounce($event)"
+               formControlName="equipmentName"/>
+      </label>
+      <i class="icon-template"
+         nz-tooltip="{{language.autoGenerate}}"
+         *ngIf="operateType===operateTypeEnum.add || isAddOperate">
+        <span class="icon-fiLink fiLink-auto iconfont" (click)="onClickAuto()">
+        </span>
+      </i>
+    </div>
+  </form>
+</ng-template>
+
+<!--设施模板-->
+<ng-template #facilitiesSelector>
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="input-name"
+             nz-input
+             [disabled]="isWisdomPicture ? true : !formItemDisable"
+             placeholder="{{language.picInfo.pleaseChoose}}"
+             [(ngModel)]="saveEquipmentModel.deviceName">
+    </label>
+    <i *ngIf="isWisdomPicture ? false : formItemDisable" (click)="mapVisible = true"
+       nz-tooltip="{{language.selectFacility}}"
+       class="icon-template">
+        <span class="icon-fiLink fiLink-search-index iconfont">
+        </span>
+    </i>
+  </div>
+</ng-template>
+
+<!--区域选择模板-->
+<ng-template #areaSelector let-col="col">
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="input-name"
+             [disabled]="isLock"
+             nz-input
+             placeholder="{{language.picInfo.pleaseChoose}}"
+             [(ngModel)]="saveEquipmentModel.areaName">
+    </label>
+    <i nz-tooltip="{{language.selectArea}}"
+       *ngIf="!isLock"
+       class="icon-template"
+       (click)="onClickShowArea()">
+        <span class="icon-fiLink fiLink-search-index iconfont">
+        </span>
+    </i>
+  </div>
+</ng-template>
+<!--区域选择器-->
+<xc-tree-area-selector
+  *ngIf="areaSelectVisible"
+  [(xcVisible)]="areaSelectVisible"
+  [treeSelectorConfig]="areaSelectorConfig"
+  [canClear]="false"
+  (selectDataChange)="areaSelectChange($event)">
+</xc-tree-area-selector>
+
+<!--挂载位置-->
+<ng-template #positionByDeviceTemplate let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <nz-select
+      [nzDisabled]="isWisdomPicture? true : !formItemDisable"
+      [(ngModel)]="WisdomPictureMountPosition"
+      class="mount-position-select"
+      formControlName="mountPosition"
+      nzPlaceHolder="{{language.picInfo.pleaseChoose}}">
+      <nz-option *ngFor="let item of positionSelectList" [nzValue]="item" [nzLabel]="item"></nz-option>
+    </nz-select>
+  </form>
+</ng-template>
+
+<!--型号-->
+<ng-template #modelByTypeTemplate let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select #nzSelectComponent
+                  nzPlaceHolder="{{language.picInfo.pleaseChoose}}"
+                  formControlName="equipmentModel"
+                  (ngModelChange)="onSelectedModelChange($event)">
+      <xc-nz-option *ngFor="let item of modelChangeValue"
+                    [nzLabel]="item.model"
+                    [nzValue]="item.model">
+      </xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>
+<!--网关端口选择器-->
+<ng-template #gatewayPortTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <nz-select
+      [nzDisabled]="isGateway? gatewayPortFlagList !== 'electric' : isWisdomPicture? false : !formItemDisable || isAddOperate"
+      nzPlaceHolder="{{language.picInfo.pleaseChoose}}"
+      formControlName="portNo" [(ngModel)]="gatewayPort">
+      <nz-option *ngFor="let item of gatewayPortList"
+                 [nzLabel]="item.portName" [nzValue]="item.portType + ',' + item.portNo">
+      </nz-option>
+    </nz-select>
+  </form>
+</ng-template>
+<!--网关-->
+<ng-template #gatewaySelectorTemp
+             let-col="col">
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="input-name"
+             nz-input
+             [disabled]="isGateway? gatewayPortFlagList !== 'electric' : isWisdomPicture? false : !formItemDisable || isAddOperate"
+             placeholder="{{language.picInfo.pleaseChoose}}"
+             [(ngModel)]="saveEquipmentModel.gatewayName">
+    </label>
+    <i nz-tooltip="{{language.selectGateway}}"
+       *ngIf="(gatewayNameDisabled && formItemDisable) || (isGateway? gatewayPortFlagList === 'electric' : isWisdomPicture)"
+       class="icon-template"
+       (click)="gatewayVisible = true">
+        <span class="icon-fiLink fiLink-search-index iconfont">
+        </span>
+    </i>
+  </div>
+</ng-template>
+
+<!--设施列表选择器-->
+<facility-list-selector-component *ngIf="mapVisible"
+                                  [(facilityVisible)]="mapVisible"
+                                  [multiple]="false"
+                                  [filterConditions]="facilityFilter"
+                                  [selectFacilityId]="saveEquipmentModel.deviceId"
+                                  title="{{language.facilityList}}"
+                                  (selectDataChange)="selectDataChange($event)">
+</facility-list-selector-component>
+
+<!--网关选择器-->
+<equipment-list-selector-component *ngIf="gatewayVisible"
+                                   [(equipmentVisible)]="gatewayVisible"
+                                   [filterConditions]="gatewayFilter"
+                                   [isFilterEquipmentType]="true"
+                                   [showCleanBtn]="true"
+                                   [selectEquipmentId]="saveEquipmentModel.gatewayId"
+                                   (selectDataChange)="onGatewayDataChange($event)">
+</equipment-list-selector-component>
+<!--电源控制设备-->
+<ng-template #powerControlTemp>
+  <div class="custom-template">
+    <label>
+      <input readonly="readonly"
+             class="input-name"
+             [disabled]="isGateway? gatewayPortFlagList === 'electric' : isLock"
+             nz-input
+             placeholder="{{language.picInfo.pleaseChoose}}"
+             [(ngModel)]="saveEquipmentModel.powerControlName">
+    </label>
+    <i nz-tooltip="{{language.selectPowerControl}}"
+       *ngIf="isGateway? gatewayPortFlagList !== 'electric' : !isLock"
+       class="icon-template"
+       (click)="powerControlVisible = true">
+        <span class="icon-fiLink fiLink-search-index iconfont">
+        </span>
+    </i>
+  </div>
+</ng-template>
+<!--安装时间-->
+<ng-template #installationDateTemplate let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <nz-date-picker formControlName="installationDate" class="installation-date"></nz-date-picker>
+  </form>
+</ng-template>
+<!--电源控制设备选择-->
+<equipment-list-selector-component *ngIf="powerControlVisible"
+                                   [(equipmentVisible)]="powerControlVisible"
+                                   [filterConditions]="powerControlFilter"
+                                   [isFilterEquipmentType]="true"
+                                   [showCleanBtn]="true"
+                                   [selectEquipmentId]="saveEquipmentModel.powerControlId"
+                                   (selectDataChange)="onPowerControlDataChange($event)">
+</equipment-list-selector-component>
+<!--回路下拉选-->
+<ng-template #loopTemplate let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select formControlName="loopId"
+                  nzPlaceHolder="{{language.picInfo.pleaseChoose}}">
+      <xc-nz-option *ngFor="let item of loopList"
+                    [nzLabel]="item.loopName"
+                    [nzValue]="item.loopId">
+      </xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>
+<!--电源控制器端口-->
+<ng-template #powerPortTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <nz-select nzPlaceHolder="{{language.picInfo.pleaseChoose}}" [(ngModel)]="powerControlPortNo"
+               [nzDisabled]="gatewayPortFlagList === 'electric'"
+               formControlName="powerControlPortNo">
+      <nz-option *ngFor="let item of powerPortList" [nzLabel]="item.portName"
+                 [nzValue]="item.portType + ',' + item.portNo">
+      </nz-option>
+    </nz-select>
+  </form>
+</ng-template>
+
+<ng-template #productTemp let-formGroup="formGroup" let-col="col">
+  <div class="custom-template">
+    <input class="input-name" nz-input [title]="productName?productName:''" [disabled]="productTempDisabled"
+           readonly [(ngModel)]="productName">
+    <span class="icon-template open-button" (click)="showProductSelectorModal()"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></span>
+  </div>
+</ng-template>
+
+<ng-template #equipmentSelect>
+  <div class="alarm-tab">
+    <xc-table #tableCom [dataSet]="_dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</ng-template>
+
+<!--告警单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedProductId" (ngModelChange)="selectedProductChange($event, data)">
+    <label nz-radio [nzValue]="data.productId"></label>
+  </nz-radio-group>
+</ng-template>
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+        title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>

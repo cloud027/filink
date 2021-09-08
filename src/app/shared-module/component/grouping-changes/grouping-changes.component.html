@@ -1,0 +1,48 @@
+<!--分组变更弹窗-->
+<nz-modal [(nzVisible)]="xcVisible"
+          [nzWidth]="1000"
+          [nzTitle]="assetLanguage.groupChange"
+          [nzContent]="dynamicTemp"
+          [nzFooter]="modalFooters"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="handleClose()">
+  <ng-template #dynamicTemp>
+    <div class="step-modal-box">
+      <!--步骤条组件-->
+      <div class="steps-box">
+        <div class="step-item" *ngFor="let item of stepData" [ngClass]="item.activeClass">
+          <div class="step-num">{{item.stepNumber}}</div>
+          <div class="step-finish" (click)="backSteps(item)"><i class="icon-fiLink fiLink-pass iconfont"></i></div>
+          <div class="step-title" (click)="backSteps(item)">{{item.title}}</div>
+        </div>
+      </div>
+      <div class="step-warp">
+        <!--选择设施 第一步-->
+        <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST" class="step-group-table">
+          <div class="page-detail-title">{{indexLanguage.theFirstStep}}</div>
+          <xc-table
+            [dataSet]="tableDataSet"
+            [pageBean]="pageBean"
+            (pageChange)="pageChange($event)"
+            [tableConfig]="tableConfig">
+          </xc-table>
+        </div>
+        <!--添加分组 第二步-->
+        <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+          <div class="page-detail-title">{{indexLanguage.theSecondStep}}</div>
+          <!--表单-->
+          <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="group-form"></xc-form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooters>
+    <button class="link-button" nz-button nzType="primary" (click)="handlePrev()"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">{{indexLanguage.lastStep}}</button>
+    <button nz-button class="link-button" nzType="primary" (click)="handleNext()" [disabled]="!isNext"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_FIRST">{{indexLanguage.nextStep}}</button>
+    <button nz-button class="link-button" nzType="primary" (click)="handleSave()" [disabled]="!isSubmit"
+            *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND" [nzLoading]="isSaveLoading">{{indexLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="handleClose()">{{indexLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

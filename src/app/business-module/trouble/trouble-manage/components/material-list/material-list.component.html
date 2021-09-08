@@ -1,0 +1,25 @@
+<nz-table [nzData]="curData"
+          [nzFrontPagination]="false"
+          [nzTotal]="total"
+          [nzSimple]= "true"
+          [(nzPageIndex)]="pageIndex"
+          [(nzPageSize)]="pageSize"
+          (nzPageIndexChange)="changePageIndex($event)"
+          [nzShowQuickJumper]="true"
+          [nzShowSizeChanger]="true"
+>
+  <thead>
+  <tr>
+    <th *ngFor="let item of columnConfig">{{item.title}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of curData, let index = index">
+    <td>{{(index+1) + ((pageIndex-1) * pageSize)}}</td>
+    <td>{{data.name}}</td>
+  </tr>
+  <tr *ngIf="curData.length <= 0">
+    <td colspan="2" class="no-data">{{language.noData}}</td>
+  </tr>
+  </tbody>
+</nz-table>

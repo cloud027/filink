@@ -1,0 +1,136 @@
+<div>
+  <nz-tabset [nzTabPosition]="'top'" [nzSelectedIndex]="selectedIndex"
+             (nzSelectedIndexChange)="selectedIndexChange($event)">
+
+    <nz-tab [nzTitle]="particularsName" *ngIf="checkHasTenantRole('1-2-1')">
+      <ng-template nz-tab>
+        <!--设施和设备板块详情-->
+        <app-facility-detail-panel [facilityId]="facilityId"
+                                   [facilityPowerCode]="facilityPowerCode"
+                                   [isShowBusinessPicture]="isShowBusinessPicture"
+                                   *ngIf="isShowFacilityDetailTab">
+        </app-facility-detail-panel>
+        <!--智能门禁板块详情-->
+        <lock-detail-panel [facilityId]="facilityId"
+                           [indexType]="indexType"
+                           *ngIf="facilityPowerCode.includes(powerCode.smartAccessControlDetail)"></lock-detail-panel>
+      </ng-template>
+    </nz-tab>
+
+    <!--告警-->
+    <nz-tab [nzTitle]="alarmName"
+            *ngIf="facilityPowerCode.includes(powerCode.alarm) && (this.currentAlarmRole || this.hisAlarmRole) && checkHasTenantRole('1-2-2')">
+      <ng-template nz-tab>
+        <app-facility-alarm-panel [facilityId]="facilityId"
+                                  [idData]="idData"
+                                  [currentAlarmRole]="currentAlarmRole"
+                                  [hisAlarmRole]="hisAlarmRole"
+        ></app-facility-alarm-panel>
+      </ng-template>
+    </nz-tab>
+
+    <!--工单日志-->
+    <nz-tab [nzTitle]="indexLanguage.facilityLogAndOrderPanelTitle"
+            *ngIf="(facilityPowerCode.includes(powerCode.workOrder)||facilityPowerCode.includes(powerCode.equipmentLog)||facilityPowerCode.includes(powerCode.operationLog)) && (this.workOrderRole || this.deviceLogRole || this.operationLogRole) && checkHasTenantRole('1-2-3')">
+      <ng-template nz-tab>
+        <app-log-order-panel [facilityPowerCode]="facilityPowerCode"
+                             [facilityId]="facilityId"
+                             [facilityName]="facilityName"
+                             [idData]="idData"
+                             [workOrderRole]="workOrderRole"
+                             [deviceLogRole]="deviceLogRole"
+                             [operationLogRole]="operationLogRole"
+        ></app-log-order-panel>
+      </ng-template>
+    </nz-tab>
+    <!--设备操作-->
+    <nz-tab
+      *ngIf="this.operation && this.indexType === indexLayeredTypeEnum.equipment && this.roleDeviceOperating"
+      [nzTitle]="indexLanguage.equipmentOperation">
+      <ng-template nz-tab>
+        <app-equipment-operating
+          [isData]="idData"
+        ></app-equipment-operating>
+      </ng-template>
+    </nz-tab>
+    <!--实景图-->
+    <nz-tab
+      *ngIf="this.indexType !== indexLayeredTypeEnum.equipment && this.facilityCode === deviceTypeEnum.wisdom && checkHasTenantRole('1-2-4')"
+      [nzTitle]="indexLanguage.facilityRealScenePicture">
+      <ng-template nz-tab>
+        <!--智慧杆实景图-->
+        <i class="icon-fiLink iconfont fiLink-filink-equipment-warehouse-icon select-equipment"
+           *ngIf="!pictureClickShowOperating"
+           (click)="showModal()"
+           [title]="'设备仓'"></i>
+        <app-real-picture
+          *ngIf="!pictureClickShowOperating"
+          [deviceId]="facilityId"
+          [isShowRoundPoint]="false"
+          (clickChange)="clickChange($event)"
+          (mousemoveChange)="mousemoveChange($event)"
+        ></app-real-picture>
+        <!--设备操作-->
+        <i nz-icon [nzType]="'arrow-left'" *ngIf="pictureClickShowOperating" class="goback" (click)="goBack()"
+           [title]="indexLanguage.goBack"></i>
+        <app-equipment-operating
+          *ngIf="pictureClickShowOperating"
+          [isData]="idData"
+        ></app-equipment-operating>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</div>
+
+<!--查看设备仓-->
+<nz-modal [(nzVisible)]="operationVisible"
+          [nzMaskClosable]="false"
+          [nzWidth]="1000"
+          [nzTitle]="language.equipmentWarehouseList"
+          (nzOnCancel)="closeModal()"
+          [nzFooter]="null">
+
+
+  <!--设备仓列表-->
+  <xc-table #tableComponent
+            [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+
+  <!--弹框底部按钮-->
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="danger" (click)="closeModal()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--设施过滤输入框-->
+<ng-template #facilityTemplate let-filterValue="filterValue">
+  <input nz-input
+         type="text"
+         [placeholder]="language.picInfo.pleaseChoose"
+         [ngModel]="filterValue.filterName||filterDeviceName"
+         (click)="onShowFacility(filterValue)">
+</ng-template>
+
+<!--设备类型模板展示-->
+<ng-template #equipmentTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span class="status-text" [ngStyle]="data.rowStyle"
+        title="{{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.equipmentType | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>
+
+<!--设备状态模板展示-->
+<ng-template #equipmentStatusTemplate let-data="data">
+  <div class="area-level">
+    <i [class]="'iconfont '+data.statusIconClass+' '+data.statusColorClass"></i>
+    <span class="status-text"
+          title="{{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}"
+          [ngStyle]="data.rowStyle">
+          {{data.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+    </span>
+  </div>
+</ng-template>

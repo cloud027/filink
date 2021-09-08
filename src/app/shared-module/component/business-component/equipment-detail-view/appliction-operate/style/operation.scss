@@ -1,0 +1,41 @@
+@mixin operationStyle {
+  padding: 10px;
+  background: #fff;
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .application-list {
+    display: flex;
+    height: 50px;
+    align-items: center;
+
+    .button-groups {
+      .btn {
+        width: 80px;
+        margin-right: 15px;
+      }
+    }
+
+    .light {
+      display: flex;
+      height: 50px;
+      margin-left: 80px;
+      align-items: center;
+
+      .icon-img {
+        display: flex;
+        align-items: center;
+        margin-right: 50px;
+
+        .iconfont {
+          font-size: 20px;
+        }
+      }
+
+      .application-slider {
+        width: 250px;
+      }
+    }
+  }
+}

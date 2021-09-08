@@ -1,0 +1,141 @@
+<!--地图相关-->
+<div class="index-map-container">
+  <!--视图切换-->
+  <div class="view-switch" *ngIf="viewShow">
+    <span [appTenantPermission]="'3'"
+          *ngIf="this.planRole"
+          class="view-tab plan-view"
+          [ngClass]="{'tab-selected': viewIndex === planView}"
+          (click)="viewSwitch('planView')">{{indexLanguage.planView}}
+    </span>
+    <span class="view-tab title-selected"
+          [appTenantPermission]="'2'"
+          *ngIf="this.projectRole"></span>
+    <span [appTenantPermission]="'2'"
+          *ngIf="this.projectRole"
+          class="view-tab project-view"
+          [ngClass]="{'tab-selected':  viewIndex ===projectView}"
+          (click)="viewSwitch('projectView')">{{indexLanguage.projectView}}
+    </span>
+    <span class="view-tab title-selected"
+          [appTenantPermission]="'1'"
+          *ngIf="(this.projectRole&&this.projectTypes)||(this.planRole&&this.planTypes)">
+    </span>
+    <span [appTenantPermission]="'1'"
+          class="view-tab maintenance-view"
+          [ngClass]="{'tab-selected': viewIndex=== maintenanceView}"
+          (click)="viewSwitch('maintenanceView')">{{indexLanguage.maintenanceView}}
+    </span>
+  </div>
+
+  <!--地图-->
+  <xc-map #mainMap
+          [mapConfig]="mapConfig"
+          [viewIndex]="viewIndex"
+          [data]="data"
+          [iconSize]="iconSize"
+          [centerPoint]="centerPoint"
+          [areaData]="areaData"
+          [deviceLocation]="deviceLocation"
+          [equipmentLocation]="equipmentLocation"
+          [planOrProjectLocation]="planOrProjectLocation"
+          [planOrProjectListLocation]="planOrProjectListLocation"
+          [polymerizationChange]="polymerizationChange"
+          (showProgressBar)="showProgressBar()"
+          (hideProgressBar)="hideProgressBar()"
+          (mapEvent)="mapEvent($event)">
+  </xc-map>
+
+
+  <!--详情卡-->
+  <div *ngIf="isShowFacilityPanel && facilityId" class="facility-panel" [appTenantPermission]="'1-2'">
+    <div class="map-tab-container">
+      <app-facility-particulars-card [facilityId]="facilityId"
+                                     [facilityName]="facilityName"
+                                     [facilityCode]="facilityCode"
+                                     [idData]="idData"
+                                     [facilityPowerCode]="facilityPowerCode"
+                                     [isShowBusinessPicture]="isShowBusinessPicture">
+      </app-facility-particulars-card>
+    </div>
+  </div>
+
+  <!--刷新按钮-->
+  <div class="refresh-btn" (click)="refresh()" title="{{indexLanguage.refresh}}">
+    <div class="icon-refresh"></div>
+  </div>
+
+  <!--左侧浮窗-->
+  <app-index-operational-data #indexOperationalDataComponent
+                              [viewIndex]="viewIndex"
+                              [polymerizationChange]="polymerizationChange"></app-index-operational-data>
+
+  <!--右侧操作栏-->
+  <div class="facility-status">
+    <app-index-map-operation [viewIndex]="viewIndex" [roleSelect]="roleSelect" [indexType]="mainMap.indexType">
+    </app-index-map-operation>
+  </div>
+
+  <!--统计相关-->
+  <div class="statistics-panel">
+    <div class="statistics-panel-charts">
+      <ng-container *ngFor="let item of statisticsConfig">
+        <app-index-statistics *ngIf="item.isShow" [title]="item.title" [type]="item.type"
+                              [isShowTitle]="item.isShowTitle"
+                              [isOneType]="item.isOneType"
+                              [isShowSelect]="item.isShowSelect"
+                              [data]="data"
+                              [noFaultType]="noFaultType"
+                              [noFailureRateAnalysis]="noFailureRateAnalysis"
+                              [selectEquipmentData]="selectEquipmentData"
+                              (noFaultTypeEmitter)="noFaultTypeEmitter($event)"
+                              (noFailureRateAnalysisEmitter)="noFailureRateAnalysisEmitter($event)"
+                              (selectEquipmentEmitter)="selectEquipmentEmitter($event)"></app-index-statistics>
+      </ng-container>
+    </div>
+    <div class="statistics-panel-switch">
+      <div class="statistics-panel-switch-item iconfont fiLink-overview number"
+           [ngClass]="{'card-selected' : isShowCard}"
+           (click)="ClickAllItems()"></div>
+      <div *ngFor="let item of statisticsConfig"
+           class="statistics-panel-switch-item"
+           [ngClass]="{'card-selected' : item.isShow}"
+           (click)="statisticsItemClick(item)" [title]="item.label">
+        <div class="iconfont number" [ngClass]="item.icon"></div>
+      </div>
+      <!--地图设置-->
+      <div class="map-setting">
+        <i class="iconfont icon-fiLink fiLink-map-setting  bg-c-w height-number"
+           title="{{indexLanguage.mapConfigTitle}}"
+           (click)="openMapSettingModal()">
+        </i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--地图设置temp-->
+<ng-template #MapConfigTemp>
+  <div class="map-config-container">
+    <div class="map-config-box">
+      <div class="map-config-item">
+        <div class="map-config-item-text">{{indexLanguage.iconSize}}</div>
+        <div class="map-config-item-content">
+          <nz-select class="width-all" [(ngModel)]="facilityIconSizeValue"
+                     nzPlaceHolder="{{indexLanguage.pleaseSelect}}">
+            <ng-container *ngFor="let option of facilityIconSizeConfig">
+              <nz-option nzValue="{{option.value}}" nzLabel="{{option.label}}"></nz-option>
+            </ng-container>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--进度条-->
+<div class="progress-bar" *ngIf="isShowProgressBar">
+  <p>{{commonLanguage.loading}}...</p>
+  <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+</div>
+

@@ -1,0 +1,66 @@
+@import "../../../../../style-module/config";
+
+.box-warp{
+  padding: 0 16px;
+  position: relative;
+
+  .pageTitle {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .area-name {
+    cursor: default;
+  }
+
+  .open-button {
+    border: none;
+    outline: none;
+    background: $button-danger-color;
+    cursor: pointer;
+  }
+
+  .trouble-wrap{
+    padding-bottom: 20px;
+
+    .trouble-btn-box {
+      padding-left: 20px;
+    }
+
+    .link-button {
+      margin-right: 20px;
+    }
+
+    .trouble-flex{
+      display: flex;
+
+      .trouble-status{
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.custom-template {
+  align-items: center;
+
+  .input-name{
+    width: 262px;
+  }
+
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+.loading{
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  z-index: 999;
+}
+
+

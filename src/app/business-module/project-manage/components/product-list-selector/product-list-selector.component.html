@@ -1,0 +1,45 @@
+<!--产品列表选择器弹窗-->
+<nz-modal
+  *ngIf="productListVisible"
+  [nzVisible]="productListVisible"
+  [nzTitle]="productLanguage.select + planLanguage.model"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="modalFooter"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="handleCancel()"
+  nzWidth="70%">
+  <xc-table
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            [disabled]="!selectedProductId"
+            (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+            (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>
+
+<!--产品列表单选框-->
+<ng-template #radioTemp let-data="data">
+  <nz-radio-group [(ngModel)]="selectedProductId" (ngModelChange)="selectedProductChange($event, data)">
+    <label nz-radio [nzValue]="data.productId"></label>
+  </nz-radio-group>
+</ng-template>
+
+
+<!--设备和设施图标样式-->
+<ng-template #productTypeTemplate let-data="data">
+  <i class="device-type-icon" [ngClass]="data.iconClass"></i>
+  <span *ngIf="data.typeFlag === productTypeEnum.facility" class="status-text"
+        title="{{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}">
+    {{data.typeCode | translate: deviceTypeEnum: 'facility.config'}}
+  </span>
+  <span *ngIf="data.typeFlag === productTypeEnum.equipment" class="status-text"
+        title="{{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}">
+    {{data.typeCode | translate: equipmentTypeEnum: languageEnum.facility}}
+  </span>
+</ng-template>

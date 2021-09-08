@@ -1,0 +1,20 @@
+<!--分组列表-->
+<nz-modal nzWidth="60%"
+          [(nzVisible)]="groupVisible"
+          nzTitle="{{language.groupInfo}}"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="groupVisible=false">
+  <xc-table [dataSet]="dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+  <ng-template #modalFooter>
+    <button class="link-button" nz-button nzType="primary" type="button"
+            (click)="groupVisible=false">{{language.handleOk}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="groupVisible=false">
+      {{language.handleCancel}}
+    </button>
+  </ng-template>
+</nz-modal>

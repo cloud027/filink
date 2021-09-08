@@ -1,0 +1,82 @@
+<div class="add-delivery">
+  <div class="table-common-title">
+    <span>{{storageLanguage.addDelivery}}</span>
+  </div>
+  <div class="delivery-add-content">
+    <!--基本信息-->
+    <div class="basic-info">
+      <p class="secondary-title">{{storageLanguage.basicInfo}}</p>
+      <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    </div>
+    <!--待出库物料-->
+    <div class="delivery-container">
+      <p class="secondary-title">{{storageLanguage.noDeliveryMaterial}}</p>
+      <div class="table-wrapper">
+        <xc-table #waitDeliveryTable
+          [dataSet]="waitDeliveryDataSet"
+          [pageBean]="waitDeliveryPageBean"
+          [tableConfig]="selectTableConfig"
+          (pageChange)="waitDeliveryPageChange($event)">
+        </xc-table>
+      </div>
+    </div>
+  </div>
+  <!--确认、取消按钮-->
+  <div class="btn-all">
+    <button class="link-button submit-btn" nz-button nzType="primary" [nzLoading]="isLoading"
+            [disabled]="isDisabled || !waitDeliveryDataSet.length" (click)="submit()">{{commonLanguage.okText}}</button>
+    <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{commonLanguage.cancelText}}</button>
+  </div>
+</div>
+<!--规格型号选择模板-->
+<ng-template #materialModelSelector let-formGroup="formGroup" let-col="col">
+  <form [formGroup]="formGroup">
+    <div class="custom-template">
+      <label>
+        <input nz-input class="input-name" readonly formControlName="materialModel">
+      </label>
+      <button type="button" class="open-button icon-template" (click)="showModelSelect()">
+        <i class="icon-fiLink fiLink-search-index iconfont"></i>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<!--规格型号选择器弹窗-->
+<app-material-model *ngIf="modelSelectVisible"
+                    [(isVisible)]="modelSelectVisible"
+                    [isRadio]="true"
+                    [selectRadioId]="selectModelId"
+                    [productTypeDataSource]="productTypeDataSource"
+                    (handleOkEvent)="handleModelOk($event)"
+></app-material-model>
+
+<!--添加出库物料弹窗-->
+<nz-modal *ngIf="isShowModal" [(nzVisible)]="isShowModal"
+          [nzWidth]="900"
+          [nzTitle]="storageLanguage.addDeliveryMaterial"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter"
+          [nzMaskClosable]="false"
+          (nzOnCancel)="isShowModal = false">
+  <ng-template #modalContent>
+      <xc-table #tableComponent
+                [dataSet]="dataSet"
+                [selectedData]="selectDeliveryData"
+                [tableConfig]="tableConfig"
+                [pageBean]="pageBean"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button class="link-button" nzType="primary" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="isShowModal = false">{{commonLanguage.cancel}}</button>
+    <button nz-button class="link-button" nzType="danger" (click)="cleanUp()">{{commonLanguage.cleanUp}}</button>
+  </ng-template>
+</nz-modal>
+<!--编辑数量-->
+<app-modify-delivery *ngIf="showEditDeliveryNum"
+                     [(showEditDeliveryNum)]="showEditDeliveryNum"
+                     [editDeliveryData]="editDeliveryData"
+                     (handleOkEvent)="handleNumOk($event)"
+                     (visibleChange)="showEditDeliveryNum=false">
+</app-modify-delivery>

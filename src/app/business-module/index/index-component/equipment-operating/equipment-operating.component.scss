@@ -1,0 +1,72 @@
+@import "~src/app/style-module/config";
+
+.operating-body {
+  overflow-y: auto;
+  height: 76vh;
+
+  .information-screen {
+    /deep/ .application-content {
+      display: block;
+      position: relative;
+      padding-top: 80px;
+
+      /deep/ .content-left {
+        width: 100%;
+      }
+
+      /deep/ .content-right {
+        width: 100%;
+        height: 56px;
+        background: $bg-c-w;
+        position: absolute;
+        top: 8px;
+
+        .screen {
+          width: auto;
+          margin: 0;
+          padding: 20px;
+          border-radius: 3px;
+          border-top: none;
+        }
+      }
+    }
+  }
+
+  .camera {
+    margin: 10px;
+    height: 308px;
+
+    /deep/ .screen {
+      /deep/ .camera-wrap {
+        width: 100%;
+        padding: 0;
+
+        .one {
+          height: auto;
+
+          .video-component {
+            height: auto;
+          }
+        }
+
+      }
+    }
+  }
+
+  .camera-operating {
+    margin-bottom: 10px;
+
+    /deep/ .camera-config .icon-row {
+      margin-left: 22%;
+    }
+  }
+
+  .basicOperation {
+    padding-left: 10px;
+  }
+
+  .no-data {
+    text-align: center;
+    margin: 0 auto;
+  }
+}

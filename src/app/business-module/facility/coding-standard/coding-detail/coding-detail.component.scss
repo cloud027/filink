@@ -1,0 +1,55 @@
+@import "../../../../style-module/config";
+.coding-standard-add {
+  display: flex;
+  margin-top: 20px;
+  border-top: 1px solid $border-color;
+
+  .xc-steps {
+    padding-top: 80px;
+    width: 186px;
+    border-right: 1px solid $border-color;
+  }
+
+  .assembly {
+    width: calc(100% - 186px);
+    .coding-btn {
+      padding-bottom: 30px;
+      .next-step {
+        margin: 0 10px 0 20px;
+      }
+      .ok-step {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+.search {
+  position: absolute;
+  top:3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $button-danger-color;
+}
+
+.assetType-title-box {
+  background-color: #EAEDF1;
+  height: 40px;
+  font-weight: bold;
+  .assetType-title {
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+}
+.area-box {
+  width: 300px;
+  display: inline-block;
+  padding: 4.5px 11px;
+  border: 1px solid $button-delete-disable-border-color;
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  height: 32px;
+}

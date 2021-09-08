@@ -1,0 +1,46 @@
+@import "../../../../style-module/config";
+.area-detail-title{
+  padding-left: 18px;
+  border-left: 2px solid $detail-title-color;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+.facility-detail{
+  padding: 10px;
+}
+
+.address-p {
+  color: $color;
+}
+.unit-select {
+  width: 300px;
+  .unit-name {
+    display: inline-block;
+    width: 50%;
+    border: 1px solid $separation-color;
+    height: 32px;
+    padding: 4px 11px;
+    border-radius: 4px;
+    margin-right: 10px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  background: $bg-c-w;
+}
+.parts-form-container{
+  padding-left: 20px;
+  .save-btn-container{
+    padding-left: 20px;
+    .save-parts{
+      margin-right: 20px;
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import "../../../share/style/common-style";
+@import "../../../../../style-module/config";
+
+.strategy {
+  padding: 0 20px;
+  width: 100%;
+
+  .title {
+    color: $title-color;
+    font-size: 13px;
+    font-weight: bold;
+    position: relative;
+    &:after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -10px;
+      height: 20px;
+      border-left: 4px solid $color;
+    }
+  }
+
+  .condition {
+    .condition-info {
+      display: flex;
+      margin-bottom: 10px;
+
+      .info-left {
+        width: 140px;
+        color: $disabled-font-color;
+      }
+    }
+  }
+
+  .trigger {
+    margin: 20px 10px;
+  }
+
+  .implement {
+    width: 100%;
+
+    .title {
+      color: $title-color;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .implement-list {
+      width: 100%;
+    }
+  }
+
+  .instructions-title {
+    color: $title-color;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+
+  .screen {
+    @include screen-style;
+  }
+}
+
+.area-name {
+  @include input-style;
+}
+
+.open-button {
+  @include button-style;
+}

@@ -1,0 +1,225 @@
+@import "config";
+
+body {
+  min-width: 1220px;
+  overflow: auto;
+}
+
+ul, p {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+// 对于大列表 表格容器的间距
+// 面包屑已经在组件设置 margin-top 16 需要原来每个模块最外层的间距去掉
+// 当和面包屑重合时利用 margin 塌陷现象以表格顶部20为准
+.table-wrapper {
+  padding: 0;
+  margin: 20px 16px;
+}
+
+.flex-minx{
+  display: flex;
+}
+.hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //white-space: nowrap;
+  white-space: pre !important;
+  word-break: keep-all;
+}
+
+// 文字过长处理
+.text-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.show-hidden {
+  display: none;
+}
+
+.text-pre {
+  white-space: pre;
+  word-break: keep-all;
+}
+
+.box-color-icon {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  align-self: center;
+}
+
+.bg-c {
+  background-color: $bg-c;
+}
+
+.bg-c-w {
+  background-color: $bg-c-w;
+}
+
+
+.pic-device-selector {
+  .area-name {
+    padding-top: 7px;
+    height: 32px;
+  }
+}
+
+.open-button[disabled] {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f5f5f5;
+  border-color: #d9d9d9;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.ant-steps-vertical {
+  .ant-steps-item-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  > .ant-steps-item > .ant-steps-item-tail {
+    top: 10px;
+    left: 20px;
+    height: 92%;
+  }
+
+  .ant-steps-item-title {
+    line-height: 40px;
+  }
+}
+
+.ant-steps-item-icon > .ant-steps-icon {
+  top: 3px;
+}
+// 地图类的input占位符修改
+.map-search {
+  input::-webkit-input-placeholder {
+    color: $index-title-color;
+  }
+
+  input:-moz-placeholder {
+    color: $index-title-color;
+    opacity: 1;
+  }
+
+  input::-moz-placeholder {
+    color: $index-title-color;
+    opacity: 1;
+  }
+
+  input:-ms-input-placeholder {
+    color: $index-title-color;
+  }
+
+  input{
+    color: $map-search-placeholder-color;
+  }
+}
+
+.select-area-statistical {
+  width: 100px;
+  padding: 4.5px 20px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  margin-right: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+  min-width: 170px;
+  .place-holder {
+    color: $border-color;
+  }
+}
+.area-name {
+  display: inline-block;
+  width: 50%;
+  height: 32px;
+  border: 1px solid #ccc;
+  padding: 4px 11px;
+  border-radius: 4px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.unit-name {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid #ccc;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 11px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.width-style {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+// 资产打印样式
+.right-warp{
+  position: relative;
+}
+#print-wrap {
+  width: 100%;
+  height: calc(100% - 105px);
+  //杆体示意图
+  .window {
+    height: 100%;
+    float: left;
+    position: relative;
+  }
+  #img-box{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  //右侧信息栏
+  .right-information {
+    float: left;
+    padding-left: 10px;
+
+    //基础信息Title
+    .basic-information-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+    }
+
+    //基础信息Body
+    .basic-information-body {
+      display: flex;
+      height: 150px;
+      color: #808080;
+
+      .body-div {
+        .body-div-span {
+          margin-top: 20px;
+          width: 185px;
+        }
+      }
+    }
+  }
+}

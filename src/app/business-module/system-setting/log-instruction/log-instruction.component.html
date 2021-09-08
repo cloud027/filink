@@ -1,0 +1,16 @@
+<div class="table-wrapper">
+  <xc-table
+    [dataSet]="dataSet"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    [esPaginationCount]="true"
+    [totalCount]="totalCount"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+
+<!--操作结果模板-->
+<ng-template #operateResultTemp let-data="data">
+  <span>{{data.success | translate: operateResultEnum :languageEnum.log}}</span>
+</ng-template>

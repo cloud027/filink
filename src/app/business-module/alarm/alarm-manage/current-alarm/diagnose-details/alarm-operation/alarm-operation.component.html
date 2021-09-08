@@ -1,0 +1,64 @@
+<nz-card nzTitle="{{language.basicOperation}}" class="common-card alarm-operate">
+  <div *ngIf="pageType === pageTypeEnum.alarm" class="alarm-btn-warp">
+    <!--派单销障-->
+    <button class="operate-btn" (click)="clickOrdersCancelAccount()" appAccessPermission="02-1-6-2">
+      <i class="icon-fiLink-l iconfont fiLink-send-pin"></i>
+      <p class="btn-text" >{{language.ordersCancelAccount}}</p>
+    </button>
+    <!--转故障处理-->
+    <button class="operate-btn" (click)="turnTrouble()" appAccessPermission="02-1-6-3" *ngIf="turnTroubleShow">
+      <i class="icon-fiLink-l iconfont fiLink-turn-trouble"></i>
+      <p class="btn-text" >{{language.passTroubleDispose}}</p>
+    </button>
+    <!--查看类似案例-->
+    <button class="operate-btn" (click)="lookSimilarCases()" appAccessPermission="02-1-6-4">
+      <i class="icon-fiLink-l iconfont fiLink-view-case"></i>
+      <p class="btn-text" >{{language.lookSimilarCases}}</p>
+    </button>
+    <!--误判-->
+    <button class="operate-btn" (click)="erroneousJudgement()" appAccessPermission="02-1-6-5">
+      <i class="icon-fiLink-l iconfont fiLink-filink-wupan-icon"></i>
+      <p class="btn-text" >{{language.erroneousJudgement }}</p>
+    </button>
+    <!--已处理-->
+    <button class="operate-btn" (click)="processed()" appAccessPermission="02-1-6-6">
+      <i class="icon-fiLink-l iconfont fiLink-processed-trouble"></i>
+      <p class="btn-text">{{language.processed}}</p>
+    </button>
+  </div>
+  <!--保存到知识库-->
+  <button class="operate-btn" (click)="saveRepository()" *ngIf="pageType === 'history'" appAccessPermission="02-2-4-1">
+    <i class="icon-fiLink-l iconfont fiLink-view-optical-cable"></i>
+    <p class="btn-text" >{{language.saveRepository}}</p>
+  </button>
+</nz-card>
+<!-- 新增销障工单 派单销障-->
+<app-add-work-order *ngIf="isShowWorkOrder"
+                    [isShowModal]="isShowWorkOrder"
+                    [alarmInfo] = "alarmInfo"
+                    (close)="closeClearBarrier()"
+                    [modalTitle]="addOrderTitle"
+></app-add-work-order>
+<!-- 已处理弹窗 -->
+<nz-modal
+  class="update-remark-pop-up remarkModal"
+  [(nzVisible)]="dealTable"
+  *ngIf="dealTable"
+  [nzTitle]="modalTitle"
+  [nzMaskClosable]="false"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="cancel()">
+  <ng-template #modalTitle>
+    {{confirmTitle}}{{language.alarm}}
+  </ng-template>
+  <ng-template #modalContent>
+    <xc-form [column]="formColumnDeal" (formInstance)="formInstanceDeal($event)"></xc-form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button"
+            (click)="deal();" [disabled]="!isDealDis">{{language.okText}}
+    </button>
+    <button nz-button nzType="danger" class="link-button" (click)="cancel()">{{language.cancelText}}</button>
+  </ng-template>
+</nz-modal>

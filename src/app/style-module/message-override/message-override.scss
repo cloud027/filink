@@ -1,0 +1,29 @@
+// 未读消息徽标样式
+@import "../config";
+.badge-share {
+  position: absolute;
+  background: red;
+  width: 20px;
+  height: 15px;
+  line-height: 16px;
+  border-radius: 10px;
+  font-size: 8px;
+  color: $menu-font-color;
+  text-align: center;
+}
+.badge {
+  top: 12px;
+  right: 10px;
+}
+.message-badge {
+  top: 4px;
+  right: 4px;
+}
+
+// 消息大厅选择日期框样式
+.range-date {
+  .ant-input {
+    height: 32px;
+    padding: 4px 11px;
+  }
+}

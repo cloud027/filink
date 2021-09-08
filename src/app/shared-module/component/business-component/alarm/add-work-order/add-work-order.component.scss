@@ -1,0 +1,23 @@
+@import "../../../../../style-module/config";
+.unit-width {
+  display: flex;
+  align-items: center;
+
+  .icon-position {
+    position: absolute;
+    left: 105%;
+  }
+}
+
+.area-name{
+  cursor: default;
+}
+
+.open-button {
+  border: none;
+  outline: none;
+  background: $bg-c-w;
+  cursor: pointer;
+}
+
+

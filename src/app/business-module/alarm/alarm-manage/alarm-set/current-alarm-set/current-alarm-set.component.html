@@ -1,0 +1,52 @@
+<div class="current-alarm-set-box">
+  <div class="alarm-common-title">{{language.currentAlarmSet}}</div>
+  <div class="box-wrap">
+    <div class="table-wrapper">
+      <xc-table [dataSet]="dataSet"
+                [pageBean]="pageBean"
+                [tableConfig]="tableConfig"
+                (pageChange)="pageChange($event)">
+      </xc-table>
+    </div>
+  </div>
+  <ng-template #alarmDefaultLevelTemp let-data="data">
+    <div class="level-flex">
+      <div class="box-icon" [ngStyle]="data.defaultStyle"></div>
+      <span class="level-margin-left">{{data.alarmDefaultLevel | translate: alarmLevelEnum: languageEnum.alarm}}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #alarmLevelTemp let-data="data">
+    <div class="level-flex">
+      <div class="box-icon" [ngStyle]="data.style"></div>
+      <span class="level-margin-left">{{data.alarmLevel | translate: alarmLevelEnum: languageEnum.alarm}}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #alarmConfirmTemp let-data="data">
+    <div>{{data.alarmAutomaticConfirmation | translate: alarmIsConfirmEnum: languageEnum.alarm}}</div>
+  </ng-template>
+
+  <!-- 编辑 -->
+  <nz-modal [(nzVisible)]="isVisibleEdit"
+            [nzTitle]="editModalTitle"
+            [nzContent]="editModalContent"
+            [nzFooter]="editModalFooter"
+            (nzOnCancel)="editHandleCancel()">
+    <ng-template #editModalTitle>
+      {{modalTitle}}
+    </ng-template>
+    <ng-template #editModalContent>
+      <xc-form [column]="tableColumnEdit" (formInstance)="formInstanceSecond($event)"></xc-form>
+    </ng-template>
+    <ng-template #editModalFooter>
+      <button nz-button nzType="primary" class="link-button" (click)="editHandle()" [nzLoading]="isLoading"  [disabled]="!isCurrentAlarmSet">{{language.okText}}</button>
+      <button nz-button nzType="danger" class="link-button" (click)="editHandleCancel()">{{language.cancelText}}</button>
+    </ng-template>
+  </nz-modal>
+  <!-- 告警名称 -->
+  <ng-template #alarmName let-filterValue="filterValue">
+    <app-alarm-name [alarmNameConfig]='alarmNameConfig' [filterCondition]="filterValue"></app-alarm-name>
+  </ng-template>
+</div>
+

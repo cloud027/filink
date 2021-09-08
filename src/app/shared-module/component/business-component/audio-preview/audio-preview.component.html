@@ -1,0 +1,5 @@
+<div class="audio-box">
+  <audio controls="controls" type="audio/mp3" preload [src]="src" *ngIf="!isIe"></audio>
+  <embed class="embed"  type="audio/mp3" menu="true"
+         loop="false" align="center" preload="auto" autostart="false" [src]="src" *ngIf="isIe">
+</div>

@@ -1,0 +1,116 @@
+@import "../../../../../style-module/config";
+.alarm-box{
+  .alarm-box-item{
+    font-size: 14px;
+    position: relative;
+  }
+  /*第一列*/
+  .column-title{
+    .fault-head{
+      height: 22px;
+      line-height: 22px;
+      margin-top: 12px;
+      .title-tag{
+        display: inline-block;
+        float: left;
+        border-radius: 2px;
+        margin-right: 6px;
+        color: $menu-font-color;
+        font-size: 12px;
+        &.fault-title{
+          color: $title-color;
+          font-size: 16px;
+          max-width: 40%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        &.fault-level{
+          padding: 0 5px;
+        }
+        &.fault-status{
+          padding: 0 5px;
+        }
+      }
+    }
+    .clear-fault{
+      clear: both;
+    }
+    .happen-time{
+      color: $sp-icon-color-7;
+    }
+    .handel-unit{
+      color: $title-color;
+      .icon-fiLink{
+        margin-right: 6px;
+        vertical-align: inherit;
+        &.fiLink-user-menu{
+          color: $color;
+        }
+        &.fiLink-departments{
+          color: $sp-icon-color-3;
+        }
+      }
+      &.speed{
+        margin-top: 4px;
+      }
+    }
+  }
+
+  /*第二列*/
+  .column-area{
+    .cate-margin{
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      span{
+        display: inline-block;
+      }
+      .label-text{
+        width: 125px;
+      }
+      .value-text{
+        width: calc(100% - 126px);
+      }
+    }
+    .iconfont{
+      margin-right: 6px;
+    }
+  }
+  /*第三列*/
+  .column-time{
+    .fault-time{
+      height: 40px;
+      line-height: 40px;
+      .label-text{
+        display: inline-block;
+        width: 98px;
+      }
+      .value-text{
+        display: inline-block;
+        width: calc(100% - 100px);
+        .iconfont{
+          color: #67a8f7;
+          margin-right: 5px;
+        }
+      }
+    }
+    .alarm-left{
+      span{
+        float: left;
+      }
+    }
+  }
+
+
+  .label-text{
+    color: $sp-icon-color-7;
+  }
+  .value-text{
+    color: $title-color;
+  }
+  .line-heights{
+    height: 40px;
+    line-height: 40px;
+  }
+}

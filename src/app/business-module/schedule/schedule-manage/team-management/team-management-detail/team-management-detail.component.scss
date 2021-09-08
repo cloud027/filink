@@ -1,0 +1,46 @@
+@import "../../../../../style-module/config";
+.team-add-wrap {
+  .team-add-content {
+    padding: 20px 20px 20px 16px;
+
+    .secondary-title {
+      line-height: 30px;
+      font-size: 14px;
+      color: $title-color;
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .secondary-title::before {
+      content: '';
+      display: inline-block;
+      height: 30px;
+      width: 4px;
+      vertical-align: bottom;
+      margin-right: 10px;
+      background-color: $color;
+    }
+
+    .footer {
+      .submit-btn {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .dept-name {
+    width: 300px;
+  }
+  .open-button {
+    position: absolute;
+    top: 3px;
+    border: none;
+    outline: none;
+    background: $menu-font-color;
+    cursor: pointer;
+    &:disabled .icon-search {
+      background: $disabled-font-color;
+    }
+  }
+}

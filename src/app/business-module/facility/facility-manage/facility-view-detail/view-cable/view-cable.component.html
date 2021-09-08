@@ -1,0 +1,125 @@
+<div class="box-warp">
+  <!--光缆信息-->
+  <div style="width: 100%;" class="table-container">
+    <button *ngIf=isDisabled class="add-cable" [appAccessPermission]="'03-6-1'" (click)="addCable()">+
+      {{ '' + language.addCable}}</button>
+    <p *ngIf=isDisabled class="title cable-table-title">{{language.cableInformation}}</p>
+    <p *ngIf=!isDisabled class="title cable-segment-table-title">{{language.cableInformation}}</p>
+    <xc-table [dataSet]="_dataSet"
+              [pageBean]="pageBean"
+              [tableConfig]="tableConfig"
+              (pageChange)="pageChange($event)"
+    >
+
+    </xc-table>
+  </div>
+  <!--光缆段信息列表-->
+  <div style="width: 100%; top: 20px" class="table-container">
+    <p class="title cable-segment-table-title">{{language.cableSegmentInformation}}</p>
+    <xc-table [dataSet]="section_dataSet"
+              [pageBean]="section_pageBean"
+              [tableConfig]="section_tableConfig"
+              (pageChange)="section_pageChange($event)"
+    >
+    </xc-table>
+  </div>
+</div>
+
+<ng-template #cableName let-data="data">
+  <span class="navigate table-text-td" [title]="data['opticCableName']" (click)="navigateToCableSegment(data)">
+    {{data['opticCableName']}}</span>
+</ng-template>
+
+<!-- 所属区域 -->
+<ng-template #areaSelector let-filterValue="filterValue">
+  <app-area [areaConfig]='areaConfig' [filterValue]="filterValue"></app-area>
+</ng-template>
+
+<!--设施起始节点 -->
+<ng-template #UnitNameSearch let-filterValue="filterValue">
+  <app-alarm-object [alarmObjectConfig]="deviceObjectConfig" [filterValue]="filterValue"
+                    [title]="language.startingNode"></app-alarm-object>
+</ng-template>
+
+<!--设施终止节点 -->
+<ng-template #EndUnitNameSearch let-filterValue="filterValue">
+  <app-alarm-object [alarmObjectConfig]="deviceObjectConfigEnd" [filterValue]="filterValue"
+                    [title]="language.terminationNode"></app-alarm-object>
+</ng-template>
+
+
+<!-- 光缆纤芯筛选带操作符模板 -->
+<ng-template #cableCoreTemp let-filterValue="filterValue">
+  <span class="inputBox">
+    <input type="text" class="width-style" class="numberInput"
+           [placeholder]="InspectionLanguage.pleaseEnter"
+           [(ngModel)]="filterValue.filterValue" oninput="value=value.replace(/\D/g,'')">
+    <xc-nz-select style="width: 110px;" [(ngModel)]="cableCoreSelectValue" [disabled]="!filterValue.filterValue">
+       <xc-nz-option nzValue="gt" [nzLabel]="'>'"></xc-nz-option>
+       <xc-nz-option nzValue="eq" [nzLabel]="'='"></xc-nz-option>
+       <xc-nz-option nzValue="lt" [nzLabel]="'<'"></xc-nz-option>
+    </xc-nz-select>
+  </span>
+</ng-template>
+
+<!-- 长度筛选带操作符模板 -->
+<ng-template #lengthTemp let-filterValue="filterValue">
+  <span class="inputBox">
+    <input type="text" class="width-style" class="numberInput"
+           [placeholder]="InspectionLanguage.pleaseEnter"
+           [(ngModel)]="filterValue.filterValue" oninput="value=value.replace(/\D/g,'')">
+    <xc-nz-select style="width: 110px;" [(ngModel)]="lengthSelectValue" [disabled]="!filterValue.filterValue">
+       <xc-nz-option nzValue="gt" [nzLabel]="'>'"></xc-nz-option>
+       <xc-nz-option nzValue="eq" [nzLabel]="'='"></xc-nz-option>
+       <xc-nz-option nzValue="lt" [nzLabel]="'<'"></xc-nz-option>
+    </xc-nz-select>
+  </span>
+</ng-template>
+
+<!-- 光缆芯数筛选带操作符模板 -->
+<ng-template #cableCoreNumTemp let-filterValue="filterValue">
+  <span class="inputBox">
+    <input type="text" class="width-style" class="numberInput"
+           [placeholder]="InspectionLanguage.pleaseEnter"
+           [(ngModel)]="filterValue.filterValue" oninput="value=value.replace(/\D/g,'')">
+    <xc-nz-select style="width: 110px;" [(ngModel)]="cableCoreNumSelectValue" [disabled]="!filterValue.filterValue">
+       <xc-nz-option nzValue="gt" [nzLabel]="'>'"></xc-nz-option>
+       <xc-nz-option nzValue="eq" [nzLabel]="'='"></xc-nz-option>
+       <xc-nz-option nzValue="lt" [nzLabel]="'<'"></xc-nz-option>
+    </xc-nz-select>
+  </span>
+</ng-template>
+
+<!--查看光缆段智能标签-->
+<app-smart-label
+  *ngIf="labelVisible"
+  (close)="this.labelVisible = false"
+  [opticCableSectionId]="opticCableSectionId" #smartLabel>
+</app-smart-label>
+
+<!--调整光缆段坐标-->
+<app-adjust-map
+  *ngIf="mapIsible"
+  [mapData]="mapData"
+  [id]='mapDataId'
+  (close)="this.mapIsible = false" #adjustMap>
+</app-adjust-map>
+
+<!--纤芯熔接 -->
+<app-core-fusion
+  *ngIf="coreVisible"
+  (close)="this.coreVisible = false"
+  [num]="num"
+  [name]="name"
+  [id]="id"
+  [deviceId]="deviceId"
+  [deviceName]="deviceName"
+  [viewCoreFusion]="viewCoreFusion"
+  [endId]="terminationNode"
+  [startId]="startNode"
+  [endDeviceType]="terminationNodeDeviceType"
+  [startDeviceType]="startNodeDeviceType"
+  [startNodeName]="startNodeName"
+  [endNodeName]="terminationNodeName"
+  #coreFusion
+></app-core-fusion>

@@ -1,0 +1,141 @@
+@import "../../../../../style-module/config";
+// 整体详情的样式
+.product-info-container {
+  display: flex;
+  .first-line-card {
+    margin-right: 10px;
+    height: 225px;
+  }
+  // 每一个卡片的样式
+  .info-card-item {
+    background-color: $bg-c-w;
+    .product-image {
+      padding: 10px;
+      height: auto;
+      width: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .import-info {
+      .product-description {
+        margin-right: 10px;
+        max-width: 40%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      // 端口
+      .equipment-port {
+        margin-right: 10px;
+        padding: 2px 6px;
+        color: $sp-icon-color-4;
+        background-color: $facility-status-outOfContact;
+      }
+
+      .product-model {
+        padding: 2px 6px;
+        color: $sp-icon-color-4;
+        background-color: $sp-icon-color-3;
+      }
+
+      // 端口类型
+      .port-type {
+        margin: 0 10px;
+        padding: 2px 6px;
+        color: $sp-icon-color-4;
+        background-color: $inspection-equipment-bg;
+      }
+
+      .unit {
+        margin-right: 10px;
+        padding: 2px 6px;
+        color: $sp-icon-color-4;
+        background-color: $level-two;
+      }
+    }
+
+    .product-base {
+      padding-top: 30px;
+      padding-left: 16px;
+      padding-bottom: 10px;
+      .wisdom-preview{
+        margin: 0 10px;
+        float: right;
+      }
+    }
+
+    .chart-container {
+      display: flex;
+      margin-top: 10px;
+      .product-creator {
+        padding-top: 30px;
+        padding-left: 16px;
+        width: 400px;
+      }
+      .break-chart {
+        padding-right: 16px;
+        width: 220px;
+        height: 146px;
+        float: right;
+      }
+    }
+
+    .detail-btn {
+      padding-top: 30px;
+      padding-left: 16px;
+      margin-bottom: 40px;
+    }
+  }
+
+  // 安装信息卡片样式
+  .install-info {
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 195px;
+    .form-first-item{
+      padding-top: 30px;
+    }
+
+    .install-info-container{
+      padding: 30px 16px;
+    }
+  }
+  .create-info{
+    height: 195px;
+  }
+
+  .picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+    height: 636px;
+
+  }
+
+  .form-last-item {
+    padding-bottom: 30px;
+  }
+
+  // 表单类型名称
+  .install-info-item {
+    display: flex;
+    padding: 0 0 18px 0;
+    width: 100%;
+    vertical-align: middle;
+    .icon-item {
+      margin-right: 6px;
+    }
+    // 云平台信息
+    .platform-info{
+      margin-right: 15px;
+      width: 80px;
+    }
+  }
+}
+.product-img-container{
+  text-align: center;
+}

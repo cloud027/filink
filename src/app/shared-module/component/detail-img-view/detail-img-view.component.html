@@ -1,0 +1,18 @@
+<div *ngIf="transmitData.length>0; else noPic" class="trouble-img-container">
+  <div class="trouble-img-item" *ngFor="let item of transmitData">
+    <img class="trouble-img" [src]="item.picUrlBase" (click)="clickImage(item)" alt=""/>
+    <div class="info-item">
+      <span>{{language.picDate}}</span> <span>{{item.ctime | dynamic: 'date' : null}}</span>
+    </div>
+    <div class="info-item">
+      <span>{{language.picSize}}</span> <span>{{item.picSize}}</span>
+    </div>
+    <div class="info-item">
+      <span>{{language.picResource}}</span> <span>{{item.resourceName}}</span>
+    </div>
+  </div>
+</div>
+<ng-template #noPic>
+  <div>{{ language.noPicturesYet }}</div>
+</ng-template>
+

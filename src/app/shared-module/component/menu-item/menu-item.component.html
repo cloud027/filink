@@ -1,0 +1,60 @@
+<div cdk-overlay-origin #trigger="cdkOverlayOrigin" class="menu-wrap" [class.first-menu-bg]="menuItem.menuLevel===1" (click)="menuClick($event);"
+     (mouseleave)="setMouseEnterState($event,false)"
+     (mouseenter)="setMouseEnterState($event,true)">
+  <p class="menu-item"
+     [style.padding-left.px]="menuIndent"
+     [class.menu-icon-active]="isActive"
+     [class.menu-icon-selected]="menuItem.isSelected|menuSelected:menuItem:isCollapsed">
+    <i *ngIf="menuItem.menuLevel===1" [class]="'menu-icon-first icon iconfont '+menuItem.imageUrl"></i>
+    <!--没有子级-->
+    <span *ngIf="!menuItem.children || menuItem.children.length === 0"
+          class="menu-transition" [ngClass]="{'hidden': menuItem.menuName.length > 14 && currentLangType}"
+          [class.menu-text-display]="isCollapsed"
+          [nz-tooltip]="menuItem.menuName.length > 14 && currentLangType ? 'true' : null"
+          [nzTitle]="menuItem.menuName.length > 14 && currentLangType ? menuItem.menuName : ''" nzPlacement="topLeft"
+          style="max-width: 150px">{{menuItem.menuName}}</span>
+    <!--有子级-->
+    <span *ngIf="menuItem.children && menuItem.children.length > 0"
+          class="menu-transition" [ngClass]="{'hidden': menuItem.menuName.length > 10 && currentLangType}"
+          [class.menu-text-display]="isCollapsed"
+          [nz-tooltip]="menuItem.menuName.length > 10 && currentLangType ? 'true' : null"
+          [nzTitle]="menuItem.menuName.length > 10 && currentLangType ? menuItem.menuName : ''" nzPlacement="topLeft"
+          style="max-width: 100px">{{menuItem.menuName}}</span>
+    <ng-container *ngIf="menuItem.menuLevel===1">
+      <i *ngIf="menuItem.children&&menuItem.children.length&&menuItem.expand"
+         [class.menu-item-display]="isCollapsed"
+         nz-icon type="down" theme="outline" class="up-down menu-transition"></i>
+      <i *ngIf="menuItem.children&&menuItem.children.length&&!menuItem.expand"
+         [class.menu-item-display]="isCollapsed"
+         nz-icon type="up" theme="outline" class="up-down menu-transition"></i>
+    </ng-container>
+    <i *ngIf="menuItem.children&&menuItem.children.length&&menuItem.menuLevel===2"
+       [class.menu-item-display]="isCollapsed" nz-icon type="right" theme="outline" class="up-down menu-transition"></i>
+  </p>
+  <ul class="second-ul" @fadeIn *ngIf="menuItem.expand">
+    <li *ngFor="let el of menuItem.children">
+      <app-menu-item *ngIf="el.isShow !== '0'" [isMenuPreview]="isMenuPreview" [menuItem]="el"
+                     (menuSelected)="menuSelectedHandle($event)"></app-menu-item>
+    </li>
+  </ul>
+</div>
+
+
+<ng-template cdk-connected-overlay
+             [cdkConnectedOverlayOrigin]="trigger"
+             [cdkConnectedOverlayPositions]="overlayPositions"
+             [cdkConnectedOverlayWidth]="cdkConnectedOverlayWidth"
+             [cdkConnectedOverlayPush]="true"
+             [cdkConnectedOverlayOpen]="isMenuOpen">
+  <div class="menu-wrap  overlay-position" @zoomBigMotion @slideMotion [class.first-menu-bg]="menuItem.menuLevel===1"
+       (mouseleave)="setMouseEnterState($event,false)"
+       (mouseenter)="setMouseEnterState($event,true)">
+    <ul class="panel-class">
+      <ng-container *ngFor="let item of menuItem.children">
+        <app-menu-item *ngIf="item.isShow !== '0'" [isMenuPreview]="isMenuPreview" [menuItem]="item" [menuIndent]="30"
+                       (menuSelected)="menuSelectedHandle($event)"></app-menu-item>
+      </ng-container>
+
+    </ul>
+  </div>
+</ng-template>

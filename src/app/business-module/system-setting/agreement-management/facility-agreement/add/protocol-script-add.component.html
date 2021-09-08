@@ -1,0 +1,72 @@
+<!--新增、编辑协议脚本-->
+<app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+<div class="protocol-form">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)" class="form-margin"></xc-form>
+    <!--确认/取消按钮-->
+    <div class="btn">
+      <button class="link-button btn-space"
+              nz-button nzType="primary"
+              [disabled]="submitBtnDisableStatus()"
+              (click)="onConfirm()"
+              [nzLoading]="submitLoading">{{commonLanguage.confirm}}
+      </button>
+      <button class="link-button" nz-button (click)="onCancel()">{{commonLanguage.cancel}}</button>
+    </div>
+</div>
+
+<!--产品列表选择模板-->
+<ng-template #productSelector let-formGroup="formGroup">
+  <div class="auto-wrapper">
+    <form [formGroup]="formGroup">
+      <input nz-input class="input-name" formControlName="equipmentModel" readonly="readonly">
+      <i class="icon-fiLink fiLink-search-index iconfont auto-icon" (click)="productSelectVisible = true"></i>
+    </form>
+    <label>
+    </label>
+  </div>
+</ng-template>
+<!--产品列表选择器-->
+<app-product-list-selector
+  *ngIf="productSelectVisible"
+  [(productVisible)]="productSelectVisible"
+  [selectProductId] = "selectProductId"
+  (selectDataChange)="selectDataChange($event)">
+</app-product-list-selector>
+<!--上传协议脚本-->
+<ng-template #uploads>
+  <nz-form-control [nzSm]="14" [nzXs]="24" class="form-width">
+    <input type="file" class="file-input" id="file" (change)="fileChange($event, 'file')">
+    <button nz-button (click)="uploadFileChange('file')" type="button">
+      <i nz-icon type="upload"></i><span>{{protocolLanguage.uploadProtocolScriptFile}}</span>
+    </button>
+    <span *ngIf="fileName" [title]="fileName" class="file-name">{{fileName}}</span>
+  </nz-form-control>
+</ng-template>
+
+<!--上传设备配置文件-->
+<ng-template #uploadFile>
+  <nz-form-control [nzSm]="14" [nzXs]="24" class="form-width">
+    <input type="file" class="file-input" id="config-file"
+           (change)="fileChange($event, 'config-file')">
+    <button nz-button (click)="uploadFileChange('config-file')" type="button">
+      <i nz-icon type="upload"></i><span>{{protocolLanguage.uploadDeviceConfigurationFile}}</span>
+    </button>
+    <span *ngIf="configFileName" [title]="configFileName" class="file-name">{{configFileName}}</span>
+  </nz-form-control>
+</ng-template>
+
+<!--上传ssl证书-->
+<ng-template #uploadCertificate>
+  <nz-form-control [nzSm]="14" [nzXs]="24" class="form-width form-ssl">
+    <input type="file" class="file-input" id="ssl-file"
+           (change)="fileChange($event, 'ssl-file')">
+    <button nz-button (click)="uploadFileChange('ssl-file')" type="button">
+      <i nz-icon type="upload"></i><span>{{protocolLanguage.uploadSslFile}}</span>
+    </button>
+    <div *ngIf="sslFileName" class="file-name-wrap">
+      <span [title]="sslFileName" class="file-name">{{sslFileName}}</span>
+      <i nz-icon nzType="close" [title]="protocolLanguage.deleteFile" class="del-icon" (click)="delSslFile()"></i>
+    </div>
+  </nz-form-control>
+</ng-template>
+

@@ -1,0 +1,41 @@
+<nz-spin class="facility-detail" [nzSpinning]="pageLoading">
+  <div>
+    <span class="area-detail-title">
+      {{language.setBusinessInfo}}
+    </span>
+  </div>
+  <div class="form-container">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20" nz-button nzType="primary" [nzLoading]="isLoading" [disabled]="!formStatus.getValid()"
+               (click)="saveInfo()">{{language.handleOk}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+
+<!--箱架选择模版-->
+<ng-template #smartLabelTemp let-formGroup="formGroup" let-col="col">
+  <div>
+    <span class="facility-area-name" [class.disabled]="templateDisabled"
+          [title]="smartLabelInfo.name">{{smartLabelInfo.name}}</span>
+    <button type="button" class="facility-open-button" [disabled]="templateDisabled"
+            (click)="openSmartLabel()"><i
+      class="icon-fiLink fiLink-search-index iconfont"></i></button>
+  </div>
+</ng-template>
+
+<!--选择模板弹框-->
+<nz-modal [(nzVisible)]="templateShow"
+          *ngIf="templateShow"
+          [nzWidth]=1000
+          [nzTitle]="language.selectTemplate"
+          [nzMaskClosable]="false"
+          [nzFooter]="null"
+          (nzOnCancel)="templateShow = false">
+  <app-business-template [TemplateReqDto]="templateReqDto"
+                         (selectedTemplate)="selectedTemplate($event)"></app-business-template>
+
+</nz-modal>

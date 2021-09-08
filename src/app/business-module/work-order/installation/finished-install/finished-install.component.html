@@ -1,0 +1,32 @@
+<div class="order-box-warp install-order">
+  <div class="table-common-title"><span>{{inspectionLanguage.historyOrder}}</span></div>
+  <!--统计图-->
+  <div class="order-chart" nz-row nzGutter="10">
+    <!--第一列-->
+    <div nz-col class="gutter-row" nzSpan="12">
+      <!--统计图-->
+      <div class="gutter-box">
+        <div class="chart-title">{{workOrderLanguage.equipStatistic}}</div>
+        <div *ngIf="equipmentTypeChartType === chartType.chart" echarts [options]="barChartOption" class="chart-box"></div>
+        <div *ngIf="equipmentTypeChartType === chartType.text" class="no-data">{{inspectionLanguage.noData}}</div>
+      </div>
+    </div>
+    <!--第二列-->
+    <div nz-col class="gutter-row" nzSpan="12">
+      <!--  工单状态环形进度  -->
+      <div class="gutter-box">
+        <div class="chart-title">{{workOrderLanguage.statusProportion}}</div>
+        <div class="circle-container" *ngIf="statusChartType === chartType.chart">
+          <div echarts [options]="completedChart" class="ring-chart"></div>
+          <div echarts [options]="singleBackChart" class="ring-chart"></div>
+          <div class="over-box"></div>
+        </div>
+        <div *ngIf="statusChartType === chartType.text" class="no-data">{{inspectionLanguage.noData}}</div>
+      </div>
+    </div>
+  </div>
+  <!-- 表格 -->
+  <div class="order-table">
+    <app-installation-table #installTable [orderTableType]="orderPageType"></app-installation-table>
+  </div>
+</div>

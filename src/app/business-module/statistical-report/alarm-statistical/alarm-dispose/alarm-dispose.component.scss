@@ -1,0 +1,12 @@
+@import '../../../../style-module/config';
+.bar-chart{
+  margin-top: 10px;
+  display: flex;
+  padding: 0 20px;
+  app-echart-column {
+    flex: 1;
+    background-color: $eCharts-bg-color;
+    padding: 10px;
+    margin-right: 10px;
+  }
+}

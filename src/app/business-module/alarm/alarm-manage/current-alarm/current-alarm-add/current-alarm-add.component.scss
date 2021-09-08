@@ -1,0 +1,29 @@
+@import "../../../../../style-module/config";
+
+.page-title {
+  border-left: 2px solid $detail-title-color;
+  padding-left: 18px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.user-detail{
+  padding: 10px;
+  .btn-warp {
+    padding-left: 20px;
+    padding-bottom:10px;
+  }
+  .sub-btn {
+    margin-right: 20px;
+  }
+}
+
+.custom-template {
+  display: flex;
+  align-items: center;
+  .icon-template {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

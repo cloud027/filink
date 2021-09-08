@@ -1,0 +1,26 @@
+@import "../../../../../style-module/config";
+.Echarts-box {
+  background-color: #fff;
+  padding: 16px;
+  .echarts-top-box {
+    display: flex;
+    justify-content: space-between;
+    .echarts-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: #333;
+    }
+    .echarts-select-box {
+      .time-picker-select-box {
+        display: flex;
+      }
+    }
+  }
+
+  .echarts {
+    .empty-container {
+      height: 240px;
+      padding-top: 80px;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@import "../../../../../../style-module/config";
+
+.alarm-operate{
+  .alarm-btn-warp {
+    display: flex;
+  }
+  .operate-btn {
+    width: 15.8%;
+    height: 80px;
+    border: none;
+    outline: none;
+    margin-right: 12px;
+    padding: 10px 10px;
+    cursor: pointer;
+    box-shadow: none;
+    background: $bg-c-w;
+    text-align: center;
+    color: $page-font-color;
+    border-radius: 4px;
+
+    &:hover{
+      background: $menu-active-font-color;
+      color: $bg-c-w;
+      .icon-fiLink-l{
+        color: $bg-c-w;
+      }
+    }
+    &:nth-child(6n) {
+      margin-right: 0;
+    }
+    .icon-fiLink-l{
+      color: $page-font-color;
+      font-size: 20px;
+    }
+  }
+
+  .operate-btn[disabled] {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: $border-color;
+    border-color: $button-danger-hover-color;
+    text-shadow: none;
+    box-shadow: none;
+    .icon-fiLink-l {
+      color: $button-danger-font-color;
+    }
+  }
+}
+

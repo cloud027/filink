@@ -1,0 +1,131 @@
+<div class="strategy">
+  <h3 class="title">{{languageTable.strategyList.trigger}}</h3>
+  <!--执行动作-->
+  <div class="condition">
+    <div class="condition-info">
+      <span class="info-left">{{languageTable.strategyList.sourceType}}:</span>
+      <span
+        class="info-right">{{lightingData.linkageStrategyInfo.conditionType| translate : conditionTypeEnum: 'application.conditionType'}}</span>
+    </div>
+    <div class="condition-info" *ngIf="lightingData.linkageStrategyInfo.conditionType === conditionTypeEnum.trigger">
+      <span class="info-left">{{languageTable.strategyList.coincident}}:</span>
+      <span
+        class="info-right">{{lightingData.linkageStrategyInfo.logic| translate : conditionsMetEnum: 'application.conditionsMet'}}</span>
+    </div>
+    <ng-container *ngIf="lightingData.linkageStrategyInfo.conditionType !== conditionTypeEnum.trigger">
+      <div class="condition-info">
+        <span class="info-left">{{languageTable.strategyList.alarmDeviceName}}:</span>
+        <span class="info-right">{{lightingData.linkageStrategyInfo.equipmentName}}</span>
+      </div>
+      <div class="condition-info">
+        <span class="info-left">{{languageTable.strategyList.alarmName}}:</span>
+        <span class="info-right">{{lightingData.linkageStrategyInfo.conditionName}}</span>
+      </div>
+    </ng-container>
+  </div>
+  <div class="implement" *ngIf="lightingData.linkageStrategyInfo.conditionType !== conditionTypeEnum.trigger">
+    <h3 class="title">{{languageTable.strategyList.performAction}}</h3>
+    <div class="implement-list">
+      <app-view-equipment [inputDataSet]="lightingData.multiEquipmentData"></app-view-equipment>
+    </div>
+  </div>
+  <!--触发条件已选择的回显-->
+  <div class="trigger-selected" *ngIf="lightingData.linkageStrategyInfo.conditionType === conditionTypeEnum.trigger">
+    <xc-table [dataSet]="triggerSelectedList"
+              [tableConfig]="tableConfigTrigger">
+    </xc-table>
+  </div>
+
+  <h3 class="instructions-title">{{languageTable.strategyList.setCommand}}</h3>
+  <!--执行动作已选择的回显-->
+  <div class="action-selected" *ngIf="lightingData.linkageStrategyInfo.conditionType === conditionTypeEnum.trigger">
+    <xc-table [dataSet]="actionSelectedList"
+              [tableConfig]="tableConfigAction">
+    </xc-table>
+  </div>
+  <!--单控和集控-->
+  <div class="screen" *ngIf="linkageStrategyInfo.targetType&&
+  (linkageStrategyInfo.targetType.includes(targetTypeEnum.singleControl)|| linkageStrategyInfo.targetType.includes(targetTypeEnum.multiControl))">
+    <div class="information-screen lamp">{{languageTable.strategyList.lamp}}</div>
+    <div class="instruct-list">
+      <span class="instruct-title">
+        <span class="icon-wrap open-wrap">
+          <i class="iconfont fiLink-open"></i>
+        </span>
+        <span>{{languageTable.strategyList.switch}}</span>
+      </span>
+      <span>
+        <nz-radio-group [disabled]="true" [(ngModel)]="lightingData.linkageStrategyInfo.instructLightBase.switchLight">
+          <label nz-radio [nzValue]="ExecStatusEnum.implement">{{languageTable.equipmentTable.switch}}</label>
+          <label nz-radio [nzValue]="ExecStatusEnum.free">{{languageTable.equipmentTable.shut}}</label>
+        </nz-radio-group>
+      </span>
+    </div>
+    <div class="instruct-list">
+      <div class="instruct-title">
+        <span class="icon-wrap light-wrap">
+          <i class="iconfont fiLink-light"></i>
+        </span>
+        <span>
+          {{languageTable.equipmentTable.light}}
+        </span>
+      </div>
+      <div class="instruct-volume">
+        <nz-slider
+          [nzDisabled]="true"
+          [nzMin]="sliderValue.min"
+          [nzMax]="sliderValue.lightMax"
+          [(ngModel)]="lightingData.linkageStrategyInfo.instructLightBase.light"></nz-slider>
+      </div>
+      <div>{{lightingData.linkageStrategyInfo.instructLightBase.light}}</div>
+    </div>
+  </div>
+  <!--信息屏-->
+  <div class="screen"
+       *ngIf="linkageStrategyInfo.targetType&&linkageStrategyInfo.targetType.includes(targetTypeEnum.informationScreen)">
+    <div class="information-screen">{{languageTable.strategyList.screen}}</div>
+    <div class="program-select">
+      <span class="program-title">{{languageTable.strategyList.programName}}</span>
+      <span class="area-name" [title]="programName">
+        {{programName}}
+      </span>
+      <span>
+        <button class="open-button">
+          <i class="icon-l icon-search"></i>
+        </button>
+      </span>
+    </div>
+    <!--音量-->
+    <div class="instruct-list">
+      <div class="instruct-title">
+        <span class="icon-wrap volume-wrap"><i class="iconfont fiLink-filink-yinliang-icon"></i></span>
+        <span>{{languageTable.strategyList.volume}}</span>
+      </div>
+      <div class="instruct-volume">
+        <nz-slider
+          [disabled]="true"
+          [nzMin]="sliderValue.min"
+          [nzMax]="sliderValue.volumeMax"
+          [(ngModel)]="linkageStrategyInfo.instructInfoBase.volume"></nz-slider>
+      </div>
+      <div>{{linkageStrategyInfo.instructInfoBase.volume}}</div>
+    </div>
+    <!--亮度-->
+    <div class="instruct-list">
+
+      <div class="instruct-title">
+        <span class="icon-wrap light-wrap"><i class="iconfont fiLink-light"></i></span>
+        <span>{{languageTable.equipmentTable.light}}</span>
+      </div>
+      <div class="instruct-volume">
+        <nz-slider
+          [disabled]="true"
+          [nzMin]="sliderValue.min"
+          [nzMax]="sliderValue.max"
+          [(ngModel)]="linkageStrategyInfo.instructInfoBase.light"></nz-slider>
+      </div>
+      <div>{{linkageStrategyInfo.instructInfoBase.light}}</div>
+    </div>
+  </div>
+</div>
+

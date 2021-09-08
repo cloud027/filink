@@ -1,0 +1,19 @@
+<div class="table-wrapper">
+  <xc-table [dataSet]="_dataSet"
+            [pageBean]="pageBean"
+            [tableConfig]="tableConfig"
+            (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
+
+<!-- 角色权限和设施集 -->
+<xc-tree-role-selector [(xcVisible)]="roleSelectorVisible"
+                       [treeSelectorConfig]="roleSelectorConfig"
+                       [nodeDisabled]="true"
+                       [isHiddenButton]="true">
+</xc-tree-role-selector>
+
+<!--角色名称-->
+<ng-template #roleTemp let-data="data">
+  <span class="width-style" title="{{data.roleName}}">{{data.roleName}}</span>
+</ng-template>

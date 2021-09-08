@@ -1,0 +1,50 @@
+@import "../../../../style-module/config";
+.install-order{
+  background: $bg-c;
+  .order-chart{
+    background: $bg-c;
+    margin-top: 5px;
+    .gutter-row{
+      .gutter-box{
+        height: 230px;
+        background: $bg-c-w;
+        padding: 0 16px;
+        .chart-title{
+          height: 40px;
+          line-height: 40px;
+          font-weight: bold;
+          color: $title-color;
+        }
+        .chart-box{
+          height: 180px;
+        }
+        .circle-container{
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          height: 190px;
+          position: relative;
+          .over-box{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 3;
+          }
+          .ring-chart{
+            width: 160px;
+            height: 160px;
+          }
+        }
+        .no-data{
+          margin-top: 10%;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .order-table{
+    padding: 0 16px 20px 16px;
+    margin-top: 10px;
+    background: $bg-c-w;
+  }
+}

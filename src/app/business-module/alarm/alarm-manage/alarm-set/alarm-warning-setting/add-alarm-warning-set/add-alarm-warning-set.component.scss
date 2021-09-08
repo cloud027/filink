@@ -1,0 +1,18 @@
+@import "../../../../../../style-module/config";
+
+.add-alarm-warning-set {
+  padding: 0 16px 20px 16px;
+  .page-title {
+    border-left: 2px solid $detail-title-color;
+    padding-left: 18px;
+    color: $title-color;
+    font-size: 16px;
+    font-weight: 900;
+  }
+  .set-btn-box{
+    padding-left: 20px;
+  }
+  .submit-btn{
+    margin-right: 20px;
+  }
+}

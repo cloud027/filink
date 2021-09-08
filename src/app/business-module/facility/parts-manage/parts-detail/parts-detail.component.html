@@ -1,0 +1,33 @@
+<div class="facility-detail">
+  <div>
+    <span class="area-detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div class="parts-form-container">
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="save-btn-container">
+      <button class="link-button save-parts" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="addParts()">{{language.okText}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.cancelText}}</button>
+    </div>
+  </div>
+</div>
+<!-- 部门选择 -->
+<ng-template #department let-formGroup="formGroup" let-col="col">
+  <div class="unit-select">
+    <span class="unit-name" [title]="selectUnitName">{{selectUnitName}}</span>
+    <button class="open-button" (click)="showModal()"><i
+      class="icon-l icon-search"></i></button>
+  </div>
+</ng-template>
+
+
+<xc-tree-selector #unitTreeSelector
+                  [(xcVisible)]="isVisible"
+                  (selectDataChange)="selectDataChange($event)"
+                  [treeSelectorConfig]="treeSelectorConfig">
+</xc-tree-selector>

@@ -1,0 +1,48 @@
+<nz-modal [nzWidth]="850"
+          [(nzVisible)]="xcVisible"
+          nzTitle="{{language.choosePosition}}"
+          [nzMaskClosable]="false"
+          (nzAfterOpen)="afterModelOpen()"
+          (nzOnCancel)="handleCancel()"
+          [nzFooter]="modalFooter"
+>
+  <div class="map-selector-position" style="width: 800px;height: 500px;position: relative">
+    <div class="address" *ngIf="address.addressComponents.district">
+       <span *ngIf="address.addressComponents.province">{{address.addressComponents.province}}</span>
+       <span *ngIf="address.addressComponents.city">{{address.addressComponents.city}}</span>
+       <span *ngIf="address.addressComponents.district">{{address.addressComponents.district}}</span>
+       <input nz-input type="text" class="hidden" [(ngModel)]="address.address">
+    </div>
+    <div #mapContainer id="mapContainer"></div>
+    <!--左上角选择框-->
+    <div class="select-container">
+      <div class="map-select">
+        <span style="min-width: 50px;color:#13c2c2;">{{indexLanguage.searchAddress}}</span>
+      </div>
+      <div class="map-search">
+        <!--百度地图地址搜索-->
+        <div class="b-map-location-search" [hidden]="mapType === 'google'">
+          <div id="r-result">
+            <input type="text" placeholder="{{indexLanguage.enterPlace}}" id="_suggestId" size="20" [(ngModel)]="searchKey"/>
+          </div>
+          <div [hidden]="true" id="_searchResultPanel"></div>
+        </div>
+        <!--谷歌地图地址搜索-->
+        <div class="g-map-location-search" [hidden]="mapType === 'baidu'">
+          <input #input [(ngModel)]="searchKey" placeholder="{{indexLanguage.enterPlace}}" (keyup.enter)="location()"/>
+          <div class="iconfont icon-fiLink fiLink-search location-icon" (click)="location()"></div>
+        </div>
+      </div>
+    </div>
+    <div class="zoom-control">
+      <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-in" style="margin-top: 8px;"  (click)="zoomIn()" title="{{indexLanguage.magnify}}"></div>
+      <div class="zoom-control-item iconfont icon-fiLink fiLink-zoom-out" (click)="zoomOut()" title="{{indexLanguage.narrow}}"></div>
+    </div>
+  </div>
+  <ng-template #modalFooter>
+    <button class="link-button" [disabled]="!(address.point.lat)" nz-button nzType="primary" (click)="handleOk()">
+      {{language.confirm}}
+    </button>
+    <button class="link-button" nz-button nzType="danger" (click)="handleCancel()">{{language.cancel}}</button>
+  </ng-template>
+</nz-modal>

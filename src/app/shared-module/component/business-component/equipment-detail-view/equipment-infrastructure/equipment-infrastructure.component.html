@@ -1,0 +1,216 @@
+<div class="equipment-info-container">
+  <div nz-col nzSpan="8">
+    <!--基本信息卡片-->
+    <div class="information-card-item first-line-card">
+      <div class="equipment-info-item">
+        <span class="equipment-name"
+              nz-tooltip="{{equipmentDetailInfo.equipmentName}}">{{equipmentDetailInfo.equipmentName}}</span>
+        <span *ngIf="equipmentDetailInfo.businessStatus"
+              [class]="'status '+getBusinessStatusBg(equipmentDetailInfo.businessStatus)">
+            {{equipmentDetailInfo.businessStatus | translate: businessStatusEnum: languageEnum.facility}}
+        </span>
+        <!--设备状态-->
+        <span *ngIf="equipmentDetailInfo.equipmentStatus"
+              [class]="'status ' + getEquipmentStatusBg(equipmentDetailInfo.equipmentStatus)">
+            <i [class]="getEquipmentStatusIconClass(equipmentDetailInfo.equipmentStatus)"></i>
+          {{equipmentDetailInfo.equipmentStatus | translate: equipmentStatusEnum: languageEnum.facility}}
+        </span>
+      </div>
+      <!--设备更新时间-->
+      <div class="equipment-update-time">
+        <span>{{language.updateTime}}: {{equipmentDetailInfo.utime | dynamic: 'date' : null}} </span>
+      </div>
+      <!--设备类型-->
+      <div class="equipment-type">
+        <span *ngIf="equipmentDetailInfo.equipmentType" class="type-span">
+          <i [class]="getEquipmentIconClass(equipmentDetailInfo)"></i>
+          {{equipmentDetailInfo.equipmentType | translate:equipmentTypeEnum:languageEnum.facility}}
+        </span>
+        <span class="equipment-model">
+          {{equipmentDetailInfo.equipmentModel}}
+        </span>
+      </div>
+      <!--所属回路-->
+      <div nz-row class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name">{{language.loop}}：</div>
+        <div nz-col nzSpan="12" class="label-value"
+             title="{{equipmentDetailInfo.loopName}}">{{equipmentDetailInfo.loopName}}</div>
+      </div>
+      <!--权属公司-->
+      <div nz-row class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name">{{language.company}}：</div>
+        <div nz-col nzSpan="12" class="label-value" title="{{equipmentDetailInfo.company}}">
+          {{equipmentDetailInfo.company}}
+        </div>
+      </div>
+      <div class="equipment-label">
+        <!--资产编码-->
+        <div class="code-item">
+          <i [nz-tooltip]="language.deviceCode" class="icon-fiLink-7 icon-item iconfont fiLink-asset-number"></i>
+          <span nz-tooltip="{{equipmentDetailInfo.equipmentCode}}">{{equipmentDetailInfo.equipmentCode}}</span>
+        </div>
+        <span class="item-separation">|</span>
+        <!--三方编码-->
+        <div class="code-item">
+          <i [nz-tooltip]="language.otherSystemNumber"
+             class="icon-fiLink-6 icon-item iconfont fiLink-tripartite-coding"></i>
+          <span nz-tooltip="{{equipmentDetailInfo.otherSystemNumber}}">{{equipmentDetailInfo.otherSystemNumber}}</span>
+        </div>
+      </div>
+      <div class="equipment-label">
+        <!--责任单位-->
+        <div class="code-item">
+          <i [nz-tooltip]="language.responsibleUnit" class="icon-fiLink-6 icon-item iconfont fiLink-departments"></i>
+          <span nz-tooltip="{{equipmentDetailInfo.departmentName}}">{{equipmentDetailInfo.departmentName}}</span>
+        </div>
+        <span class="item-separation">|</span>
+        <!--供应商-->
+        <div class="code-item">
+          <i [nz-tooltip]="language.supplierName" class="icon-fiLink-9 icon-item  iconfont fiLink-supplier"></i>
+          <span nz-tooltip="{{equipmentDetailInfo.supplier}}">
+          {{equipmentDetailInfo.supplier}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--租赁方信息-->
+    <div class="information-card-item lessee-card">
+      <!--租赁单位-->
+      <div nz-row class="equipment-label equipment-lessee">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.lessee : ''">{{language.lessee}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <i class="icon-fiLink-6 iconfont fiLink-filink-danwei-icon"></i>
+        </div>
+      </div>
+      <!--租赁开始时间-->
+      <div nz-row class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.lesseeStartTime : ''">{{language.lesseeStartTime}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <i class="icon-fiLink-6 iconfont fiLink-time"></i>
+        </div>
+      </div>
+      <!--租赁结束时间-->
+      <div nz-row class="equipment-label">
+        <span nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.lesseeEndTime : ''">{{language.lesseeEndTime}}：</span>
+        <span nz-col nzSpan="12" class="label-value">
+          <i class="icon-fiLink-6 iconfont fiLink-time"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="8">
+    <!--所属区域、设施、网关、等信息-->
+    <div class="information-card-item first-line-card">
+      <div class="equipment-info-item">
+        <!--区域-->
+        <span class="equipment-name equipment-ref-area"
+              nz-tooltip="{{equipmentDetailInfo.areaInfo.areaName}}">{{equipmentDetailInfo.areaInfo.areaName}}</span>
+        <!--所属设施-->
+        <span class="equipment-ref-device"
+              nz-tooltip="{{deviceInfo.deviceName}}">{{deviceInfo ? deviceInfo.deviceName : ''}}</span>
+        <!--挂载位置-->
+        <span *ngIf="equipmentDetailInfo.mountPosition" class="equipment-mount-position">{{language.mountPosition}}
+          : {{equipmentDetailInfo.mountPosition}}</span>
+      </div>
+      <div class="equipment-info-item cm-clo">
+        <!--通信方式-->
+        <div class="equipment-communicate">
+          <i [nz-tooltip]="language.communicationMode"
+             class="icon-fiLink-7 icon-item iconfont fiLink-communication-model"></i>
+          <span>{{equipmentDetailInfo.communicationMode}}</span>
+        </div>
+        <!--云平台-->
+        <div>
+          <i [nz-tooltip]="language.cloudPlatform" class="icon-fiLink-6 icon-item iconfont fiLink-cloud-platform"></i>
+          <span>{{equipmentDetailInfo.cloudPlatformName}}</span>
+        </div>
+      </div>
+      <!--查看分组和查看策略-->
+      <div class="group-and-policy" *ngIf="showGroupAndPolicy">
+        <button class="info-btn icon-fiLink-4" nz-button nzType="default" type="button" (click)="showGroupInfo=true">
+          <i class="iconfont fiLink-query-group"></i>
+          {{language.queryGroupInfo}}
+        </button>
+        <button *ngIf='!isMonitorDeatilsFlag' class="icon-fiLink-4 iconfont" nz-button nzType="default" type="button" (click)="showPolicyInfo=true">
+          <i class="iconfont fiLink-policy"></i>
+          {{language.queryPolicyInfo}}
+        </button>
+      </div>
+      <div nz-row class="equipment-label">
+        <!--所属网关-->
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.gatewayName : ''">{{language.gatewayName}}：</div>
+        <div nz-col nzSpan="5" class="label-value more" nz-tooltip="{{equipmentDetailInfo.gatewayName}}">
+          {{equipmentDetailInfo.gatewayName}}
+        </div>
+        <!--电源控制器设备-->
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.powerControlEquipment : ''">{{language.powerControlEquipment}}：</div>
+        <div nz-col nzSpan="5" class="label-value more" nz-tooltip="{{equipmentDetailInfo.powerControlName}}">
+          {{equipmentDetailInfo.powerControlName}}
+        </div>
+      </div>
+      <!--网关端口-->
+      <div class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.gatewayPort : ''">{{language.gatewayPort}}：</div>
+        <div nz-col nzSpan="5" class="label-value more">
+          {{equipmentDetailInfo.portName}}
+        </div>
+        <!--电源控制器端口-->
+        <span nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.powerControlEquipmentPort : ''">{{language.powerControlEquipmentPort}}：</span>
+        <span nz-col nzSpan="5" class="label-value more">
+          {{equipmentDetailInfo.powerControlPortName}}
+        </span>
+      </div>
+    </div>
+    <!--安装信息-->
+    <div class="information-card-item lessee-card">
+      <!--安装时间-->
+      <div nz-row class="equipment-label equipment-lessee">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.installationDate : ''">{{language.installationDate}}：</div>
+        <div nz-col nzSpan="12" class="label-value">
+          <i class="icon-fiLink-6 iconfont fiLink-time"></i>
+          {{equipmentDetailInfo.installationDate | dynamic: 'date' : 'yyyy-MM-dd'}}
+        </div>
+      </div>
+      <!--报废年限-->
+      <div nz-row class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.scrapTime : ''">{{language.scrapTime}}：</div>
+        <div nz-col nzSpan="12" *ngIf="equipmentDetailInfo.scrapTime" class="label-value">
+          <i class="iconfont icon-fiLink-6 fiLink-filink-riqi-icon"></i>
+          {{equipmentDetailInfo.scrapTime}}{{language.year}}
+        </div>
+      </div>
+      <!--备注-->
+      <div nz-row class="equipment-label">
+        <div nz-col nzSpan="7" class="label-name" [nz-tooltip]="isEn ? language.remarks : ''">{{language.remarks}}：</div>
+        <div nz-col nzSpan="12" class="label-value" nz-tooltip="{{equipmentDetailInfo.remarks}}">
+          {{equipmentDetailInfo.remarks}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="8">
+    <!--实景图-->
+    <div class="information-card-item picture">
+      <img class="equipment-real-pic" (click)="onClickImage()" [src]="equipmentPicUrl" alt="">
+    </div>
+    <!--缩略图-->
+    <div class="information-card-item thumbnail-info">
+      <div class="thumbnail-container">
+        <app-thumbnail #thumbnail [equipmentId]="equipmentId"
+                       [type]="objectType.equipment"
+                       [baseInfo]="thumbnailData"
+                       [mapType]="mapType">
+        </app-thumbnail>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--查看分组信息-->
+<group-info-list *ngIf="showGroupInfo"
+                 [(groupVisible)]="showGroupInfo"
+                 [equipmentId]="equipmentId">
+</group-info-list>
+<!--查看应用策略-->
+<application-policy-info-list *ngIf="showPolicyInfo" [(policyVisible)]="showPolicyInfo" [equipmentId]="equipmentId">
+</application-policy-info-list>

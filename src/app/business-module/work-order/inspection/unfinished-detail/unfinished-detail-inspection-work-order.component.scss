@@ -1,0 +1,448 @@
+@import "../../share/style/common-picture.scss";
+
+.area-detail-title {
+  display: inline-block;
+  padding-left: 16px;
+  color: $title-color;
+  font-size: 16px;
+  font-weight: bold;
+  height: 26px;
+  line-height: 26px;
+  margin-bottom: 6px;
+  &.tabTitle{
+    font-size: 14px;
+    position: absolute;
+  }
+}
+/**
+ * 巡检工单routine-inspection
+ */
+.info-container{
+  background: $bg-c;
+  padding-top: 10px;
+  .detail-info{
+    height: 260px;
+    .gutter-row {
+      height: 100%;
+      .icon-fiLink{
+        vertical-align: top;
+        font-size: 14px;
+        margin-right: 5px;
+        font-weight: bold;
+      }
+      .gutter-box{
+        background: $bg-c-w;
+        padding: 30px 16px;
+        height: 100%;
+        position: relative;
+        &.tran{
+          background: transparent;
+          padding: 0;
+          .time{
+            background: $bg-c-w;
+            padding: 28px 16px;
+          }
+          .remark{
+            margin-top: 10px;
+            background: $bg-c-w;
+            padding: 26px 16px;
+            .time-box{
+              margin-bottom: 12px;
+            }
+          }
+        }
+        .time-box{
+          height: 21px;
+          line-height: 21px;
+          margin-bottom: 13px;
+          font-size: 14px;
+          .icon-fiLink{
+            color: $sp-icon-color-3;
+          }
+          &.task{
+            height: 22px;
+            line-height: 22px;
+            margin-bottom: 15px;
+          }
+          .time-label{
+            display: inline-block;
+            color: $sp-icon-color-7;
+            vertical-align: top;
+            width: 130px;
+          }
+          .time-value{
+            display: inline-block;
+            width: calc(100% - 130px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: $title-color;
+          }
+        }
+        .title{
+          height: 26px;
+          line-height: 26px;
+          .iconStatus{
+            display: inline-block;
+            padding: 0 5px;
+            height: 20px;
+            line-height: 20px;
+            color: $bg-c-w;
+            border-radius: 2px;
+            font-size: 12px;
+          }
+          .order-title{
+            display: inline-block;
+            max-width: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 15px;
+            vertical-align: middle;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            &.text{
+              max-width: calc(100% - 200px);
+            }
+          }
+          .order-status{
+            &:before{
+              content: '';
+            }
+            &.statistics-pending-color {
+              background: $statistics-pending;
+            }
+            &.statistics-assigned-color{
+              background: $statistics-assigned;
+            }
+            &.statistics-processing-color{
+              background: $statistics-processing;
+            }
+            &.statistics-completed-color{
+              background: $statistics-completed;
+            }
+            &.statistics-singleBack-color {
+              background: $statistics-singleBack;
+            }
+            &.statistics-turnProcess-color{
+              background: $statistics-turnProcessing;
+            }
+            &.fiLink-processed{
+              background: $statistics-pending;
+            }
+            &.fiLink-processing{
+              background: $prompt-prompting;
+            }
+            &.fiLink-completed-o{
+              background: $statistics-completed
+            }
+            .icon-fiLink{
+              color: $bg-c-w;
+            }
+          }
+          .auto-dis{
+            background: $dispatch;
+            margin-left: 10px;
+          }
+          .dev-total{
+            i{
+              font-style: normal;
+              color: $color;
+            }
+          }
+          .opens{
+            background: $statistics-assigned;
+            margin-left: 10px;
+          }
+          .count{
+            color: $color;
+            margin-left: 15px;
+            font-weight: bold;
+          }
+          .iconfont{
+            vertical-align: bottom;
+          }
+        }
+        .ctime{
+          height: 117px;
+          padding-top: 10px;
+          color: $sp-icon-color-7;
+        }
+        .user{
+          margin-bottom: 15px;
+          font-size: 14px;
+          color: $title-color;
+          .icon-fiLink{
+            &.fiLink-user-menu{
+              color: $sp-icon-color-5;
+            }
+            &.fiLink-departments{
+              color: $sp-icon-color-3;
+            }
+          }
+        }
+        .last-time{
+          width: 150px;
+          height: 220px;
+          position: absolute;
+          right: 2px;
+          top: 30px;
+          &.task{
+            .day-label{
+              margin-top: 5px;
+              color: $sp-icon-color-7;
+            }
+          }
+          .row-progress{
+            display: inline-block;
+            width: 51%;
+            color: $sp-icon-color-7;
+          }
+          .lastDay{
+            width: 76px;
+            height: 76px;
+            line-height: 110px;
+            margin: 35px auto 0;
+            text-align: center;
+            color: $bg-c-w;
+            font-weight: bold;
+            &.last-1 {
+              background: url($progress3) no-repeat;
+            }
+            &.last-2 {
+              background: url($progress1) no-repeat;
+            }
+            &.last-3 {
+              background: url($progress2) no-repeat;
+            }
+          }
+          .task-pro{
+            position: absolute;
+            width: 100%;
+            bottom: 22px;
+            display: flex;
+            justify-content: center;
+          }
+          .day-label{
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            color: $sp-icon-color-7;
+            &.mt{
+              margin-top: 7px;
+            }
+          }
+          .pro-label{
+            color: $sp-icon-color-7;
+          }
+          .order-top{
+            height: 66px;
+          }
+          .order{
+            width: 107px;
+            height: 76px;
+            margin: 0 auto;
+            background: url($star3) no-repeat;
+          }
+        }
+        .equip{
+          height: 80px;
+          .equip-name{
+            display: inline-block;
+            height: 24px;
+            line-height: 24px;
+            background: $inspection-equipment-bg;
+            padding: 0 3px;
+            border-radius: 3px;
+            color: $bg-c-w;
+            margin: 5px 8px 0 0;
+            .iconfont{
+              color: $bg-c-w;
+            }
+          }
+        }
+        .car-mater{
+          height: 22px;
+          line-height: 22px;
+          margin-bottom: 15px;
+          font-size: 14px;
+          .cm-label{
+            display: inline-block;
+            width: 100px;
+            vertical-align: top;
+            color: $sp-icon-color-7;
+          }
+          .cm-value{
+            display: inline-block;
+            width: calc(100% - 100px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: $title-color;
+          }
+        }
+        .more-order{
+          height: 26px;
+          line-height: 26px;
+          .more{
+            color: $sp-icon-color-7;
+          }
+          .multi-0{
+            color: $prompt-prompting;
+          }
+        }
+        .btn-modal{
+          height: 150px;
+          .btn-check{
+            display: inline-block;
+            padding: 0 8px;
+            height: 30px;
+            line-height: 28px;
+            margin-right: 15px;
+            margin-top: 20px;
+            color: $color;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            &:hover{
+              border-color: $color;
+            }
+          }
+        }
+      }
+    }
+  }
+  /**
+   * 巡检工单表格
+   */
+  .table-infos{
+    min-height: calc(100% - 220px);
+    background: $bg-c-w;
+    margin-top: 10px;
+    padding-bottom: 30px;
+    padding-top: 20px;
+    position: relative;
+    .detail-table{
+      padding: 0 16px;
+    }
+    .last-button{
+      padding-left: 16px;
+      margin-top: 15px;
+    }
+  }
+  /**
+   * 巡检任务详情
+   */
+  &.task-info {
+    .detail-info{
+      height: 210px;
+      .gutter-row{
+        .gutter-box {
+          .ctime{
+            height: 70px;
+          }
+          .last-time {
+            height: 75px;
+            top: 35px;
+          }
+          .btn-modal{
+            height: 105px;
+          }
+        }
+      }
+    }
+  }
+}
+.clear{
+  clear: both;
+}
+.area-name {
+  width: 100%;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 11px;
+  outline: none;
+  &:hover{
+    border-color: $color;
+  }
+}
+
+.status-temp{
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: -3px;
+  &.fiLink-success{
+    color: $statistics-assigned;
+  }
+  &.fiLink-fail{
+    color: $statistics-singleBack;
+  }
+}
+/**
+ * 巡检报告
+ */
+.report-warp{
+  padding: 20px 16px;
+  .report-box{
+    height: 450px;
+    .report-left{
+      width: 300px;
+      height: 100%;
+      float: left;
+      border: 1px solid $border-color;
+
+      .tree-title{
+        height: 40px;
+        line-height: 40px;
+        background: $table-bg-color;
+        padding-left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: $title-color;
+      }
+
+      .device-tree{
+        height: 408px;
+        padding: 10px;
+        position: relative;
+        overflow: hidden;
+        .spins{
+          width: 100%;
+          height: 100%;
+          position: absolute;
+        }
+        .tree-warp{
+          height: calc(100% - 38px);
+          margin-top: 8px;
+          padding: 10px 15px 10px 0;
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+        .tree-nodata{
+          width: 95%;
+          position: absolute;
+          top: 45%;
+          text-align: center;
+        }
+        .icon-fiLink{
+          cursor: pointer;
+        }
+      }
+    }
+
+    .report-right{
+      box-sizing: border-box;
+      float: left;
+      margin-left: 30px;
+      width: calc(100% - 350px);
+      height: 100%;
+      border: 1px solid $border-color;
+      .ant-table-content{
+        height: 450px;
+      }
+    }
+  }
+  .last-button{
+    margin-top: 15px;
+  }
+}
+

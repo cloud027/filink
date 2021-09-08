@@ -1,0 +1,82 @@
+<!--回路新增、编辑组件-->
+<nz-spin class="loop-warp" [nzSpinning]="pageLoading">
+  <div>
+    <span class="detail-title">
+      {{pageTitle}}
+    </span>
+  </div>
+  <div>
+    <xc-form [column]="formColumn" (formInstance)="formInstance($event)"></xc-form>
+    <div class="button-container">
+      <button class="link-button margin-right20" nz-button nzType="primary"
+              [nzLoading]="isLoading"
+              [disabled]="isDisabled"
+              (click)="addOrEditLoop()">{{language.handleOk}}
+      </button>
+      <button class="link-button" nz-button nzType="danger" (click)="goBack()">{{language.handleCancel}}</button>
+    </div>
+  </div>
+</nz-spin>
+
+<!--所属配电箱模板-->
+<ng-template #distributionBoxTemp let-col="col">
+  <div class="custom-template">
+    <label>
+      <input nz-input readonly="readonly" class="input-name" [(ngModel)]="distributionBoxName">
+    </label>
+    <i (click)="distributionBoxVisible = true" class="icon-template"
+       nz-tooltip="{{assetLanguage.selectTheDistributionBox}}">
+      <span class="icon-fiLink fiLink-search-index iconfont"></span>
+    </i>
+  </div>
+</ng-template>
+<!--配电箱列表选择器-->
+<facility-list-selector-component
+  *ngIf="distributionBoxVisible"
+  title="{{assetLanguage.distributionBox}}"
+  [(facilityVisible)]="distributionBoxVisible"
+  [filterConditions]="distributionBoxFilter"
+  [multiple]="false"
+  [selectFacilityId]="distributionBoxId"
+  (selectDataChange)="selectDataChange($event)">
+</facility-list-selector-component>
+
+
+<!--关联设施模板-->
+<ng-template #linkDeviceTemp let-col="col">
+  <div class="custom-template">
+    <label>
+      <input nz-input readonly="readonly" class="input-name" [(ngModel)]="linkDeviceName">
+    </label>
+    <i (click)="linkDeviceVisible = true" nz-tooltip="{{assetLanguage.selectRelatedFacilities}}" class="icon-template">
+      <span class="icon-fiLink fiLink-search-index iconfont"></span>
+    </i>
+  </div>
+</ng-template>
+<!--关联设施(智慧功能杆子)选择器-->
+<facility-list-selector-component
+  *ngIf="linkDeviceVisible"
+  title="{{assetLanguage.relatedFacilities}}"
+  [(facilityVisible)]="linkDeviceVisible"
+  [filterConditions]="linkDeviceFilter"
+  [multiple]="true"
+  [showNext]="true"
+  [saveBtn]="false"
+  [isSaveBtn]="false"
+  [associatedLine]="lineData"
+  [selectFacilityIds]="selectLinkDeviceIds"
+  (selectDataChange)="selectLinkDeviceData($event)">
+</facility-list-selector-component>
+
+<!--控制对象-->
+<ng-template #controlObjectTemp let-formGroup="formGroup">
+  <form [formGroup]="formGroup">
+    <xc-nz-select formControlName="centralizedControlId" (ngModelChange)="onChangeControlObject()">
+      <xc-nz-option *ngFor="let item of controlObjectValue"
+                    [nzLabel]="item.label"
+                    [nzValue]="item.code">
+      </xc-nz-option>
+    </xc-nz-select>
+  </form>
+</ng-template>
+

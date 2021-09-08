@@ -1,0 +1,12 @@
+<div>
+  <xc-form [column]="tableFormColumn" (formInstance)="tableFormInstance($event)"></xc-form>
+  <div class="btn-box">
+    <button class="link-button" nz-button nzType="primary" [disabled]="!canCommit" (click)="handleOk()">{{productLanguage.addTo}}</button>
+  </div>
+  <xc-table
+    [dataSet]="tableData"
+    [pageBean]="pageBean"
+    [tableConfig]="tableConfig"
+    (pageChange)="pageChange($event)">
+  </xc-table>
+</div>
