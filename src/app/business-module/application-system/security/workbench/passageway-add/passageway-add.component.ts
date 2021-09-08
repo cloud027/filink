@@ -700,7 +700,7 @@ export class PassagewayAddComponent implements OnInit, OnDestroy {
     this.tableConfig.isLoading = true;
     this.queryCondition.filterConditions.push(new FilterCondition('equipmentType', OperatorEnum.in, [EquipmentTypeEnum.camera]));
     this.$applicationService.equipmentListByPage(this.queryCondition)
-    // todo EquipmentListModel 用share moudel 中的模型
+    // EquipmentListModel 用share moudel 中的模型
       .subscribe((result: ResultModel<any[]>) => {
         if (result.code === ResultCodeEnum.success) {
           this.tableConfig.isLoading = false;

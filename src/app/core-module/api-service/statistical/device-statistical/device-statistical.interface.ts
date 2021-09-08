@@ -43,7 +43,6 @@ export interface DeviceStatisticalInterface {
    */
   exportDeployStatusCount(body): Observable<Object>;
 
-  // todo 缺设施状态和部署状态导出
 }
 
 

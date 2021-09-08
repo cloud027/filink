@@ -177,7 +177,6 @@ export const OPERATE_TYPE_EXPORT = `${LOG_STATISTICAL}/exportOperateType`;
 // 危险级别导出
 export const SECURITY_LEVEL_EXPORT = `${LOG_STATISTICAL}/exportSecurityLevel`;
 
-// todo 上面要删除
 export const STATISTICAL_REQUEST_URL = {
   // 获取光缆段列表
   opticCableSectionById: `${SMART_SERVER}/opticCableSectionInfo/opticCableSectionById`,

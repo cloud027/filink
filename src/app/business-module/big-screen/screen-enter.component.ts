@@ -70,7 +70,7 @@ export class ScreenEnterComponent implements OnInit {
   }
 
   changeName(item) {
-    // todo 失去焦点请求接口
+    // 失去焦点请求接口
     this.isEditName = true;
     if (!item.largeScreenName.trim()) {
       this.$message.info(this.language.largeScreenNameWarning);

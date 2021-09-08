@@ -6,7 +6,7 @@ import {NzI18nService} from 'ng-zorro-antd';
 
 export type TFilterOption = (input?: string, option?: NzOptionComponent) => boolean;
 
-// TODO: can not dynamic change pipe pure yet
+// can not dynamic change pipe pure yet
 @Pipe({name: 'nzFilterOptionPipe'})
 export class NzOptionPipe implements PipeTransform {
   transform(options: NzOptionComponent[] | QueryList<NzOptionComponent>, input: string, filterOption: TFilterOption, serverSearch: boolean): NzOptionComponent[] | QueryList<NzOptionComponent> {

@@ -511,12 +511,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy, OnChanges {
           key: 'light',
           width: 100,
         },
-        // todo 暂不删除 // 其他事件源
-        // {
-        //   title: this.languageTable.strategyList.eventSources,
-        //   key: 'refObjectName',
-        //   width: 130,
-        // },
         // 光照强度
         {
           title: this.languageTable.strategyList.lightIntensity,

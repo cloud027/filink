@@ -111,7 +111,7 @@ export class BasicsModelComponent implements OnInit, OnDestroy {
    */
   private onInitialization(): void {
     this.$applicationService.getSecurityConfiguration(this.equipmentId)
-      // todo 基础配置模型
+      // 基础配置模型
       .subscribe((result: ResultModel<PassagewayModel>) => {
         if (result.code === ResultCodeEnum.success) {
           this.certificateFormStatus.resetData(result.data);

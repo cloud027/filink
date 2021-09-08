@@ -160,7 +160,6 @@ export class MapSelectorComponent implements OnInit, AfterViewInit, OnChanges, O
   private timer: any;
 
 
-  // 重构 todo/////////////////////////////////////
 
   // 设施区域模型
   public deviceAreaModel: DeviceAreaModel = new DeviceAreaModel;
@@ -949,7 +948,6 @@ export class MapSelectorComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
 
-  // todo 区域选择器重构新方法  ////////////////////////////////////////////////////////////
 
   /**
    * 设施区域数据查询

@@ -245,19 +245,15 @@ export class TopologyComponent implements OnInit, AfterViewInit {
         menus.style.top = evt.layerY + 'px';
       }
     };
-    // TODO 鼠标移入节点显示详情
+    // 鼠标移入节点显示详情
     this.graph.onmousemove = (evt, graph) => {
       const node = this.graph.getElementByMouseEvent(evt);
       const ifData = this.ifshow(node);
       if (ifData) {
-        // clearTimeout(this.timer);
-        // this.timer = setTimeout(() => {
-        // this.queryDeviceId(node.nodeId);
         this.getMyCollectionData(node.nodeId);
         const deveice = document.getElementById('deveice');
         deveice.style.left = evt.layerX + 'px';
         deveice.style.top = evt.layerY - 20 + 'px';
-        // }, 200);
       } else if (node === undefined) {
         this.clearDetail();
         this.isShowInfoWindow = false;

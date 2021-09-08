@@ -553,7 +553,7 @@ export class GroupComponent implements OnInit, OnDestroy {
           handle: (data: GroupListModel) => {
             this.isVolume = true;
             this.volumeList = [data];
-            // TODO 调用接口查询指定设备的
+            // 调用接口查询指定设备的
             // this.queryBroadcastVolumeById(data.sequenceId);
           },
         },

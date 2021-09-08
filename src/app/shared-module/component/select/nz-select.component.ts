@@ -439,7 +439,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   }
 
   onClearSelection(e: MouseEvent): void {
-    // TODO: should not clear disabled option ?
+    // should not clear disabled option ?
     e.stopPropagation();
     this.clearNgModel();
   }

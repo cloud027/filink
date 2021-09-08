@@ -203,7 +203,7 @@ export const ResultCode = {
 };
 
 /**
- * 数字常量 0-20  todo  删除
+ * 数字常量 0-20  删除
  */
 export const num = {
     zero: 0,

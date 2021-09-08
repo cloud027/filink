@@ -321,26 +321,6 @@ export class BusinessComponent implements OnInit, OnDestroy {
     }
     const alarmMsg = JSON.parse(msg.data);
     if (alarmMsg.channelKey === 'alarm') {
-      /**
-      const userInfo: any = SessionUtil.getUserInfo();
-      const deviceTypeId = alarmMsg.msg.alarmSourceTypeId;
-      const deviceRoleSet = userInfo.role.roleDevicetypeList as any[];
-      const hasDeviceTypeRole = deviceRoleSet.findIndex(item => item.deviceTypeId === deviceTypeId) > -1;
-      // 当前用户的区域code
-      const areaCodeList = userInfo.department.areaCodeList as any[];
-      // 接口返回的区域code
-      const areaRole = alarmMsg.msg.alarmAreaCode;
-      // 接口返回的区域code每截后三位进行区域权限比对
-      let hasAreaCodeRole: boolean = false;
-      if (areaCodeList && areaCodeList.length > 0) {
-        for (let i = 0; i <= (areaRole.length / 3); i++) {
-          if (areaCodeList.indexOf(areaRole.substring(0, areaRole.length - 3 * i)) > -1) {
-            hasAreaCodeRole = true;
-            break;
-          }
-        }
-      }
-       */
       // 判断推送的消息当前用户是否有权限id为'1'是超级管理员默认有所以权限
       // 获取租户id
       const tenantId = SessionUtil.getTenantId();

@@ -516,14 +516,7 @@ export class AreaTableVirtualComponent implements OnInit, OnChanges, OnDestroy {
             (finalLeft - startLeft) +
             TableStylePixelEnum.PIXEL;
           this.draggingColumn.width = columnWidth;
-          // const temp = this.tableConfig.columnConfig.filter(item => (!item.hidden) && item.key);
-          // const tempWidth = parseInt(temp[temp.length - 1].width, 10) - (finalLeft - startLeft);
-          // const tableContainer = $(`#${this.tableId}`).width();
-          // const aa = tableContainer > parseInt(this.tableConfig.scroll.x, 10);
-          // if (this.draggingColumn.key !== temp[temp.length - 1].key) {
-          //   temp[temp.length - 1].width = tempWidth;
-          // }
-          // 如果拖动列为固定列重新计算所有固定列列宽 (虚拟滚动会有小问题)todo
+          // 如果拖动列为固定列重新计算所有固定列列宽 (虚拟滚动会有小问题)
           if (this.draggingColumn.fixedStyle && this.draggingColumn.fixedStyle.fixedLeft) {
             const changeColumn = this.tableConfig.columnConfig.filter(
               (item) => item.fixedStyle && item.fixedStyle.fixedLeft,

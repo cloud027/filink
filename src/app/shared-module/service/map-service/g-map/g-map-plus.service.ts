@@ -696,7 +696,7 @@ export class GMapPlusService extends GMapBaseService implements MapPlusPointInte
   }
 
   /**
-   * 胡孝聪新方法 todo
+   * 胡孝聪新方法
    * 添加地图类型控件
    */
   addMapTypeControl() {
@@ -705,7 +705,7 @@ export class GMapPlusService extends GMapBaseService implements MapPlusPointInte
 
   /**
    * 百度地图首页切换到其他页面时有div未清除
-   * 谷歌暂未测试 todo
+   * 谷歌暂未测试
    * 地图对象销毁
    */
   destroy() {

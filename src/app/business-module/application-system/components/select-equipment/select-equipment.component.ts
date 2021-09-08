@@ -315,7 +315,7 @@ export class SelectEquipmentComponent implements OnInit, OnChanges {
    * 刷新表格数据
    */
   private refreshData(): void {
-    // 这个地方只能选择传感器的设备 一期没有 先使用future代替 todo
+    // 这个地方只能选择传感器的设备 一期没有 先使用future代替
     if (this.targetType === 'future') {
       return;
     }

@@ -233,12 +233,6 @@ export class LightingDetailsComponent implements OnInit {
           key: 'light',
           width: 300
         },
-        // todo 暂不删除 // 其他事件源
-        // {
-        //   title: this.languageTable.strategyList.event,
-        //   key: 'refObjectName',
-        //   width: 300
-        // },
         // 光照强度
         {
           title: this.languageTable.strategyList.lightIntensity,

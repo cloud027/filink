@@ -156,7 +156,6 @@ export class FacilityListModel {
   /**
    * 设施下的门锁集合
    */
-  // todo 待后端接口给出lockList结构后将any类型修改
   public  lockList: any;
   /**
    * 设施下的门锁集合

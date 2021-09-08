@@ -340,14 +340,14 @@ export class ProductListComponent extends ListUnitSelector implements OnInit, On
     }
 
     /**
-     * 将文件上传设置成自定义上传 todo 大文件上传功能暂时还没完成
+     * 将文件上传设置成自定义上传
      */
     public onBeforeUpload = (file: UploadFile) => {
         return false;
     }
 
     /**
-     * 确定上传文件 todo 大文件上传功能暂时还没完成
+     * 确定上传文件
      */
     public onConfirmUploadFile(): void {
     }
@@ -917,7 +917,7 @@ export class ProductListComponent extends ListUnitSelector implements OnInit, On
     }
 
     /**
-     * 处理导出数据 todo 后台还没好
+     * 处理导出数据
      */
     private handelExport(e: ListExportModel<ProductInfoModel[]>): void {
         // 获取导出的数据和文件格式

@@ -439,16 +439,6 @@ export class MapSelectorInspectionComponent extends MapSelectorComponent impleme
     this.mapSelectorConfig.selectedColumn = [];
     this.mapSelectorConfig.showSearchSwitch = true;
     if (this.selectMapType === 'device') {
-      // 是否需要过滤已有的设施类型 TODO
-      /*const arr = FacilityForCommonUtil.getRoleFacility(this.$i18n);
-      const device = [];
-      if (this.deviceType.length > 0) {
-        arr.forEach(item => {
-          if (this.deviceType.includes(<string>item.code)) {
-            device.push(item);
-          }
-        });
-      }*/
       this.mapSelectorConfig.selectedColumn = [
         {
           title: this.InspectionLanguage.deviceName,
@@ -690,7 +680,6 @@ export class MapSelectorInspectionComponent extends MapSelectorComponent impleme
   }
 
 
-  // todo 区域选择器重构新方法  ////////////////////////////////////////////////////////////
 
   /**
    * 地图初始化中心点

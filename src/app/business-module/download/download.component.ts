@@ -242,7 +242,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       againObj['objectList'] = data.objectList;
     }
     this.$downloadService.excelExport(data.methodPath, againObj).subscribe((result: Result) => {
-      // todo build2时需删除等于0的情况
+      // build2时需删除等于0的情况
       if (result.code === 0 || result.code === ResultCodeEnum.success) {
         this.queryExportTaskList();
         // this.$message.success(result.msg);

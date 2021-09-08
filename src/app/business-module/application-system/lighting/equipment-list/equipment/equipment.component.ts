@@ -909,7 +909,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
           handle: (data: EquipmentListModel) => {
             this.isVolume = true;
             this.volumeList = [data];
-            // TODO 调用接口查询指定设备的
+            // 调用接口查询指定设备的
             this.queryBroadcastVolumeById(data.sequenceId);
           },
         },
@@ -996,7 +996,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         },
       ];
       this.tableConfig.moreButtons = [];
-      // TODO 操作权限key待补充
+      // 操作权限key待补充
       this.tableConfig.operation = [// 详情
         {
           text: this.languageTable.equipmentTable.details,
